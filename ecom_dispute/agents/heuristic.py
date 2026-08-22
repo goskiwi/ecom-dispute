@@ -35,14 +35,33 @@ class HeuristicConversationStub:
                 continue
             fact_type, polarity = self.classify(text)
             speech_act = self.speech_act(text, message["speaker"])
+            if fact_type not in {FactType.STATUS, FactType.OTHER}:
+                findings.append(
+                    Finding(
+                        finding_id=f"heuristic-business-{index + 1}",
+                        category=(
+                            "user_business_fact"
+                            if message["speaker"] == "user"
+                            else "agent_business_fact"
+                        ),
+                        claim=text,
+                        fact_type=fact_type,
+                        polarity=polarity,
+                        temporal_status=self.temporal_status(text, speech_act),
+                        quote=text,
+                        message_index=index,
+                        evidence_ids=[evidence.evidence_id],
+                    )
+                )
             findings.append(
                 Finding(
-                    finding_id=f"heuristic-{index + 1}",
-                    category="user_fact" if message["speaker"] == "user" else "agent_statement",
+                    finding_id=f"heuristic-act-{index + 1}",
+                    category=(
+                        "user_interaction_act"
+                        if message["speaker"] == "user"
+                        else "agent_interaction_act"
+                    ),
                     claim=text,
-                    fact_type=fact_type,
-                    polarity=polarity,
-                    temporal_status=self.temporal_status(text, speech_act),
                     speech_act=speech_act,
                     quote=text,
                     message_index=index,

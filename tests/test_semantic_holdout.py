@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 from ecom_dispute.contracts import FactType, Polarity, SpeechAct, TemporalStatus
-from ecom_dispute.llm import AtomicFact, ConversationSemantics, LLMResult
+from ecom_dispute.llm import BusinessFact, ConversationSemantics, InteractionAct, LLMResult
 from ecom_dispute.semantic_holdout import evaluate_holdout
 
 
@@ -12,14 +12,21 @@ class FakeSemanticClient:
             semantics=ConversationSemantics(
                 business_type="refund",
                 has_dispute=True,
-                facts=[
-                    AtomicFact(
+                business_facts=[
+                    BusinessFact(
                         speaker="user",
                         quote=messages[0]["text"],
                         message_index=0,
                         fact_type=FactType.REFUND_RECEIPT,
                         polarity=Polarity.NEGATED,
                         temporal_status=TemporalStatus.CURRENT,
+                    )
+                ],
+                interaction_acts=[
+                    InteractionAct(
+                        speaker="user",
+                        quote=messages[0]["text"],
+                        message_index=0,
                         speech_act=SpeechAct.ASSERTION,
                     )
                 ],
@@ -56,15 +63,16 @@ def test_semantic_holdout_repeats_without_exposing_oracle(tmp_path: Path) -> Non
                 "holdout_refund_001": {
                     "business_type": "refund",
                     "has_dispute": True,
-                    "expected_user_facts": [
+                    "expected_user_business_facts": [
                         {
                             "fact_type": "refund_receipt",
                             "polarity": "negated",
                             "temporal_status": "current",
-                            "speech_act": "assertion",
                         }
                     ],
-                    "expected_agent_facts": [],
+                    "expected_agent_business_facts": [],
+                    "expected_user_interaction_acts": ["assertion"],
+                    "expected_agent_interaction_acts": [],
                 }
             }
         ),
@@ -80,7 +88,8 @@ def test_semantic_holdout_repeats_without_exposing_oracle(tmp_path: Path) -> Non
     )
     assert result["case_count"] == 1
     assert result["repeats"] == 2
-    assert result["user_fact_exact_match"] == 1.0
-    assert result["user_fact_precision"] == 1.0
-    assert result["user_fact_recall"] == 1.0
+    assert result["user_business_fact_exact_match"] == 1.0
+    assert result["user_business_fact_precision"] == 1.0
+    assert result["user_business_fact_recall"] == 1.0
+    assert result["user_interaction_act_exact_match"] == 1.0
     assert result["input_tokens"] == 20

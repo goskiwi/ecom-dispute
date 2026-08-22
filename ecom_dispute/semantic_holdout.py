@@ -4,7 +4,7 @@ import json
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
-from .llm import AtomicFact, ResponsesClient
+from .llm import BusinessFact, InteractionAct, ResponsesClient
 
 
 def evaluate_holdout(
@@ -27,8 +27,10 @@ def evaluate_holdout(
             checks = {
                 "business_type": False,
                 "has_dispute": False,
-                "user_facts": False,
-                "agent_facts": False,
+                "user_business_facts": False,
+                "agent_business_facts": False,
+                "user_interaction_acts": False,
+                "agent_interaction_acts": False,
             }
             return {
                 "repeat": repeat,
@@ -41,29 +43,55 @@ def evaluate_holdout(
                 "latency_ms": 0,
             }
 
-        observed_user = {
-            _fact_key(item) for item in result.semantics.facts if item.speaker == "user"
+        observed_user_facts = {
+            _business_fact_key(item)
+            for item in result.semantics.business_facts
+            if item.speaker == "user"
         }
-        observed_agent = {
-            _fact_key(item) for item in result.semantics.facts if item.speaker == "agent"
+        observed_agent_facts = {
+            _business_fact_key(item)
+            for item in result.semantics.business_facts
+            if item.speaker == "agent"
         }
-        expected_user = {_oracle_key(item) for item in expected["expected_user_facts"]}
-        expected_agent = {_oracle_key(item) for item in expected["expected_agent_facts"]}
+        observed_user_acts = {
+            _interaction_act_key(item)
+            for item in result.semantics.interaction_acts
+            if item.speaker == "user"
+        }
+        observed_agent_acts = {
+            _interaction_act_key(item)
+            for item in result.semantics.interaction_acts
+            if item.speaker == "agent"
+        }
+        expected_user_facts = {
+            _oracle_business_fact_key(item) for item in expected["expected_user_business_facts"]
+        }
+        expected_agent_facts = {
+            _oracle_business_fact_key(item) for item in expected["expected_agent_business_facts"]
+        }
+        expected_user_acts = set(expected["expected_user_interaction_acts"])
+        expected_agent_acts = set(expected["expected_agent_interaction_acts"])
         checks = {
             "business_type": result.semantics.business_type == expected["business_type"],
             "has_dispute": result.semantics.has_dispute == expected["has_dispute"],
-            "user_facts": expected_user == observed_user,
-            "agent_facts": expected_agent == observed_agent,
+            "user_business_facts": expected_user_facts == observed_user_facts,
+            "agent_business_facts": expected_agent_facts == observed_agent_facts,
+            "user_interaction_acts": expected_user_acts == observed_user_acts,
+            "agent_interaction_acts": expected_agent_acts == observed_agent_acts,
         }
         return {
             "repeat": repeat,
             "case_id": case["case_id"],
             "checks": checks,
             "passed": all(checks.values()),
-            "expected_user_facts": sorted(expected_user),
-            "observed_user_facts": sorted(observed_user),
-            "expected_agent_facts": sorted(expected_agent),
-            "observed_agent_facts": sorted(observed_agent),
+            "expected_user_business_facts": sorted(expected_user_facts),
+            "observed_user_business_facts": sorted(observed_user_facts),
+            "expected_agent_business_facts": sorted(expected_agent_facts),
+            "observed_agent_business_facts": sorted(observed_agent_facts),
+            "expected_user_interaction_acts": sorted(expected_user_acts),
+            "observed_user_interaction_acts": sorted(observed_user_acts),
+            "expected_agent_interaction_acts": sorted(expected_agent_acts),
+            "observed_agent_interaction_acts": sorted(observed_agent_acts),
             "response_id": result.response_id,
             "model": result.model,
             "input_tokens": result.input_tokens,
@@ -96,10 +124,16 @@ def evaluate_holdout(
             }
         )
     evaluated_results = [item for item in results if "error" not in item]
-    user_precision, user_recall = _fact_precision_recall(evaluated_results, "user")
-    agent_precision, agent_recall = _fact_precision_recall(evaluated_results, "agent")
+    user_precision, user_recall = _set_precision_recall(evaluated_results, "user_business_facts")
+    agent_precision, agent_recall = _set_precision_recall(evaluated_results, "agent_business_facts")
+    user_act_precision, user_act_recall = _set_precision_recall(
+        evaluated_results, "user_interaction_acts"
+    )
+    agent_act_precision, agent_act_recall = _set_precision_recall(
+        evaluated_results, "agent_interaction_acts"
+    )
     return {
-        "schema_version": 2,
+        "schema_version": 3,
         "mode": "semantic_holdout",
         "case_count": len(inputs),
         "repeats": repeats,
@@ -108,12 +142,20 @@ def evaluate_holdout(
         "api_errors": len(results) - len(evaluated_results),
         "business_type_accuracy": _check_rate(evaluated_results, "business_type"),
         "has_dispute_accuracy": _check_rate(evaluated_results, "has_dispute"),
-        "user_fact_exact_match": _check_rate(evaluated_results, "user_facts"),
-        "agent_fact_exact_match": _check_rate(evaluated_results, "agent_facts"),
-        "user_fact_precision": user_precision,
-        "user_fact_recall": user_recall,
-        "agent_fact_precision": agent_precision,
-        "agent_fact_recall": agent_recall,
+        "user_business_fact_exact_match": _check_rate(evaluated_results, "user_business_facts"),
+        "agent_business_fact_exact_match": _check_rate(evaluated_results, "agent_business_facts"),
+        "user_business_fact_precision": user_precision,
+        "user_business_fact_recall": user_recall,
+        "agent_business_fact_precision": agent_precision,
+        "agent_business_fact_recall": agent_recall,
+        "user_interaction_act_exact_match": _check_rate(evaluated_results, "user_interaction_acts"),
+        "agent_interaction_act_exact_match": _check_rate(
+            evaluated_results, "agent_interaction_acts"
+        ),
+        "user_interaction_act_precision": user_act_precision,
+        "user_interaction_act_recall": user_act_recall,
+        "agent_interaction_act_precision": agent_act_precision,
+        "agent_interaction_act_recall": agent_act_recall,
         "input_tokens": sum(item["input_tokens"] for item in results),
         "output_tokens": sum(item["output_tokens"] for item in results),
         "latency_ms": sum(item["latency_ms"] for item in results),
@@ -121,33 +163,41 @@ def evaluate_holdout(
     }
 
 
-def _fact_key(item: AtomicFact) -> tuple[str, str, str, str]:
+def _business_fact_key(item: BusinessFact) -> tuple[str, str, str]:
     return (
         item.fact_type.value,
         item.polarity.value,
         item.temporal_status.value,
-        item.speech_act.value,
     )
 
 
-def _oracle_key(item: dict) -> tuple[str, str, str, str]:
+def _oracle_business_fact_key(item: dict) -> tuple[str, str, str]:
     return (
         item["fact_type"],
         item["polarity"],
         item["temporal_status"],
-        item["speech_act"],
     )
+
+
+def _interaction_act_key(item: InteractionAct) -> str:
+    return item.speech_act.value
 
 
 def _check_rate(results: list[dict], name: str) -> float | None:
     return sum(item["checks"][name] for item in results) / len(results) if results else None
 
 
-def _fact_precision_recall(results: list[dict], speaker: str) -> tuple[float | None, float | None]:
+def _set_precision_recall(results: list[dict], field: str) -> tuple[float | None, float | None]:
     expected_total = observed_total = matched_total = 0
     for item in results:
-        expected = {tuple(value) for value in item[f"expected_{speaker}_facts"]}
-        observed = {tuple(value) for value in item[f"observed_{speaker}_facts"]}
+        expected = {
+            tuple(value) if isinstance(value, list) else value
+            for value in item[f"expected_{field}"]
+        }
+        observed = {
+            tuple(value) if isinstance(value, list) else value
+            for value in item[f"observed_{field}"]
+        }
         expected_total += len(expected)
         observed_total += len(observed)
         matched_total += len(expected & observed)

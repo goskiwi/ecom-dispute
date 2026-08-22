@@ -10,7 +10,6 @@ from .contracts import (
     FactType,
     Finding,
     Polarity,
-    SpeechAct,
     TemporalStatus,
 )
 from .skills import Skill
@@ -120,7 +119,7 @@ class EvidenceFusion:
 
         for finding in list(state.findings):
             conflict: str | None = None
-            if finding.category == "agent_statement" and finding.speech_act == SpeechAct.ASSERTION:
+            if finding.category == "agent_business_fact":
                 if not refunds and (
                     (
                         finding.fact_type == FactType.REFUND_INITIATION
@@ -150,7 +149,7 @@ class EvidenceFusion:
                 ):
                     conflict = "客服称包裹已送达，但物流系统不存在送达事件"
             elif (
-                finding.category == "user_fact"
+                finding.category == "user_business_fact"
                 and finding.fact_type == FactType.REFUND_RECEIPT
                 and finding.polarity == Polarity.NEGATED
                 and finding.temporal_status == TemporalStatus.CURRENT
@@ -158,7 +157,7 @@ class EvidenceFusion:
             ):
                 conflict = "用户称退款未到账，但支付系统存在成功入账记录"
             elif (
-                finding.category == "user_fact"
+                finding.category == "user_business_fact"
                 and finding.fact_type == FactType.REFUND_INITIATION
                 and finding.polarity == Polarity.NEGATED
                 and finding.temporal_status == TemporalStatus.CURRENT
@@ -166,7 +165,7 @@ class EvidenceFusion:
             ):
                 conflict = "用户称退款未发起，但退款系统存在处理记录"
             elif (
-                finding.category == "user_fact"
+                finding.category == "user_business_fact"
                 and finding.fact_type == FactType.DELIVERY_RECEIPT
                 and finding.polarity == Polarity.NEGATED
                 and finding.temporal_status == TemporalStatus.CURRENT

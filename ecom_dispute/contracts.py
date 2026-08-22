@@ -114,8 +114,10 @@ class AgentResult(BaseModel):
 
 class CaseState(BaseModel):
     case_id: str
-    user_facts: list[str] = Field(default_factory=list)
-    agent_statements: list[str] = Field(default_factory=list)
+    user_business_facts: list[str] = Field(default_factory=list)
+    agent_business_facts: list[str] = Field(default_factory=list)
+    user_interaction_acts: list[str] = Field(default_factory=list)
+    agent_interaction_acts: list[str] = Field(default_factory=list)
     timeline: list[dict[str, Any]] = Field(default_factory=list)
     findings: list[Finding] = Field(default_factory=list)
     evidence: dict[str, Evidence] = Field(default_factory=dict)

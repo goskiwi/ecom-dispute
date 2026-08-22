@@ -20,10 +20,14 @@ class CaseStateReducer:
                     }
                 )
         for finding in result.findings:
-            if finding.category == "user_fact":
-                next_state.user_facts.append(finding.claim)
-            elif finding.category == "agent_statement":
-                next_state.agent_statements.append(finding.claim)
+            if finding.category == "user_business_fact":
+                next_state.user_business_facts.append(finding.claim)
+            elif finding.category == "agent_business_fact":
+                next_state.agent_business_facts.append(finding.claim)
+            elif finding.category == "user_interaction_act":
+                next_state.user_interaction_acts.append(finding.claim)
+            elif finding.category == "agent_interaction_act":
+                next_state.agent_interaction_acts.append(finding.claim)
             next_state.findings.append(finding)
         next_state.timeline.sort(key=lambda event: event["occurred_at"])
         next_state.trace.append(

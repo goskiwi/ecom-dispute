@@ -9,19 +9,25 @@ v2 删除了以下旧字段：
 - `agent_commitments`
 - `statement_type`
 
-新输出统一为原子 `facts[]`，每项包含：
+最终输出拆为两个数组：
 
 ```text
-speaker
-quote
-message_index
-fact_type
-polarity
-temporal_status
-speech_act
+business_facts[]
+  speaker
+  quote
+  message_index
+  fact_type
+  polarity
+  temporal_status
+
+interaction_acts[]
+  speaker
+  quote
+  message_index
+  speech_act
 ```
 
-每个事实只有一个类型和一个时态。用户实际收到钱/货使用 `*_receipt`，系统退款完成或物流送达状态使用 `*_completion`；未来承诺与当前事实通过 `speech_act` 和 `temporal_status` 区分。
+每个业务事实只有一个类型和一个时态。用户实际收到钱/货使用 `*_receipt`，系统退款完成或物流送达状态使用 `*_completion`；查询、建议、核验动作和解释不再伪装成业务事实。
 
 ## 验证
 
@@ -31,4 +37,4 @@ speech_act
 
 ## 当前结论
 
-v2 合同和运行代码已经生效，旧合同没有兼容解析器。新的盲测集合已经产生首轮未调优基线；运行后不修改 Oracle，后续改进必须使用新的测试集验证。
+随后进一步把 BusinessFact 与 InteractionAct 拆成独立数组，并使用新建的 20 条未见对话完成正式 Run 1：用户/客服 BusinessFact F1 约 86.3%/85.7%，InteractionAct F1 约 94.7%/93.0%，全项 Exact Match 11/20。详见 `semantic_holdout_split-contract_report_2026-08-22.md`。

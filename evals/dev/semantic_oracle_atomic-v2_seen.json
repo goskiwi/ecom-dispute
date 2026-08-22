@@ -1,0 +1,679 @@
+{
+  "blind_refund_001": {
+    "business_type": "refund",
+    "has_dispute": true,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "refund_receipt",
+        "polarity": "negated",
+        "temporal_status": "current"
+      }
+    ],
+    "expected_agent_business_facts": [
+      {
+        "fact_type": "refund_receipt",
+        "polarity": "affirmed",
+        "temporal_status": "future"
+      }
+    ],
+    "expected_user_interaction_acts": [
+      "assertion"
+    ],
+    "expected_agent_interaction_acts": [
+      "advice",
+      "promise"
+    ]
+  },
+  "blind_refund_002": {
+    "business_type": "refund",
+    "has_dispute": true,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "refund_completion",
+        "polarity": "affirmed",
+        "temporal_status": "completed"
+      },
+      {
+        "fact_type": "refund_receipt",
+        "polarity": "negated",
+        "temporal_status": "current"
+      }
+    ],
+    "expected_agent_business_facts": [
+      {
+        "fact_type": "refund_completion",
+        "polarity": "affirmed",
+        "temporal_status": "completed"
+      }
+    ],
+    "expected_user_interaction_acts": [
+      "assertion"
+    ],
+    "expected_agent_interaction_acts": [
+      "assertion"
+    ]
+  },
+  "blind_refund_003": {
+    "business_type": "refund",
+    "has_dispute": false,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "refund_request",
+        "polarity": "affirmed",
+        "temporal_status": "completed"
+      }
+    ],
+    "expected_agent_business_facts": [],
+    "expected_user_interaction_acts": [
+      "assertion",
+      "query"
+    ],
+    "expected_agent_interaction_acts": [
+      "action"
+    ]
+  },
+  "blind_refund_004": {
+    "business_type": "refund",
+    "has_dispute": true,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "refund_initiation",
+        "polarity": "negated",
+        "temporal_status": "current"
+      }
+    ],
+    "expected_agent_business_facts": [
+      {
+        "fact_type": "refund_initiation",
+        "polarity": "affirmed",
+        "temporal_status": "future"
+      }
+    ],
+    "expected_user_interaction_acts": [
+      "assertion"
+    ],
+    "expected_agent_interaction_acts": [
+      "promise"
+    ]
+  },
+  "blind_refund_005": {
+    "business_type": "refund",
+    "has_dispute": false,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "refund_processing",
+        "polarity": "affirmed",
+        "temporal_status": "current"
+      }
+    ],
+    "expected_agent_business_facts": [
+      {
+        "fact_type": "refund_processing",
+        "polarity": "affirmed",
+        "temporal_status": "current"
+      }
+    ],
+    "expected_user_interaction_acts": [
+      "assertion"
+    ],
+    "expected_agent_interaction_acts": [
+      "assertion"
+    ]
+  },
+  "blind_refund_006": {
+    "business_type": "refund",
+    "has_dispute": false,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "refund_receipt",
+        "polarity": "affirmed",
+        "temporal_status": "completed"
+      }
+    ],
+    "expected_agent_business_facts": [
+      {
+        "fact_type": "refund_completion",
+        "polarity": "affirmed",
+        "temporal_status": "completed"
+      }
+    ],
+    "expected_user_interaction_acts": [
+      "assertion"
+    ],
+    "expected_agent_interaction_acts": [
+      "assertion"
+    ]
+  },
+  "blind_refund_007": {
+    "business_type": "refund",
+    "has_dispute": true,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "refund_amount",
+        "polarity": "conflicting",
+        "temporal_status": "completed"
+      }
+    ],
+    "expected_agent_business_facts": [],
+    "expected_user_interaction_acts": [
+      "assertion"
+    ],
+    "expected_agent_interaction_acts": [
+      "action"
+    ]
+  },
+  "blind_refund_008": {
+    "business_type": "refund",
+    "has_dispute": false,
+    "expected_user_business_facts": [],
+    "expected_agent_business_facts": [],
+    "expected_user_interaction_acts": [
+      "query"
+    ],
+    "expected_agent_interaction_acts": [
+      "action"
+    ]
+  },
+  "blind_refund_009": {
+    "business_type": "refund",
+    "has_dispute": false,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "refund_initiation",
+        "polarity": "uncertain",
+        "temporal_status": "future"
+      }
+    ],
+    "expected_agent_business_facts": [
+      {
+        "fact_type": "refund_initiation",
+        "polarity": "affirmed",
+        "temporal_status": "future"
+      }
+    ],
+    "expected_user_interaction_acts": [
+      "query"
+    ],
+    "expected_agent_interaction_acts": [
+      "promise"
+    ]
+  },
+  "blind_refund_010": {
+    "business_type": "refund",
+    "has_dispute": false,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "refund_completion",
+        "polarity": "affirmed",
+        "temporal_status": "completed"
+      },
+      {
+        "fact_type": "refund_receipt",
+        "polarity": "affirmed",
+        "temporal_status": "completed"
+      }
+    ],
+    "expected_agent_business_facts": [
+      {
+        "fact_type": "refund_completion",
+        "polarity": "affirmed",
+        "temporal_status": "completed"
+      }
+    ],
+    "expected_user_interaction_acts": [
+      "assertion"
+    ],
+    "expected_agent_interaction_acts": [
+      "assertion"
+    ]
+  },
+  "blind_refund_011": {
+    "business_type": "refund",
+    "has_dispute": true,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "refund_initiation",
+        "polarity": "negated",
+        "temporal_status": "current"
+      }
+    ],
+    "expected_agent_business_facts": [
+      {
+        "fact_type": "refund_completion",
+        "polarity": "affirmed",
+        "temporal_status": "completed"
+      }
+    ],
+    "expected_user_interaction_acts": [
+      "assertion"
+    ],
+    "expected_agent_interaction_acts": [
+      "assertion"
+    ]
+  },
+  "blind_refund_012": {
+    "business_type": "refund",
+    "has_dispute": false,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "refund_request",
+        "polarity": "affirmed",
+        "temporal_status": "completed"
+      },
+      {
+        "fact_type": "status",
+        "polarity": "uncertain",
+        "temporal_status": "current"
+      }
+    ],
+    "expected_agent_business_facts": [],
+    "expected_user_interaction_acts": [
+      "assertion"
+    ],
+    "expected_agent_interaction_acts": [
+      "promise"
+    ]
+  },
+  "blind_refund_013": {
+    "business_type": "refund",
+    "has_dispute": true,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "refund_processing",
+        "polarity": "affirmed",
+        "temporal_status": "current"
+      },
+      {
+        "fact_type": "refund_receipt",
+        "polarity": "negated",
+        "temporal_status": "current"
+      }
+    ],
+    "expected_agent_business_facts": [],
+    "expected_user_interaction_acts": [
+      "assertion"
+    ],
+    "expected_agent_interaction_acts": [
+      "action"
+    ]
+  },
+  "blind_refund_014": {
+    "business_type": "refund",
+    "has_dispute": true,
+    "expected_user_business_facts": [],
+    "expected_agent_business_facts": [],
+    "expected_user_interaction_acts": [
+      "query"
+    ],
+    "expected_agent_interaction_acts": [
+      "explanation"
+    ]
+  },
+  "blind_refund_015": {
+    "business_type": "refund",
+    "has_dispute": false,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "refund_request",
+        "polarity": "affirmed",
+        "temporal_status": "completed"
+      }
+    ],
+    "expected_agent_business_facts": [],
+    "expected_user_interaction_acts": [
+      "assertion"
+    ],
+    "expected_agent_interaction_acts": [
+      "promise"
+    ]
+  },
+  "blind_delivery_001": {
+    "business_type": "delivery",
+    "has_dispute": false,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "delivery_receipt",
+        "polarity": "negated",
+        "temporal_status": "current"
+      },
+      {
+        "fact_type": "delivery_promise",
+        "polarity": "affirmed",
+        "temporal_status": "future"
+      }
+    ],
+    "expected_agent_business_facts": [
+      {
+        "fact_type": "status",
+        "polarity": "affirmed",
+        "temporal_status": "current"
+      }
+    ],
+    "expected_user_interaction_acts": [
+      "assertion"
+    ],
+    "expected_agent_interaction_acts": [
+      "advice",
+      "assertion"
+    ]
+  },
+  "blind_delivery_002": {
+    "business_type": "delivery",
+    "has_dispute": true,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "delivery_delay",
+        "polarity": "affirmed",
+        "temporal_status": "current"
+      },
+      {
+        "fact_type": "delivery_receipt",
+        "polarity": "negated",
+        "temporal_status": "current"
+      }
+    ],
+    "expected_agent_business_facts": [],
+    "expected_user_interaction_acts": [
+      "assertion"
+    ],
+    "expected_agent_interaction_acts": [
+      "action"
+    ]
+  },
+  "blind_delivery_003": {
+    "business_type": "delivery",
+    "has_dispute": false,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "delivery_receipt",
+        "polarity": "affirmed",
+        "temporal_status": "completed"
+      }
+    ],
+    "expected_agent_business_facts": [
+      {
+        "fact_type": "delivery_completion",
+        "polarity": "affirmed",
+        "temporal_status": "completed"
+      }
+    ],
+    "expected_user_interaction_acts": [
+      "assertion"
+    ],
+    "expected_agent_interaction_acts": [
+      "assertion"
+    ]
+  },
+  "blind_delivery_004": {
+    "business_type": "delivery",
+    "has_dispute": true,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "delivery_completion",
+        "polarity": "affirmed",
+        "temporal_status": "completed"
+      },
+      {
+        "fact_type": "delivery_receipt",
+        "polarity": "negated",
+        "temporal_status": "current"
+      }
+    ],
+    "expected_agent_business_facts": [
+      {
+        "fact_type": "delivery_completion",
+        "polarity": "affirmed",
+        "temporal_status": "completed"
+      }
+    ],
+    "expected_user_interaction_acts": [
+      "assertion"
+    ],
+    "expected_agent_interaction_acts": [
+      "assertion"
+    ]
+  },
+  "blind_delivery_005": {
+    "business_type": "delivery",
+    "has_dispute": true,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "delivery_pickup",
+        "polarity": "negated",
+        "temporal_status": "current"
+      }
+    ],
+    "expected_agent_business_facts": [],
+    "expected_user_interaction_acts": [
+      "assertion"
+    ],
+    "expected_agent_interaction_acts": [
+      "action"
+    ]
+  },
+  "blind_delivery_006": {
+    "business_type": "delivery",
+    "has_dispute": false,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "status",
+        "polarity": "affirmed",
+        "temporal_status": "current"
+      }
+    ],
+    "expected_agent_business_facts": [
+      {
+        "fact_type": "status",
+        "polarity": "affirmed",
+        "temporal_status": "current"
+      }
+    ],
+    "expected_user_interaction_acts": [
+      "assertion"
+    ],
+    "expected_agent_interaction_acts": [
+      "assertion"
+    ]
+  },
+  "blind_delivery_007": {
+    "business_type": "delivery",
+    "has_dispute": true,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "delivery_promise",
+        "polarity": "affirmed",
+        "temporal_status": "completed"
+      },
+      {
+        "fact_type": "delivery_delay",
+        "polarity": "affirmed",
+        "temporal_status": "current"
+      },
+      {
+        "fact_type": "delivery_receipt",
+        "polarity": "negated",
+        "temporal_status": "current"
+      }
+    ],
+    "expected_agent_business_facts": [],
+    "expected_user_interaction_acts": [
+      "assertion"
+    ],
+    "expected_agent_interaction_acts": [
+      "action"
+    ]
+  },
+  "blind_delivery_008": {
+    "business_type": "delivery",
+    "has_dispute": true,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "delivery_delay",
+        "polarity": "affirmed",
+        "temporal_status": "current"
+      }
+    ],
+    "expected_agent_business_facts": [],
+    "expected_user_interaction_acts": [
+      "assertion"
+    ],
+    "expected_agent_interaction_acts": [
+      "explanation"
+    ]
+  },
+  "blind_delivery_009": {
+    "business_type": "delivery",
+    "has_dispute": true,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "delivery_receipt",
+        "polarity": "negated",
+        "temporal_status": "current"
+      }
+    ],
+    "expected_agent_business_facts": [
+      {
+        "fact_type": "status",
+        "polarity": "affirmed",
+        "temporal_status": "current"
+      }
+    ],
+    "expected_user_interaction_acts": [
+      "assertion"
+    ],
+    "expected_agent_interaction_acts": [
+      "assertion"
+    ]
+  },
+  "blind_delivery_010": {
+    "business_type": "delivery",
+    "has_dispute": true,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "delivery_receipt",
+        "polarity": "affirmed",
+        "temporal_status": "completed"
+      },
+      {
+        "fact_type": "delivery_delay",
+        "polarity": "affirmed",
+        "temporal_status": "completed"
+      }
+    ],
+    "expected_agent_business_facts": [
+      {
+        "fact_type": "delivery_completion",
+        "polarity": "affirmed",
+        "temporal_status": "completed"
+      }
+    ],
+    "expected_user_interaction_acts": [
+      "assertion"
+    ],
+    "expected_agent_interaction_acts": [
+      "assertion"
+    ]
+  },
+  "blind_delivery_011": {
+    "business_type": "delivery",
+    "has_dispute": false,
+    "expected_user_business_facts": [],
+    "expected_agent_business_facts": [],
+    "expected_user_interaction_acts": [
+      "query"
+    ],
+    "expected_agent_interaction_acts": [
+      "action"
+    ]
+  },
+  "blind_delivery_012": {
+    "business_type": "delivery",
+    "has_dispute": false,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "delivery_pickup",
+        "polarity": "affirmed",
+        "temporal_status": "future"
+      }
+    ],
+    "expected_agent_business_facts": [
+      {
+        "fact_type": "delivery_pickup",
+        "polarity": "affirmed",
+        "temporal_status": "future"
+      }
+    ],
+    "expected_user_interaction_acts": [
+      "assertion"
+    ],
+    "expected_agent_interaction_acts": [
+      "promise"
+    ]
+  },
+  "blind_delivery_013": {
+    "business_type": "delivery",
+    "has_dispute": true,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "delivery_delay",
+        "polarity": "affirmed",
+        "temporal_status": "current"
+      }
+    ],
+    "expected_agent_business_facts": [
+      {
+        "fact_type": "status",
+        "polarity": "affirmed",
+        "temporal_status": "current"
+      }
+    ],
+    "expected_user_interaction_acts": [
+      "assertion"
+    ],
+    "expected_agent_interaction_acts": [
+      "assertion"
+    ]
+  },
+  "blind_delivery_014": {
+    "business_type": "delivery",
+    "has_dispute": true,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "delivery_completion",
+        "polarity": "conflicting",
+        "temporal_status": "current"
+      }
+    ],
+    "expected_agent_business_facts": [],
+    "expected_user_interaction_acts": [
+      "assertion"
+    ],
+    "expected_agent_interaction_acts": [
+      "action"
+    ]
+  },
+  "blind_delivery_015": {
+    "business_type": "delivery",
+    "has_dispute": false,
+    "expected_user_business_facts": [
+      {
+        "fact_type": "delivery_receipt",
+        "polarity": "affirmed",
+        "temporal_status": "completed"
+      }
+    ],
+    "expected_agent_business_facts": [
+      {
+        "fact_type": "delivery_completion",
+        "polarity": "affirmed",
+        "temporal_status": "completed"
+      }
+    ],
+    "expected_user_interaction_acts": [
+      "assertion"
+    ],
+    "expected_agent_interaction_acts": [
+      "assertion"
+    ]
+  }
+}

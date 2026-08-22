@@ -12,7 +12,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from .contracts import FactType, Polarity, SpeechAct, TemporalStatus
 
 
-class AtomicFact(BaseModel):
+class BusinessFact(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     speaker: Literal["user", "agent"]
@@ -21,6 +21,14 @@ class AtomicFact(BaseModel):
     fact_type: FactType
     polarity: Polarity
     temporal_status: TemporalStatus
+
+
+class InteractionAct(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    speaker: Literal["user", "agent"]
+    quote: str
+    message_index: int = Field(ge=0)
     speech_act: SpeechAct
 
 
@@ -29,7 +37,8 @@ class ConversationSemantics(BaseModel):
 
     business_type: Literal["refund", "delivery", "other"]
     has_dispute: bool
-    facts: list[AtomicFact]
+    business_facts: list[BusinessFact]
+    interaction_acts: list[InteractionAct]
     uncertainty: str | None
 
 
@@ -65,8 +74,13 @@ class ResponsesClient:
             "has_dispute 表示用户是否表达业务异常或对处理结果不满，正常查询或问题已解决为 false。"
             "只要用户明确陈述晚到、未收到、未发起、未到账或金额不符等异常，has_dispute 必须为 true，"
             "即使用户同时在询问政策；只有没有异常的状态查询或已正常解决才为 false。"
-            "输出原子事实 facts。每个事实只能有一个 fact_type，并独立标注 polarity、temporal_status 和 speech_act。"
-            "同一句含多个事实时输出多个 facts。quote 必须逐字取自对应消息，message_index 从 0 开始。"
+            "输出 business_facts 与 interaction_acts 两个完全独立的数组。business_facts 只包含可被订单、退款、"
+            "支付或物流系统核验的业务命题，每个事实只有一个 fact_type、polarity 和 temporal_status。"
+            "interaction_acts 只描述说话行为：promise、action、advice、query、explanation 或 assertion。"
+            "纯查询、建议等待、正在核验、原因解释不能写入 business_facts。"
+            "未来业务承诺需要同时输出 future business_fact 和 promise interaction_act。"
+            "同一句含多个业务事实时输出多个 business_facts。两个数组的 quote 都必须逐字取自对应消息，"
+            "message_index 从 0 开始。"
             "fact_type 定义：refund_request=用户提交退款申请；refund_initiation=资金退款流程是否发起；"
             "refund_processing=资金退款处理中；refund_completion=退款系统已完成；refund_receipt=用户账户实际入账；"
             "refund_amount=退款金额；delivery_pickup=承运商揽收；delivery_promise=承诺送达时间；"
@@ -74,10 +88,9 @@ class ResponsesClient:
             "status=查询或处理状态；other=无法归入上述业务事实。fact_type 不编码否定或言语行为。"
             "polarity 定义：affirmed=事实成立，negated=事实明确未发生，conflicting=金额或状态不一致，"
             "uncertain=仅询问或无法确认。"
-            "例如未到账是 refund_receipt + negated，"
-            "未来会发起是 refund_initiation + affirmed + future + promise，查询状态是 status + uncertain + "
-            "not_applicable + query。客服的事实陈述使用 assertion，未来承诺使用 promise，正在执行的人工动作"
-            "使用 action，等待建议使用 advice，原因说明使用 explanation。不要把建议或查询写成业务完成事实。\n"
+            "例如未到账 business_fact 是 refund_receipt + negated + current；未来会发起的 business_fact 是"
+            "refund_initiation + affirmed + future，同时 interaction_act 是 promise；查询状态只输出 query act；"
+            "正在核验只输出 action act；等待只输出 advice act。不要把交互行为写成业务状态。\n"
             f"对话：{json.dumps(messages, ensure_ascii=False)}"
         )
         schema = ConversationSemantics.model_json_schema()

@@ -28,7 +28,7 @@ EcomDispute 是一个面向退款与物流争议的 LLM 增强型证据化裁决
 - `EvidenceFusion`：过滤无证据 Finding、去重、检查必需证据、检测退款与支付冲突。
 - 60 个固定案例：40 个退款、20 个物流延迟，覆盖多轮与模糊表达、错误客服承诺、政策宽限期、商家/物流责任、不可抗力和跨源冲突。
 - 单 LLM Agent Function Calling 基线：完整回传 `function_call` / `function_call_output` 历史，支持并行工具调用、严格最终 Schema、轮数预算和 Evidence ID 校验。
-- 语义 Evidence Fusion：LLM 输出原子 `facts[]`；每个事实独立包含 `fact_type + polarity + temporal_status + speech_act + quote`，代码核验客服断言与业务记录，并为 `not_found` 查询生成负向 Evidence ID。
+- 语义 Evidence Fusion：LLM 分别输出 `business_facts[]` 与 `interaction_acts[]`；业务事实只包含 `fact_type + polarity + temporal_status + quote`，查询、动作、建议、承诺和解释独立建模，Fusion 只消费 BusinessFact。
 - `SkillRegistry`：Refund/Delivery 各自拥有工具边界、必需证据和 Decision Strategy，Fusion 不按 Skill 名称分支。
 - 持久化 Review Task：支持 pending/resolved、人工结论、责任方、备注和冲突证据引用。
 
@@ -90,6 +90,6 @@ M3 详见 [语义融合报告](evals/semantic_fusion_report_2026-08-22.md)、[�
 
 本地 Demo 默认使用 `live-llm`，必须配置模型接口；`--agent-mode heuristic-test` 只用于确定性测试。旧 Recorded Agent 和旧语义兼容层已经删除。控制台支持人工复检操作。
 
-旧 Luna 指标使用已删除的 schema v1，已移入 `evals/legacy/`。schema v2 使用全新 30 条盲测对话完成 `gpt-5.6-luna` Run 1：Business Type 100%、Has Dispute 93.3%、用户 Fact Precision/Recall 79.1%/82.9%、客服 Fact 41.9%/40.6%、全项 Exact Match 10/30。Oracle 在运行后未调整。详见 [v2 Blind Run 1](evals/semantic_holdout_schema-v2_blind_report_2026-08-22.md)。
+旧 Luna 和 AtomicFact 合同结果已移入 legacy/dev。当前 split-contract 使用新建的 20 条未见对话完成 `gpt-5.6-luna` Run 1：Business Type 100%，用户/客服 BusinessFact F1 约 86.3%/85.7%，InteractionAct F1 约 94.7%/93.0%，全项 Exact Match 11/20。Oracle 在运行后未调整。详见 [Split Contract Blind Run 1](evals/semantic_holdout_split-contract_report_2026-08-22.md)。
 
 M5 针对 M4 的三个冲突误报增加时态约束并完成真实 LLM 定向回归，详见 [时态回归报告](evals/temporal_regression_report_2026-08-22.md)。该回归不替代 60 案例首轮指标。

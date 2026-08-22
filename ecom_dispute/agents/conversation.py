@@ -33,26 +33,35 @@ class ConversationAgent:
 
         result = await asyncio.to_thread(self.llm_client.extract_conversation, case.conversation)
         findings = []
-        for index, fact in enumerate(result.semantics.facts, start=1):
-            if fact.message_index >= len(case.conversation):
-                raise ValueError(f"fact message_index out of range: {fact.message_index}")
-            source_message = case.conversation[fact.message_index]
-            if (
-                source_message["speaker"] != fact.speaker
-                or fact.quote not in source_message["text"]
-            ):
-                raise ValueError(f"fact quote is not grounded in message {fact.message_index}")
+        for index, fact in enumerate(result.semantics.business_facts, start=1):
+            self._validate_grounding(case, fact)
             findings.append(
                 Finding(
-                    finding_id=f"llm-fact-{index}",
-                    category="user_fact" if fact.speaker == "user" else "agent_statement",
+                    finding_id=f"llm-business-fact-{index}",
+                    category=(
+                        "user_business_fact" if fact.speaker == "user" else "agent_business_fact"
+                    ),
                     claim=fact.quote,
                     fact_type=fact.fact_type,
                     polarity=fact.polarity,
                     temporal_status=fact.temporal_status,
-                    speech_act=fact.speech_act,
                     quote=fact.quote,
                     message_index=fact.message_index,
+                    evidence_ids=[evidence.evidence_id],
+                )
+            )
+        for index, act in enumerate(result.semantics.interaction_acts, start=1):
+            self._validate_grounding(case, act)
+            findings.append(
+                Finding(
+                    finding_id=f"llm-interaction-act-{index}",
+                    category=(
+                        "user_interaction_act" if act.speaker == "user" else "agent_interaction_act"
+                    ),
+                    claim=act.quote,
+                    speech_act=act.speech_act,
+                    quote=act.quote,
+                    message_index=act.message_index,
                     evidence_ids=[evidence.evidence_id],
                 )
             )
@@ -87,7 +96,20 @@ class ConversationAgent:
                 "latency_ms": result.latency_ms,
                 "business_type": result.semantics.business_type,
                 "has_dispute": result.semantics.has_dispute,
-                "facts": [fact.model_dump(mode="json") for fact in result.semantics.facts],
+                "business_facts": [
+                    fact.model_dump(mode="json") for fact in result.semantics.business_facts
+                ],
+                "interaction_acts": [
+                    act.model_dump(mode="json") for act in result.semantics.interaction_acts
+                ],
                 "uncertainty": result.semantics.uncertainty,
             },
         )
+
+    @staticmethod
+    def _validate_grounding(case: CaseInput, item: object) -> None:
+        if item.message_index >= len(case.conversation):
+            raise ValueError(f"message_index out of range: {item.message_index}")
+        source_message = case.conversation[item.message_index]
+        if source_message["speaker"] != item.speaker or item.quote not in source_message["text"]:
+            raise ValueError(f"quote is not grounded in message {item.message_index}")
