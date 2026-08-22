@@ -3,16 +3,18 @@ from __future__ import annotations
 import json
 from collections.abc import Callable
 from datetime import datetime
+from typing import Any
 
 from .contracts import Evidence, EvidenceKind, ToolResult
 from .repository import Repository
+from .resource_loader import ToolDefinitionLoader, ToolResource
 
 
 class ToolRegistry:
     def __init__(self, repository: Repository):
         self.repository = repository
         self._cache: dict[tuple[str, tuple[tuple[str, str], ...]], ToolResult] = {}
-        self._tools: dict[str, Callable[..., ToolResult]] = {
+        self._executors: dict[str, Callable[..., ToolResult]] = {
             "get_order": self.get_order,
             "get_logistics_events": self.get_logistics_events,
             "get_payment_records": self.get_payment_records,
@@ -20,62 +22,61 @@ class ToolRegistry:
             "get_after_sales_case": self.get_after_sales_case,
             "read_policy": self.read_policy,
         }
+        self._adapter_ids = {
+            "order",
+            "logistics_events",
+            "payment_records",
+            "refund_records",
+            "after_sales_case",
+            "policy",
+        }
+        self._definitions = ToolDefinitionLoader(
+            known_executors=set(self._executors),
+            known_adapters=self._adapter_ids,
+        ).load_all()
 
     @property
     def names(self) -> set[str]:
-        return set(self._tools)
+        return set(self._definitions)
 
-    def response_tools(self, allowed: set[str] | None = None) -> list[dict]:
-        descriptions = {
-            "get_order": "按订单号查询订单状态、金额、地区和业务类型。",
-            "get_logistics_events": "按订单号查询物流事件。",
-            "get_payment_records": "按订单号查询扣款和入账支付流水。",
-            "get_refund_records": "按订单号查询退款发起、处理和完成记录。",
-            "get_after_sales_case": "按订单号查询售后申请、审核状态和通过时间。",
-            "read_policy": "按地区、业务类型和事件时间查询当时生效的政策版本。",
-        }
-        tools = []
-        for name in sorted(allowed or self.names):
-            if name not in self._tools:
-                continue
-            if name == "read_policy":
-                properties = {
-                    "region": {"type": "string"},
-                    "business_type": {"type": "string"},
-                    "effective_at": {"type": "string", "description": "ISO-8601 时间"},
-                }
-                required = ["region", "business_type", "effective_at"]
-            else:
-                properties = {"order_id": {"type": "string"}}
-                required = ["order_id"]
-            tools.append(
-                {
-                    "type": "function",
-                    "name": name,
-                    "description": descriptions[name],
-                    "strict": True,
-                    "parameters": {
-                        "type": "object",
-                        "properties": properties,
-                        "required": required,
-                        "additionalProperties": False,
-                    },
-                }
+    def definition(self, tool_id: str) -> ToolResource:
+        try:
+            return self._definitions[tool_id]
+        except KeyError as exc:
+            raise ValueError(f"unknown tool definition: {tool_id}") from exc
+
+    def response_tools(self, allowed: set[str] | None = None) -> list[dict[str, Any]]:
+        selected = sorted(allowed if allowed is not None else self.names)
+        return [
+            {
+                "type": "function",
+                "name": definition.tool_id,
+                "description": definition.description,
+                "strict": True,
+                "parameters": definition.input_schema,
+            }
+            for tool_id in selected
+            if (definition := self._definitions.get(tool_id)) is not None
+        ]
+
+    def execute_bound(self, tool_id: str, arguments: dict[str, Any]) -> ToolResult:
+        try:
+            executor = self._executors[tool_id]
+        except KeyError:
+            return ToolResult(
+                tool_name=tool_id,
+                status="invalid",
+                error_code="UNKNOWN_TOOL",
             )
-        return tools
-
-    def execute(self, name: str, **arguments: str) -> ToolResult:
-        if name not in self._tools:
-            return ToolResult(tool_name=name, status="invalid", error_code="UNKNOWN_TOOL")
-        cache_key = (name, tuple(sorted(arguments.items())))
+        cache_key = (tool_id, tuple(sorted((key, str(value)) for key, value in arguments.items())))
         if cache_key not in self._cache:
             try:
-                self._cache[cache_key] = self._tools[name](**arguments)
+                self._cache[cache_key] = executor(**arguments)
             except (TypeError, ValueError) as exc:
                 return ToolResult(
-                    tool_name=name,
+                    tool_name=tool_id,
                     status="invalid",
-                    error_code="INVALID_ARGUMENTS",
+                    error_code="TOOL_ARGUMENT_INVALID",
                     message=str(exc),
                 )
         return self._cache[cache_key].model_copy(deep=True)

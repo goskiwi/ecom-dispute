@@ -4,18 +4,21 @@ import asyncio
 
 from .agents import (
     ConversationAgent,
-    FixedFactExecutor,
+    CoreEvidenceExecutor,
     HeuristicConversationStub,
-    PolicyResolver,
     ToolQueryAgent,
 )
 from .case_state import CaseStateReducer
+from .context_projector import ContextProjector
 from .contracts import CaseInput, CaseState, DecisionReport
 from .fusion import EvidenceFusion
 from .llm import ResponsesClient
 from .repository import Repository
-from .skills import DeliveryDelaySkill, RefundDisputeSkill, SkillRegistry
+from .runtime_state import AgentRunState, HarnessStage
+from .skills import SkillRegistry, default_strategies
 from .tool_registry import ToolRegistry
+from .tool_runtime import ToolRuntime, ToolSurfaceResolver
+from .trace import TraceRecorder
 
 
 class DiagnosticHarness:
@@ -26,12 +29,14 @@ class DiagnosticHarness:
         tool_query_agent: ToolQueryAgent | None = None,
     ):
         self.registry = ToolRegistry(repository)
+        self.tool_runtime = ToolRuntime(self.registry)
+        self.tool_surface_resolver = ToolSurfaceResolver(self.registry)
         self.repository = repository
         self.reducer = CaseStateReducer()
         self.fusion = EvidenceFusion()
-        self.skills = SkillRegistry()
-        self.skills.register(RefundDisputeSkill())
-        self.skills.register(DeliveryDelaySkill())
+        self.context_projector = ContextProjector()
+        self.trace_recorder = TraceRecorder()
+        self.skills = SkillRegistry(default_strategies(), known_tools=self.registry.names)
         self.conversation_agent = conversation_agent
         self.tool_query_agent = tool_query_agent
 
@@ -44,7 +49,7 @@ class DiagnosticHarness:
     ) -> DiagnosticHarness:
         harness = cls(repository, ConversationAgent(llm_client))
         if tool_mode == "agent":
-            harness.tool_query_agent = ToolQueryAgent(llm_client, harness.registry)
+            harness.tool_query_agent = ToolQueryAgent(llm_client, harness.tool_runtime)
         elif tool_mode != "fixed":
             raise ValueError(f"unknown tool mode: {tool_mode}")
         return harness
@@ -54,33 +59,105 @@ class DiagnosticHarness:
         return cls(repository, HeuristicConversationStub())
 
     async def diagnose(self, case: CaseInput) -> DecisionReport:
-        skill = self.skills.resolve(case.business_type)
+        run_state = AgentRunState(case_id=case.case_id)
         state = CaseState(case_id=case.case_id)
+        self.trace_recorder.record(state, run_state, "TASK_STARTED")
+
+        skill = self.skills.resolve(case.business_type)
+        run_state = run_state.activate(
+            skill.skill_id,
+            skill.route_id,
+            skill.route.start_stage,
+        )
+        self.trace_recorder.record(
+            state,
+            run_state,
+            "ROUTE_SELECTED",
+            business_type=case.business_type,
+        )
+
+        analyze_context = self.context_projector.project(case, state, run_state, skill)
+        self.trace_recorder.record(
+            state,
+            run_state,
+            "STAGE_ENTERED",
+            objective=analyze_context.stage_objective,
+            tool_ids=list(analyze_context.tool_ids),
+        )
         conversation_result = await self.conversation_agent.run(case)
         state = self.reducer.apply(state, conversation_result)
         agent_names = [self.conversation_agent.name]
+
+        run_state = run_state.move_to(HarnessStage.VERIFY)
+        verify_context = self.context_projector.project(case, state, run_state, skill)
+        self.trace_recorder.record(
+            state,
+            run_state,
+            "STAGE_ENTERED",
+            objective=verify_context.stage_objective,
+            tool_ids=list(verify_context.tool_ids),
+        )
+        tool_surface = self.tool_surface_resolver.resolve(skill, run_state)
+        self.trace_recorder.record(
+            state,
+            run_state,
+            "TOOL_SURFACE_RESOLVED",
+            tool_ids=list(tool_surface.tool_ids),
+        )
+        trace_start = len(state.trace)
         if self.tool_query_agent:
-            state = await self.tool_query_agent.run(case, state, skill, self.reducer)
+            state = await self.tool_query_agent.run(
+                case,
+                state,
+                self.reducer,
+                tool_surface,
+            )
             agent_names.append(self.tool_query_agent.name)
         else:
-            fact_tools = tuple(name for name in skill.allowed_tools if name != "read_policy")
-            fixed_executors = (
-                FixedFactExecutor(self.registry, fact_tools),
-                PolicyResolver(self.registry),
-            )
-            results = await asyncio.gather(*(agent.run(case) for agent in fixed_executors))
-            for result in results:
-                state = self.reducer.apply(state, result)
-            agent_names.extend(agent.name for agent in fixed_executors)
-        state.trace.insert(
-            0,
-            {
-                "stage": "intake_and_routing",
-                "skill": skill.name,
-                "agents": agent_names,
-            },
+            executor = CoreEvidenceExecutor(self.tool_runtime, tool_surface)
+            result = await executor.run(case)
+            state = self.reducer.apply(state, result)
+            agent_names.append(executor.name)
+        verification_calls = sum(
+            len(event.get("tool_calls", [])) for event in state.trace[trace_start:]
         )
-        report = self.fusion.fuse(case, state, skill)
+        run_state = run_state.add_tool_calls(verification_calls)
+        self.trace_recorder.record(
+            state,
+            run_state,
+            "VERIFICATION_COMPLETED",
+            agents=agent_names,
+        )
+
+        run_state = run_state.move_to(HarnessStage.DECIDE)
+        decide_context = self.context_projector.project(case, state, run_state, skill)
+        self.trace_recorder.record(
+            state,
+            run_state,
+            "STAGE_ENTERED",
+            objective=decide_context.stage_objective,
+            tool_ids=list(decide_context.tool_ids),
+        )
+        state, outcome = self.fusion.decide(case, state, skill)
+
+        run_state = run_state.move_to(HarnessStage.FUSE_AND_REVIEW)
+        fuse_context = self.context_projector.project(case, state, run_state, skill)
+        self.trace_recorder.record(
+            state,
+            run_state,
+            "STAGE_ENTERED",
+            objective=fuse_context.stage_objective,
+            tool_ids=list(fuse_context.tool_ids),
+        )
+        run_state = run_state.complete()
+        self.trace_recorder.record(
+            state,
+            run_state,
+            "TASK_COMPLETED",
+            decision=outcome.decision,
+            review_required=outcome.review_required,
+        )
+        report = self.fusion.fuse(case, state, skill, outcome)
         if report.review_required:
             self.repository.ensure_review_task(report)
         return report

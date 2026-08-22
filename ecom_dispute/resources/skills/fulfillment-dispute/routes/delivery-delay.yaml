@@ -1,0 +1,56 @@
+route_id: delivery-delay
+name: 物流延迟争议
+report_type: delivery_delay
+match:
+  description: 用户反馈商家未发货、运输延迟或订单晚于承诺时间送达。
+  business_types:
+    - delivery
+  positive_examples:
+    - 商家一直没有发货
+    - 包裹超过承诺时间还没到
+  negative_examples:
+    - 退款显示完成但没到账
+start_stage: ANALYZE
+core_tools:
+  - get_order
+  - get_logistics_events
+  - read_policy
+lazy_tools: []
+required_evidence:
+  - conversation
+  - order
+  - logistics
+  - policy
+optional_evidence: []
+allowed_decisions:
+  - delivery_completed_on_time
+  - delivery_completed_late
+  - delivery_in_transit_within_sla
+  - delivery_delay_logistics
+  - delivery_delay_merchant
+  - delivery_delay_force_majeure
+  - delivery_event_conflict
+  - manual_review
+decision_strategy: delivery_delay
+stages:
+  ANALYZE:
+    mode: agent
+    objective: 提取物流状态、收货事实和客服相关表述
+    instruction_file: stages/analyze.md
+    default_next: VERIFY
+  VERIFY:
+    mode: deterministic
+    objective: 并行查询订单、物流事件和事发时政策
+    tools:
+      - get_order
+      - get_logistics_events
+      - read_policy
+    default_next: DECIDE
+  DECIDE:
+    mode: deterministic
+    objective: 根据履约时间线、SLA和异常事件执行裁决
+    default_next: FUSE_AND_REVIEW
+  FUSE_AND_REVIEW:
+    mode: deterministic
+    objective: 校验证据、合并冲突并创建必要的复检任务
+

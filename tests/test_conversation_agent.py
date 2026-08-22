@@ -11,8 +11,16 @@ from ecom_dispute.repository import Repository, rebuild_database
 class FakeConversationClient:
     def __init__(self, fact: BusinessFact):
         self.fact = fact
+        self.calls = 0
+        self.repair_hints: list[str | None] = []
 
-    def extract_conversation(self, messages: list[dict[str, str]]) -> LLMResult:
+    def extract_conversation(
+        self,
+        messages: list[dict[str, str]],
+        repair_hint: str | None = None,
+    ) -> LLMResult:
+        self.calls += 1
+        self.repair_hints.append(repair_hint)
         return LLMResult(
             semantics=ConversationSemantics(
                 business_type="refund",
@@ -63,5 +71,29 @@ def test_non_verbatim_quote_is_rejected(tmp_path) -> None:
     repository = Repository(rebuild_database(tmp_path / "bad-quote.db"))
     case = repository.case("refund_conflict_001")
     agent = ConversationAgent(FakeConversationClient(_fact("用户没有收到退款")))  # type: ignore[arg-type]
-    with pytest.raises(ValueError, match="quote is not grounded"):
+    with pytest.raises(RuntimeError, match="invalid after one model repair"):
         asyncio.run(agent.run(case))
+
+
+def test_non_verbatim_quote_is_repaired_once(tmp_path) -> None:
+    repository = Repository(rebuild_database(tmp_path / "repair-quote.db"))
+    case = repository.case("refund_conflict_001")
+
+    class RepairingClient(FakeConversationClient):
+        def extract_conversation(
+            self,
+            messages: list[dict[str, str]],
+            repair_hint: str | None = None,
+        ) -> LLMResult:
+            if self.calls == 1:
+                self.fact = _fact("银行卡一直没入账")
+            return super().extract_conversation(messages, repair_hint)
+
+    client = RepairingClient(_fact("用户没有收到退款"))
+    agent = ConversationAgent(client)  # type: ignore[arg-type]
+    result = asyncio.run(agent.run(case))
+
+    assert client.calls == 2
+    assert client.repair_hints[0] is None
+    assert "quote is not grounded" in (client.repair_hints[1] or "")
+    assert result.telemetry["model_repairs"] == 1

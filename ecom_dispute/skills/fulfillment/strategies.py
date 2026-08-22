@@ -3,26 +3,12 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime
 
-from ..contracts import CaseInput, CaseState, EvidenceKind, Finding
-from .base import DecisionOutcome
+from ...contracts import CaseInput, CaseState, EvidenceKind, Finding
+from ..base import DecisionOutcome
 
 
 @dataclass(frozen=True)
-class DeliveryDelaySkill:
-    name: str = "delivery_delay"
-    business_type: str = "delivery"
-    allowed_tools: tuple[str, ...] = (
-        "get_order",
-        "get_logistics_events",
-        "read_policy",
-    )
-    required_evidence: tuple[EvidenceKind, ...] = (
-        EvidenceKind.CONVERSATION,
-        EvidenceKind.ORDER,
-        EvidenceKind.LOGISTICS,
-        EvidenceKind.POLICY,
-    )
-
+class DeliveryDelayStrategy:
     def decide(
         self, case: CaseInput, state: CaseState, missing_evidence: tuple[str, ...]
     ) -> DecisionOutcome:
@@ -122,3 +108,4 @@ class DeliveryDelaySkill:
             recommended_action="物流仍在政策宽限时限内，继续跟踪",
             review_required=False,
         )
+

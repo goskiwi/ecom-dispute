@@ -9,8 +9,10 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from .contracts import CaseInput
 from .llm import ResponsesClient
-from .skills import RefundDisputeSkill
+from .runtime_state import AgentRunState, HarnessStage
+from .skills import SkillRegistry, default_strategies
 from .tool_registry import ToolRegistry
+from .tool_runtime import ToolRuntime, ToolSurfaceResolver
 
 
 class BaselineDecision(BaseModel):
@@ -55,8 +57,18 @@ class ToolCallingBaseline:
     ):
         self.client = client
         self.registry = registry
+        self.runtime = ToolRuntime(registry)
         self.max_rounds = max_rounds
-        self.skill = RefundDisputeSkill()
+        self.skill = SkillRegistry(
+            default_strategies(), known_tools=registry.names
+        ).resolve("refund")
+        run_state = AgentRunState(case_id="baseline").activate(
+            self.skill.skill_id,
+            self.skill.route_id,
+            self.skill.route.start_stage,
+        )
+        run_state = run_state.move_to(HarnessStage.VERIFY)
+        self.surface = ToolSurfaceResolver(registry).resolve(self.skill, run_state)
 
     def diagnose(self, case: CaseInput) -> BaselineRun:
         prompt = self._prompt(case)
@@ -69,7 +81,7 @@ class ToolCallingBaseline:
             payload = {
                 "model": self.client.model,
                 "input": history,
-                "tools": self.registry.response_tools(set(self.skill.allowed_tools)),
+                "tools": self.surface.response_tools(),
                 "tool_choice": "required" if round_index == 1 else "auto",
                 "parallel_tool_calls": True,
                 "max_output_tokens": 1200,
@@ -105,6 +117,7 @@ class ToolCallingBaseline:
                     "input_tokens": round_input,
                     "output_tokens": round_output,
                     "latency_ms": elapsed,
+                    "request_attempts": int(response.get("_ecom_request_attempts", 1)),
                     "function_calls": [item.get("name") for item in function_calls],
                 }
             )
@@ -112,7 +125,7 @@ class ToolCallingBaseline:
                 for call in function_calls:
                     name = str(call["name"])
                     arguments = json.loads(call.get("arguments") or "{}")
-                    result = self.registry.execute(name, **arguments)
+                    result = self.runtime.execute(name, arguments, case, self.surface)
                     returned_evidence.update(item.evidence_id for item in result.evidence)
                     history.append(
                         {

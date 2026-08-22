@@ -1,0 +1,26 @@
+tool_id: read_policy
+name: 读取事发时政策
+description: 按当前案件地区、业务类型和事发时间读取当时有效的政策。
+input_schema:
+  type: object
+  additionalProperties: false
+  properties: {}
+output_schema:
+  type: object
+  additionalProperties: true
+timeout_ms: 3000
+scope_bindings:
+  region:
+    source: case.region
+    mode: RUNTIME_INJECT
+  business_type:
+    source: case.business_type
+    mode: RUNTIME_INJECT
+  effective_at:
+    source: case.occurred_at
+    mode: RUNTIME_INJECT
+executor: read_policy
+result_adapter: policy
+error_mapping:
+  NOT_FOUND: BUSINESS_NOT_FOUND
+  INVALID_ARGUMENT: TOOL_ARGUMENT_INVALID

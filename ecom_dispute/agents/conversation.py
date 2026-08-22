@@ -7,7 +7,7 @@ from ..contracts import (
     EvidenceKind,
     Finding,
 )
-from ..llm import ResponsesClient
+from ..llm import LLMResult, ResponsesClient
 
 
 class ConversationAgent:
@@ -31,7 +31,61 @@ class ConversationAgent:
     async def _run_with_llm(self, case: CaseInput, evidence: Evidence) -> AgentResult:
         import asyncio
 
-        result = await asyncio.to_thread(self.llm_client.extract_conversation, case.conversation)
+        result = None
+        findings = []
+        repair_hint = None
+        model_repairs = 0
+        for attempt in range(2):
+            try:
+                result = await asyncio.to_thread(
+                    self.llm_client.extract_conversation,
+                    case.conversation,
+                    repair_hint,
+                )
+                findings = self._build_findings(case, evidence, result)
+                break
+            except ValueError as exc:
+                if attempt == 1:
+                    raise RuntimeError(
+                        "conversation output invalid after one model repair"
+                    ) from exc
+                repair_hint = str(exc)
+                model_repairs += 1
+        if result is None:
+            raise RuntimeError("conversation model returned no result")
+
+        return AgentResult(
+            agent=self.name,
+            findings=findings,
+            evidence=[evidence],
+            tool_calls=["responses.create"],
+            telemetry={
+                "mode": "llm",
+                "response_id": result.response_id,
+                "model": result.model,
+                "input_tokens": result.input_tokens,
+                "output_tokens": result.output_tokens,
+                "latency_ms": result.latency_ms,
+                "request_attempts": result.request_attempts,
+                "model_repairs": model_repairs,
+                "business_type": result.semantics.business_type,
+                "has_dispute": result.semantics.has_dispute,
+                "business_facts": [
+                    fact.model_dump(mode="json") for fact in result.semantics.business_facts
+                ],
+                "interaction_acts": [
+                    act.model_dump(mode="json") for act in result.semantics.interaction_acts
+                ],
+                "uncertainty": result.semantics.uncertainty,
+            },
+        )
+
+    def _build_findings(
+        self,
+        case: CaseInput,
+        evidence: Evidence,
+        result: LLMResult,
+    ) -> list[Finding]:
         findings = []
         for index, fact in enumerate(result.semantics.business_facts, start=1):
             self._validate_grounding(case, fact)
@@ -82,29 +136,7 @@ class ConversationAgent:
                 evidence_ids=[evidence.evidence_id],
             )
         )
-        return AgentResult(
-            agent=self.name,
-            findings=findings,
-            evidence=[evidence],
-            tool_calls=["responses.create"],
-            telemetry={
-                "mode": "llm",
-                "response_id": result.response_id,
-                "model": result.model,
-                "input_tokens": result.input_tokens,
-                "output_tokens": result.output_tokens,
-                "latency_ms": result.latency_ms,
-                "business_type": result.semantics.business_type,
-                "has_dispute": result.semantics.has_dispute,
-                "business_facts": [
-                    fact.model_dump(mode="json") for fact in result.semantics.business_facts
-                ],
-                "interaction_acts": [
-                    act.model_dump(mode="json") for act in result.semantics.interaction_acts
-                ],
-                "uncertainty": result.semantics.uncertainty,
-            },
-        )
+        return findings
 
     @staticmethod
     def _validate_grounding(case: CaseInput, item: object) -> None:

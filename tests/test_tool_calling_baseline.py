@@ -18,18 +18,11 @@ class FakeResponsesClient:
         self.inputs.append(payload["input"])
         if self.calls == 1:
             specs = [
-                ("get_order", {"order_id": "ord-1001"}),
-                ("get_payment_records", {"order_id": "ord-1001"}),
-                ("get_refund_records", {"order_id": "ord-1001"}),
-                ("get_after_sales_case", {"order_id": "ord-1001"}),
-                (
-                    "read_policy",
-                    {
-                        "region": "CN",
-                        "business_type": "refund",
-                        "effective_at": "2026-01-03T10:00:00",
-                    },
-                ),
+                ("get_order", {}),
+                ("get_payment_records", {}),
+                ("get_refund_records", {}),
+                ("get_after_sales_case", {}),
+                ("read_policy", {}),
             ]
             output = [
                 {

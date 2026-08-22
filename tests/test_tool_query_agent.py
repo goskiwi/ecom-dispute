@@ -7,8 +7,8 @@ from ecom_dispute.case_state import CaseStateReducer
 from ecom_dispute.contracts import CaseState
 from ecom_dispute.harness import DiagnosticHarness
 from ecom_dispute.repository import Repository, rebuild_database
-from ecom_dispute.skills import RefundDisputeSkill
-from ecom_dispute.tool_registry import ToolRegistry
+from ecom_dispute.runtime_state import AgentRunState, HarnessStage
+from ecom_dispute.tool_runtime import ToolRuntime, ToolSurfaceResolver
 
 
 class FakeQueryClient:
@@ -26,19 +26,13 @@ class FakeQueryClient:
                 {
                     "type": "function_call",
                     "name": "get_order",
-                    "arguments": json.dumps({"order_id": "ord-1001"}),
+                    "arguments": "{}",
                     "call_id": "call-order",
                 },
                 {
                     "type": "function_call",
                     "name": "read_policy",
-                    "arguments": json.dumps(
-                        {
-                            "region": "CN",
-                            "business_type": "refund",
-                            "effective_at": "2026-01-03T10:00:00",
-                        }
-                    ),
+                    "arguments": "{}",
                     "call_id": "call-policy",
                 },
             ]
@@ -61,13 +55,20 @@ class FakeQueryClient:
 def test_tool_query_agent_reduces_each_tool_round(tmp_path: Path) -> None:
     repository = Repository(rebuild_database(tmp_path / "query.db"))
     client = FakeQueryClient()
-    agent = ToolQueryAgent(client, ToolRegistry(repository))  # type: ignore[arg-type]
+    harness = DiagnosticHarness.heuristic_tests(repository)
+    route = harness.skills.resolve("refund")
+    run_state = AgentRunState(case_id="refund_complete_001").activate(
+        route.skill_id, route.route_id, route.route.start_stage
+    )
+    run_state = run_state.move_to(HarnessStage.VERIFY)
+    surface = ToolSurfaceResolver(harness.registry).resolve(route, run_state)
+    agent = ToolQueryAgent(client, harness.tool_runtime)  # type: ignore[arg-type]
     state = asyncio.run(
         agent.run(
             repository.case("refund_complete_001"),
             CaseState(case_id="refund_complete_001"),
-            RefundDisputeSkill(),
             CaseStateReducer(),
+            surface,
         )
     )
 
@@ -80,9 +81,19 @@ def test_tool_query_agent_reduces_each_tool_round(tmp_path: Path) -> None:
 
 def test_registry_returns_structured_invalid_arguments(tmp_path: Path) -> None:
     repository = Repository(rebuild_database(tmp_path / "invalid.db"))
-    result = ToolRegistry(repository).execute("get_order", wrong="value")
+    harness = DiagnosticHarness.heuristic_tests(repository)
+    case = repository.case("refund_complete_001")
+    route = harness.skills.resolve(case.business_type)
+    run_state = AgentRunState(case_id=case.case_id).activate(
+        route.skill_id, route.route_id, route.route.start_stage
+    )
+    run_state = run_state.move_to(HarnessStage.VERIFY)
+    surface = ToolSurfaceResolver(harness.registry).resolve(route, run_state)
+    result = ToolRuntime(harness.registry).execute(
+        "get_order", {"wrong": "value"}, case, surface
+    )
     assert result.status == "invalid"
-    assert result.error_code == "INVALID_ARGUMENTS"
+    assert result.error_code == "TOOL_ARGUMENT_INVALID"
 
 
 def test_live_harness_defaults_to_fixed_tools(tmp_path: Path) -> None:

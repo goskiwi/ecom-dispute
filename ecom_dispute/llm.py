@@ -50,6 +50,13 @@ class LLMResult:
     input_tokens: int
     output_tokens: int
     latency_ms: int
+    request_attempts: int = 1
+
+
+class LLMRequestError(RuntimeError):
+    def __init__(self, message: str, *, retryable: bool):
+        super().__init__(message)
+        self.retryable = retryable
 
 
 class ResponsesClient:
@@ -61,13 +68,21 @@ class ResponsesClient:
         api_key: str,
         model: str = "gpt-5.4-mini",
         timeout_seconds: int = 60,
+        max_attempts: int = 2,
+        retry_backoff_seconds: float = 0.2,
     ):
         self.base_url = base_url.rstrip("/")
         self.api_key = api_key
         self.model = model
         self.timeout_seconds = timeout_seconds
+        self.max_attempts = max_attempts
+        self.retry_backoff_seconds = retry_backoff_seconds
 
-    def extract_conversation(self, messages: list[dict[str, str]]) -> LLMResult:
+    def extract_conversation(
+        self,
+        messages: list[dict[str, str]],
+        repair_hint: str | None = None,
+    ) -> LLMResult:
         prompt = (
             "你是电商售后争议的对话分析 Agent。仅依据下列对话提取信息，不推测订单、"
             "支付、退款、物流或政策事实。business_type 只能是 refund、delivery 或 other；"
@@ -93,6 +108,11 @@ class ResponsesClient:
             "正在核验只输出 action act；等待只输出 advice act。不要把交互行为写成业务状态。\n"
             f"对话：{json.dumps(messages, ensure_ascii=False)}"
         )
+        if repair_hint:
+            prompt += (
+                "\n上一次输出未通过结构或原文一致性校验。"
+                f"错误：{repair_hint}。请依据相同对话重新生成一次，不要解释。"
+            )
         schema = ConversationSemantics.model_json_schema()
         payload = {
             "model": self.model,
@@ -120,9 +140,24 @@ class ResponsesClient:
             input_tokens=int(usage.get("input_tokens", 0)),
             output_tokens=int(usage.get("output_tokens", 0)),
             latency_ms=latency_ms,
+            request_attempts=int(response.get("_ecom_request_attempts", 1)),
         )
 
     def create_response(self, payload: dict[str, Any]) -> dict[str, Any]:
+        last_error: LLMRequestError | None = None
+        for attempt in range(1, self.max_attempts + 1):
+            try:
+                response = self._create_response_once(payload)
+                response["_ecom_request_attempts"] = attempt
+                return response
+            except LLMRequestError as exc:
+                last_error = exc
+                if not exc.retryable or attempt >= self.max_attempts:
+                    raise
+                time.sleep(self.retry_backoff_seconds)
+        raise last_error or RuntimeError("LLM request failed without an error")
+
+    def _create_response_once(self, payload: dict[str, Any]) -> dict[str, Any]:
         request = urllib.request.Request(
             f"{self.base_url}/v1/responses",
             data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
@@ -137,12 +172,18 @@ class ResponsesClient:
                 return json.loads(response.read().decode("utf-8"))
         except urllib.error.HTTPError as exc:
             body = exc.read().decode("utf-8", errors="replace")
-            raise RuntimeError(f"LLM request failed with HTTP {exc.code}: {body[:500]}") from exc
+            raise LLMRequestError(
+                f"LLM request failed with HTTP {exc.code}: {body[:500]}",
+                retryable=exc.code in {429, 502, 503, 504},
+            ) from exc
         except urllib.error.URLError as exc:
-            raise RuntimeError(f"LLM request failed: {exc.reason}") from exc
+            raise LLMRequestError(
+                f"LLM request failed: {exc.reason}", retryable=True
+            ) from exc
         except TimeoutError as exc:
-            raise RuntimeError(
-                f"LLM request timed out after {self.timeout_seconds} seconds"
+            raise LLMRequestError(
+                f"LLM request timed out after {self.timeout_seconds} seconds",
+                retryable=True,
             ) from exc
 
     @staticmethod

@@ -1,13 +1,11 @@
 from .conversation import ConversationAgent
-from .fact import FixedFactExecutor
+from .fact import CoreEvidenceExecutor
 from .heuristic import HeuristicConversationStub
-from .policy import PolicyResolver
 from .tool_query import ToolQueryAgent
 
 __all__ = [
     "ConversationAgent",
-    "FixedFactExecutor",
+    "CoreEvidenceExecutor",
     "HeuristicConversationStub",
-    "PolicyResolver",
     "ToolQueryAgent",
 ]

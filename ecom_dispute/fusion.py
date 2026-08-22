@@ -12,16 +12,16 @@ from .contracts import (
     Polarity,
     TemporalStatus,
 )
-from .skills import Skill
+from .skills import DecisionOutcome, ResolvedRoute
 
 
 class EvidenceFusion:
-    def fuse(
+    def decide(
         self,
         case: CaseInput,
         state: CaseState,
-        skill: Skill,
-    ) -> DecisionReport:
+        skill: ResolvedRoute,
+    ) -> tuple[CaseState, DecisionOutcome]:
         state = state.model_copy(deep=True)
         state.findings = self._validated_findings(state)
         available_kinds = {item.kind for item in state.evidence.values()}
@@ -38,6 +38,26 @@ class EvidenceFusion:
         for conflict in outcome.conflicts:
             if conflict not in state.conflicts:
                 state.conflicts.append(conflict)
+
+        state.trace.append(
+            {
+                "stage": "decision",
+                "strategy": skill.route.decision_strategy,
+                "decision": outcome.decision,
+                "responsible_party": outcome.responsible_party,
+                "review_required": outcome.review_required,
+            }
+        )
+        return state, outcome
+
+    def fuse(
+        self,
+        case: CaseInput,
+        state: CaseState,
+        skill: ResolvedRoute,
+        outcome: DecisionOutcome,
+    ) -> DecisionReport:
+        state = state.model_copy(deep=True)
 
         state.trace.append(
             {

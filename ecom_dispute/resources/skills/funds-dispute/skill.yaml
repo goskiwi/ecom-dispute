@@ -1,0 +1,18 @@
+skill_id: funds-dispute
+name: 资金争议
+entry: SKILL.md
+allowed_tools:
+  - get_order
+  - get_payment_records
+  - get_refund_records
+  - get_after_sales_case
+  - read_policy
+routes:
+  - route_id: refund-status
+    file: routes/refund-status.yaml
+limits:
+  max_model_turns: 6
+  max_tool_calls: 8
+  max_loaded_lazy_tools: 2
+  max_total_recovery_actions: 3
+

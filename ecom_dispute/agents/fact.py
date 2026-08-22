@@ -3,21 +3,28 @@ from __future__ import annotations
 import asyncio
 
 from ..contracts import AgentResult, CaseInput, Finding
-from ..tool_registry import ToolRegistry
+from ..tool_runtime import ToolRuntime, ToolSurface
 
 
-class FixedFactExecutor:
-    name = "fixed_fact_executor"
+class CoreEvidenceExecutor:
+    name = "core_evidence_executor"
 
-    def __init__(self, registry: ToolRegistry, tools: tuple[str, ...]):
-        self.registry = registry
-        self.tools = tools
+    def __init__(self, runtime: ToolRuntime, surface: ToolSurface):
+        self.runtime = runtime
+        self.surface = surface
 
     async def run(self, case: CaseInput) -> AgentResult:
+        tools = tuple(tool_id for tool_id in self.surface.tool_ids if tool_id != "tool_search")
         results = await asyncio.gather(
             *(
-                asyncio.to_thread(self.registry.execute, name, order_id=case.order_id)
-                for name in self.tools
+                asyncio.to_thread(
+                    self.runtime.execute,
+                    tool_id,
+                    {},
+                    case,
+                    self.surface,
+                )
+                for tool_id in tools
             )
         )
         evidence = [item for result in results for item in result.evidence]
@@ -34,5 +41,5 @@ class FixedFactExecutor:
             agent=self.name,
             findings=findings,
             evidence=evidence,
-            tool_calls=list(self.tools),
+            tool_calls=list(tools),
         )

@@ -32,7 +32,15 @@ def test_refund_vertical_slice(
     assert report.policy_evidence_ids
     assert report.evidence_ids
     assert all(finding.evidence_ids for finding in report.findings)
-    assert report.trace[1]["telemetry"]["mode"] == "heuristic_test_stub"
+    conversation_event = next(
+        event
+        for event in report.trace
+        if event.get("stage") == "agent_result" and event.get("agent") == "conversation"
+    )
+    assert conversation_event["telemetry"]["mode"] == "heuristic_test_stub"
+    assert [
+        event["stage"] for event in report.trace if event.get("event") == "STAGE_ENTERED"
+    ] == ["ANALYZE", "VERIFY", "DECIDE", "FUSE_AND_REVIEW"]
 
 
 def test_conflict_is_evidence_grounded(repository: Repository) -> None:

@@ -11,7 +11,7 @@ from pydantic import BaseModel, ConfigDict
 from ..case_state import CaseStateReducer
 from ..contracts import AgentResult, CaseInput, CaseState, Finding
 from ..llm import ResponsesClient
-from ..tool_registry import ToolRegistry
+from ..tool_runtime import ToolRuntime, ToolSurface
 
 
 class QueryConclusion(BaseModel):
@@ -35,12 +35,12 @@ class ToolQueryAgent:
     def __init__(
         self,
         client: ResponsesClient,
-        registry: ToolRegistry,
+        runtime: ToolRuntime,
         max_rounds: int = 6,
         max_tool_calls: int = 10,
     ):
         self.client = client
-        self.registry = registry
+        self.runtime = runtime
         self.max_rounds = max_rounds
         self.max_tool_calls = max_tool_calls
 
@@ -48,11 +48,10 @@ class ToolQueryAgent:
         self,
         case: CaseInput,
         state: CaseState,
-        skill: object,
         reducer: CaseStateReducer,
+        surface: ToolSurface,
     ) -> CaseState:
         session = QuerySession(history=[{"role": "user", "content": self._initial_prompt(case)}])
-        allowed_tools = set(skill.allowed_tools)
         for round_index in range(1, self.max_rounds + 1):
             session.rounds = round_index
             session.history.append(
@@ -64,7 +63,7 @@ class ToolQueryAgent:
             payload = {
                 "model": self.client.model,
                 "input": session.history,
-                "tools": self.registry.response_tools(allowed_tools),
+                "tools": surface.response_tools(),
                 "tool_choice": "required" if round_index == 1 else "auto",
                 "parallel_tool_calls": True,
                 "max_output_tokens": 800,
@@ -93,6 +92,7 @@ class ToolQueryAgent:
                 "input_tokens": int(usage.get("input_tokens", 0)),
                 "output_tokens": int(usage.get("output_tokens", 0)),
                 "latency_ms": elapsed_ms,
+                "request_attempts": int(response.get("_ecom_request_attempts", 1)),
             }
             if not calls:
                 conclusion = QueryConclusion.model_validate_json(
@@ -126,7 +126,7 @@ class ToolQueryAgent:
                     return state
                 name = str(call["name"])
                 arguments = json.loads(call.get("arguments") or "{}")
-                result = self.registry.execute(name, **arguments)
+                result = self.runtime.execute(name, arguments, case, surface)
                 session.tool_calls += 1
                 called_names.append(name)
                 evidence.extend(result.evidence)

@@ -3,30 +3,13 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime
 
-from ..case_state import evidence_ids_by_kind
-from ..contracts import CaseInput, CaseState, EvidenceKind, Finding
-from .base import DecisionOutcome
+from ...case_state import evidence_ids_by_kind
+from ...contracts import CaseInput, CaseState, EvidenceKind, Finding
+from ..base import DecisionOutcome
 
 
 @dataclass(frozen=True)
-class RefundDisputeSkill:
-    name: str = "refund_dispute"
-    business_type: str = "refund"
-    allowed_tools: tuple[str, ...] = (
-        "get_order",
-        "get_payment_records",
-        "get_refund_records",
-        "get_after_sales_case",
-        "read_policy",
-    )
-    required_evidence: tuple[EvidenceKind, ...] = (
-        EvidenceKind.CONVERSATION,
-        EvidenceKind.ORDER,
-        EvidenceKind.PAYMENT,
-        EvidenceKind.AFTER_SALES,
-        EvidenceKind.POLICY,
-    )
-
+class RefundStatusStrategy:
     def decide(
         self, case: CaseInput, state: CaseState, missing_evidence: tuple[str, ...]
     ) -> DecisionOutcome:
@@ -112,3 +95,4 @@ class RefundDisputeSkill:
                 conflicts=[conflict],
             )
         return DecisionOutcome()
+

@@ -1,0 +1,21 @@
+tool_id: get_after_sales_case
+name: 查询售后单
+description: 查询当前订单的售后申请、类型、审核状态和通过时间。
+input_schema:
+  type: object
+  additionalProperties: false
+  properties: {}
+output_schema:
+  type: object
+  additionalProperties: true
+timeout_ms: 3000
+scope_bindings:
+  order_id:
+    source: case.order_id
+    mode: RUNTIME_INJECT
+executor: get_after_sales_case
+result_adapter: after_sales_case
+error_mapping:
+  NOT_FOUND: BUSINESS_NOT_FOUND
+  INVALID_ARGUMENT: TOOL_ARGUMENT_INVALID
+
