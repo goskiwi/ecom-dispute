@@ -105,6 +105,8 @@ class HeuristicConversationStub:
 
     @staticmethod
     def speech_act(text: str, speaker: str) -> SpeechAct:
+        if any(token in text for token in ("转人工", "升级处理", "转交主管", "提交复检")):
+            return SpeechAct.ESCALATION
         if any(token in text for token in ("查询", "确认", "核验", "看下", "核对", "吗", "为什么")):
             return SpeechAct.QUERY if speaker == "user" else SpeechAct.ACTION
         if any(

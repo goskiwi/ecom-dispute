@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+from dataclasses import replace
 
 from .agents import (
     ConversationAgent,
@@ -16,6 +17,7 @@ from .llm import ResponsesClient
 from .repository import Repository
 from .runtime_state import AgentRunState, HarnessStage
 from .skills import SkillRegistry, default_strategies
+from .skills.compliance.runner import ServiceComplianceRunner
 from .tool_registry import ToolRegistry
 from .tool_runtime import ToolRuntime, ToolSurfaceResolver
 from .trace import TraceRecorder
@@ -139,6 +141,28 @@ class DiagnosticHarness:
             tool_ids=list(decide_context.tool_ids),
         )
         state, outcome = self.fusion.decide(case, state, skill)
+        state.candidate_decisions.append(
+            {
+                "skill_id": skill.skill_id,
+                "route_id": skill.route_id,
+                "decision": outcome.decision,
+                "responsible_party": outcome.responsible_party,
+                "review_required": outcome.review_required,
+            }
+        )
+        compliance_runner = ServiceComplianceRunner(
+            self.skills,
+            self.tool_runtime,
+            self.tool_surface_resolver,
+            self.reducer,
+        )
+        state = await compliance_runner.run(case, state)
+        compliance_review = any(
+            finding.category == "service_compliance" and finding.review_recommended
+            for finding in state.findings
+        )
+        if compliance_review and not outcome.review_required:
+            outcome = replace(outcome, review_required=True)
 
         run_state = run_state.move_to(HarnessStage.FUSE_AND_REVIEW)
         fuse_context = self.context_projector.project(case, state, run_state, skill)

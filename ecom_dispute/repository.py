@@ -340,6 +340,23 @@ def _seed(connection: sqlite3.Connection) -> None:
             json.dumps({"attachment_required": True}, ensure_ascii=False),
             "破损争议应收集商品、外包装和物流相关凭证。",
         ),
+        (
+            "service-compliance-cn-standard",
+            1,
+            "CN",
+            "service_compliance",
+            "2025-01-01T00:00:00",
+            None,
+            json.dumps(
+                {
+                    "fact_statements_must_be_grounded": True,
+                    "unsupported_promises_forbidden": True,
+                    "conflict_requires_escalation": True,
+                },
+                ensure_ascii=False,
+            ),
+            "客服业务陈述必须有事实依据；不支持无依据承诺；冲突案件必须升级复检。",
+        ),
     ]
     connection.executemany("INSERT INTO policies VALUES (?, ?, ?, ?, ?, ?, ?, ?)", policies)
 

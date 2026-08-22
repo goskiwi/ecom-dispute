@@ -23,6 +23,7 @@ def test_default_resources_are_typed_and_cross_validated() -> None:
         "funds-dispute",
         "fulfillment-dispute",
         "item-after-sales",
+        "service-compliance",
     }
     refund = packs["funds-dispute"].routes["refund-status"]
     assert refund.match.business_types == ("refund",)

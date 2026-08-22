@@ -4,6 +4,11 @@ from .base import (
     ResolvedRoute,
     SkillRegistry,
 )
+from .compliance import (
+    FalseBusinessStatementStrategy,
+    MissingRequiredEscalationStrategy,
+    UnsupportedPromiseStrategy,
+)
 from .fulfillment import (
     CancellationInTransitStrategy,
     DeliveredNotReceivedStrategy,
@@ -38,6 +43,9 @@ def default_strategies() -> dict[str, DecisionStrategy]:
         "wrong_item": WrongItemStrategy(),
         "missing_item": MissingItemStrategy(),
         "damaged_item": DamagedItemStrategy(),
+        "false_business_statement": FalseBusinessStatementStrategy(),
+        "unsupported_promise": UnsupportedPromiseStrategy(),
+        "missing_required_escalation": MissingRequiredEscalationStrategy(),
     }
 
 

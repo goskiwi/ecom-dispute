@@ -1,0 +1,16 @@
+route_id: missing-required-escalation
+name: 缺少必要升级
+report_type: missing_required_escalation
+match: {description: 主争议需要人工复检，但客服没有明确升级或转人工。, business_types: [compliance_missing_escalation]}
+start_stage: ANALYZE
+core_tools: [read_policy]
+lazy_tools: []
+required_evidence: [conversation, policy]
+optional_evidence: []
+allowed_decisions: [required_escalation_missing, required_escalation_present, escalation_not_required]
+decision_strategy: missing_required_escalation
+stages:
+  ANALYZE: {mode: deterministic, objective: 读取升级行为和主争议结论, default_next: VERIFY}
+  VERIFY: {mode: deterministic, objective: 读取客服合规政策, tools: [read_policy], default_next: DECIDE}
+  DECIDE: {mode: deterministic, objective: 检查需要复检时是否已经升级, default_next: FUSE_AND_REVIEW}
+  FUSE_AND_REVIEW: {mode: deterministic, objective: 生成独立合规Finding}

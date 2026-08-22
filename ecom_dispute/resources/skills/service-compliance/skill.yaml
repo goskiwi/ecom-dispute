@@ -1,0 +1,10 @@
+skill_id: service-compliance
+name: 客服合规
+entry: SKILL.md
+allowed_tools: [read_policy]
+routes:
+  - {route_id: false-business-statement, file: routes/false-business-statement.yaml}
+  - {route_id: unsupported-promise, file: routes/unsupported-promise.yaml}
+  - {route_id: missing-required-escalation, file: routes/missing-required-escalation.yaml}
+limits: {max_model_turns: 4, max_tool_calls: 1, max_loaded_lazy_tools: 0, max_total_recovery_actions: 2}
+

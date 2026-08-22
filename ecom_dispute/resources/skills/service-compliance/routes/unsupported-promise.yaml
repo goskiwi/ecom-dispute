@@ -1,0 +1,17 @@
+route_id: unsupported-promise
+name: 无依据承诺
+report_type: unsupported_promise
+match: {description: 客服做出政策或当前证据不支持的结果承诺。, business_types: [compliance_unsupported_promise]}
+start_stage: ANALYZE
+core_tools: [read_policy]
+lazy_tools: []
+required_evidence: [conversation, policy]
+optional_evidence: [order, payment, refund, logistics]
+allowed_decisions: [unsupported_promise_found, unsupported_promise_not_found]
+decision_strategy: unsupported_promise
+stages:
+  ANALYZE: {mode: deterministic, objective: 读取已提取客服承诺, default_next: VERIFY}
+  VERIFY: {mode: deterministic, objective: 读取客服合规政策, tools: [read_policy], default_next: DECIDE}
+  DECIDE: {mode: deterministic, objective: 检查承诺是否得到事实和政策支持, default_next: FUSE_AND_REVIEW}
+  FUSE_AND_REVIEW: {mode: deterministic, objective: 生成独立合规Finding}
+

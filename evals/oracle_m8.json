@@ -1,0 +1,8 @@
+{
+  "delivery_ontime_004":{"decision":"delivery_completed_on_time","responsible_party":"none","review_required":true},
+  "refund_missing_005":{"decision":"refund_not_initiated_overdue","responsible_party":"platform","review_required":true},
+  "refund_missing_006":{"decision":"refund_not_initiated_overdue","responsible_party":"platform","review_required":true},
+  "refund_missing_008":{"decision":"refund_not_initiated_overdue","responsible_party":"platform","review_required":true},
+  "refund_pending_005":{"decision":"refund_processing_within_sla","responsible_party":"none","review_required":true},
+  "refund_within_003":{"decision":"refund_pending_within_sla","responsible_party":"none","review_required":true}
+}

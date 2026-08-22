@@ -64,6 +64,7 @@ class SpeechAct(StrEnum):
     ADVICE = "advice"
     QUERY = "query"
     EXPLANATION = "explanation"
+    ESCALATION = "escalation"
 
 
 class Evidence(BaseModel):
@@ -133,6 +134,7 @@ class CaseState(BaseModel):
     evidence: dict[str, Evidence] = Field(default_factory=dict)
     conflicts: list[str] = Field(default_factory=list)
     missing_evidence: list[str] = Field(default_factory=list)
+    candidate_decisions: list[dict[str, Any]] = Field(default_factory=list)
     trace: list[dict[str, Any]] = Field(default_factory=list)
 
 

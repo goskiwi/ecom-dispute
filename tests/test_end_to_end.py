@@ -65,7 +65,7 @@ def test_dataset_has_manual_and_policy_boundary_cases(repository: Repository) ->
     assert sum(case.source_type == "manual" for case in cases) >= 8
     historical = repository.case("refund_historical_policy_001")
     report = DiagnosticHarness.heuristic_tests(repository).diagnose_sync(historical)
-    assert report.policy_evidence_ids == ["policies:refund-cn-standard:v1"]
+    assert "policies:refund-cn-standard:v1" in report.policy_evidence_ids
 
 
 @pytest.mark.parametrize(

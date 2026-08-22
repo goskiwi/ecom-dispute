@@ -21,6 +21,9 @@ def evaluate(
     m6_oracle = oracle_path.with_name("oracle_m6.json")
     if m6_oracle.is_file():
         oracle.update(json.loads(m6_oracle.read_text(encoding="utf-8")))
+    m8_oracle = oracle_path.with_name("oracle_m8.json")
+    if m8_oracle.is_file():
+        oracle.update(json.loads(m8_oracle.read_text(encoding="utf-8")))
     harness = (
         DiagnosticHarness.live(repository, llm_client)
         if llm_client
