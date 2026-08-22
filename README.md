@@ -192,6 +192,8 @@ v1.0发布后新建12条完整E2E案件，每个主Route一条。真实三Agent�
 
 ABCD正式外部集包含160条受支持对话和40条拒识对话。首轮199条有效结果中，总Route Accuracy 71.9%、受支持Route 66.7%、unsupported拒识92.5%；Action-presence代理P/R为100%/64.8%。详见[Formal ABCD 200报告](evals/formal_abcd_200_report_2026-08-23.md)。外部对话不与本项目订单硬拼成“真实案件”。
 
+由于ABCD按客服流程分类、EcomDispute按争议事实分类，66.7%只是粗粒度映射一致率。仓库已提供隐藏subflow和模型预测的双人逐对话标注UI，以及一致率、Cohen's Kappa、Consensus和对原首轮输出重评分工具。人工标注尚未完成，不能提前给出Consensus准确率。见[ABCD标注指南](docs/abcd_route_annotation_guide.md)。
+
 ### Review人工评测
 
 40条固定模板/ReviewAgent匿名A/B已生成，分布为5条冲突、4条证据缺失、31条合规。当前人工评分为0/40，尚不能声称ReviewAgent优于模板。评审方法见[Review A/B说明](docs/review_rubric_instructions.md)。

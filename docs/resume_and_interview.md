@@ -33,6 +33,7 @@ EcomDispute解决的是电商争议中“对话说法、系统事实和政策版
 - v1.0发布后新建12条全链路E2E盲测，12个主Route的Route、Decision、Party、Review、Evidence和Tool检查均通过；三Agent相对Core未提高准确率，额外增加约5.9万输入Token和159秒累计延迟。
 - 正式120条E2E由84个独立业务模板和36个表达变体组成，首轮Live/Core均为116/120，Evidence Grounded 100%；4个失败均来自Route重叠，Gap/Review未提高准确率且增加约53万输入Token。
 - ABCD外部200条首轮总Route Accuracy 71.9%、受支持Route 66.7%、unsupported拒识92.5%，不能表述为已实现稳定跨语言泛化。
+- ABCD粗映射存在流程标签与争议Route边界不一致；已建设隐藏subflow/模型预测的双人逐对话标注、Kappa和Consensus重评分工具，人工Consensus结果尚未完成。
 
 ## 不能使用的表述
 

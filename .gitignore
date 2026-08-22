@@ -21,6 +21,9 @@ output/playwright/
 evals/formal_review_40_ab_key.json
 evals/formal_review_40_rater1.json
 evals/formal_review_40_rater2.json
+evals/formal_abcd_200_rater1.json
+evals/formal_abcd_200_rater2.json
+evals/formal_abcd_200_consensus.json
 
 # Personal source material
 彭一凡_南京大学软件学院_Agent开发工程师.pdf

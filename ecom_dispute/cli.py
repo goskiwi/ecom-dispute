@@ -5,7 +5,13 @@ import json
 import os
 from pathlib import Path
 
+from .abcd_annotation import (
+    agreement_and_consensus,
+    build_annotation_forms,
+    rescore_first_run,
+)
 from .abcd_evaluation import build_abcd_manifest, evaluate_abcd
+from .annotation_web import serve_annotation
 from .e2e_evaluation import evaluate_e2e
 from .evaluation import evaluate, evaluate_baseline
 from .harness import DiagnosticHarness
@@ -83,6 +89,40 @@ def _parser() -> argparse.ArgumentParser:
     )
     review_ab.add_argument("--review-db", type=Path, default=Path("/tmp/review-ab.db"))
     review_ab.add_argument("--workers", type=int, default=4)
+    annotation_build = commands.add_parser("abcd-annotation-build")
+    annotation_build.add_argument("--dataset", type=Path, required=True)
+    annotation_build.add_argument(
+        "--manifest", type=Path, default=Path("evals/formal_abcd_200_manifest.json")
+    )
+    annotation_build.add_argument(
+        "--rater1", type=Path, default=Path("evals/formal_abcd_200_rater1.json")
+    )
+    annotation_build.add_argument(
+        "--rater2", type=Path, default=Path("evals/formal_abcd_200_rater2.json")
+    )
+    annotation_web = commands.add_parser("abcd-annotation-web")
+    annotation_web.add_argument("--form", type=Path, required=True)
+    annotation_web.add_argument("--host", default="127.0.0.1")
+    annotation_web.add_argument("--port", type=int, default=8877)
+    annotation_agreement = commands.add_parser("abcd-annotation-agreement")
+    annotation_agreement.add_argument(
+        "--rater1", type=Path, default=Path("evals/formal_abcd_200_rater1.json")
+    )
+    annotation_agreement.add_argument(
+        "--rater2", type=Path, default=Path("evals/formal_abcd_200_rater2.json")
+    )
+    annotation_agreement.add_argument(
+        "--consensus", type=Path, default=Path("evals/formal_abcd_200_consensus.json")
+    )
+    annotation_rescore = commands.add_parser("abcd-annotation-rescore")
+    annotation_rescore.add_argument(
+        "--raw",
+        type=Path,
+        default=Path("evals/formal_abcd_200_gpt-5.6-luna_run1_raw.json.gz"),
+    )
+    annotation_rescore.add_argument(
+        "--consensus", type=Path, default=Path("evals/formal_abcd_200_consensus.json")
+    )
     return parser
 
 
@@ -141,6 +181,21 @@ def main() -> None:
             args.review_db,
             args.workers,
         )
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return
+    if args.command == "abcd-annotation-build":
+        result = build_annotation_forms(args.dataset, args.manifest, args.rater1, args.rater2)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return
+    if args.command == "abcd-annotation-web":
+        serve_annotation(args.form, args.host, args.port)
+        return
+    if args.command == "abcd-annotation-agreement":
+        result = agreement_and_consensus(args.rater1, args.rater2, args.consensus)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return
+    if args.command == "abcd-annotation-rescore":
+        result = rescore_first_run(args.raw, args.consensus)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return
     repository = Repository(args.db)
