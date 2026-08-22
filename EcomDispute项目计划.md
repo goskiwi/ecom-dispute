@@ -1,5 +1,7 @@
 # EcomDispute 项目计划
 
+> 本文档为早期计划，当前实施以根目录 `EcomDispute作品集版实施计划V2.md` 为准。
+
 ## 1. 项目定位
 
 EcomDispute 是一个面向电商售后争议的多 Agent 证据化诊断系统。

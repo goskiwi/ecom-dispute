@@ -1,97 +1,198 @@
 # EcomDispute
 
-EcomDispute 是一个面向退款与物流争议的 LLM 增强型证据化裁决原型。真实运行模式由 Conversation Agent 提取对话语义，Tool Query Agent 根据逐轮 CaseState 选择只读工具，最终由 Skill Strategy 和确定性 Evidence Fusion 输出建议裁决与人工复检任务。
+EcomDispute 是一个面向电商售后争议的多阶段 Agent Harness。系统用真实 LLM 理解对话和处理长尾证据，用只读工具核验业务事实，再通过确定性策略完成金额、时限、政策和责任裁决，最终生成带 Evidence、Timeline、Trace 和人工复检任务的报告。
 
-## 为什么是这个项目
+## 为什么做这个项目
 
-项目将两类真实业务能力组合成一条独立产品链路：
+电商争议通常同时包含三种互不等价的信息：
 
-| 能力来源 | 在 EcomDispute 中的落点 |
-|---|---|
-| 虫盯盯的诊断 Harness | CaseState、只读工具、事件时间线、证据引用、可回放 Trace |
-| 虫盯盯的 Skill 机制 | `RefundDisputeSkill` 与 `DeliveryDelaySkill` 分别声明允许工具、必需证据和裁决路径 |
-| SHEIN 的多阶段质检 | 对话分析、事实核验、政策选择、结果校验与复检分流 |
-| SHEIN 的规则与事实裁决 | 对话证据、业务事实和版本化政策联合判断 |
-| SHEIN 的结果融合 | Finding 校验、去重、退款/支付冲突检测和人工复检 |
+- 用户和客服在对话中的说法；
+- 订单、支付、退款、物流、仓库等系统事实；
+- 事发时有效的业务政策。
 
-它不是把“运维诊断”和“客服质检”简单拼接，而是把故障排查方法应用于售后争议：先重建事件和事实，再依据事发时有效政策裁决。
+模型适合理解非结构化语言，但不应该自由编造业务记录或计算确定性规则。本项目的核心边界是：
 
-## 当前能力
+> 模型负责开放性理解和长尾判断，Harness 负责工具边界、状态、恢复和Trace，Strategy负责确定性裁决。
 
-- SQLite 中的订单、支付、退款、售后、物流和版本化政策数据。
-- 6 个只读业务工具及 Case 级查询缓存。
-- `ConversationAgent`：只负责真实 Responses API 结构化语义提取，不包含关键词降级。
-- `ToolQueryAgent`：保留为 `--tool-mode agent` 对照模式；默认使用固定工具执行器，因为端到端盲测未观察到裁决或工具数量收益。
-- `FixedFactExecutor` 与 `PolicyResolver`：仅用于确定性测试，不称为 Agent。
-- `HeuristicConversationStub`：仅供测试，Trace 明确标记 `heuristic_test_stub`。
-- `CaseStateReducer`：确定性投影 Evidence、Finding、时间线和 Trace。
-- `EvidenceFusion`：过滤无证据 Finding、去重、检查必需证据、检测退款与支付冲突。
-- 60 个固定案例：40 个退款、20 个物流延迟，覆盖多轮与模糊表达、错误客服承诺、政策宽限期、商家/物流责任、不可抗力和跨源冲突。
-- 单 LLM Agent Function Calling 基线：完整回传 `function_call` / `function_call_output` 历史，支持并行工具调用、严格最终 Schema、轮数预算和 Evidence ID 校验。
-- 语义 Evidence Fusion：LLM 分别输出 `business_facts[]` 与 `interaction_acts[]`；业务事实只包含 `fact_type + polarity + temporal_status + quote`，查询、动作、建议、承诺和解释独立建模，Fusion 只消费 BusinessFact。
-- `SkillRegistry`：Refund/Delivery 各自拥有工具边界、必需证据和 Decision Strategy，Fusion 不按 Skill 名称分支。
-- 持久化 Review Task：支持 pending/resolved、人工结论、责任方、备注和冲突证据引用。
+## 当前规模
 
-项目没有上下文卸载、多地区、多语言或批处理 Worker；当前数据规模没有证明这些机制必要，因此不在 README 中声称已实现。
+| 能力 | 当前实现 |
+|---|---:|
+| Skill Pack | 4 |
+| Route | 15 |
+| 只读业务Tool | 14 |
+| live LLM Agent角色 | 3 |
+| 持久化回归案例 | 152 |
+| 自动化测试 | 63 |
+
+### Skill与Route
+
+```text
+funds-dispute
+├── refund-status
+├── refund-amount-mismatch
+├── duplicate-charge
+└── payment-captured-order-failed
+
+fulfillment-dispute
+├── delivery-delay
+├── merchant-not-shipped
+├── delivered-not-received
+└── cancellation-in-transit
+
+item-after-sales
+├── return-eligibility
+├── wrong-item
+├── missing-item
+└── damaged-item
+
+service-compliance
+├── false-business-statement
+├── unsupported-promise
+└── missing-required-escalation
+```
+
+### 三个真实LLM Agent
+
+- `ConversationAgent`：输出具体 `route_type`、BusinessFact 和 InteractionAct；quote 必须来自原消息。
+- `EvidenceGapAgent`：核心证据完成后，只能在当前Route的Lazy Tool中选择一个长尾工具，不负责裁决。
+- `ReviewAgent`：仅在冲突或合规问题需要复检时运行，只能引用已存在的Evidence ID。
+
+确定性执行器、Policy Resolver、Reducer和Decision Strategy不称为Agent。
+
+## 五阶段链路
+
+```text
+ROUTE
+ConversationAgent选择具体Route
+  ↓
+ANALYZE
+提取BusinessFact与InteractionAct
+  ↓
+VERIFY
+固定核心工具 + 按需EvidenceGapAgent
+  ↓
+DECIDE
+确定性Decision Strategy
+  ↓
+FUSE_AND_REVIEW
+客服合规子任务 + Evidence Fusion + 按需ReviewAgent
+```
+
+主争议和客服合规保持独立Route与Trace，最后才合并Finding；合规结论不能覆盖主业务责任。
+
+## Skill资源
+
+```text
+SKILL.md   给模型和开发者阅读的业务说明
+skill.yaml Skill工具能力上限与Route索引
+route.yaml Stage、工具面、证据要求和输出范围
+stage.md   按需加载的当前阶段说明
+tool.yaml  Schema、Scope、错误映射和实现绑定
+Python     Strategy、Executor、Adapter、Reducer和Fusion
+```
+
+YAML不包含金额/SLA计算、责任逻辑、任意脚本或复杂表达式DSL。所有资源通过Pydantic加载并检查Tool、Stage、Strategy、Executor和引用文件。
+
+## Tool Runtime
+
+每轮工具集合由当前Skill、Route、Stage和已加载Lazy Tool计算。`tool_search`只能搜索当前Route声明的Lazy Tool，不能访问全局Registry。
+
+已知Case参数由Runtime注入：
+
+```text
+order_id / region / business_type / effective_at
+```
+
+模型生成的ToolCall还要经过：
+
+```text
+Tool Surface准入
+→ JSON Schema
+→ Case Scope
+→ Executor
+→ ToolResultEnvelope
+→ Result Adapter
+→ StateDelta
+→ CaseStateReducer
+```
+
+## 状态、证据和上下文
+
+- `AgentRunState` 保存Skill、Route、Stage、预算、Lazy Tool和恢复状态。
+- `CaseState` 保存事实、对话行为、时间线、Evidence、缺口、冲突和候选裁决。
+- ToolResult通过Reducer确定性更新CaseState，LLM不能重写完整状态。
+- 商品或签收附件只保留URI、摘要和大小，原始内容不进入长期上下文。
+- ContextProjector每轮只投影当前Stage、精简状态、最近Observation和当前工具定义。
+
+## 有限错误恢复
+
+- 429、502/503/504、超时和连接重置：Model Gateway保持原请求重试一次。
+- Schema、quote、speaker或message index不合法：模型获得字段级提示后修复一次。
+- 业务记录不存在：生成负向Evidence，不盲目重试。
+- Tool越界或Case Scope错误：拒绝执行。
+- 第二次模型修复仍失败：终止当前路径并生成不完整结果。
+
+所有尝试进入Trace，但临时错误提示不进入长期上下文。
 
 ## 快速开始
 
-要求 Python 3.11+。
+要求Python 3.11+和[uv](https://docs.astral.sh/uv/)。
 
 ```bash
-python -m ecom_dispute data rebuild
-python -m ecom_dispute demo --agent-mode heuristic-test --case-id refund_conflict_001
-python -m ecom_dispute eval --mode deterministic
-python -m ecom_dispute web --agent-mode heuristic-test --port 8765
-python -m pytest -q
+uv sync --dev
+uv run python -m ecom_dispute data rebuild
+uv run pytest -q
+uv run python -m ecom_dispute eval --mode deterministic
+uv run python -m ecom_dispute web --agent-mode heuristic-test --port 8765
 ```
 
-真实 LLM 模式通过环境变量传入密钥，密钥不会写入仓库：
+真实LLM：
 
 ```bash
 export ECOM_DISPUTE_API_KEY='your-key'
-python -m ecom_dispute \
+uv run python -m ecom_dispute \
   --base-url 'https://your-openai-compatible-endpoint.example' \
-  --model 'gpt-5.4-mini' \
+  --model 'your-model' \
   demo --agent-mode live-llm --case-id refund_conflict_001
 ```
 
-## 执行链路
-
-```text
-Case Intake / Skill Router
-          |
-     ConversationAgent -- real LLM semantic extraction
-          |
-     CaseState Reducer
-          |
-     FixedFactExecutor + PolicyResolver -- default scoped read-only tools
-          |
-     CaseState Reducer after every ToolResult
-                              |
-                       Evidence Fusion
-                              |
-              DecisionReport / manual review
-```
-
-LLM 不接触评测 Oracle。业务查询结果由工具产生，政策时效、跨源冲突和最终责任由代码计算。
+旧 `--tool-mode` 已删除。live链路固定采用核心工具确定性收集，并按条件触发EvidenceGapAgent和ReviewAgent。
 
 ## 当前评测
 
-M2-M4 报告属于旧开发集实验，案例、规则和 Oracle 均由本仓库构造，不是独立准确率。它们保留用于展示架构取舍和失败分析，不能直接作为当前重构后主链路的最终指标。
+### 确定性回归
 
-随后扩展至 40 个案例验证语义融合：最终裁决、责任方和复检均为 40/40，用户 statement type 召回 90.7%，客服承诺类型召回 97.6%，6 个对话-事实冲突的 Precision/Recall 均为 100%，全项通过 34/40。数据仍为人工与规则构造，不表述为线上业务准确率。
+152/152通过。它证明构造业务数据、工具、Reducer和Strategy之间一致，不代表LLM或线上准确率。
 
-详见 [M2 对照评测报告](evals/compare_report_2026-08-22.md) 和 [原始逐案结果](evals/compare_gpt-5.4-mini_2026-08-22.json)。
+### 真实LLM冒烟
 
-M3 详见 [语义融合报告](evals/semantic_fusion_report_2026-08-22.md)、[原始首轮输出](evals/hybrid_semantic_gpt-5.4-mini_40cases_2026-08-22.json) 和 [审计后计分](evals/hybrid_semantic_rescored_40cases_2026-08-22.json)。
+`gpt-5.6-luna`已真实运行三个Agent角色：
 
-当前重构后的 live 主链路已完成 `refund_conflict_001` 真实端到端冒烟：工具 Agent 用三轮查询订单/退款/支付/售后/政策，并保留逐轮 Response ID 和 CaseState Trace。全量重新评测尚未完成。
+| Case | Agent | Route | Decision | Input | Output | 模型延迟 |
+|---|---|---|---|---:|---:|---:|
+| `m6_refund_amount_001` | Conversation + EvidenceGap | refund_amount | refund_amount_incorrect | 10,145 | 379 | 26,898ms |
+| `refund_conflict_001` | Conversation + Review | refund | refund_record_conflict | 10,289 | 810 | 56,795ms |
 
-本地 Demo 默认使用 `live-llm`，必须配置模型接口；`--agent-mode heuristic-test` 只用于确定性测试。旧 Recorded Agent 和旧语义兼容层已经删除。控制台支持人工复检操作。
+两条定向案例的Route、裁决、责任和复检符合预期。该结果是已有案例冒烟，不称为盲测准确率。详见[真实Agent冒烟报告](evals/v2_live_agent_smoke_2026-08-23.md)。
 
-旧 Luna 和 AtomicFact 合同结果已移入 legacy/dev。当前 split-contract 使用新建的 20 条未见对话完成 `gpt-5.6-luna` Run 1：Business Type 100%，用户/客服 BusinessFact F1 约 86.3%/85.7%，InteractionAct F1 约 94.7%/93.0%，全项 Exact Match 11/20。Oracle 在运行后未调整。详见 [Split Contract Blind Run 1](evals/semantic_holdout_split-contract_report_2026-08-22.md)。
+### 外部数据
 
-端到端 20 案例对照获得 19 个有效结果：Live ToolQuery 与 Fixed Executor 的裁决、责任方、复检、必需 Evidence 均为 19/19，平均工具调用同为 4.05；ToolQuery 额外消耗 209,720 输入 Token 和约 429 秒模型延迟。因此默认采用 Fixed Executor。详见 [E2E 对照报告](evals/e2e_blind_live-vs-fixed_report_2026-08-22.md)。
+ABCD适配器已在官方 `abcd_v1.1.json.gz` 上实测选择50条test对话，覆盖退款、退货、物流和退货后计费场景。外部对话只用于语义和Action评测，不与本项目订单硬拼成“真实案件”。
 
-M5 针对 M4 的三个冲突误报增加时态约束并完成真实 LLM 定向回归，详见 [时态回归报告](evals/temporal_regression_report_2026-08-22.md)。该回归不替代 60 案例首轮指标。
+## 已有架构取舍
+
+旧实验中，全量ToolQueryAgent在19个有效案例上没有提高裁决、责任、复检或工具数量，却额外消耗约21万输入Token和429秒模型延迟。因此它已被删除，不保留兼容路径。新EvidenceGapAgent只处理Route声明的长尾证据。
+
+## 当前限制
+
+- 业务数据主要为人工和规则构造，不是企业生产流量。
+- 工具后端主要为本地SQLite，不代表远程微服务可靠性。
+- 152/152是确定性回归，不是LLM准确率。
+- 当前真实LLM结果仍是小样本冒烟，独立Route盲测尚未完成。
+- 没有写操作、审批、沙箱、长期记忆、完整DAG或分布式恢复。
+- 多Agent串行延迟仍高，真实复检案例累计模型延迟约57秒。
+
+## 计划
+
+完整实施范围、真实性边界和里程碑见[EcomDispute作品集版实施计划V2.md](EcomDispute作品集版实施计划V2.md)。
