@@ -1,0 +1,37 @@
+[
+  {
+    "business_type": "return_eligibility",
+    "count": 17,
+    "variants": [
+      {"scenario": "eligible", "expected": {"decision": "return_eligible", "responsible_party": "none", "review_required": false}},
+      {"scenario": "expired", "expected": {"decision": "return_window_expired", "responsible_party": "user", "review_required": false}},
+      {"scenario": "excluded", "expected": {"decision": "return_category_excluded", "responsible_party": "none", "review_required": false}},
+      {"scenario": "condition", "expected": {"decision": "return_condition_ineligible", "responsible_party": "user", "review_required": false}}
+    ]
+  },
+  {
+    "business_type": "wrong_item",
+    "count": 17,
+    "variants": [
+      {"scenario": "warehouse_mismatch", "expected": {"decision": "wrong_item_warehouse_mismatch", "responsible_party": "warehouse", "review_required": true}},
+      {"scenario": "warehouse_match", "expected": {"decision": "wrong_item_not_verified", "responsible_party": "undetermined", "review_required": true}}
+    ]
+  },
+  {
+    "business_type": "missing_item",
+    "count": 17,
+    "variants": [
+      {"scenario": "warehouse_shortage", "expected": {"decision": "missing_item_warehouse_shortage", "responsible_party": "warehouse", "review_required": true}},
+      {"scenario": "warehouse_match", "expected": {"decision": "missing_item_not_verified", "responsible_party": "undetermined", "review_required": true}}
+    ]
+  },
+  {
+    "business_type": "damaged_item",
+    "count": 17,
+    "variants": [
+      {"scenario": "attachment", "expected": {"decision": "damaged_item_evidence_confirmed", "responsible_party": "undetermined", "review_required": true}},
+      {"scenario": "warehouse_only", "expected": {"decision": "damaged_item_attachment_missing", "responsible_party": "user", "review_required": true}},
+      {"scenario": "insufficient", "expected": {"decision": "damaged_item_insufficient_evidence", "responsible_party": "undetermined", "review_required": true}}
+    ]
+  }
+]

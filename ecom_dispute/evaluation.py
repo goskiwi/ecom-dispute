@@ -24,6 +24,12 @@ def evaluate(
     m8_oracle = oracle_path.with_name("oracle_m8.json")
     if m8_oracle.is_file():
         oracle.update(json.loads(m8_oracle.read_text(encoding="utf-8")))
+    matrix_path = ROOT / "data" / "cases" / "m10_item_matrix.json"
+    if matrix_path.is_file():
+        for group in json.loads(matrix_path.read_text(encoding="utf-8")):
+            for offset in range(group["count"]):
+                variant = group["variants"][offset % len(group["variants"])]
+                oracle[f"m10_{group['business_type']}_{offset + 1:03d}"] = variant["expected"]
     harness = (
         DiagnosticHarness.live(repository, llm_client)
         if llm_client

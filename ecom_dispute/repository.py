@@ -12,6 +12,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_DB = ROOT / "data" / "ecom_dispute.db"
 SCHEMA = ROOT / "data" / "schema.sql"
 M6_CASES = ROOT / "data" / "cases" / "m6_cases.json"
+M10_ITEM_MATRIX = ROOT / "data" / "cases" / "m10_item_matrix.json"
 
 
 def _rows(cursor: sqlite3.Cursor) -> list[dict[str, Any]]:
@@ -1022,6 +1023,90 @@ def _seed(connection: sqlite3.Connection) -> None:
     for index, spec in enumerate(delivery_specs, start=len(specs) + 1):
         _insert_delivery_case(connection, index, spec)
     _seed_m6_cases(connection)
+    _seed_m10_item_cases(connection)
+
+
+def _seed_m10_item_cases(connection: sqlite3.Connection) -> None:
+    groups = json.loads(M10_ITEM_MATRIX.read_text(encoding="utf-8"))
+    serial = 0
+    for group in groups:
+        for offset in range(group["count"]):
+            serial += 1
+            variant = group["variants"][offset % len(group["variants"])]
+            business_type = group["business_type"]
+            scenario = variant["scenario"]
+            case_id = f"m10_{business_type}_{offset + 1:03d}"
+            order_id = f"m10-ord-{serial:03d}"
+            connection.execute(
+                "INSERT INTO cases VALUES (?, ?, 'rule_generated', 'CN', ?, '2026-05-01T10:00:00', '2026-05-20T12:00:00', ?)",
+                (
+                    case_id,
+                    order_id,
+                    business_type,
+                    json.dumps(
+                        [
+                            {"speaker": "user", "text": f"请核验{business_type}商品售后争议。"},
+                            {"speaker": "agent", "text": "正在核验商品和凭证。"},
+                        ],
+                        ensure_ascii=False,
+                    ),
+                ),
+            )
+            connection.execute(
+                "INSERT INTO orders VALUES (?, ?, 'CN', ?, 'delivered', 199.0, 'CNY', '2026-05-01T08:00:00', '2026-05-03T18:00:00', 1)",
+                (order_id, f"m10-user-{serial:03d}", business_type),
+            )
+            category = "personal_care" if scenario == "excluded" else "general"
+            connection.execute(
+                "INSERT INTO order_items VALUES (?, ?, 'sku-ordered', '测试商品', 2, 99.5, ?, 1)",
+                (f"m10-item-{serial:03d}", order_id, category),
+            )
+            _seed_m10_item_variant(connection, serial, order_id, business_type, scenario)
+
+
+def _seed_m10_item_variant(
+    connection: sqlite3.Connection,
+    serial: int,
+    order_id: str,
+    business_type: str,
+    scenario: str,
+) -> None:
+    if business_type == "return_eligibility":
+        requested_at = "2026-05-15T08:00:00" if scenario == "expired" else "2026-05-05T08:00:00"
+        condition = "opened_damaged" if scenario == "condition" else "unopened"
+        connection.execute(
+            "INSERT INTO return_requests VALUES (?, ?, ?, 'requested', ?, 'user_request', ?, 1)",
+            (
+                f"m10-return-{serial:03d}",
+                order_id,
+                f"m10-item-{serial:03d}",
+                requested_at,
+                condition,
+            ),
+        )
+        return
+    if business_type in {"wrong_item", "missing_item"}:
+        sku = "sku-other" if scenario == "warehouse_mismatch" else "sku-ordered"
+        quantity = 1 if scenario == "warehouse_shortage" else 2
+        connection.execute(
+            "INSERT INTO warehouse_pack_records VALUES (?, ?, ?, ?, '2026-05-02T08:00:00', 'station-m10', 1)",
+            (f"m10-pack-{serial:03d}", order_id, sku, quantity),
+        )
+        return
+    if business_type == "damaged_item" and scenario in {"attachment", "warehouse_only"}:
+        connection.execute(
+            "INSERT INTO warehouse_pack_records VALUES (?, ?, 'sku-ordered', 2, '2026-05-02T08:00:00', 'station-m10', 1)",
+            (f"m10-pack-{serial:03d}", order_id),
+        )
+    if business_type == "damaged_item" and scenario == "attachment":
+        connection.execute(
+            "INSERT INTO claim_attachments VALUES (?, ?, 'damage_photo', ?, 524288, '商品破损照片', '2026-05-04T08:00:00', 1)",
+            (
+                f"m10-attachment-{serial:03d}",
+                order_id,
+                f"evidence://m10/{serial:03d}/damage-photo",
+            ),
+        )
 
 
 def _seed_m6_cases(connection: sqlite3.Connection) -> None:
