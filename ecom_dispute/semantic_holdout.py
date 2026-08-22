@@ -133,7 +133,7 @@ def evaluate_holdout(
         evaluated_results, "agent_interaction_acts"
     )
     return {
-        "schema_version": 3,
+        "schema_version": 4,
         "mode": "semantic_holdout",
         "case_count": len(inputs),
         "repeats": repeats,

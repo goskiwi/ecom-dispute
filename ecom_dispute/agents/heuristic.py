@@ -77,6 +77,22 @@ class HeuristicConversationStub:
 
     @staticmethod
     def classify(text: str) -> tuple[FactType, Polarity]:
+        if any(token in text for token in ("重复扣款", "扣了两次", "扣款两次", "重复扣了")):
+            return FactType.PAYMENT_DUPLICATE, Polarity.AFFIRMED
+        if any(token in text for token in ("已经扣款", "钱已经扣", "扣款成功", "被扣了")):
+            return FactType.PAYMENT_CHARGE, Polarity.AFFIRMED
+        if any(token in text for token in ("订单创建失败", "订单没创建", "订单没有生成")):
+            return FactType.ORDER_CREATION, Polarity.NEGATED
+        if any(token in text for token in ("不是我买的", "发错了", "型号不对", "颜色不对")):
+            return FactType.ITEM_IDENTITY, Polarity.CONFLICTING
+        if any(token in text for token in ("少发", "少了一件", "只收到一件", "数量不对")):
+            return FactType.ITEM_QUANTITY, Polarity.CONFLICTING
+        if any(token in text for token in ("破损", "碎了", "裂了", "坏了")):
+            return FactType.ITEM_DAMAGE, Polarity.AFFIRMED
+        if any(token in text for token in ("没拆封", "未拆封", "保持原样", "可二次销售")):
+            return FactType.ITEM_CONDITION, Polarity.AFFIRMED
+        if any(token in text for token in ("申请退货", "提交退货", "发起退货")):
+            return FactType.RETURN_REQUEST, Polarity.AFFIRMED
         if any(token in text for token in ("没收到货", "没有收到货", "还没收到", "未收到货")):
             return FactType.DELIVERY_RECEIPT, Polarity.NEGATED
         if any(token in text for token in ("物流延迟", "配送延迟", "晚到", "超时", "超过承诺")):
@@ -126,7 +142,10 @@ class HeuristicConversationStub:
             return TemporalStatus.NOT_APPLICABLE
         if speech_act == SpeechAct.PROMISE:
             return TemporalStatus.FUTURE
-        if any(token in text for token in ("已经", "已完成", "已送达", "到账了")):
+        if any(
+            token in text
+            for token in ("已经", "已完成", "已送达", "到账了", "扣了", "收到", "到货")
+        ):
             return TemporalStatus.COMPLETED
         if any(token in text for token in ("正在", "处理中", "仍", "一直", "还没", "未")):
             return TemporalStatus.CURRENT

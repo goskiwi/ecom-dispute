@@ -97,3 +97,22 @@ def test_non_verbatim_quote_is_repaired_once(tmp_path) -> None:
     assert client.repair_hints[0] is None
     assert "quote is not grounded" in (client.repair_hints[1] or "")
     assert result.telemetry["model_repairs"] == 1
+
+
+@pytest.mark.parametrize(
+    ("text", "fact_type", "polarity"),
+    [
+        ("同一个订单扣了两次", FactType.PAYMENT_DUPLICATE, Polarity.AFFIRMED),
+        ("钱已经扣了但订单创建失败", FactType.PAYMENT_CHARGE, Polarity.AFFIRMED),
+        ("收到的不是我买的商品", FactType.ITEM_IDENTITY, Polarity.CONFLICTING),
+        ("订单两件只收到一件", FactType.ITEM_QUANTITY, Polarity.CONFLICTING),
+        ("商品到货时已经碎了", FactType.ITEM_DAMAGE, Polarity.AFFIRMED),
+        ("商品没拆封", FactType.ITEM_CONDITION, Polarity.AFFIRMED),
+    ],
+)
+def test_v4_fact_ontology_has_first_class_types(
+    text: str, fact_type: FactType, polarity: Polarity
+) -> None:
+    from ecom_dispute.agents.heuristic import HeuristicConversationStub
+
+    assert HeuristicConversationStub.classify(text) == (fact_type, polarity)

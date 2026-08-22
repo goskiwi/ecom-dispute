@@ -27,6 +27,10 @@ class EvidenceKind(StrEnum):
 
 
 class FactType(StrEnum):
+    ORDER_CREATION = "order_creation"
+    PAYMENT_CHARGE = "payment_charge"
+    PAYMENT_DUPLICATE = "payment_duplicate"
+    PAYMENT_REVERSAL = "payment_reversal"
     REFUND_REQUEST = "refund_request"
     REFUND_INITIATION = "refund_initiation"
     REFUND_PROCESSING = "refund_processing"
@@ -38,6 +42,12 @@ class FactType(StrEnum):
     DELIVERY_COMPLETION = "delivery_completion"
     DELIVERY_PROMISE = "delivery_promise"
     DELIVERY_PICKUP = "delivery_pickup"
+    ITEM_IDENTITY = "item_identity"
+    ITEM_QUANTITY = "item_quantity"
+    ITEM_DAMAGE = "item_damage"
+    RETURN_REQUEST = "return_request"
+    RETURN_ELIGIBILITY = "return_eligibility"
+    ITEM_CONDITION = "item_condition"
     STATUS = "status"
     OTHER = "other"
 

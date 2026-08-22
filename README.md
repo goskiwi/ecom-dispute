@@ -178,6 +178,8 @@ uv run python -m ecom_dispute \
 
 新建8条Route holdout首轮结果：Route Type与Has Dispute均为8/8，但全项Exact Match为0/8；旧事实本体无法细分商品、支付和退货事实，InteractionAct召回也偏低。Oracle未在运行后调整。详见[V2 Route Holdout报告](evals/v2_route_holdout_report_2026-08-23.md)。
 
+随后破坏性升级Fact ontology，并使用8条全新v4 holdout首轮验证：Route与Has Dispute均为8/8，FactType-only Precision/Recall为90.9%/100%，InteractionAct P/R提升到用户88.9%/100%、客服100%/100%；全项Exact仍为2/8，剩余错误主要是`current/completed`边界。详见[V4 Fact Holdout报告](evals/v4_fact_holdout_report_2026-08-23.md)。
+
 ### 外部数据
 
 ABCD适配器已在官方 `abcd_v1.1.json.gz` 上实测选择50条test对话，覆盖退款、退货、物流和退货后计费场景。外部对话只用于语义和Action评测，不与本项目订单硬拼成“真实案件”。

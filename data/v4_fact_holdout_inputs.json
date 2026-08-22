@@ -1,0 +1,12 @@
+{
+  "cases": [
+    {"case_id":"v4_duplicate_001","conversation":[{"speaker":"user","text":"账单里同一订单出现两笔成功扣款。"},{"speaker":"agent","text":"我正在核对支付流水。"}]},
+    {"case_id":"v4_payment_failure_001","conversation":[{"speaker":"user","text":"银行卡已经扣款，但订单没有创建成功。"},{"speaker":"agent","text":"我正在核验订单和支付状态。"}]},
+    {"case_id":"v4_wrong_item_001","conversation":[{"speaker":"user","text":"订单是蓝色运动鞋，收到的却是红色皮鞋。"},{"speaker":"agent","text":"我正在查询订单SKU和仓库扫描记录。"}]},
+    {"case_id":"v4_missing_item_001","conversation":[{"speaker":"user","text":"订单有三件商品，箱子里实际只有两件。"},{"speaker":"agent","text":"我正在核对订单和打包数量。"}]},
+    {"case_id":"v4_damaged_001","conversation":[{"speaker":"user","text":"显示器到货时屏幕已经裂了。"},{"speaker":"agent","text":"我正在核验破损照片和物流记录。"}]},
+    {"case_id":"v4_return_001","conversation":[{"speaker":"user","text":"衣服一直没拆封，签收第六天还能退货吗？"},{"speaker":"agent","text":"我正在核对退货期限和商品状态。"}]},
+    {"case_id":"v4_refund_amount_001","conversation":[{"speaker":"user","text":"应退480元，实际入账只有420元。"},{"speaker":"agent","text":"我正在核对退款金额和入账流水。"}]},
+    {"case_id":"v4_not_shipped_001","conversation":[{"speaker":"user","text":"下单三天仍然没有揽收记录。"},{"speaker":"agent","text":"我正在查询订单和物流事件。"}]}
+  ]
+}
