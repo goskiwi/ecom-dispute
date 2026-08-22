@@ -26,7 +26,7 @@ EcomDispute 是一个面向电商售后争议的证据化诊断项目。当前 M
 - `EvidenceFusion`：过滤无证据 Finding、去重、检查必需证据、检测退款与支付冲突。
 - 60 个固定案例：40 个退款、20 个物流延迟，覆盖多轮与模糊表达、错误客服承诺、政策宽限期、商家/物流责任、不可抗力和跨源冲突。
 - 单 LLM Agent Function Calling 基线：完整回传 `function_call` / `function_call_output` 历史，支持并行工具调用、严格最终 Schema、轮数预算和 Evidence ID 校验。
-- 语义 Evidence Fusion：LLM 输出 `business_type + has_dispute` 和多标签 `statement_types[]`，代码核验客服所称退款/送达状态与业务记录，并为 `not_found` 查询生成负向 Evidence ID。
+- 语义 Evidence Fusion：LLM 输出 `business_type + has_dispute`、多标签 `statement_types[]` 和 `temporal_status`，代码核验客服所称退款/送达状态与业务记录，并为 `not_found` 查询生成负向 Evidence ID。
 
 当前的 Fact/Policy 模块是确定性专项执行器，不包装成 LLM。真实评测显示当前网关单次短请求仍约含 4.7k 输入 Token，因此先验证一次语义调用的业务收益，再通过对照实验决定是否增加 LLM 调用。
 
@@ -38,6 +38,7 @@ EcomDispute 是一个面向电商售后争议的证据化诊断项目。当前 M
 python -m ecom_dispute data rebuild
 python -m ecom_dispute demo --case-id refund_conflict_001
 python -m ecom_dispute eval --mode offline
+python -m ecom_dispute web --port 8765
 python -m pytest -q
 ```
 
@@ -80,3 +81,7 @@ LLM 只读取会话，不接触评测 Oracle。业务查询结果由工具产生
 M3 详见 [语义融合报告](evals/semantic_fusion_report_2026-08-22.md)、[原始首轮输出](evals/hybrid_semantic_gpt-5.4-mini_40cases_2026-08-22.json) 和 [审计后计分](evals/hybrid_semantic_rescored_40cases_2026-08-22.json)。
 
 M4 扩展为 60 个跨 Skill 案例：确定性裁决、责任方、复检、业务类型和争议存在性均为 60/60；用户/客服类型召回分别为 95.7% 和 96.7%，冲突 Precision 70%、Recall 100%，全项通过 53/60。详见 [跨 Skill 评测报告](evals/multiskill_report_2026-08-22.md)。
+
+本地 Demo 控制台启动后访问 `http://127.0.0.1:8765`，可以筛选 Refund/Delivery 案例并检查对话、时间线、Finding、Evidence 和完整执行轨迹。简历与面试表达见 [项目讲解文档](docs/resume_and_interview.md)。
+
+M5 针对 M4 的三个冲突误报增加时态约束并完成真实 LLM 定向回归，详见 [时态回归报告](evals/temporal_regression_report_2026-08-22.md)。该回归不替代 60 案例首轮指标。

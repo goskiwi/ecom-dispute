@@ -9,7 +9,7 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from .contracts import StatementType
+from .contracts import StatementType, TemporalStatus
 
 
 class ExtractedStatement(BaseModel):
@@ -17,6 +17,7 @@ class ExtractedStatement(BaseModel):
 
     text: str
     statement_types: list[StatementType] = Field(min_length=1)
+    temporal_status: TemporalStatus
     message_indexes: list[int] = Field(min_length=1)
 
 
@@ -65,9 +66,13 @@ class ResponsesClient:
             "delivery_not_received（未收到货）、delivery_delayed（物流延迟）、"
             "delivery_completed（已送达）、delivery_promised（承诺送达或配送时限）、"
             "wait_advice（建议等待）、verify_status（查询或核验）、other。"
+            "temporal_status 必须区分 future（将会/预计/会处理）、current（正在/仍处于）、"
+            "completed（已经发生或完成）和 unknown（无法判断）。"
             "边界示例：‘晚了两天才送到’同时输出 delivery_delayed 和 delivery_completed，has_dispute=true；"
             "‘还没收到，但预计明天送达’输出 delivery_not_received 和 delivery_promised，has_dispute=false；"
-            "‘退款已经正常到账’输出 refund_completed，business_type=refund，has_dispute=false。"
+            "‘退款已经正常到账’输出 refund_completed、temporal_status=completed，business_type=refund，has_dispute=false；"
+            "‘退款会尽快处理’输出 refund_processing、temporal_status=future；"
+            "‘预计五天内到账’不是已完成，使用 wait_advice、temporal_status=future。"
             "user_claims 与 agent_commitments 中的 text 使用原意简述，message_indexes 使用从 0 开始的消息序号。\n"
             f"对话：{json.dumps(messages, ensure_ascii=False)}"
         )

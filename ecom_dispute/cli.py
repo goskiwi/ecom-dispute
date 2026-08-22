@@ -10,6 +10,7 @@ from .harness import DiagnosticHarness
 from .llm import ResponsesClient
 from .repository import DEFAULT_DB, Repository, rebuild_database
 from .semantic_scoring import rescore_semantic_run
+from .web import serve
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -30,6 +31,9 @@ def _parser() -> argparse.ArgumentParser:
     rescore = commands.add_parser("rescore")
     rescore.add_argument("--input", type=Path, required=True)
     rescore.add_argument("--semantic-oracle", type=Path, default=Path("evals/semantic_oracle.json"))
+    web = commands.add_parser("web")
+    web.add_argument("--host", default="127.0.0.1")
+    web.add_argument("--port", type=int, default=8765)
     return parser
 
 
@@ -52,7 +56,9 @@ def main() -> None:
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return
     repository = Repository(args.db)
-    if args.command == "demo":
+    if args.command == "web":
+        serve(repository, args.host, args.port)
+    elif args.command == "demo":
         client = _llm_client(args)
         report = DiagnosticHarness(repository, llm_client=client).diagnose_sync(
             repository.case(args.case_id)

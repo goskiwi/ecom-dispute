@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <link rel="icon" href="data:," />
+    <title>EcomDispute Evidence Console</title>
+    <link rel="stylesheet" href="/assets/app.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="EcomDispute 首页">
+        <span class="brand-mark">ED</span>
+        <span><strong>EcomDispute</strong><small>Evidence Console</small></span>
+      </a>
+      <div class="run-state"><span></span> Offline deterministic demo</div>
+    </header>
+    <main class="workspace">
+      <aside class="case-panel" aria-label="案例列表">
+        <div class="case-controls">
+          <label for="case-search">搜索案例</label>
+          <input id="case-search" type="search" placeholder="Case ID / decision" autocomplete="off" />
+          <div class="filter-row" role="group" aria-label="案例筛选">
+            <select id="skill-filter" aria-label="Skill">
+              <option value="all">全部 Skill</option>
+              <option value="refund">Refund</option>
+              <option value="delivery">Delivery</option>
+            </select>
+            <select id="review-filter" aria-label="复检状态">
+              <option value="all">全部状态</option>
+              <option value="review">需要复检</option>
+              <option value="clear">自动裁决</option>
+            </select>
+          </div>
+        </div>
+        <div class="case-count" id="case-count">正在载入案例…</div>
+        <div class="case-list" id="case-list" aria-live="polite"></div>
+      </aside>
+      <section class="detail" id="detail" aria-live="polite">
+        <div class="detail-loading"><div class="skeleton wide"></div><div class="skeleton"></div><div class="skeleton grid"></div></div>
+      </section>
+    </main>
+    <template id="empty-template">
+      <div class="empty-state"><strong>没有匹配案例</strong><p>调整搜索词或筛选条件。</p></div>
+    </template>
+    <script src="/assets/app.js" defer></script>
+  </body>
+</html>

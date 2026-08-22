@@ -35,6 +35,13 @@ class StatementType(StrEnum):
     OTHER = "other"
 
 
+class TemporalStatus(StrEnum):
+    FUTURE = "future"
+    CURRENT = "current"
+    COMPLETED = "completed"
+    UNKNOWN = "unknown"
+
+
 class Evidence(BaseModel):
     evidence_id: str
     kind: EvidenceKind
@@ -70,6 +77,7 @@ class Finding(BaseModel):
     category: str
     claim: str
     statement_type: StatementType | None = None
+    temporal_status: TemporalStatus | None = None
     evidence_ids: list[str] = Field(default_factory=list)
     policy_rule_ids: list[str] = Field(default_factory=list)
     severity: Literal["info", "warning", "critical"] = "info"
@@ -103,6 +111,7 @@ class DecisionReport(BaseModel):
     decision: str
     timeline: list[dict[str, Any]]
     findings: list[Finding]
+    evidence: list[Evidence]
     evidence_ids: list[str]
     policy_evidence_ids: list[str]
     conflicts: list[str]

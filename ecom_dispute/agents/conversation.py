@@ -7,6 +7,7 @@ from ..contracts import (
     EvidenceKind,
     Finding,
     StatementType,
+    TemporalStatus,
 )
 from ..llm import ResponsesClient
 
@@ -43,6 +44,7 @@ class ConversationAgent:
                     category=category,
                     claim=text,
                     statement_type=self._offline_statement_type(text, speaker == "user"),
+                    temporal_status=self._offline_temporal_status(text),
                     evidence_ids=[evidence.evidence_id],
                 )
             )
@@ -60,23 +62,29 @@ class ConversationAgent:
         findings = []
         for index, statement in enumerate(result.semantics.user_claims, start=1):
             for type_index, statement_type in enumerate(statement.statement_types, start=1):
+                if not self._type_supported_by_text(statement_type, statement.text):
+                    continue
                 findings.append(
                     Finding(
                         finding_id=f"llm-user-claim-{index}-{type_index}",
                         category="user_claim",
                         claim=statement.text,
                         statement_type=statement_type,
+                        temporal_status=statement.temporal_status,
                         evidence_ids=[evidence.evidence_id],
                     )
                 )
         for index, statement in enumerate(result.semantics.agent_commitments, start=1):
             for type_index, statement_type in enumerate(statement.statement_types, start=1):
+                if not self._type_supported_by_text(statement_type, statement.text):
+                    continue
                 findings.append(
                     Finding(
                         finding_id=f"llm-agent-commitment-{index}-{type_index}",
                         category="agent_commitment",
                         claim=statement.text,
                         statement_type=statement_type,
+                        temporal_status=statement.temporal_status,
                         evidence_ids=[evidence.evidence_id],
                     )
                 )
@@ -121,6 +129,33 @@ class ConversationAgent:
                     for item in result.semantics.agent_commitments
                     for statement_type in item.statement_types
                 ],
+                "statements": [
+                    {
+                        "speaker": speaker,
+                        "text": item.text,
+                        "types": [value.value for value in item.statement_types],
+                        "temporal_status": item.temporal_status.value,
+                    }
+                    for speaker, items in (
+                        ("user", result.semantics.user_claims),
+                        ("agent", result.semantics.agent_commitments),
+                    )
+                    for item in items
+                ],
+                "rejected_types": [
+                    {
+                        "speaker": speaker,
+                        "text": item.text,
+                        "type": statement_type.value,
+                    }
+                    for speaker, items in (
+                        ("user", result.semantics.user_claims),
+                        ("agent", result.semantics.agent_commitments),
+                    )
+                    for item in items
+                    for statement_type in item.statement_types
+                    if not self._type_supported_by_text(statement_type, item.text)
+                ],
                 "uncertainty": result.semantics.uncertainty,
             },
         )
@@ -156,3 +191,26 @@ class ConversationAgent:
         if any(token in text for token in ("查询", "确认", "核验", "看下", "核对")):
             return StatementType.VERIFY_STATUS
         return StatementType.OTHER
+
+    @staticmethod
+    def _offline_temporal_status(text: str) -> TemporalStatus:
+        if any(token in text for token in ("已经", "已完成", "已送达", "收到货了", "到账了")):
+            return TemporalStatus.COMPLETED
+        if any(token in text for token in ("预计", "将", "会尽快", "会在", "请等待")):
+            return TemporalStatus.FUTURE
+        if any(token in text for token in ("正在", "处理中", "仍", "一直", "还没", "未")):
+            return TemporalStatus.CURRENT
+        return TemporalStatus.UNKNOWN
+
+    @staticmethod
+    def _type_supported_by_text(statement_type: StatementType, text: str) -> bool:
+        if statement_type == StatementType.REFUND_NOT_RECEIVED:
+            return any(
+                token in text
+                for token in ("没到账", "未到账", "没收到", "未收到", "没有收到", "入账失败")
+            )
+        if statement_type == StatementType.DELIVERY_NOT_RECEIVED:
+            return any(
+                token in text for token in ("没收到", "未收到", "没有收到", "还没到", "一直没到")
+            )
+        return True
