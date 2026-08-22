@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
 
@@ -171,11 +172,11 @@ def evaluate_e2e(
     db_path: Path,
     input_path: Path,
     oracle_path: Path,
+    workers: int = 1,
 ) -> dict:
     repository, case_ids = prepare_e2e_database(db_path, input_path)
     oracle = json.loads(oracle_path.read_text(encoding="utf-8"))
-    results = []
-    for case_id in case_ids:
+    def run_case(case_id: str) -> dict:
         case = repository.case(case_id)
         expected = oracle[case_id]
         try:
@@ -188,22 +189,28 @@ def evaluate_e2e(
             fixed = DiagnosticHarness(repository, PrecomputedConversationAgent(conversation_result))
             live_report = live.diagnose_sync(case)
             fixed_report = fixed.diagnose_sync(case)
-            results.append(
-                {
-                    "case_id": case_id,
-                    "business_type": case.business_type,
-                    "conversation_telemetry": conversation_result.telemetry,
-                    "live": _score_report(live_report, expected, include_agent_check=True),
-                    "fixed": _score_report(fixed_report, expected, include_agent_check=False),
-                }
-            )
+            return {
+                "case_id": case_id,
+                "business_type": case.business_type,
+                "conversation_telemetry": conversation_result.telemetry,
+                "live": _score_report(live_report, expected, include_agent_check=True),
+                "fixed": _score_report(fixed_report, expected, include_agent_check=False),
+            }
         except (RuntimeError, ValueError) as exc:
-            results.append({"case_id": case_id, "error": str(exc)})
+            return {"case_id": case_id, "error": str(exc)}
+
+    results = []
+    with ThreadPoolExecutor(max_workers=workers) as executor:
+        futures = {executor.submit(run_case, case_id): case_id for case_id in case_ids}
+        for future in as_completed(futures):
+            results.append(future.result())
+    results.sort(key=lambda item: item["case_id"])
 
     valid = [item for item in results if "error" not in item]
     return {
         "mode": "e2e_blind_comparison",
         "case_count": len(case_ids),
+        "workers": workers,
         "evaluated": len(valid),
         "api_errors": len(results) - len(valid),
         "live": _aggregate(valid, "live"),

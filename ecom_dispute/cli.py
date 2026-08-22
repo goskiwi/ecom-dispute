@@ -46,6 +46,7 @@ def _parser() -> argparse.ArgumentParser:
     e2e.add_argument("--inputs", type=Path, default=Path("data/v1_e2e_12route_inputs.json"))
     e2e.add_argument("--oracle", type=Path, default=Path("evals/v1_e2e_12route_oracle.json"))
     e2e.add_argument("--e2e-db", type=Path, default=Path("data/v1_e2e_12route.db"))
+    e2e.add_argument("--workers", type=int, default=1)
     return parser
 
 
@@ -77,7 +78,7 @@ def main() -> None:
         return
     if args.command == "e2e-eval":
         client = _llm_client(args, required=True)
-        result = evaluate_e2e(client, args.e2e_db, args.inputs, args.oracle)
+        result = evaluate_e2e(client, args.e2e_db, args.inputs, args.oracle, args.workers)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return
     repository = Repository(args.db)
