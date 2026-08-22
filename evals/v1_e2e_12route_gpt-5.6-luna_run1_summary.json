@@ -1,0 +1,46 @@
+{
+  "model": "gpt-5.6-luna",
+  "source": "v1_e2e_12route_blind_pre_llm",
+  "case_count": 12,
+  "evaluated": 12,
+  "api_errors": 0,
+  "live": {
+    "passed": 12,
+    "route_type_accuracy": 1.0,
+    "decision_accuracy": 1.0,
+    "responsible_party_accuracy": 1.0,
+    "review_accuracy": 1.0,
+    "review_precision": 1.0,
+    "review_recall": 1.0,
+    "required_evidence_rate": 1.0,
+    "required_tools_rate": 1.0,
+    "evidence_grounded_rate": 1.0,
+    "average_tool_calls": 4.75,
+    "agent_input_tokens": 128310,
+    "agent_output_tokens": 8897,
+    "agent_latency_ms": 309725,
+    "per_case_agent_latency_p50_ms": 22903.5,
+    "per_case_agent_latency_p95_ms": 46174,
+    "agent_invocations": {"conversation": 12, "evidence_gap": 4, "review": 8}
+  },
+  "core": {
+    "passed": 12,
+    "route_type_accuracy": 1.0,
+    "decision_accuracy": 1.0,
+    "responsible_party_accuracy": 1.0,
+    "review_accuracy": 1.0,
+    "required_evidence_rate": 1.0,
+    "required_tools_rate": 1.0,
+    "evidence_grounded_rate": 1.0,
+    "average_tool_calls": 4.4166666667,
+    "agent_input_tokens": 69598,
+    "agent_output_tokens": 4340,
+    "agent_latency_ms": 150914
+  },
+  "gap_review_increment": {
+    "input_tokens": 58712,
+    "output_tokens": 4557,
+    "latency_ms": 158811,
+    "average_tool_calls": 0.3333333333
+  }
+}

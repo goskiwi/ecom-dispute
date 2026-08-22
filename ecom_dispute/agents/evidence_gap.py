@@ -73,15 +73,22 @@ class EvidenceGapAgent:
         plan = EvidenceGapPlan.model_validate_json(ResponsesClient._output_text(response))
         allowed = set(resolved.route.lazy_tools)
         if not plan.needs_more_evidence:
-            state.trace.append(
-                {
-                    "event": "EVIDENCE_GAP_AGENT_COMPLETED",
-                    "agent": self.name,
-                    "selected_tool": None,
-                    "reason": plan.reason,
-                }
+            usage = response.get("usage") or {}
+            return reducer.apply(
+                state,
+                AgentResult(
+                    agent=self.name,
+                    telemetry={
+                        "model": response.get("model", self.client.model),
+                        "response_id": response.get("id"),
+                        "input_tokens": int(usage.get("input_tokens", 0)),
+                        "output_tokens": int(usage.get("output_tokens", 0)),
+                        "latency_ms": latency_ms,
+                        "reason": plan.reason,
+                        "selected_tool": None,
+                    },
+                ),
             )
-            return state
         if not plan.tool_id or plan.tool_id not in allowed:
             raise ValueError(f"EvidenceGapAgent selected tool outside route: {plan.tool_id}")
         loaded_state = run_state.model_copy(
@@ -116,4 +123,3 @@ class EvidenceGapAgent:
                 },
             ),
         )
-

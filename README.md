@@ -182,6 +182,8 @@ uv run python -m ecom_dispute \
 
 Temporal v5进一步删除`temporal_status`，拆分为`fact_mode + time_relation`。16条全新holdout首轮全项11/16，用户BusinessFact P/R为88.9%/94.1%，用户InteractionAct为100%/100%。详见[V5 Temporal Holdout报告](evals/v5_temporal_holdout_report_2026-08-23.md)。
 
+v1.0发布后新建12条完整E2E案件，每个主Route一条。真实三Agent链路与共享Conversation的Core对照均为12/12，Route、Decision、Party、Review、Evidence和Tool检查全部通过；Gap/Review额外增加58,712输入Token和158.8秒累计延迟，没有提高本轮裁决准确率。详见[12-Route E2E报告](evals/v1_e2e_12route_report_2026-08-23.md)。
+
 共享Conversation输出的三层消融显示：GapAgent增加1条网关Evidence但不改变裁决，增量成本约4.7k输入Token；ReviewAgent增加1条复检Finding而不改确定性裁决，增量成本约4.8k输入Token。详见[V5 Agent Layer消融](evals/v5_agent_layer_ablation_report_2026-08-23.md)。
 
 ### 外部数据

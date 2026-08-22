@@ -30,6 +30,7 @@ EcomDispute解决的是电商争议中“对话说法、系统事实和政策版
 - 8条新Route holdout首轮路由8/8，但全项Exact Match 0/8；失败集中于旧FactType本体和InteractionAct标注边界，不能表述成业务准确率。
 - 破坏性扩展Fact ontology后，第二批8条新holdout的FactType-only P/R为90.9%/100%，用户InteractionAct P/R为88.9%/100%，客服为100%/100%；全项Exact 2/8，主要受TemporalStatus边界影响。
 - Temporal v5删除旧`temporal_status`并拆分event/state与past/present/future；16条新holdout首轮全项11/16，用户BusinessFact P/R为88.9%/94.1%，用户InteractionAct为100%/100%。
+- v1.0发布后新建12条全链路E2E盲测，12个主Route的Route、Decision、Party、Review、Evidence和Tool检查均通过；三Agent相对Core未提高准确率，额外增加约5.9万输入Token和159秒累计延迟。
 
 ## 不能使用的表述
 

@@ -43,9 +43,9 @@ def _parser() -> argparse.ArgumentParser:
     holdout.add_argument("--repeats", type=int, default=3)
     holdout.add_argument("--workers", type=int, default=1)
     e2e = commands.add_parser("e2e-eval")
-    e2e.add_argument("--inputs", type=Path, default=Path("data/e2e_blind_inputs.json"))
-    e2e.add_argument("--oracle", type=Path, default=Path("evals/e2e_blind_oracle.json"))
-    e2e.add_argument("--e2e-db", type=Path, default=Path("data/e2e_blind.db"))
+    e2e.add_argument("--inputs", type=Path, default=Path("data/v1_e2e_12route_inputs.json"))
+    e2e.add_argument("--oracle", type=Path, default=Path("evals/v1_e2e_12route_oracle.json"))
+    e2e.add_argument("--e2e-db", type=Path, default=Path("data/v1_e2e_12route.db"))
     return parser
 
 
