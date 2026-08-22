@@ -1,0 +1,29 @@
+{
+  "schema_version": 3,
+  "model": "gpt-5.6-luna",
+  "case_count": 8,
+  "evaluated": 8,
+  "api_errors": 0,
+  "full_exact_match": 0,
+  "route_type_accuracy": 1.0,
+  "has_dispute_accuracy": 1.0,
+  "user_business_fact_precision": 0.2727272727,
+  "user_business_fact_recall": 0.75,
+  "user_interaction_act_precision": 1.0,
+  "user_interaction_act_recall": 0.375,
+  "agent_interaction_act_precision": 0.5,
+  "agent_interaction_act_recall": 0.4444444444,
+  "input_tokens": 43762,
+  "output_tokens": 1755,
+  "latency_ms": 82257,
+  "per_case": {
+    "v2_route_damaged_001": {"route_type": true, "has_dispute": true, "user_business_facts": false, "user_interaction_acts": true, "agent_interaction_acts": false},
+    "v2_route_duplicate_001": {"route_type": true, "has_dispute": true, "user_business_facts": false, "user_interaction_acts": false, "agent_interaction_acts": false},
+    "v2_route_not_received_001": {"route_type": true, "has_dispute": true, "user_business_facts": true, "user_interaction_acts": false, "agent_interaction_acts": false},
+    "v2_route_not_shipped_001": {"route_type": true, "has_dispute": true, "user_business_facts": false, "user_interaction_acts": false, "agent_interaction_acts": true},
+    "v2_route_payment_failure_001": {"route_type": true, "has_dispute": true, "user_business_facts": false, "user_interaction_acts": true, "agent_interaction_acts": true},
+    "v2_route_refund_amount_001": {"route_type": true, "has_dispute": true, "user_business_facts": false, "user_interaction_acts": false, "agent_interaction_acts": true},
+    "v2_route_return_001": {"route_type": true, "has_dispute": true, "user_business_facts": false, "user_interaction_acts": true, "agent_interaction_acts": false},
+    "v2_route_wrong_item_001": {"route_type": true, "has_dispute": true, "user_business_facts": false, "user_interaction_acts": false, "agent_interaction_acts": true}
+  }
+}

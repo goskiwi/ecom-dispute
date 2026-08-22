@@ -1,0 +1,12 @@
+{
+  "cases": [
+    {"case_id":"v2_route_refund_amount_001","conversation":[{"speaker":"user","text":"这单实付299元，退款只到账199元，金额明显不对。"},{"speaker":"agent","text":"我正在核对退款和入账流水。"}]},
+    {"case_id":"v2_route_duplicate_001","conversation":[{"speaker":"user","text":"同一个订单银行卡连续扣了两次199元。"},{"speaker":"agent","text":"我会核验两笔支付交易。"}]},
+    {"case_id":"v2_route_payment_failure_001","conversation":[{"speaker":"user","text":"钱已经扣了，但页面说订单创建失败。"},{"speaker":"agent","text":"我正在检查订单和支付状态。"}]},
+    {"case_id":"v2_route_not_shipped_001","conversation":[{"speaker":"user","text":"下单四天了商家还没发货，也没有任何揽收记录。"},{"speaker":"agent","text":"我去核对商家发货时限。"}]},
+    {"case_id":"v2_route_not_received_001","conversation":[{"speaker":"user","text":"物流显示昨天已经签收，但我和家人都没有收到。"},{"speaker":"agent","text":"我会查询签收证明并提交复检。"}]},
+    {"case_id":"v2_route_return_001","conversation":[{"speaker":"user","text":"商品没拆封，收到第五天了，现在还能申请退货吗？"},{"speaker":"agent","text":"我会核对商品品类和退货期限。"}]},
+    {"case_id":"v2_route_wrong_item_001","conversation":[{"speaker":"user","text":"我买的是黑色外套，包裹里却是白色衬衫。"},{"speaker":"agent","text":"我正在核对订单SKU和仓库记录。"}]},
+    {"case_id":"v2_route_damaged_001","conversation":[{"speaker":"user","text":"商品到货时外壳已经碎了，我上传了照片。"},{"speaker":"agent","text":"我会核验照片、包装和物流记录。"}]}
+  ]
+}

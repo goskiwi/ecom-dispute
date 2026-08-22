@@ -27,6 +27,7 @@ EcomDispute解决的是电商争议中“对话说法、系统事实和政策版
 - ABCD适配器实测选择50条官方test对话。
 - `m6_refund_amount_001`真实Agent链路：Conversation + EvidenceGap，10,145输入Token、379输出Token、26.9秒模型延迟，Route与结论正确。
 - `refund_conflict_001`真实Agent链路：Conversation + Review，10,289输入Token、810输出Token、56.8秒模型延迟，Route与结论正确。
+- 8条新Route holdout首轮路由8/8，但全项Exact Match 0/8；失败集中于旧FactType本体和InteractionAct标注边界，不能表述成业务准确率。
 
 ## 不能使用的表述
 

@@ -176,6 +176,8 @@ uv run python -m ecom_dispute \
 
 两条定向案例的Route、裁决、责任和复检符合预期。该结果是已有案例冒烟，不称为盲测准确率。详见[真实Agent冒烟报告](evals/v2_live_agent_smoke_2026-08-23.md)。
 
+新建8条Route holdout首轮结果：Route Type与Has Dispute均为8/8，但全项Exact Match为0/8；旧事实本体无法细分商品、支付和退货事实，InteractionAct召回也偏低。Oracle未在运行后调整。详见[V2 Route Holdout报告](evals/v2_route_holdout_report_2026-08-23.md)。
+
 ### 外部数据
 
 ABCD适配器已在官方 `abcd_v1.1.json.gz` 上实测选择50条test对话，覆盖退款、退货、物流和退货后计费场景。外部对话只用于语义和Action评测，不与本项目订单硬拼成“真实案件”。
@@ -189,7 +191,7 @@ ABCD适配器已在官方 `abcd_v1.1.json.gz` 上实测选择50条test对话，�
 - 业务数据主要为人工和规则构造，不是企业生产流量。
 - 工具后端主要为本地SQLite，不代表远程微服务可靠性。
 - 152/152是确定性回归，不是LLM准确率。
-- 当前真实LLM结果仍是小样本冒烟，独立Route盲测尚未完成。
+- 独立Route盲测只有8条；虽然Route为8/8，但事实和交互行为合同仍需扩展。
 - 没有写操作、审批、沙箱、长期记忆、完整DAG或分布式恢复。
 - 多Agent串行延迟仍高，真实复检案例累计模型延迟约57秒。
 
