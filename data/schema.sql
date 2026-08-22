@@ -73,3 +73,18 @@ CREATE TABLE IF NOT EXISTS policies (
     source_summary TEXT NOT NULL,
     PRIMARY KEY (policy_id, version)
 );
+
+CREATE TABLE IF NOT EXISTS review_tasks (
+    review_id TEXT PRIMARY KEY,
+    case_id TEXT NOT NULL UNIQUE REFERENCES cases(case_id),
+    reason TEXT NOT NULL,
+    conflict_evidence_json TEXT NOT NULL,
+    status TEXT NOT NULL,
+    system_decision TEXT NOT NULL,
+    system_responsible_party TEXT NOT NULL,
+    reviewer_decision TEXT,
+    reviewer_responsible_party TEXT,
+    reviewer_comment TEXT,
+    created_at TEXT NOT NULL,
+    resolved_at TEXT
+);

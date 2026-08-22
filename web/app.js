@@ -3,6 +3,7 @@ const els = {
   list: document.querySelector("#case-list"), count: document.querySelector("#case-count"),
   detail: document.querySelector("#detail"), search: document.querySelector("#case-search"),
   skill: document.querySelector("#skill-filter"), review: document.querySelector("#review-filter"),
+  runState: document.querySelector("#run-state"),
 };
 const escapeHtml = (value) => String(value ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
 const label = (value) => String(value ?? "-").replaceAll("_", " ");
@@ -49,13 +50,16 @@ async function loadCase(caseId) {
 function renderDetail(data) {
   const input = data.input;
   const report = data.report;
+  const review = data.review;
   const evidenceMap = Object.fromEntries(report.evidence.map((item) => [item.evidence_id, item]));
   const conflicts = report.conflicts.length
     ? report.conflicts.map((item) => `<div class="conflict">${escapeHtml(item)}</div>`).join("")
     : '<div class="empty-state"><strong>未发现冲突</strong><p>对话、业务事实和政策引用一致。</p></div>';
+  const reviewPanel = review ? renderReview(review, report) : "";
   els.detail.innerHTML = `<div class="detail-inner">
     <header class="detail-header"><div><p class="case-id">${escapeHtml(input.case_id)} · ${escapeHtml(input.source_type)}</p><h1>${escapeHtml(label(report.decision))}</h1></div><div class="decision-state"><span>裁决状态</span><strong>${report.review_required ? "MANUAL REVIEW" : "AUTO DECISION"}</strong></div></header>
     <div class="metrics">${metric("Skill", report.dispute_type)}${metric("责任方", report.responsible_party)}${metric("Evidence", report.evidence_ids.length)}${metric("冲突", report.conflicts.length)}</div>
+    ${reviewPanel}
     <div class="split">
       <section class="section"><div class="section-title"><h2>对话</h2><span>${input.conversation.length} MESSAGES</span></div><div class="panel">${input.conversation.map((message) => `<div class="message"><span class="speaker">${escapeHtml(message.speaker)}</span><p>${escapeHtml(message.text)}</p></div>`).join("")}</div></section>
       <section class="section"><div class="section-title"><h2>建议动作</h2></div><div class="panel action">${escapeHtml(report.recommended_action)}</div><div class="section"><div class="section-title"><h2>冲突</h2><span>${report.conflicts.length}</span></div>${conflicts}</div></section>
@@ -67,14 +71,43 @@ function renderDetail(data) {
     </div>
     <section class="section"><div class="section-title"><h2>执行轨迹</h2><span>${report.trace.length} STEPS</span></div><div class="panel">${report.trace.map((item) => `<div class="trace-row"><strong>${escapeHtml(item.stage)}</strong><code>${json(item)}</code></div>`).join("")}</div></section>
   </div>`;
+  document.querySelectorAll("[data-review-action]").forEach((button) => {
+    button.addEventListener("click", () => resolveReview(input.case_id, button.dataset.reviewAction));
+  });
 }
 
 function metric(name, value) { return `<div class="metric"><span>${escapeHtml(name)}</span><strong>${escapeHtml(label(value))}</strong></div>`; }
 
+function renderReview(review, report) {
+  if (review.status === "resolved") {
+    return `<section class="review-panel resolved"><div><strong>人工复检已完成</strong><p>${escapeHtml(review.reviewer_comment || "无备注")}</p></div><dl><dt>人工结论</dt><dd>${escapeHtml(label(review.reviewer_decision))}</dd><dt>责任方</dt><dd>${escapeHtml(label(review.reviewer_responsible_party))}</dd></dl></section>`;
+  }
+  return `<section class="review-panel"><div><strong>待人工复检</strong><p>${escapeHtml(review.reason)}</p><div class="review-evidence">${review.conflict_evidence_ids.map(escapeHtml).join(" · ")}</div></div><label for="review-comment">复检备注</label><textarea id="review-comment" rows="3" placeholder="说明确认或修改原因"></textarea><div class="review-actions"><button data-review-action="confirm">确认系统结论</button><button class="secondary" data-review-action="insufficient">标记证据不足</button></div></section>`;
+}
+
+async function resolveReview(caseId, action) {
+  const selected = state.cases.find((item) => item.case_id === caseId);
+  const payload = action === "confirm"
+    ? { decision: selected.decision, responsible_party: selected.responsible_party }
+    : { decision: "manual_review", responsible_party: "undetermined" };
+  payload.comment = document.querySelector("#review-comment")?.value.trim() || "未填写备注";
+  const response = await fetch(`/api/reviews/${encodeURIComponent(caseId)}/resolve`, {
+    method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload),
+  });
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error || `HTTP ${response.status}`);
+  }
+  await loadCase(caseId);
+}
+
 async function boot() {
   try {
-    const response = await fetch("/api/cases");
+    const [response, metaResponse] = await Promise.all([fetch("/api/cases"), fetch("/api/meta")]);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    if (!metaResponse.ok) throw new Error(`HTTP ${metaResponse.status}`);
+    const meta = await metaResponse.json();
+    els.runState.innerHTML = `<span></span> ${escapeHtml(label(meta.agent_mode))}`;
     state.cases = await response.json();
     filterCases();
     const requested = new URLSearchParams(location.search).get("case");

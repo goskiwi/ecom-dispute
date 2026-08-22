@@ -4,8 +4,8 @@ from ..contracts import AgentResult, CaseInput, Finding
 from ..tool_registry import ToolRegistry
 
 
-class PolicyAgent:
-    name = "policy"
+class PolicyResolver:
+    name = "policy_resolver"
 
     def __init__(self, registry: ToolRegistry):
         self.registry = registry

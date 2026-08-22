@@ -119,3 +119,18 @@ class DecisionReport(BaseModel):
     recommended_action: str
     review_required: bool
     trace: list[dict[str, Any]]
+
+
+class ReviewTask(BaseModel):
+    review_id: str
+    case_id: str
+    reason: str
+    conflict_evidence_ids: list[str]
+    status: Literal["pending", "resolved"]
+    system_decision: str
+    system_responsible_party: str
+    reviewer_decision: str | None = None
+    reviewer_responsible_party: str | None = None
+    reviewer_comment: str | None = None
+    created_at: datetime
+    resolved_at: datetime | None = None

@@ -44,10 +44,17 @@ class LLMResult:
 class ResponsesClient:
     """Small Responses API client; credentials remain process-only."""
 
-    def __init__(self, base_url: str, api_key: str, model: str = "gpt-5.4-mini"):
+    def __init__(
+        self,
+        base_url: str,
+        api_key: str,
+        model: str = "gpt-5.4-mini",
+        timeout_seconds: int = 60,
+    ):
         self.base_url = base_url.rstrip("/")
         self.api_key = api_key
         self.model = model
+        self.timeout_seconds = timeout_seconds
 
     def extract_conversation(self, messages: list[dict[str, str]]) -> LLMResult:
         prompt = (
@@ -116,13 +123,17 @@ class ResponsesClient:
             method="POST",
         )
         try:
-            with urllib.request.urlopen(request, timeout=60) as response:
+            with urllib.request.urlopen(request, timeout=self.timeout_seconds) as response:
                 return json.loads(response.read().decode("utf-8"))
         except urllib.error.HTTPError as exc:
             body = exc.read().decode("utf-8", errors="replace")
             raise RuntimeError(f"LLM request failed with HTTP {exc.code}: {body[:500]}") from exc
         except urllib.error.URLError as exc:
             raise RuntimeError(f"LLM request failed: {exc.reason}") from exc
+        except TimeoutError as exc:
+            raise RuntimeError(
+                f"LLM request timed out after {self.timeout_seconds} seconds"
+            ) from exc
 
     @staticmethod
     def _output_text(response: dict[str, Any]) -> str:

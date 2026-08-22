@@ -69,7 +69,15 @@ class ToolRegistry:
             return ToolResult(tool_name=name, status="invalid", error_code="UNKNOWN_TOOL")
         cache_key = (name, tuple(sorted(arguments.items())))
         if cache_key not in self._cache:
-            self._cache[cache_key] = self._tools[name](**arguments)
+            try:
+                self._cache[cache_key] = self._tools[name](**arguments)
+            except (TypeError, ValueError) as exc:
+                return ToolResult(
+                    tool_name=name,
+                    status="invalid",
+                    error_code="INVALID_ARGUMENTS",
+                    message=str(exc),
+                )
         return self._cache[cache_key].model_copy(deep=True)
 
     def get_order(self, order_id: str) -> ToolResult:

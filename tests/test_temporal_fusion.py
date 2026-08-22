@@ -1,4 +1,3 @@
-from ecom_dispute.agents.conversation import ConversationAgent
 from ecom_dispute.contracts import (
     CaseState,
     Evidence,
@@ -45,12 +44,3 @@ def test_completed_claim_conflicts_with_missing_refund() -> None:
     state = _state(TemporalStatus.COMPLETED)
     EvidenceFusion._fuse_conversation_facts(state, [], [], [])
     assert state.conflicts == ["客服称退款已完成，但退款系统不存在成功记录"]
-
-
-def test_negative_type_requires_negative_language() -> None:
-    assert not ConversationAgent._type_supported_by_text(
-        StatementType.REFUND_NOT_RECEIVED, "卡里收到一百九十九元"
-    )
-    assert ConversationAgent._type_supported_by_text(
-        StatementType.REFUND_NOT_RECEIVED, "银行卡一直没到账"
-    )

@@ -1,6 +1,6 @@
 # EcomDispute
 
-EcomDispute 是一个面向电商售后争议的证据化诊断项目。当前 MVP 聚焦退款争议：系统从客服对话中提取用户主张和客服承诺，查询订单、支付、退款、售后与事发时有效政策，再通过确定性融合输出责任方、处理建议、证据链和人工复检标记。
+EcomDispute 是一个面向退款与物流争议的 LLM 增强型证据化裁决原型。真实运行模式由 Conversation Agent 提取对话语义，Tool Query Agent 根据逐轮 CaseState 选择只读工具，最终由 Skill Strategy 和确定性 Evidence Fusion 输出建议裁决与人工复检任务。
 
 ## 为什么是这个项目
 
@@ -20,15 +20,19 @@ EcomDispute 是一个面向电商售后争议的证据化诊断项目。当前 M
 
 - SQLite 中的订单、支付、退款、售后、物流和版本化政策数据。
 - 6 个只读业务工具及 Case 级查询缓存。
-- `ConversationAgent`：支持真实 Responses API 严格结构化输出，也支持无密钥离线模式。
-- `FactAgent` 与 `PolicyAgent`：并行查询独立信息源。
+- `ConversationAgent`：只负责真实 Responses API 结构化语义提取，不包含关键词降级。
+- `ToolQueryAgent`：在 live 模式中逐轮读取 CaseState，自主选择 Skill 允许的工具，并记录停止原因、Token 和延迟。
+- `FixedFactExecutor` 与 `PolicyResolver`：仅用于确定性测试和录制回放，不称为 Agent。
+- `HeuristicConversationStub`：仅供测试，Trace 明确标记 `heuristic_test_stub`。
 - `CaseStateReducer`：确定性投影 Evidence、Finding、时间线和 Trace。
 - `EvidenceFusion`：过滤无证据 Finding、去重、检查必需证据、检测退款与支付冲突。
 - 60 个固定案例：40 个退款、20 个物流延迟，覆盖多轮与模糊表达、错误客服承诺、政策宽限期、商家/物流责任、不可抗力和跨源冲突。
 - 单 LLM Agent Function Calling 基线：完整回传 `function_call` / `function_call_output` 历史，支持并行工具调用、严格最终 Schema、轮数预算和 Evidence ID 校验。
 - 语义 Evidence Fusion：LLM 输出 `business_type + has_dispute`、多标签 `statement_types[]` 和 `temporal_status`，代码核验客服所称退款/送达状态与业务记录，并为 `not_found` 查询生成负向 Evidence ID。
+- `SkillRegistry`：Refund/Delivery 各自拥有工具边界、必需证据和 Decision Strategy，Fusion 不按 Skill 名称分支。
+- 持久化 Review Task：支持 pending/resolved、人工结论、责任方、备注和冲突证据引用。
 
-当前的 Fact/Policy 模块是确定性专项执行器，不包装成 LLM。真实评测显示当前网关单次短请求仍约含 4.7k 输入 Token，因此先验证一次语义调用的业务收益，再通过对照实验决定是否增加 LLM 调用。
+项目没有上下文卸载、多地区、多语言或批处理 Worker；当前数据规模没有证明这些机制必要，因此不在 README 中声称已实现。
 
 ## 快速开始
 
@@ -37,7 +41,7 @@ EcomDispute 是一个面向电商售后争议的证据化诊断项目。当前 M
 ```bash
 python -m ecom_dispute data rebuild
 python -m ecom_dispute demo --case-id refund_conflict_001
-python -m ecom_dispute eval --mode offline
+python -m ecom_dispute eval --mode deterministic
 python -m ecom_dispute web --port 8765
 python -m pytest -q
 ```
@@ -49,7 +53,7 @@ export ECOM_DISPUTE_API_KEY='your-key'
 python -m ecom_dispute \
   --base-url 'https://your-openai-compatible-endpoint.example' \
   --model 'gpt-5.4-mini' \
-  eval --mode compare
+  demo --agent-mode live-llm --case-id refund_conflict_001
 ```
 
 ## 执行链路
@@ -57,22 +61,24 @@ python -m ecom_dispute \
 ```text
 Case Intake / Skill Router
           |
-          +--> ConversationAgent -- real LLM semantic extraction
-          +--> FactAgent --------- Skill-scoped business tools
-          +--> PolicyAgent ------- effective-time policy lookup
-                              |
-                       CaseState Reducer
+     ConversationAgent -- real LLM semantic extraction
+          |
+     CaseState Reducer
+          |
+     ToolQueryAgent ---- LLM selects read-only tools over multiple rounds
+          |
+     CaseState Reducer after every ToolResult
                               |
                        Evidence Fusion
                               |
               DecisionReport / manual review
 ```
 
-LLM 只读取会话，不接触评测 Oracle。业务查询结果由工具产生，政策生效时间、证据存在性、退款/支付冲突和最终复检条件由代码检查。
+LLM 不接触评测 Oracle。业务查询结果由工具产生，政策时效、跨源冲突和最终责任由代码计算。
 
 ## 当前评测
 
-2026-08-22 使用 `gpt-5.4-mini-2026-03-17` 对 20 个案例完成 Function Calling 对照：Hybrid 最终裁决 20/20，单 Agent 基线最终裁决 14/20，Baseline 使用约 2.32 倍输入 Token 和 3.33 倍模型累计延迟。
+M2-M4 报告属于旧开发集实验，案例、规则和 Oracle 均由本仓库构造，不是独立准确率。它们保留用于展示架构取舍和失败分析，不能直接作为当前重构后主链路的最终指标。
 
 随后扩展至 40 个案例验证语义融合：最终裁决、责任方和复检均为 40/40，用户 statement type 召回 90.7%，客服承诺类型召回 97.6%，6 个对话-事实冲突的 Precision/Recall 均为 100%，全项通过 34/40。数据仍为人工与规则构造，不表述为线上业务准确率。
 
@@ -80,8 +86,10 @@ LLM 只读取会话，不接触评测 Oracle。业务查询结果由工具产生
 
 M3 详见 [语义融合报告](evals/semantic_fusion_report_2026-08-22.md)、[原始首轮输出](evals/hybrid_semantic_gpt-5.4-mini_40cases_2026-08-22.json) 和 [审计后计分](evals/hybrid_semantic_rescored_40cases_2026-08-22.json)。
 
-M4 扩展为 60 个跨 Skill 案例：确定性裁决、责任方、复检、业务类型和争议存在性均为 60/60；用户/客服类型召回分别为 95.7% 和 96.7%，冲突 Precision 70%、Recall 100%，全项通过 53/60。详见 [跨 Skill 评测报告](evals/multiskill_report_2026-08-22.md)。
+当前重构后的 live 主链路已完成 `refund_conflict_001` 真实端到端冒烟：工具 Agent 用三轮查询订单/退款/支付/售后/政策，并保留逐轮 Response ID 和 CaseState Trace。全量重新评测尚未完成。
 
-本地 Demo 控制台启动后访问 `http://127.0.0.1:8765`，可以筛选 Refund/Delivery 案例并检查对话、时间线、Finding、Evidence 和完整执行轨迹。简历与面试表达见 [项目讲解文档](docs/resume_and_interview.md)。
+本地 Demo 默认使用保存的真实 LLM 记录，顶栏显示 `recorded`；`--agent-mode live-llm` 才调用实时模型，`--agent-mode heuristic-test` 仅用于测试。控制台支持人工复检操作。
+
+30 条后置 holdout 已建立，但网关当前 30/30 返回 HTTP 502，没有有效指标。详见 [Holdout 状态](evals/holdout_status_2026-08-22.md)。
 
 M5 针对 M4 的三个冲突误报增加时态约束并完成真实 LLM 定向回归，详见 [时态回归报告](evals/temporal_regression_report_2026-08-22.md)。该回归不替代 60 案例首轮指标。

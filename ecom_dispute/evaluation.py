@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from .agents import HeuristicConversationStub
 from .baseline import ToolCallingBaseline
 from .harness import DiagnosticHarness
 from .llm import ResponsesClient
@@ -23,7 +24,11 @@ def evaluate(
         if semantic_oracle_path.exists()
         else {}
     )
-    harness = DiagnosticHarness(repository, llm_client=llm_client)
+    harness = (
+        DiagnosticHarness.live(repository, llm_client)
+        if llm_client
+        else DiagnosticHarness(repository, HeuristicConversationStub())
+    )
     results = []
     for case_id in case_ids or repository.case_ids():
         case = repository.case(case_id)
@@ -129,7 +134,7 @@ def evaluate(
         for item in semantic_cases
     )
     return {
-        "mode": "llm" if llm_client else "offline",
+        "mode": "llm" if llm_client else "deterministic_test",
         "case_count": len(results),
         "passed": sum(item["passed"] for item in results),
         "pass_rate": sum(item["passed"] for item in results) / len(results) if results else 0,

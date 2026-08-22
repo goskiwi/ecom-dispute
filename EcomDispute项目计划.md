@@ -41,26 +41,31 @@ EcomDispute 是一个面向电商售后争议的多 Agent 证据化诊断系统�
 
 ### 1.2 当前可运行基线（2026-08-22）
 
-仓库已完成退款与物流延迟 M5 演示闭环：
+仓库已完成退款与物流延迟 M6 工程重构：
 
 - 订单、支付、退款、售后、物流、政策 SQLite Schema 与 60 个固定案例，其中 Refund 40 个、Delivery 20 个。
-- 6 个只读业务工具、CaseState Reducer、Refund/Delivery 两个 Skill 和 Evidence Fusion。
-- Conversation/Fact/Policy 三个专项任务并行，其中 Conversation Agent 支持真实 LLM 严格结构化输出；事实与政策模块当前为确定性执行器。
+- 6 个只读业务工具、逐轮 CaseState Reducer、Refund/Delivery 两个 Decision Strategy 和通用 Evidence Fusion。
+- live 模式由真实 Conversation Agent 与 Tool Query Agent 串联；工具 Agent 每轮读取最新状态并自主选择 Skill 允许的只读工具。录制回放中的固定查询模块明确命名为 Executor/Resolver，不称为 Agent。
 - 覆盖退款未发起超时、处理中、到账超时、已完成、退款/支付事实冲突、证据缺失和历史政策版本。
 - 单 LLM Agent Function Calling 基线，支持并行工具调用、完整历史续轮、严格 JSON Schema、轮数预算和 Evidence 引用校验。
 - LLM 将用户主张和客服承诺输出为 `business_type + has_dispute + statement_types[] + temporal_status`，Evidence Fusion 仅对当前或已完成的状态承诺生成硬冲突；空查询生成独立负向 Evidence。
-- 本地只读 Evidence Console 支持案例搜索、Skill/复检筛选、对话、时间线、Finding、Evidence 和 Trace 查看。
-- 29 个自动化测试通过。
+- Evidence Console 默认展示保存的真实 LLM Trace，支持 live-llm/recorded/heuristic-test 三种显式模式。
+- 持久化 Review Task 支持 pending/resolved、冲突证据、人工结论、责任方和备注。
+- 33 个自动化测试通过。
 
-真实 LLM 首轮对照评测使用 `gpt-5.4-mini-2026-03-17`。Hybrid 最终裁决、责任方和复检分流为 20/20，语义路由为 19/20；单 Agent Function Calling 基线最终裁决为 14/20，全项通过 11/20。Baseline 使用 216,619 输入 Token、累计模型延迟 385,275 ms，分别约为 Hybrid 的 2.32 倍和 3.33 倍。全部失败结果及调用轨迹原样保留。
+以下 M2-M5 指标均来自重构前的构造开发集，只保留为历史实验，不代表当前 live 主链路或独立准确率。
+
+历史 M2 对照使用 `gpt-5.4-mini-2026-03-17`：旧 Hybrid 最终裁决为 20/20，单 Agent Function Calling 为 14/20。全部失败结果及调用轨迹原样保留。
 
 M3 的 40 案例真实 LLM 首轮评测中，最终裁决、责任方和复检分流均为 40/40；用户 statement type 召回 90.7%，客服承诺类型召回 97.6%，对话-事实冲突 Precision/Recall 均为 100%，全项通过 34/40。原始模型输出与 Oracle 审计后计分分开保存，不用重跑覆盖首轮结果。
 
 M4 扩展至 60 个跨 Skill 案例。审计后 `business_type`、`has_dispute`、最终裁决、责任方和复检均为 60/60；用户/客服 statement type 召回分别为 95.7% 和 96.7%，对话-事实冲突 Precision 为 70%、Recall 为 100%，全项通过 53/60。剩余错误集中于未来、当前和完成时态混淆。
 
-M5 针对三个已知冲突误报增加 `temporal_status` 和窄范围原文一致性校验，并完成真实 LLM 定向回归；该结果单独报告，不覆盖 M4 的 60 案例首轮指标。
+M5 曾针对三个冲突误报增加 `temporal_status` 和原文一致性校验；M6 审计后保留时态合同、删除 live 路径中的关键词一致性校验，历史回归不再代表当前主链路。
 
-实测单次短请求仍约产生 4.7k 输入 Token。M2 前保持“一次 LLM 语义分析 + 确定性事实/政策/融合”，新增 LLM Agent 必须通过相同案例、模型和总预算的对照实验说明证据完整率或语义判断存在收益。
+M6 新主链路已完成一个真实端到端冒烟案例：工具 Agent 分三轮查询并停止，Trace 保存每轮 Response ID、Token、延迟和工具结果。30 条后置语义 holdout 已建立，但当前网关 30/30 返回 HTTP 502，没有有效新指标。
+
+实测单次短请求仍约产生 4.7k 输入 Token。新主链路增加 Tool Query Agent 后必须重新测量收益与额外成本；在 holdout 获得有效结果前不写最终简历指标。
 
 ## 2. 版本目标
 

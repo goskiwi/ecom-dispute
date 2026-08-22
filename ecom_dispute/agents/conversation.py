@@ -6,8 +6,6 @@ from ..contracts import (
     Evidence,
     EvidenceKind,
     Finding,
-    StatementType,
-    TemporalStatus,
 )
 from ..llm import ResponsesClient
 
@@ -15,7 +13,7 @@ from ..llm import ResponsesClient
 class ConversationAgent:
     name = "conversation"
 
-    def __init__(self, llm_client: ResponsesClient | None = None):
+    def __init__(self, llm_client: ResponsesClient):
         self.llm_client = llm_client
 
     async def run(self, case: CaseInput) -> AgentResult:
@@ -28,32 +26,7 @@ class ConversationAgent:
             facts={"messages": case.conversation},
             summary=f"会话共 {len(case.conversation)} 条消息",
         )
-        if self.llm_client:
-            return await self._run_with_llm(case, evidence)
-
-        findings: list[Finding] = []
-        for index, message in enumerate(case.conversation):
-            speaker = message.get("speaker")
-            text = message.get("text", "").strip()
-            if not text:
-                continue
-            category = "user_claim" if speaker == "user" else "agent_commitment"
-            findings.append(
-                Finding(
-                    finding_id=f"conversation-{index + 1}",
-                    category=category,
-                    claim=text,
-                    statement_type=self._offline_statement_type(text, speaker == "user"),
-                    temporal_status=self._offline_temporal_status(text),
-                    evidence_ids=[evidence.evidence_id],
-                )
-            )
-        return AgentResult(
-            agent=self.name,
-            findings=findings,
-            evidence=[evidence],
-            telemetry={"mode": "offline"},
-        )
+        return await self._run_with_llm(case, evidence)
 
     async def _run_with_llm(self, case: CaseInput, evidence: Evidence) -> AgentResult:
         import asyncio
@@ -62,8 +35,6 @@ class ConversationAgent:
         findings = []
         for index, statement in enumerate(result.semantics.user_claims, start=1):
             for type_index, statement_type in enumerate(statement.statement_types, start=1):
-                if not self._type_supported_by_text(statement_type, statement.text):
-                    continue
                 findings.append(
                     Finding(
                         finding_id=f"llm-user-claim-{index}-{type_index}",
@@ -76,8 +47,6 @@ class ConversationAgent:
                 )
         for index, statement in enumerate(result.semantics.agent_commitments, start=1):
             for type_index, statement_type in enumerate(statement.statement_types, start=1):
-                if not self._type_supported_by_text(statement_type, statement.text):
-                    continue
                 findings.append(
                     Finding(
                         finding_id=f"llm-agent-commitment-{index}-{type_index}",
@@ -142,75 +111,6 @@ class ConversationAgent:
                     )
                     for item in items
                 ],
-                "rejected_types": [
-                    {
-                        "speaker": speaker,
-                        "text": item.text,
-                        "type": statement_type.value,
-                    }
-                    for speaker, items in (
-                        ("user", result.semantics.user_claims),
-                        ("agent", result.semantics.agent_commitments),
-                    )
-                    for item in items
-                    for statement_type in item.statement_types
-                    if not self._type_supported_by_text(statement_type, item.text)
-                ],
                 "uncertainty": result.semantics.uncertainty,
             },
         )
-
-    @staticmethod
-    def _offline_statement_type(text: str, is_user: bool) -> StatementType:
-        if any(token in text for token in ("没收到货", "没有收到货", "还没收到", "未收到货")):
-            return StatementType.DELIVERY_NOT_RECEIVED
-        if any(token in text for token in ("物流延迟", "配送延迟", "晚到", "超时", "超过承诺")):
-            return StatementType.DELIVERY_DELAYED
-        if any(token in text for token in ("已经送达", "已送达", "签收了", "收到货了")):
-            return StatementType.DELIVERY_COMPLETED
-        if any(token in text for token in ("承诺送达", "预计送达", "配送时限")):
-            return StatementType.DELIVERY_PROMISED
-        if any(token in text for token in ("金额不", "只到账", "少退", "少了")):
-            return StatementType.REFUND_AMOUNT_MISMATCH
-        if any(token in text for token in ("没发起", "未发起", "没有退款流水", "没有退款记录")):
-            return StatementType.REFUND_NOT_INITIATED
-        if any(token in text for token in ("没到账", "未到账", "没收到", "未入账")):
-            return StatementType.REFUND_NOT_RECEIVED
-        if any(
-            token in text for token in ("已经完成", "已完成", "退款成功", "退回来了", "已经退回")
-        ):
-            return StatementType.REFUND_COMPLETED
-        if any(token in text for token in ("已经发起", "已发起", "为您申请", "申请成功")):
-            return StatementType.REFUND_INITIATED
-        if any(token in text for token in ("处理中", "正在处理", "支付渠道正在")):
-            return StatementType.REFUND_PROCESSING
-        if is_user and any(token in text for token in ("申请退款", "申请过退款", "点了退款")):
-            return StatementType.REFUND_REQUESTED
-        if any(token in text for token in ("等待", "耐心", "规定时间", "预计", "排队")):
-            return StatementType.WAIT_ADVICE
-        if any(token in text for token in ("查询", "确认", "核验", "看下", "核对")):
-            return StatementType.VERIFY_STATUS
-        return StatementType.OTHER
-
-    @staticmethod
-    def _offline_temporal_status(text: str) -> TemporalStatus:
-        if any(token in text for token in ("已经", "已完成", "已送达", "收到货了", "到账了")):
-            return TemporalStatus.COMPLETED
-        if any(token in text for token in ("预计", "将", "会尽快", "会在", "请等待")):
-            return TemporalStatus.FUTURE
-        if any(token in text for token in ("正在", "处理中", "仍", "一直", "还没", "未")):
-            return TemporalStatus.CURRENT
-        return TemporalStatus.UNKNOWN
-
-    @staticmethod
-    def _type_supported_by_text(statement_type: StatementType, text: str) -> bool:
-        if statement_type == StatementType.REFUND_NOT_RECEIVED:
-            return any(
-                token in text
-                for token in ("没到账", "未到账", "没收到", "未收到", "没有收到", "入账失败")
-            )
-        if statement_type == StatementType.DELIVERY_NOT_RECEIVED:
-            return any(
-                token in text for token in ("没收到", "未收到", "没有收到", "还没到", "一直没到")
-            )
-        return True

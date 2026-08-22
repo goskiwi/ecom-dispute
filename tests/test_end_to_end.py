@@ -25,18 +25,20 @@ def repository(tmp_path: Path) -> Repository:
 def test_refund_vertical_slice(
     repository: Repository, case_id: str, decision: str, party: str, review: bool
 ) -> None:
-    report = DiagnosticHarness(repository).diagnose_sync(repository.case(case_id))
+    report = DiagnosticHarness.heuristic_tests(repository).diagnose_sync(repository.case(case_id))
     assert report.decision == decision
     assert report.responsible_party == party
     assert report.review_required is review
     assert report.policy_evidence_ids
     assert report.evidence_ids
     assert all(finding.evidence_ids for finding in report.findings)
-    assert report.trace[1]["telemetry"]["mode"] == "offline"
+    assert report.trace[1]["telemetry"]["mode"] == "heuristic_test_stub"
 
 
 def test_conflict_is_evidence_grounded(repository: Repository) -> None:
-    report = DiagnosticHarness(repository).diagnose_sync(repository.case("refund_conflict_001"))
+    report = DiagnosticHarness.heuristic_tests(repository).diagnose_sync(
+        repository.case("refund_conflict_001")
+    )
     conflict = next(item for item in report.findings if item.category == "fact_conflict")
     assert conflict.review_recommended
     assert any(evidence_id.startswith("refunds:") for evidence_id in conflict.evidence_ids)
@@ -54,7 +56,7 @@ def test_dataset_has_manual_and_policy_boundary_cases(repository: Repository) ->
     cases = [repository.case(case_id) for case_id in repository.case_ids()]
     assert sum(case.source_type == "manual" for case in cases) >= 8
     historical = repository.case("refund_historical_policy_001")
-    report = DiagnosticHarness(repository).diagnose_sync(historical)
+    report = DiagnosticHarness.heuristic_tests(repository).diagnose_sync(historical)
     assert report.policy_evidence_ids == ["policies:refund-cn-standard:v1"]
 
 
@@ -71,13 +73,15 @@ def test_dataset_has_manual_and_policy_boundary_cases(repository: Repository) ->
 def test_conversation_commitments_join_fact_fusion(
     repository: Repository, case_id: str, expected: bool
 ) -> None:
-    report = DiagnosticHarness(repository).diagnose_sync(repository.case(case_id))
+    report = DiagnosticHarness.heuristic_tests(repository).diagnose_sync(repository.case(case_id))
     actual = any(item.category == "conversation_fact_conflict" for item in report.findings)
     assert actual is expected
 
 
 def test_false_commitment_cites_negative_refund_query(repository: Repository) -> None:
-    report = DiagnosticHarness(repository).diagnose_sync(repository.case("refund_missing_005"))
+    report = DiagnosticHarness.heuristic_tests(repository).diagnose_sync(
+        repository.case("refund_missing_005")
+    )
     conflict = next(
         item for item in report.findings if item.category == "conversation_fact_conflict"
     )
@@ -100,7 +104,7 @@ def test_false_commitment_cites_negative_refund_query(repository: Repository) ->
 def test_delivery_skill_vertical_slice(
     repository: Repository, case_id: str, decision: str, party: str, review: bool
 ) -> None:
-    report = DiagnosticHarness(repository).diagnose_sync(repository.case(case_id))
+    report = DiagnosticHarness.heuristic_tests(repository).diagnose_sync(repository.case(case_id))
     assert report.dispute_type == "delivery_delay"
     assert report.decision == decision
     assert report.responsible_party == party
@@ -112,7 +116,9 @@ def test_delivery_skill_vertical_slice(
 def test_delivery_false_completion_claim_joins_logistics_evidence(
     repository: Repository,
 ) -> None:
-    report = DiagnosticHarness(repository).diagnose_sync(repository.case("delivery_conflict_001"))
+    report = DiagnosticHarness.heuristic_tests(repository).diagnose_sync(
+        repository.case("delivery_conflict_001")
+    )
     conflict = next(
         item for item in report.findings if item.category == "conversation_fact_conflict"
     )

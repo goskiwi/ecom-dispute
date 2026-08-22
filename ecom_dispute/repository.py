@@ -2,11 +2,11 @@ from __future__ import annotations
 
 import json
 import sqlite3
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
-from .contracts import CaseInput
+from .contracts import CaseInput, DecisionReport, ReviewTask
 
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_DB = ROOT / "data" / "ecom_dispute.db"
@@ -72,6 +72,105 @@ class Repository:
         with self.connect() as connection:
             rows = connection.execute("SELECT case_id FROM cases ORDER BY case_id").fetchall()
         return [row[0] for row in rows]
+
+    def ensure_review_task(self, report: DecisionReport) -> ReviewTask:
+        evidence_ids = sorted(
+            {
+                evidence_id
+                for finding in report.findings
+                if finding.review_recommended
+                or finding.category in {"fact_conflict", "conversation_fact_conflict"}
+                for evidence_id in finding.evidence_ids
+            }
+        )
+        reasons = report.conflicts + [f"缺失证据: {item}" for item in report.missing_evidence]
+        reason = "；".join(reasons) or "裁决策略要求人工复检"
+        now = datetime.now(UTC).isoformat()
+        with self.connect() as connection:
+            connection.execute(
+                """
+                INSERT OR IGNORE INTO review_tasks VALUES (?, ?, ?, ?, 'pending', ?, ?, NULL, NULL, NULL, ?, NULL)
+                """,
+                (
+                    f"review:{report.case_id}",
+                    report.case_id,
+                    reason,
+                    json.dumps(evidence_ids, ensure_ascii=False),
+                    report.decision,
+                    report.responsible_party,
+                    now,
+                ),
+            )
+            connection.execute(
+                """
+                UPDATE review_tasks
+                SET reason = ?, conflict_evidence_json = ?, system_decision = ?,
+                    system_responsible_party = ?
+                WHERE case_id = ? AND status = 'pending'
+                """,
+                (
+                    reason,
+                    json.dumps(evidence_ids, ensure_ascii=False),
+                    report.decision,
+                    report.responsible_party,
+                    report.case_id,
+                ),
+            )
+        task = self.review_task(report.case_id)
+        if not task:
+            raise RuntimeError(f"failed to create review task for {report.case_id}")
+        return task
+
+    def review_task(self, case_id: str) -> ReviewTask | None:
+        with self.connect() as connection:
+            row = connection.execute(
+                "SELECT * FROM review_tasks WHERE case_id = ?", (case_id,)
+            ).fetchone()
+        return self._review_task(dict(row)) if row else None
+
+    def review_tasks(self, status: str | None = None) -> list[ReviewTask]:
+        with self.connect() as connection:
+            if status:
+                rows = connection.execute(
+                    "SELECT * FROM review_tasks WHERE status = ? ORDER BY created_at", (status,)
+                ).fetchall()
+            else:
+                rows = connection.execute(
+                    "SELECT * FROM review_tasks ORDER BY created_at"
+                ).fetchall()
+        return [self._review_task(dict(row)) for row in rows]
+
+    def resolve_review(
+        self,
+        case_id: str,
+        decision: str,
+        responsible_party: str,
+        comment: str,
+    ) -> ReviewTask:
+        if not decision or not responsible_party:
+            raise ValueError("decision and responsible_party are required")
+        resolved_at = datetime.now(UTC).isoformat()
+        with self.connect() as connection:
+            cursor = connection.execute(
+                """
+                UPDATE review_tasks
+                SET status = 'resolved', reviewer_decision = ?, reviewer_responsible_party = ?,
+                    reviewer_comment = ?, resolved_at = ?
+                WHERE case_id = ? AND status = 'pending'
+                """,
+                (decision, responsible_party, comment, resolved_at, case_id),
+            )
+        if cursor.rowcount != 1:
+            raise ValueError(f"pending review task not found: {case_id}")
+        task = self.review_task(case_id)
+        if not task:
+            raise RuntimeError(f"resolved review task missing: {case_id}")
+        return task
+
+    @staticmethod
+    def _review_task(row: dict[str, Any]) -> ReviewTask:
+        row["conflict_evidence_ids"] = json.loads(row.pop("conflict_evidence_json"))
+        return ReviewTask.model_validate(row)
 
 
 def rebuild_database(db_path: Path | str = DEFAULT_DB) -> Path:

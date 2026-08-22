@@ -6,8 +6,8 @@ from ..contracts import AgentResult, CaseInput, Finding
 from ..tool_registry import ToolRegistry
 
 
-class FactAgent:
-    name = "fact"
+class FixedFactExecutor:
+    name = "fixed_fact_executor"
 
     def __init__(self, registry: ToolRegistry, tools: tuple[str, ...]):
         self.registry = registry

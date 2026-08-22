@@ -61,6 +61,20 @@ button, input, select { font: inherit; }
 .metric:last-child { border-right: 0; }
 .metric span { display: block; color: var(--muted); font-size: 11px; }
 .metric strong { display: block; margin-top: 7px; font: 650 13px var(--mono); overflow-wrap: anywhere; }
+.review-panel { display: grid; grid-template-columns: minmax(0, 1fr) 260px auto; gap: 18px; align-items: end; margin: 20px 0 30px; padding: 17px; background: var(--accent-soft); border-left: 3px solid var(--accent); }
+.review-panel strong { font-size: 14px; }
+.review-panel p { margin: 5px 0 0; color: var(--muted); line-height: 1.45; }
+.review-panel label { display: block; margin-bottom: 6px; color: var(--muted); font-size: 11px; }
+.review-panel textarea { width: 100%; padding: 9px; color: var(--ink); background: var(--surface); border: 1px solid #aeb9b2; border-radius: var(--radius); resize: vertical; }
+.review-evidence { margin-top: 7px; color: var(--muted); font: 10px/1.45 var(--mono); overflow-wrap: anywhere; }
+.review-actions { display: flex; flex-direction: column; gap: 7px; }
+.review-actions button { min-height: 36px; padding: 7px 12px; color: #fff; background: var(--accent); border: 1px solid var(--accent); border-radius: var(--radius); cursor: pointer; white-space: nowrap; }
+.review-actions button:active { transform: translateY(1px); }
+.review-actions button.secondary { color: var(--ink); background: var(--surface); border-color: #9eaaa2; }
+.review-panel.resolved { grid-template-columns: minmax(0, 1fr) auto; align-items: start; }
+.review-panel dl { display: grid; grid-template-columns: auto auto; gap: 4px 14px; margin: 0; }
+.review-panel dt { color: var(--muted); font-size: 11px; }
+.review-panel dd { margin: 0; font: 11px var(--mono); }
 
 .section { margin-top: 34px; }
 .section-title { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
@@ -123,6 +137,7 @@ button, input, select { font: inherit; }
   .topbar { padding: 0 14px; }
   .run-state { display: none; }
   .filter-row, .split, .detail-header, .metrics { grid-template-columns: 1fr; }
+  .review-panel, .review-panel.resolved { grid-template-columns: 1fr; }
   .metrics { border-bottom: 0; }
   .metric { border-right: 0; border-bottom: 1px solid var(--line); }
   .timeline-item { grid-template-columns: 1fr; gap: 5px; padding-left: 28px; }

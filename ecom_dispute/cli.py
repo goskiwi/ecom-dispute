@@ -5,10 +5,12 @@ import json
 import os
 from pathlib import Path
 
+from .agents import RecordedConversationAgent
 from .evaluation import evaluate, evaluate_baseline
 from .harness import DiagnosticHarness
 from .llm import ResponsesClient
 from .repository import DEFAULT_DB, Repository, rebuild_database
+from .semantic_holdout import evaluate_holdout, generate_holdout
 from .semantic_scoring import rescore_semantic_run
 from .web import serve
 
@@ -18,14 +20,25 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--db", type=Path, default=DEFAULT_DB)
     parser.add_argument("--base-url", default=os.getenv("ECOM_DISPUTE_BASE_URL"))
     parser.add_argument("--model", default=os.getenv("ECOM_DISPUTE_MODEL", "gpt-5.4-mini"))
+    parser.add_argument("--timeout", type=int, default=60)
     commands = parser.add_subparsers(dest="command", required=True)
     data = commands.add_parser("data")
     data.add_argument("action", choices=["rebuild"])
     demo = commands.add_parser("demo")
     demo.add_argument("--case-id", required=True)
+    demo.add_argument(
+        "--agent-mode", choices=["recorded", "live-llm", "heuristic-test"], default="recorded"
+    )
+    demo.add_argument(
+        "--recording",
+        type=Path,
+        default=Path("evals/hybrid_multiskill_gpt-5.4-mini_60cases_2026-08-22.json"),
+    )
     evaluation = commands.add_parser("eval")
     evaluation.add_argument(
-        "--mode", choices=["offline", "llm", "baseline", "compare"], default="offline"
+        "--mode",
+        choices=["deterministic", "llm", "baseline", "compare"],
+        default="deterministic",
     )
     evaluation.add_argument("--case-id", action="append", dest="case_ids")
     rescore = commands.add_parser("rescore")
@@ -34,6 +47,20 @@ def _parser() -> argparse.ArgumentParser:
     web = commands.add_parser("web")
     web.add_argument("--host", default="127.0.0.1")
     web.add_argument("--port", type=int, default=8765)
+    web.add_argument(
+        "--agent-mode", choices=["recorded", "live-llm", "heuristic-test"], default="recorded"
+    )
+    web.add_argument(
+        "--recording",
+        type=Path,
+        default=Path("evals/hybrid_multiskill_gpt-5.4-mini_60cases_2026-08-22.json"),
+    )
+    holdout = commands.add_parser("holdout")
+    holdout.add_argument("action", choices=["generate", "eval"])
+    holdout.add_argument("--inputs", type=Path, default=Path("data/semantic_holdout_inputs.json"))
+    holdout.add_argument("--oracle", type=Path, default=Path("evals/semantic_holdout_oracle.json"))
+    holdout.add_argument("--repeats", type=int, default=3)
+    holdout.add_argument("--workers", type=int, default=4)
     return parser
 
 
@@ -43,7 +70,16 @@ def _llm_client(args: argparse.Namespace, required: bool = False) -> ResponsesCl
         return None
     if not key or not args.base_url:
         raise SystemExit("LLM mode requires ECOM_DISPUTE_API_KEY and --base-url")
-    return ResponsesClient(args.base_url, key, args.model)
+    return ResponsesClient(args.base_url, key, args.model, args.timeout)
+
+
+def _build_harness(args: argparse.Namespace, repository: Repository) -> DiagnosticHarness:
+    if args.agent_mode == "recorded":
+        return DiagnosticHarness(repository, RecordedConversationAgent(args.recording))
+    if args.agent_mode == "heuristic-test":
+        return DiagnosticHarness.heuristic_tests(repository)
+    client = _llm_client(args, required=True)
+    return DiagnosticHarness.live(repository, client)
 
 
 def main() -> None:
@@ -55,14 +91,20 @@ def main() -> None:
         result = rescore_semantic_run(args.input, args.semantic_oracle)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return
+    if args.command == "holdout":
+        client = _llm_client(args, required=True)
+        if args.action == "generate":
+            result = generate_holdout(client, args.inputs, args.oracle)
+        else:
+            result = evaluate_holdout(client, args.inputs, args.oracle, args.repeats, args.workers)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return
     repository = Repository(args.db)
+    harness = _build_harness(args, repository) if args.command in {"web", "demo"} else None
     if args.command == "web":
-        serve(repository, args.host, args.port)
+        serve(repository, harness, args.agent_mode, args.host, args.port)
     elif args.command == "demo":
-        client = _llm_client(args)
-        report = DiagnosticHarness(repository, llm_client=client).diagnose_sync(
-            repository.case(args.case_id)
-        )
+        report = harness.diagnose_sync(repository.case(args.case_id))
         print(report.model_dump_json(indent=2))
     elif args.command == "eval":
         client = _llm_client(args, required=args.mode in {"llm", "baseline", "compare"})
