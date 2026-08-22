@@ -1,0 +1,4290 @@
+{
+  "rubric": {
+    "evidence_correctness": "1-5",
+    "conflict_coverage": "1-5",
+    "question_actionability": "1-5",
+    "irrelevant_content": "1-5 (5 means no irrelevant content)",
+    "overall_preference": "A | B | tie"
+  },
+  "items": [
+    {
+      "review_id": "review-01",
+      "category": "compliance",
+      "option_a": {
+        "summary": "未发现证据之间的明确冲突。现有记录显示取消请求已接受，之后出现揽收事件；订单状态为 paid，退款查询未返回业务记录。",
+        "evidence_ids": [
+          "cancellation_requests:formal_cancellation_in_transit_01-cancellation_requests-1:v1",
+          "conversation:formal_cancellation_in_transit_01:v1",
+          "logistics_events:formal_cancellation_in_transit_01-logistics_events-1:v1",
+          "orders:formal_cancellation_in_transit_01-order:v1",
+          "policies:cancellation-transit-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_cancellation_in_transit_01-order:v1"
+        ],
+        "questions": [
+          "取消请求已于 2026-04-01 09:01:00 接受，揽收事件于 2026-04-01 10:00:00 发生；该时间关系在 cancellation-transit-cn-standard v1 下应如何处理？",
+          "订单状态为 paid 且退款查询未返回业务记录；是否已经按适用政策完成退款或其他规定的履约动作？",
+          "会话共 2 条消息，人工复核时是否需要结合其中的具体内容确认取消请求与履约状态？",
+          "该冲突案件的人工升级是否已完成，并是否形成可追溯的复核结论？"
+        ],
+        "recommended_action": "提交人工升级复检，依据 cancellation-transit-cn-standard v1 与 service-compliance-cn-standard v1 核查已接受取消请求与后续揽收事件的处理要求，并确认退款查询无业务记录是否符合适用政策。不得在缺少人工复核结论前直接确定最终责任。",
+        "priority": "high"
+      },
+      "option_b": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "cancellation_requests:formal_cancellation_in_transit_01-cancellation_requests-1:v1",
+          "conversation:formal_cancellation_in_transit_01:v1",
+          "logistics_events:formal_cancellation_in_transit_01-logistics_events-1:v1",
+          "orders:formal_cancellation_in_transit_01-order:v1",
+          "policies:cancellation-transit-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_cancellation_in_transit_01-order:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "拦截包裹并核验商家取消处理链路",
+        "priority": "normal"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_cancellation_in_transit_01",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "我提交取消申请后包裹仍然进入了运输。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在核验相关业务记录。"
+          }
+        ],
+        "system_decision": "cancel_before_pickup_but_shipped",
+        "system_responsible_party": "merchant",
+        "evidence": [
+          {
+            "evidence_id": "cancellation_requests:formal_cancellation_in_transit_01-cancellation_requests-1:v1",
+            "kind": "cancellation_request",
+            "summary": "cancellation_request 记录 {'cancellation_id': 'formal_cancellation_in_transit_01-cancellation_requests-1', 'order_id': 'formal_cancellation_in_transit_01-order', 'status': 'accepted', 'requested_at': '2026-04-01T09:00:00', 'accepted_at': '2026-04-01T09:01:00', 'reason': 'user_request', 'version': 1}"
+          },
+          {
+            "evidence_id": "conversation:formal_cancellation_in_transit_01:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "logistics_events:formal_cancellation_in_transit_01-logistics_events-1:v1",
+            "kind": "logistics",
+            "summary": "logistics 记录 {'event_id': 'formal_cancellation_in_transit_01-logistics_events-1', 'order_id': 'formal_cancellation_in_transit_01-order', 'event_type': 'picked_up', 'occurred_at': '2026-04-01T10:00:00', 'detail': 'picked_up', 'version': 1}"
+          },
+          {
+            "evidence_id": "orders:formal_cancellation_in_transit_01-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_cancellation_in_transit_01-order 状态为 paid"
+          },
+          {
+            "evidence_id": "policies:cancellation-transit-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 cancellation-transit-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:refunds:formal_cancellation_in_transit_01-order:v1",
+            "kind": "query",
+            "summary": "查询 refunds 未返回业务记录"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-02",
+      "category": "compliance",
+      "option_a": {
+        "summary": "未发现证据之间的明确冲突。现有证据显示取消申请已接受，订单状态为 paid；物流事件和退款查询均未返回业务记录。",
+        "evidence_ids": [
+          "cancellation_requests:formal_cancellation_in_transit_04-cancellation_requests-1:v1",
+          "conversation:formal_cancellation_in_transit_04:v1",
+          "orders:formal_cancellation_in_transit_04-order:v1",
+          "policies:cancellation-transit-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:logistics_events:formal_cancellation_in_transit_04-order:v1",
+          "query:refunds:formal_cancellation_in_transit_04-order:v1"
+        ],
+        "questions": [
+          "人工复检是否已确认取消申请 accepted 的处理结果与 cancellation-transit-cn-standard v1 一致？",
+          "在物流事件查询未返回业务记录的情况下，是否需要按适用政策补充核验或人工确认运输状态？",
+          "退款查询未返回业务记录是否足以支持当前处理结果，还是需要依据适用政策进行人工复核？",
+          "是否已完成 service-compliance-cn-standard v1 要求的冲突案件人工升级？"
+        ],
+        "recommended_action": "按 service-compliance-cn-standard v1 要求，将该案件提交人工升级复检。复检时仅依据现有证据核验已接受的取消申请、订单状态及物流和退款查询结果，不修改业务事实或最终责任结论。",
+        "priority": "high"
+      },
+      "option_b": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "cancellation_requests:formal_cancellation_in_transit_04-cancellation_requests-1:v1",
+          "conversation:formal_cancellation_in_transit_04:v1",
+          "orders:formal_cancellation_in_transit_04-order:v1",
+          "policies:cancellation-transit-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:logistics_events:formal_cancellation_in_transit_04-order:v1",
+          "query:refunds:formal_cancellation_in_transit_04-order:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "核验取消受理状态并发起应退资金",
+        "priority": "normal"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_cancellation_in_transit_04",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "我提交取消申请后包裹仍然进入了运输。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在核验相关业务记录。"
+          }
+        ],
+        "system_decision": "cancellation_refund_missing",
+        "system_responsible_party": "platform",
+        "evidence": [
+          {
+            "evidence_id": "cancellation_requests:formal_cancellation_in_transit_04-cancellation_requests-1:v1",
+            "kind": "cancellation_request",
+            "summary": "cancellation_request 记录 {'cancellation_id': 'formal_cancellation_in_transit_04-cancellation_requests-1', 'order_id': 'formal_cancellation_in_transit_04-order', 'status': 'accepted', 'requested_at': '2026-04-01T09:00:00', 'accepted_at': '2026-04-01T09:01:00', 'reason': 'user_request', 'version': 1}"
+          },
+          {
+            "evidence_id": "conversation:formal_cancellation_in_transit_04:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "orders:formal_cancellation_in_transit_04-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_cancellation_in_transit_04-order 状态为 paid"
+          },
+          {
+            "evidence_id": "policies:cancellation-transit-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 cancellation-transit-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:logistics_events:formal_cancellation_in_transit_04-order:v1",
+            "kind": "query",
+            "summary": "查询 logistics_events 未返回业务记录"
+          },
+          {
+            "evidence_id": "query:refunds:formal_cancellation_in_transit_04-order:v1",
+            "kind": "query",
+            "summary": "查询 refunds 未返回业务记录"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-03",
+      "category": "compliance",
+      "option_a": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "cancellation_requests:formal_cancellation_in_transit_05-cancellation_requests-1:v1",
+          "conversation:formal_cancellation_in_transit_05:v1",
+          "logistics_events:formal_cancellation_in_transit_05-logistics_events-1:v1",
+          "orders:formal_cancellation_in_transit_05-order:v1",
+          "policies:cancellation-transit-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_cancellation_in_transit_05-order:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "拦截包裹并核验商家取消处理链路",
+        "priority": "normal"
+      },
+      "option_b": {
+        "summary": "当前未发现证据冲突，也未标记缺失证据。已记录取消申请并接受，随后发生揽收事件；订单状态为 paid，退款查询未返回业务记录。该案件存在“冲突案件缺少必要的人工升级”的合规问题。",
+        "evidence_ids": [
+          "cancellation_requests:formal_cancellation_in_transit_05-cancellation_requests-1:v1",
+          "conversation:formal_cancellation_in_transit_05:v1",
+          "logistics_events:formal_cancellation_in_transit_05-logistics_events-1:v1",
+          "orders:formal_cancellation_in_transit_05-order:v1",
+          "policies:cancellation-transit-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_cancellation_in_transit_05-order:v1"
+        ],
+        "questions": [
+          "人工升级是否已按 service-compliance-cn-standard v1 完成并留痕？",
+          "cancellation-transit-cn-standard v1 对“取消申请已接受后发生揽收”场景的适用条件和处理要求是什么？",
+          "退款查询未返回业务记录是否需要进一步核验退款状态或处理结果？",
+          "人工复检是否需要结合会话中的两条消息确认用户请求及平台处理过程？"
+        ],
+        "recommended_action": "根据 service-compliance-cn-standard v1 对案件执行必要的人工升级和复核。复核时仅依据现有证据确认取消申请、接受时间、揽收时间、订单状态及退款查询结果；不得据此新增或改写业务事实，也不得在缺少适用规则明确结论的情况下预判最终责任。",
+        "priority": "high"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_cancellation_in_transit_05",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "取消申请和物流揽收时间存在争议，这是第5种表达。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在按cancel_before_pickup_but_shipped对应证据路径核验。"
+          }
+        ],
+        "system_decision": "cancel_before_pickup_but_shipped",
+        "system_responsible_party": "merchant",
+        "evidence": [
+          {
+            "evidence_id": "cancellation_requests:formal_cancellation_in_transit_05-cancellation_requests-1:v1",
+            "kind": "cancellation_request",
+            "summary": "cancellation_request 记录 {'cancellation_id': 'formal_cancellation_in_transit_05-cancellation_requests-1', 'order_id': 'formal_cancellation_in_transit_05-order', 'status': 'accepted', 'requested_at': '2026-04-01T09:00:00', 'accepted_at': '2026-04-01T09:01:00', 'reason': 'user_request', 'version': 1}"
+          },
+          {
+            "evidence_id": "conversation:formal_cancellation_in_transit_05:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "logistics_events:formal_cancellation_in_transit_05-logistics_events-1:v1",
+            "kind": "logistics",
+            "summary": "logistics 记录 {'event_id': 'formal_cancellation_in_transit_05-logistics_events-1', 'order_id': 'formal_cancellation_in_transit_05-order', 'event_type': 'picked_up', 'occurred_at': '2026-04-01T10:00:00', 'detail': 'picked_up', 'version': 1}"
+          },
+          {
+            "evidence_id": "orders:formal_cancellation_in_transit_05-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_cancellation_in_transit_05-order 状态为 paid"
+          },
+          {
+            "evidence_id": "policies:cancellation-transit-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 cancellation-transit-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:refunds:formal_cancellation_in_transit_05-order:v1",
+            "kind": "query",
+            "summary": "查询 refunds 未返回业务记录"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-04",
+      "category": "compliance",
+      "option_a": {
+        "summary": "未发现证据之间的明确冲突。现有材料显示取消请求已接受，订单状态为 paid；物流事件和退款查询均未返回业务记录。",
+        "evidence_ids": [
+          "cancellation_requests:formal_cancellation_in_transit_08-cancellation_requests-1:v1",
+          "conversation:formal_cancellation_in_transit_08:v1",
+          "orders:formal_cancellation_in_transit_08-order:v1",
+          "policies:cancellation-transit-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:logistics_events:formal_cancellation_in_transit_08-order:v1",
+          "query:refunds:formal_cancellation_in_transit_08-order:v1"
+        ],
+        "questions": [
+          "已接受的取消请求是否已按 cancellation-transit-cn-standard 政策完成后续处理？",
+          "订单当前为 paid 的情况下，是否应产生退款或其他资金处理记录？",
+          "物流事件查询未返回记录是否代表无履约事件，还是存在查询范围、同步或数据完整性问题？",
+          "退款查询未返回记录是否需要人工核验退款状态及处理时点？",
+          "人工复检结论是否符合 service-compliance-cn-standard 政策要求？"
+        ],
+        "recommended_action": "按服务合规要求进行人工升级复检，重点核对已接受取消请求后的履约、退款处理及相关会话内容。不得仅依据当前材料直接修改业务事实或确定最终责任。",
+        "priority": "high"
+      },
+      "option_b": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "cancellation_requests:formal_cancellation_in_transit_08-cancellation_requests-1:v1",
+          "conversation:formal_cancellation_in_transit_08:v1",
+          "orders:formal_cancellation_in_transit_08-order:v1",
+          "policies:cancellation-transit-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:logistics_events:formal_cancellation_in_transit_08-order:v1",
+          "query:refunds:formal_cancellation_in_transit_08-order:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "核验取消受理状态并发起应退资金",
+        "priority": "normal"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_cancellation_in_transit_08",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "取消申请和物流揽收时间存在争议，这是第8种表达。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在按cancellation_refund_missing对应证据路径核验。"
+          }
+        ],
+        "system_decision": "cancellation_refund_missing",
+        "system_responsible_party": "platform",
+        "evidence": [
+          {
+            "evidence_id": "cancellation_requests:formal_cancellation_in_transit_08-cancellation_requests-1:v1",
+            "kind": "cancellation_request",
+            "summary": "cancellation_request 记录 {'cancellation_id': 'formal_cancellation_in_transit_08-cancellation_requests-1', 'order_id': 'formal_cancellation_in_transit_08-order', 'status': 'accepted', 'requested_at': '2026-04-01T09:00:00', 'accepted_at': '2026-04-01T09:01:00', 'reason': 'user_request', 'version': 1}"
+          },
+          {
+            "evidence_id": "conversation:formal_cancellation_in_transit_08:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "orders:formal_cancellation_in_transit_08-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_cancellation_in_transit_08-order 状态为 paid"
+          },
+          {
+            "evidence_id": "policies:cancellation-transit-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 cancellation-transit-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:logistics_events:formal_cancellation_in_transit_08-order:v1",
+            "kind": "query",
+            "summary": "查询 logistics_events 未返回业务记录"
+          },
+          {
+            "evidence_id": "query:refunds:formal_cancellation_in_transit_08-order:v1",
+            "kind": "query",
+            "summary": "查询 refunds 未返回业务记录"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-05",
+      "category": "compliance",
+      "option_a": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "cancellation_requests:formal_cancellation_in_transit_09-cancellation_requests-1:v1",
+          "conversation:formal_cancellation_in_transit_09:v1",
+          "logistics_events:formal_cancellation_in_transit_09-logistics_events-1:v1",
+          "orders:formal_cancellation_in_transit_09-order:v1",
+          "policies:cancellation-transit-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_cancellation_in_transit_09-order:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "拦截包裹并核验商家取消处理链路",
+        "priority": "normal"
+      },
+      "option_b": {
+        "summary": "当前给定证据未记录明确业务事实冲突：取消申请已接受，之后存在揽收事件，订单状态为 paid，且退款查询未返回业务记录。该组合需要依据适用政策进行人工复核，但不据此直接认定最终责任。",
+        "evidence_ids": [
+          "cancellation_requests:formal_cancellation_in_transit_09-cancellation_requests-1:v1",
+          "logistics_events:formal_cancellation_in_transit_09-logistics_events-1:v1",
+          "orders:formal_cancellation_in_transit_09-order:v1",
+          "policies:cancellation-transit-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_cancellation_in_transit_09-order:v1"
+        ],
+        "questions": [
+          "是否已按 service-compliance-cn-standard v1 完成人工升级？",
+          "cancellation-transit-cn-standard v1 对 2026-04-01 09:01:00 已接受取消申请、2026-04-01 10:00:00 揽收事件的适用处理规则是什么？",
+          "退款查询未返回业务记录是否表示尚未产生退款，还是查询范围或状态存在遗漏？",
+          "人工复核是否需要补充退款处理结果或其他可核验记录？"
+        ],
+        "recommended_action": "按 service-compliance-cn-standard v1 的要求对该案件进行人工升级，并由人工依据 cancellation-transit-cn-standard v1 核验已接受取消申请与后续揽收事件的处理规则；同时核查退款查询未返回记录的原因及后续处理状态。不得在缺少人工复核结论前修改业务事实或确定最终责任。",
+        "priority": "high"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_cancellation_in_transit_09",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "取消申请和物流揽收时间存在争议，这是第9种表达。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在按cancel_before_pickup_but_shipped对应证据路径核验。"
+          }
+        ],
+        "system_decision": "cancel_before_pickup_but_shipped",
+        "system_responsible_party": "merchant",
+        "evidence": [
+          {
+            "evidence_id": "cancellation_requests:formal_cancellation_in_transit_09-cancellation_requests-1:v1",
+            "kind": "cancellation_request",
+            "summary": "cancellation_request 记录 {'cancellation_id': 'formal_cancellation_in_transit_09-cancellation_requests-1', 'order_id': 'formal_cancellation_in_transit_09-order', 'status': 'accepted', 'requested_at': '2026-04-01T09:00:00', 'accepted_at': '2026-04-01T09:01:00', 'reason': 'user_request', 'version': 1}"
+          },
+          {
+            "evidence_id": "conversation:formal_cancellation_in_transit_09:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "logistics_events:formal_cancellation_in_transit_09-logistics_events-1:v1",
+            "kind": "logistics",
+            "summary": "logistics 记录 {'event_id': 'formal_cancellation_in_transit_09-logistics_events-1', 'order_id': 'formal_cancellation_in_transit_09-order', 'event_type': 'picked_up', 'occurred_at': '2026-04-01T10:00:00', 'detail': 'picked_up', 'version': 1}"
+          },
+          {
+            "evidence_id": "orders:formal_cancellation_in_transit_09-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_cancellation_in_transit_09-order 状态为 paid"
+          },
+          {
+            "evidence_id": "policies:cancellation-transit-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 cancellation-transit-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:refunds:formal_cancellation_in_transit_09-order:v1",
+            "kind": "query",
+            "summary": "查询 refunds 未返回业务记录"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-06",
+      "category": "compliance",
+      "option_a": {
+        "summary": "当前未发现证据之间的明确冲突；现有材料显示订单状态为 delivered，物流记录显示已送达，配送证明显示由门卫签收。",
+        "evidence_ids": [
+          "conversation:formal_delivered_not_received_01:v1",
+          "delivery_addresses:formal_delivered_not_received_01-delivery_addresses-1:v1",
+          "delivery_proofs:formal_delivered_not_received_01-delivery_proofs-1:v1",
+          "logistics_events:formal_delivered_not_received_01-logistics_events-1:v1",
+          "orders:formal_delivered_not_received_01-order:v1",
+          "policies:delivered-receipt-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1"
+        ],
+        "questions": [
+          "是否已完成该冲突案件所需的人工升级？",
+          "配送证明中“门卫”签收是否符合 delivered-receipt-cn-standard v1 的有效签收要求？",
+          "物流送达时间与配送证明签收时间存在差异，是否需要人工核验该时间差对责任判断的影响？",
+          "现有会话材料是否足以确认消费者关于未收到货的具体主张及其与签收记录的对应关系？"
+        ],
+        "recommended_action": "按 service-compliance-cn-standard v1 对该案件进行人工升级复检，并依据 delivered-receipt-cn-standard v1 核验配送证明、签收对象与消费者未收到货主张的适用关系。人工升级仅用于补充复核流程，不得在缺少新增证据时修改业务事实或预先改变最终责任结论。",
+        "priority": "high"
+      },
+      "option_b": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_delivered_not_received_01:v1",
+          "delivery_addresses:formal_delivered_not_received_01-delivery_addresses-1:v1",
+          "delivery_proofs:formal_delivered_not_received_01-delivery_proofs-1:v1",
+          "logistics_events:formal_delivered_not_received_01-logistics_events-1:v1",
+          "orders:formal_delivered_not_received_01-order:v1",
+          "policies:delivered-receipt-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "核对签收人、地址与用户陈述后人工复检",
+        "priority": "normal"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_delivered_not_received_01",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "物流显示已经签收，但我和家人都没有收到商品。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在核验相关业务记录。"
+          }
+        ],
+        "system_decision": "delivery_receipt_disputed",
+        "system_responsible_party": "undetermined",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_delivered_not_received_01:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "delivery_addresses:formal_delivered_not_received_01-delivery_addresses-1:v1",
+            "kind": "delivery_address",
+            "summary": "delivery_address 记录 {'address_id': 'formal_delivered_not_received_01-delivery_addresses-1', 'order_id': 'formal_delivered_not_received_01-order', 'city': '南京', 'masked_address': '鼓楼区***路', 'contact_suffix': '1234', 'version': 1}"
+          },
+          {
+            "evidence_id": "delivery_proofs:formal_delivered_not_received_01-delivery_proofs-1:v1",
+            "kind": "delivery_proof",
+            "summary": "delivery_proof 记录 {'proof_id': 'formal_delivered_not_received_01-delivery_proofs-1', 'order_id': 'formal_delivered_not_received_01-order', 'recipient': '门卫', 'proof_type': 'signature', 'delivered_at': '2026-04-03T12:00:00', 'detail': 'signed by concierge', 'version': 1}"
+          },
+          {
+            "evidence_id": "logistics_events:formal_delivered_not_received_01-logistics_events-1:v1",
+            "kind": "logistics",
+            "summary": "logistics 记录 {'event_id': 'formal_delivered_not_received_01-logistics_events-1', 'order_id': 'formal_delivered_not_received_01-order', 'event_type': 'delivered', 'occurred_at': '2026-04-01T12:00:00', 'detail': 'delivered', 'version': 1}"
+          },
+          {
+            "evidence_id": "orders:formal_delivered_not_received_01-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_delivered_not_received_01-order 状态为 delivered"
+          },
+          {
+            "evidence_id": "policies:delivered-receipt-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 delivered-receipt-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-07",
+      "category": "compliance",
+      "option_a": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_delivered_not_received_02:v1",
+          "delivery_addresses:formal_delivered_not_received_02-delivery_addresses-1:v1",
+          "logistics_events:formal_delivered_not_received_02-logistics_events-1:v1",
+          "orders:formal_delivered_not_received_02-order:v1",
+          "policies:delivered-receipt-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:delivery_proofs:formal_delivered_not_received_02-order:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "要求承运商补充签收证明并转人工复检",
+        "priority": "normal"
+      },
+      "option_b": {
+        "summary": "未发现证据之间的事实冲突。现有证据显示订单及物流状态为已送达，但 delivery_proofs 查询未返回业务记录；该情况不足以直接变更最终责任结论。",
+        "evidence_ids": [
+          "conversation:formal_delivered_not_received_02:v1",
+          "logistics_events:formal_delivered_not_received_02-logistics_events-1:v1",
+          "orders:formal_delivered_not_received_02-order:v1",
+          "policies:delivered-receipt-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:delivery_proofs:formal_delivered_not_received_02-order:v1"
+        ],
+        "questions": [
+          "delivery_proofs 未返回业务记录是否意味着当前缺少满足 delivered-receipt-cn-standard v1 要求的送达凭证？",
+          "人工复检时是否需要补充核验与订单 formal_delivered_not_received_02-order 对应的送达凭证及签收信息？",
+          "当前案件是否已按 service-compliance-cn-standard v1 完成人工升级？"
+        ],
+        "recommended_action": "按 service-compliance-cn-standard v1 要求对该冲突案件进行人工升级复检，重点核验 delivered-receipt-cn-standard v1 下的送达凭证要求及缺失的 delivery_proofs 业务记录。在人工复检完成前，不修改既有业务事实或最终责任。",
+        "priority": "high"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_delivered_not_received_02",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "物流显示已经签收，但我和家人都没有收到商品。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在核验相关业务记录。"
+          }
+        ],
+        "system_decision": "delivery_proof_missing",
+        "system_responsible_party": "logistics_provider",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_delivered_not_received_02:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "delivery_addresses:formal_delivered_not_received_02-delivery_addresses-1:v1",
+            "kind": "delivery_address",
+            "summary": "delivery_address 记录 {'address_id': 'formal_delivered_not_received_02-delivery_addresses-1', 'order_id': 'formal_delivered_not_received_02-order', 'city': '南京', 'masked_address': '鼓楼区***路', 'contact_suffix': '1234', 'version': 1}"
+          },
+          {
+            "evidence_id": "logistics_events:formal_delivered_not_received_02-logistics_events-1:v1",
+            "kind": "logistics",
+            "summary": "logistics 记录 {'event_id': 'formal_delivered_not_received_02-logistics_events-1', 'order_id': 'formal_delivered_not_received_02-order', 'event_type': 'delivered', 'occurred_at': '2026-04-01T12:00:00', 'detail': 'delivered', 'version': 1}"
+          },
+          {
+            "evidence_id": "orders:formal_delivered_not_received_02-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_delivered_not_received_02-order 状态为 delivered"
+          },
+          {
+            "evidence_id": "policies:delivered-receipt-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 delivered-receipt-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:delivery_proofs:formal_delivered_not_received_02-order:v1",
+            "kind": "query",
+            "summary": "查询 delivery_proofs 未返回业务记录"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-08",
+      "category": "compliance",
+      "option_a": {
+        "summary": "未发现证据之间的冲突。现有查询证据显示未返回 delivery_proofs 和 logistics_events 业务记录，不能据此补充或推定配送事实，也不改变最终责任结论。",
+        "evidence_ids": [
+          "conversation:formal_delivered_not_received_03:v1",
+          "orders:formal_delivered_not_received_03-order:v1",
+          "policies:delivered-receipt-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:delivery_proofs:formal_delivered_not_received_03-order:v1",
+          "query:logistics_events:formal_delivered_not_received_03-order:v1"
+        ],
+        "questions": [
+          "是否已按 service-compliance-cn-standard v1 完成人工升级？",
+          "在未返回 delivery_proofs 和 logistics_events 业务记录的情况下，是否仍有可引用的配送相关证据？",
+          "人工复检是否基于 delivered-receipt-cn-standard v1，并保持现有责任结论不被无证据改变？"
+        ],
+        "recommended_action": "按照 service-compliance-cn-standard v1 对案件进行必要的人工升级复检。复检应基于现有证据处理，不新增或推定未提供的业务事实，不直接据此变更最终责任。",
+        "priority": "high"
+      },
+      "option_b": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_delivered_not_received_03:v1",
+          "delivery_addresses:formal_delivered_not_received_03-delivery_addresses-1:v1",
+          "orders:formal_delivered_not_received_03-order:v1",
+          "policies:delivered-receipt-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:delivery_proofs:formal_delivered_not_received_03-order:v1",
+          "query:logistics_events:formal_delivered_not_received_03-order:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "转入普通物流状态排查",
+        "priority": "normal"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_delivered_not_received_03",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "物流显示已经签收，但我和家人都没有收到商品。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在核验相关业务记录。"
+          }
+        ],
+        "system_decision": "delivery_not_marked_delivered",
+        "system_responsible_party": "undetermined",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_delivered_not_received_03:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "delivery_addresses:formal_delivered_not_received_03-delivery_addresses-1:v1",
+            "kind": "delivery_address",
+            "summary": "delivery_address 记录 {'address_id': 'formal_delivered_not_received_03-delivery_addresses-1', 'order_id': 'formal_delivered_not_received_03-order', 'city': '南京', 'masked_address': '鼓楼区***路', 'contact_suffix': '1234', 'version': 1}"
+          },
+          {
+            "evidence_id": "orders:formal_delivered_not_received_03-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_delivered_not_received_03-order 状态为 paid"
+          },
+          {
+            "evidence_id": "policies:delivered-receipt-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 delivered-receipt-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:delivery_proofs:formal_delivered_not_received_03-order:v1",
+            "kind": "query",
+            "summary": "查询 delivery_proofs 未返回业务记录"
+          },
+          {
+            "evidence_id": "query:logistics_events:formal_delivered_not_received_03-order:v1",
+            "kind": "query",
+            "summary": "查询 logistics_events 未返回业务记录"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-09",
+      "category": "compliance",
+      "option_a": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_delivered_not_received_04:v1",
+          "delivery_addresses:formal_delivered_not_received_04-delivery_addresses-1:v1",
+          "delivery_proofs:formal_delivered_not_received_04-delivery_proofs-1:v1",
+          "logistics_events:formal_delivered_not_received_04-logistics_events-1:v1",
+          "orders:formal_delivered_not_received_04-order:v1",
+          "policies:delivered-receipt-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "核对签收人、地址与用户陈述后人工复检",
+        "priority": "normal"
+      },
+      "option_b": {
+        "summary": "当前证据未标记明确事实冲突，但案件存在已识别的合规问题：冲突案件缺少必要的人工升级。现有材料仅显示订单状态为 delivered、物流记录显示已送达，并有门卫签收凭证；不足以据此修改业务事实或确定最终责任。",
+        "evidence_ids": [
+          "conversation:formal_delivered_not_received_04:v1",
+          "delivery_proofs:formal_delivered_not_received_04-delivery_proofs-1:v1",
+          "logistics_events:formal_delivered_not_received_04-logistics_events-1:v1",
+          "orders:formal_delivered_not_received_04-order:v1",
+          "policies:delivered-receipt-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1"
+        ],
+        "questions": [
+          "门卫签收是否符合适用政策对有效收货证明的要求？",
+          "物流送达时间为 2026-04-01 12:00:00，而签收凭证时间为 2026-04-03 12:00:00，该时间差是否需要人工核验？",
+          "是否已完成 service-compliance-cn-standard v1 要求的必要人工升级？",
+          "会话材料是否包含消费者关于未收到货的具体陈述及其与送达、签收记录的对应关系？"
+        ],
+        "recommended_action": "按 service-compliance-cn-standard v1 要求进行人工升级复检，并依据 delivered-receipt-cn-standard v1 核验“门卫签收”是否满足适用的收货证明要求。人工复检完成前，不应据现有证据单独作出最终责任认定。",
+        "priority": "high"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_delivered_not_received_04",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "物流显示已经签收，但我和家人都没有收到商品。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在核验相关业务记录。"
+          }
+        ],
+        "system_decision": "delivery_receipt_disputed",
+        "system_responsible_party": "undetermined",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_delivered_not_received_04:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "delivery_addresses:formal_delivered_not_received_04-delivery_addresses-1:v1",
+            "kind": "delivery_address",
+            "summary": "delivery_address 记录 {'address_id': 'formal_delivered_not_received_04-delivery_addresses-1', 'order_id': 'formal_delivered_not_received_04-order', 'city': '南京', 'masked_address': '鼓楼区***路', 'contact_suffix': '1234', 'version': 1}"
+          },
+          {
+            "evidence_id": "delivery_proofs:formal_delivered_not_received_04-delivery_proofs-1:v1",
+            "kind": "delivery_proof",
+            "summary": "delivery_proof 记录 {'proof_id': 'formal_delivered_not_received_04-delivery_proofs-1', 'order_id': 'formal_delivered_not_received_04-order', 'recipient': '门卫', 'proof_type': 'signature', 'delivered_at': '2026-04-03T12:00:00', 'detail': 'signed by concierge', 'version': 1}"
+          },
+          {
+            "evidence_id": "logistics_events:formal_delivered_not_received_04-logistics_events-1:v1",
+            "kind": "logistics",
+            "summary": "logistics 记录 {'event_id': 'formal_delivered_not_received_04-logistics_events-1', 'order_id': 'formal_delivered_not_received_04-order', 'event_type': 'delivered', 'occurred_at': '2026-04-01T12:00:00', 'detail': 'delivered', 'version': 1}"
+          },
+          {
+            "evidence_id": "orders:formal_delivered_not_received_04-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_delivered_not_received_04-order 状态为 delivered"
+          },
+          {
+            "evidence_id": "policies:delivered-receipt-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 delivered-receipt-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-10",
+      "category": "compliance",
+      "option_a": {
+        "summary": "未提供具体事实冲突。现有材料显示订单状态为 delivered，物流记录显示已送达，配送证明记录签收人为门卫；但材料同时标注存在“冲突案件缺少必要的人工升级”的合规问题。",
+        "evidence_ids": [
+          "conversation:formal_delivered_not_received_05:v1",
+          "delivery_proofs:formal_delivered_not_received_05-delivery_proofs-1:v1",
+          "logistics_events:formal_delivered_not_received_05-logistics_events-1:v1",
+          "orders:formal_delivered_not_received_05-order:v1",
+          "policies:delivered-receipt-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1"
+        ],
+        "questions": [
+          "是否已按照 service-compliance-cn-standard v1 对该冲突案件完成必要的人工升级？",
+          "门卫签收是否满足 delivered-receipt-cn-standard v1 对收货证明的要求？",
+          "会话中的两条消息是否包含对送达、签收或未收到事实的具体异议？",
+          "人工复检是否已记录对物流送达时间与配送证明签收时间差异的核查结果？"
+        ],
+        "recommended_action": "按 service-compliance-cn-standard v1 要求补充必要的人工升级并完成复检；人工复检应核对会话、物流送达记录及门卫签收证明与 delivered-receipt-cn-standard v1 的适用要求。不得仅依据当前自动化材料直接改变最终责任结论。",
+        "priority": "high"
+      },
+      "option_b": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_delivered_not_received_05:v1",
+          "delivery_addresses:formal_delivered_not_received_05-delivery_addresses-1:v1",
+          "delivery_proofs:formal_delivered_not_received_05-delivery_proofs-1:v1",
+          "logistics_events:formal_delivered_not_received_05-logistics_events-1:v1",
+          "orders:formal_delivered_not_received_05-order:v1",
+          "policies:delivered-receipt-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "核对签收人、地址与用户陈述后人工复检",
+        "priority": "normal"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_delivered_not_received_05",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "物流显示签收但用户没有收到，这是第5种表达。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在按delivery_receipt_disputed对应证据路径核验。"
+          }
+        ],
+        "system_decision": "delivery_receipt_disputed",
+        "system_responsible_party": "undetermined",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_delivered_not_received_05:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "delivery_addresses:formal_delivered_not_received_05-delivery_addresses-1:v1",
+            "kind": "delivery_address",
+            "summary": "delivery_address 记录 {'address_id': 'formal_delivered_not_received_05-delivery_addresses-1', 'order_id': 'formal_delivered_not_received_05-order', 'city': '南京', 'masked_address': '鼓楼区***路', 'contact_suffix': '1234', 'version': 1}"
+          },
+          {
+            "evidence_id": "delivery_proofs:formal_delivered_not_received_05-delivery_proofs-1:v1",
+            "kind": "delivery_proof",
+            "summary": "delivery_proof 记录 {'proof_id': 'formal_delivered_not_received_05-delivery_proofs-1', 'order_id': 'formal_delivered_not_received_05-order', 'recipient': '门卫', 'proof_type': 'signature', 'delivered_at': '2026-04-03T12:00:00', 'detail': 'signed by concierge', 'version': 1}"
+          },
+          {
+            "evidence_id": "logistics_events:formal_delivered_not_received_05-logistics_events-1:v1",
+            "kind": "logistics",
+            "summary": "logistics 记录 {'event_id': 'formal_delivered_not_received_05-logistics_events-1', 'order_id': 'formal_delivered_not_received_05-order', 'event_type': 'delivered', 'occurred_at': '2026-04-01T12:00:00', 'detail': 'delivered', 'version': 1}"
+          },
+          {
+            "evidence_id": "orders:formal_delivered_not_received_05-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_delivered_not_received_05-order 状态为 delivered"
+          },
+          {
+            "evidence_id": "policies:delivered-receipt-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 delivered-receipt-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-11",
+      "category": "compliance",
+      "option_a": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_delivered_not_received_06:v1",
+          "delivery_addresses:formal_delivered_not_received_06-delivery_addresses-1:v1",
+          "logistics_events:formal_delivered_not_received_06-logistics_events-1:v1",
+          "orders:formal_delivered_not_received_06-order:v1",
+          "policies:delivered-receipt-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:delivery_proofs:formal_delivered_not_received_06-order:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "要求承运商补充签收证明并转人工复检",
+        "priority": "normal"
+      },
+      "option_b": {
+        "summary": "未发现给定证据之间的事实冲突。订单及物流记录显示订单已标记为 delivered，并记录了 2026-04-01 12:00:00 的 delivered 事件；但 delivery_proofs 查询未返回业务记录，当前不足以确认实际签收事实。",
+        "evidence_ids": [
+          "conversation:formal_delivered_not_received_06:v1",
+          "delivery_addresses:formal_delivered_not_received_06-delivery_addresses-1:v1",
+          "logistics_events:formal_delivered_not_received_06-logistics_events-1:v1",
+          "orders:formal_delivered_not_received_06-order:v1",
+          "policies:delivered-receipt-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:delivery_proofs:formal_delivered_not_received_06-order:v1"
+        ],
+        "questions": [
+          "是否存在符合 delivered-receipt-cn-standard v1 要求的签收或交付证明？",
+          "delivery_proofs 查询未返回业务记录的原因是什么，是否需要补充查询或核验其他可用记录？",
+          "人工复检是否已按照 service-compliance-cn-standard v1 完成升级并记录处理结果？"
+        ],
+        "recommended_action": "按照 service-compliance-cn-standard v1 对案件进行人工升级复检。复检应核验 delivered-receipt-cn-standard v1 所要求的签收或交付证明；在缺少有效 delivery proof 的情况下，不应仅依据订单状态或物流 delivered 记录确定最终责任。",
+        "priority": "high"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_delivered_not_received_06",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "物流显示签收但用户没有收到，这是第6种表达。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在按delivery_proof_missing对应证据路径核验。"
+          }
+        ],
+        "system_decision": "delivery_proof_missing",
+        "system_responsible_party": "logistics_provider",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_delivered_not_received_06:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "delivery_addresses:formal_delivered_not_received_06-delivery_addresses-1:v1",
+            "kind": "delivery_address",
+            "summary": "delivery_address 记录 {'address_id': 'formal_delivered_not_received_06-delivery_addresses-1', 'order_id': 'formal_delivered_not_received_06-order', 'city': '南京', 'masked_address': '鼓楼区***路', 'contact_suffix': '1234', 'version': 1}"
+          },
+          {
+            "evidence_id": "logistics_events:formal_delivered_not_received_06-logistics_events-1:v1",
+            "kind": "logistics",
+            "summary": "logistics 记录 {'event_id': 'formal_delivered_not_received_06-logistics_events-1', 'order_id': 'formal_delivered_not_received_06-order', 'event_type': 'delivered', 'occurred_at': '2026-04-01T12:00:00', 'detail': 'delivered', 'version': 1}"
+          },
+          {
+            "evidence_id": "orders:formal_delivered_not_received_06-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_delivered_not_received_06-order 状态为 delivered"
+          },
+          {
+            "evidence_id": "policies:delivered-receipt-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 delivered-receipt-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:delivery_proofs:formal_delivered_not_received_06-order:v1",
+            "kind": "query",
+            "summary": "查询 delivery_proofs 未返回业务记录"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-12",
+      "category": "compliance",
+      "option_a": {
+        "summary": "未发现给定证据之间的事实冲突。现有证据显示订单已支付，但未查询到该订单的配送证明或物流事件记录；仅凭这些证据无法确认是否已妥投，也无法确定最终责任。",
+        "evidence_ids": [
+          "conversation:formal_delivered_not_received_07:v1",
+          "delivery_addresses:formal_delivered_not_received_07-delivery_addresses-1:v1",
+          "orders:formal_delivered_not_received_07-order:v1",
+          "policies:delivered-receipt-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:delivery_proofs:formal_delivered_not_received_07-order:v1",
+          "query:logistics_events:formal_delivered_not_received_07-order:v1"
+        ],
+        "questions": [
+          "人工复检是否应依据 delivered-receipt-cn-standard v1 核验订单是否具备有效的妥投证明？",
+          "在 delivery_proofs 和 logistics_events 均无业务记录的情况下，是否满足 service-compliance-cn-standard v1 的人工升级条件？",
+          "现有会话、订单及地址证据是否足以支持任何一方承担最终责任？"
+        ],
+        "recommended_action": "按服务合规要求进行人工升级复检。复检时仅依据现有证据核验适用政策，并避免在缺少配送证明和物流事件记录的情况下直接认定收货、未收货或最终责任。",
+        "priority": "high"
+      },
+      "option_b": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_delivered_not_received_07:v1",
+          "delivery_addresses:formal_delivered_not_received_07-delivery_addresses-1:v1",
+          "orders:formal_delivered_not_received_07-order:v1",
+          "policies:delivered-receipt-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:delivery_proofs:formal_delivered_not_received_07-order:v1",
+          "query:logistics_events:formal_delivered_not_received_07-order:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "转入普通物流状态排查",
+        "priority": "normal"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_delivered_not_received_07",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "物流显示签收但用户没有收到，这是第7种表达。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在按delivery_not_marked_delivered对应证据路径核验。"
+          }
+        ],
+        "system_decision": "delivery_not_marked_delivered",
+        "system_responsible_party": "undetermined",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_delivered_not_received_07:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "delivery_addresses:formal_delivered_not_received_07-delivery_addresses-1:v1",
+            "kind": "delivery_address",
+            "summary": "delivery_address 记录 {'address_id': 'formal_delivered_not_received_07-delivery_addresses-1', 'order_id': 'formal_delivered_not_received_07-order', 'city': '南京', 'masked_address': '鼓楼区***路', 'contact_suffix': '1234', 'version': 1}"
+          },
+          {
+            "evidence_id": "orders:formal_delivered_not_received_07-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_delivered_not_received_07-order 状态为 paid"
+          },
+          {
+            "evidence_id": "policies:delivered-receipt-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 delivered-receipt-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:delivery_proofs:formal_delivered_not_received_07-order:v1",
+            "kind": "query",
+            "summary": "查询 delivery_proofs 未返回业务记录"
+          },
+          {
+            "evidence_id": "query:logistics_events:formal_delivered_not_received_07-order:v1",
+            "kind": "query",
+            "summary": "查询 logistics_events 未返回业务记录"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-13",
+      "category": "compliance",
+      "option_a": {
+        "summary": "未发现证据冲突。现有材料显示订单状态为 delivered，物流记录为已送达，配送证明显示由门卫签收；但仅凭这些证据不改变既有责任结论。",
+        "evidence_ids": [
+          "conversation:formal_delivered_not_received_08:v1",
+          "delivery_proofs:formal_delivered_not_received_08-delivery_proofs-1:v1",
+          "logistics_events:formal_delivered_not_received_08-logistics_events-1:v1",
+          "orders:formal_delivered_not_received_08-order:v1",
+          "policies:delivered-receipt-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1"
+        ],
+        "questions": [
+          "是否已按照 service-compliance-cn-standard v1 完成必要的人工升级？",
+          "delivery_proof 中“门卫”签收是否符合 delivered-receipt-cn-standard v1 的有效签收要求？",
+          "会话记录中的申诉内容是否与订单、物流记录及配送证明对应于同一订单？"
+        ],
+        "recommended_action": "依据 service-compliance-cn-standard v1 对该冲突案件执行必要的人工升级和复检；复检时核验会话材料与配送证明的对应关系，并依据 delivered-receipt-cn-standard v1 评估签收证明是否满足适用要求。在人工升级完成前，不修改业务事实或最终责任结论。",
+        "priority": "high"
+      },
+      "option_b": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_delivered_not_received_08:v1",
+          "delivery_addresses:formal_delivered_not_received_08-delivery_addresses-1:v1",
+          "delivery_proofs:formal_delivered_not_received_08-delivery_proofs-1:v1",
+          "logistics_events:formal_delivered_not_received_08-logistics_events-1:v1",
+          "orders:formal_delivered_not_received_08-order:v1",
+          "policies:delivered-receipt-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "核对签收人、地址与用户陈述后人工复检",
+        "priority": "normal"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_delivered_not_received_08",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "物流显示签收但用户没有收到，这是第8种表达。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在按delivery_receipt_disputed对应证据路径核验。"
+          }
+        ],
+        "system_decision": "delivery_receipt_disputed",
+        "system_responsible_party": "undetermined",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_delivered_not_received_08:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "delivery_addresses:formal_delivered_not_received_08-delivery_addresses-1:v1",
+            "kind": "delivery_address",
+            "summary": "delivery_address 记录 {'address_id': 'formal_delivered_not_received_08-delivery_addresses-1', 'order_id': 'formal_delivered_not_received_08-order', 'city': '南京', 'masked_address': '鼓楼区***路', 'contact_suffix': '1234', 'version': 1}"
+          },
+          {
+            "evidence_id": "delivery_proofs:formal_delivered_not_received_08-delivery_proofs-1:v1",
+            "kind": "delivery_proof",
+            "summary": "delivery_proof 记录 {'proof_id': 'formal_delivered_not_received_08-delivery_proofs-1', 'order_id': 'formal_delivered_not_received_08-order', 'recipient': '门卫', 'proof_type': 'signature', 'delivered_at': '2026-04-03T12:00:00', 'detail': 'signed by concierge', 'version': 1}"
+          },
+          {
+            "evidence_id": "logistics_events:formal_delivered_not_received_08-logistics_events-1:v1",
+            "kind": "logistics",
+            "summary": "logistics 记录 {'event_id': 'formal_delivered_not_received_08-logistics_events-1', 'order_id': 'formal_delivered_not_received_08-order', 'event_type': 'delivered', 'occurred_at': '2026-04-01T12:00:00', 'detail': 'delivered', 'version': 1}"
+          },
+          {
+            "evidence_id": "orders:formal_delivered_not_received_08-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_delivered_not_received_08-order 状态为 delivered"
+          },
+          {
+            "evidence_id": "policies:delivered-receipt-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 delivered-receipt-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-14",
+      "category": "compliance",
+      "option_a": {
+        "summary": "已提供的冲突列表为空。现有材料包含订单状态为 delivered、物流显示已送达，以及签收人为门卫的签收证明；本复检不据此改判最终责任。合规问题标注为“冲突案件缺少必要的人工升级”，但当前输入未列明冲突案件，需确认该合规要求是否适用于本案。",
+        "evidence_ids": [
+          "conversation:formal_delivered_not_received_09:v1",
+          "delivery_addresses:formal_delivered_not_received_09-delivery_addresses-1:v1",
+          "delivery_proofs:formal_delivered_not_received_09-delivery_proofs-1:v1",
+          "logistics_events:formal_delivered_not_received_09-logistics_events-1:v1",
+          "orders:formal_delivered_not_received_09-order:v1",
+          "policies:delivered-receipt-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1"
+        ],
+        "questions": [
+          "本案是否被业务规则认定为冲突案件？",
+          "若本案属于冲突案件，必要的人工升级是否已执行并留存记录？",
+          "delivery-receipt-cn-standard v1 对门卫签收是否有适用条件或额外要求？",
+          "物流显示的送达时间与签收证明时间不同，是否需要按既定政策进行时间一致性复核？"
+        ],
+        "recommended_action": "保持现有业务事实和最终责任结论不变；先依据 service-compliance-cn-standard v1 核对本案是否属于需要人工升级的冲突案件。若属于，应补充必要的人工升级记录后再完成复检；若不属于，应记录该合规问题不适用的依据。",
+        "priority": "high"
+      },
+      "option_b": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_delivered_not_received_09:v1",
+          "delivery_addresses:formal_delivered_not_received_09-delivery_addresses-1:v1",
+          "delivery_proofs:formal_delivered_not_received_09-delivery_proofs-1:v1",
+          "logistics_events:formal_delivered_not_received_09-logistics_events-1:v1",
+          "orders:formal_delivered_not_received_09-order:v1",
+          "policies:delivered-receipt-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "核对签收人、地址与用户陈述后人工复检",
+        "priority": "normal"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_delivered_not_received_09",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "物流显示签收但用户没有收到，这是第9种表达。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在按delivery_receipt_disputed对应证据路径核验。"
+          }
+        ],
+        "system_decision": "delivery_receipt_disputed",
+        "system_responsible_party": "undetermined",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_delivered_not_received_09:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "delivery_addresses:formal_delivered_not_received_09-delivery_addresses-1:v1",
+            "kind": "delivery_address",
+            "summary": "delivery_address 记录 {'address_id': 'formal_delivered_not_received_09-delivery_addresses-1', 'order_id': 'formal_delivered_not_received_09-order', 'city': '南京', 'masked_address': '鼓楼区***路', 'contact_suffix': '1234', 'version': 1}"
+          },
+          {
+            "evidence_id": "delivery_proofs:formal_delivered_not_received_09-delivery_proofs-1:v1",
+            "kind": "delivery_proof",
+            "summary": "delivery_proof 记录 {'proof_id': 'formal_delivered_not_received_09-delivery_proofs-1', 'order_id': 'formal_delivered_not_received_09-order', 'recipient': '门卫', 'proof_type': 'signature', 'delivered_at': '2026-04-03T12:00:00', 'detail': 'signed by concierge', 'version': 1}"
+          },
+          {
+            "evidence_id": "logistics_events:formal_delivered_not_received_09-logistics_events-1:v1",
+            "kind": "logistics",
+            "summary": "logistics 记录 {'event_id': 'formal_delivered_not_received_09-logistics_events-1', 'order_id': 'formal_delivered_not_received_09-order', 'event_type': 'delivered', 'occurred_at': '2026-04-01T12:00:00', 'detail': 'delivered', 'version': 1}"
+          },
+          {
+            "evidence_id": "orders:formal_delivered_not_received_09-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_delivered_not_received_09-order 状态为 delivered"
+          },
+          {
+            "evidence_id": "policies:delivered-receipt-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 delivered-receipt-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-15",
+      "category": "compliance",
+      "option_a": {
+        "summary": "未发现已标识的证据冲突。订单及物流记录显示已送达，但 delivery_proofs 查询未返回业务记录，当前存在人工复核所需交付证明不足的情况。",
+        "evidence_ids": [
+          "conversation:formal_delivered_not_received_10:v1",
+          "logistics_events:formal_delivered_not_received_10-logistics_events-1:v1",
+          "orders:formal_delivered_not_received_10-order:v1",
+          "policies:delivered-receipt-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:delivery_proofs:formal_delivered_not_received_10-order:v1"
+        ],
+        "questions": [
+          "在 delivery_proofs 未返回业务记录的情况下，是否仍满足 delivered-receipt-cn-standard v1 的送达证明要求？",
+          "请人工核查现有物流“delivered”事件是否具有该政策要求的完整证明材料。",
+          "是否已完成 service-compliance-cn-standard v1 要求的人工升级，并记录复检结果？"
+        ],
+        "recommended_action": "依据 service-compliance-cn-standard v1 对案件进行必要的人工升级和复检；结合 delivered-receipt-cn-standard v1 核查送达证明缺失的影响。人工升级仅用于补充复核，不据此修改既有业务事实或最终责任结论。",
+        "priority": "high"
+      },
+      "option_b": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_delivered_not_received_10:v1",
+          "delivery_addresses:formal_delivered_not_received_10-delivery_addresses-1:v1",
+          "logistics_events:formal_delivered_not_received_10-logistics_events-1:v1",
+          "orders:formal_delivered_not_received_10-order:v1",
+          "policies:delivered-receipt-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:delivery_proofs:formal_delivered_not_received_10-order:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "要求承运商补充签收证明并转人工复检",
+        "priority": "normal"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_delivered_not_received_10",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "物流显示签收但用户没有收到，这是第10种表达。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在按delivery_proof_missing对应证据路径核验。"
+          }
+        ],
+        "system_decision": "delivery_proof_missing",
+        "system_responsible_party": "logistics_provider",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_delivered_not_received_10:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "delivery_addresses:formal_delivered_not_received_10-delivery_addresses-1:v1",
+            "kind": "delivery_address",
+            "summary": "delivery_address 记录 {'address_id': 'formal_delivered_not_received_10-delivery_addresses-1', 'order_id': 'formal_delivered_not_received_10-order', 'city': '南京', 'masked_address': '鼓楼区***路', 'contact_suffix': '1234', 'version': 1}"
+          },
+          {
+            "evidence_id": "logistics_events:formal_delivered_not_received_10-logistics_events-1:v1",
+            "kind": "logistics",
+            "summary": "logistics 记录 {'event_id': 'formal_delivered_not_received_10-logistics_events-1', 'order_id': 'formal_delivered_not_received_10-order', 'event_type': 'delivered', 'occurred_at': '2026-04-01T12:00:00', 'detail': 'delivered', 'version': 1}"
+          },
+          {
+            "evidence_id": "orders:formal_delivered_not_received_10-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_delivered_not_received_10-order 状态为 delivered"
+          },
+          {
+            "evidence_id": "policies:delivered-receipt-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 delivered-receipt-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:delivery_proofs:formal_delivered_not_received_10-order:v1",
+            "kind": "query",
+            "summary": "查询 delivery_proofs 未返回业务记录"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-16",
+      "category": "conflict",
+      "option_a": {
+        "summary": "客服称包裹已送达，但物流系统不存在送达事件；订单送达状态与物流送达事件不一致",
+        "evidence_ids": [
+          "conversation:formal_delivery_01:v1",
+          "logistics_events:formal_delivery_01-logistics_events-1:v1",
+          "logistics_events:formal_delivery_01-logistics_events-2:v1",
+          "orders:formal_delivery_01-order:v1",
+          "policies:delivery-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "核验订单状态与物流轨迹后人工复检",
+        "priority": "high"
+      },
+      "option_b": {
+        "summary": "订单状态显示为 delivered，但现有物流证据仅包含 shipment_created 和 picked_up 事件，未提供送达事件；因此客服关于包裹已送达的业务陈述与物流系统事实不一致。该案件同时存在订单送达状态与物流送达事件不一致，以及缺少必要人工升级的合规问题。",
+        "evidence_ids": [
+          "conversation:formal_delivery_01:v1",
+          "logistics_events:formal_delivery_01-logistics_events-1:v1",
+          "logistics_events:formal_delivery_01-logistics_events-2:v1",
+          "orders:formal_delivery_01-order:v1",
+          "policies:delivery-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1"
+        ],
+        "questions": [
+          "订单状态为何为 delivered，而物流事件记录未包含送达事件？",
+          "客服关于包裹已送达的陈述是否有对应的送达凭证或其他系统记录支持？",
+          "该冲突案件是否已按 service-compliance-cn-standard v1 完成人工升级？",
+          "在缺少物流送达事件的情况下，订单送达状态是否需要由具备权限的人工复核人员确认？"
+        ],
+        "recommended_action": "依据适用的 delivery-cn-standard v1 和 service-compliance-cn-standard v1 进行人工升级复核，核验订单送达状态、客服陈述与物流事件记录的一致性，并补充或确认送达依据。在完成复核前，不应基于现有冲突证据直接作出或变更最终责任结论。",
+        "priority": "high"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_delivery_01",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "订单显示已送达，但物流轨迹没有签收。"
+          },
+          {
+            "speaker": "agent",
+            "text": "系统订单状态是已送达。"
+          }
+        ],
+        "system_decision": "delivery_event_conflict",
+        "system_responsible_party": "undetermined",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_delivery_01:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "logistics_events:formal_delivery_01-logistics_events-1:v1",
+            "kind": "logistics",
+            "summary": "logistics 记录 {'event_id': 'formal_delivery_01-logistics_events-1', 'order_id': 'formal_delivery_01-order', 'event_type': 'shipment_created', 'occurred_at': '2026-03-06T10:00:00', 'detail': 'label_created', 'version': 1}"
+          },
+          {
+            "evidence_id": "logistics_events:formal_delivery_01-logistics_events-2:v1",
+            "kind": "logistics",
+            "summary": "logistics 记录 {'event_id': 'formal_delivery_01-logistics_events-2', 'order_id': 'formal_delivery_01-order', 'event_type': 'picked_up', 'occurred_at': '2026-03-07T08:00:00', 'detail': 'carrier_pickup', 'version': 1}"
+          },
+          {
+            "evidence_id": "orders:formal_delivery_01-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_delivery_01-order 状态为 delivered"
+          },
+          {
+            "evidence_id": "policies:delivery-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 delivery-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-17",
+      "category": "conflict",
+      "option_a": {
+        "summary": "订单送达状态与物流送达事件不一致",
+        "evidence_ids": [
+          "conversation:formal_delivery_02:v1",
+          "logistics_events:formal_delivery_02-logistics_events-1:v1",
+          "logistics_events:formal_delivery_02-logistics_events-2:v1",
+          "logistics_events:formal_delivery_02-logistics_events-3:v1",
+          "orders:formal_delivery_02-order:v1",
+          "policies:delivery-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "核验订单状态与物流轨迹后人工复检",
+        "priority": "high"
+      },
+      "option_b": {
+        "summary": "订单状态显示为 shipped，但物流事件记录显示已 delivered（detail 为 signed），两者存在送达状态不一致。现有材料还标示该冲突案件缺少必要的人工升级。",
+        "evidence_ids": [
+          "orders:formal_delivery_02-order:v1",
+          "logistics_events:formal_delivery_02-logistics_events-3:v1",
+          "policies:delivery-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1"
+        ],
+        "questions": [
+          "订单状态为何仍为 shipped，是否存在状态同步延迟、回滚或数据源差异？",
+          "物流 delivered 事件及 signed 详情是否与该订单正确关联，且事件记录完整有效？",
+          "是否已按照适用合规政策完成必要的人工升级？",
+          "人工复检应以哪一条经核验的送达状态作为后续责任判断依据？"
+        ],
+        "recommended_action": "按适用的配送与服务合规政策立即发起人工升级复检，核对订单状态与物流送达事件的来源、更新时间及关联关系。在冲突消除前，不修改业务事实，不提前确定最终责任。",
+        "priority": "high"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_delivery_02",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "物流有签收事件，但订单仍显示运输中。"
+          },
+          {
+            "speaker": "agent",
+            "text": "需要核验订单与物流状态。"
+          }
+        ],
+        "system_decision": "delivery_event_conflict",
+        "system_responsible_party": "undetermined",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_delivery_02:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "logistics_events:formal_delivery_02-logistics_events-1:v1",
+            "kind": "logistics",
+            "summary": "logistics 记录 {'event_id': 'formal_delivery_02-logistics_events-1', 'order_id': 'formal_delivery_02-order', 'event_type': 'shipment_created', 'occurred_at': '2026-03-07T10:00:00', 'detail': 'label_created', 'version': 1}"
+          },
+          {
+            "evidence_id": "logistics_events:formal_delivery_02-logistics_events-2:v1",
+            "kind": "logistics",
+            "summary": "logistics 记录 {'event_id': 'formal_delivery_02-logistics_events-2', 'order_id': 'formal_delivery_02-order', 'event_type': 'picked_up', 'occurred_at': '2026-03-08T08:00:00', 'detail': 'carrier_pickup', 'version': 1}"
+          },
+          {
+            "evidence_id": "logistics_events:formal_delivery_02-logistics_events-3:v1",
+            "kind": "logistics",
+            "summary": "logistics 记录 {'event_id': 'formal_delivery_02-logistics_events-3', 'order_id': 'formal_delivery_02-order', 'event_type': 'delivered', 'occurred_at': '2026-03-11T12:00:00', 'detail': 'signed', 'version': 1}"
+          },
+          {
+            "evidence_id": "orders:formal_delivery_02-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_delivery_02-order 状态为 shipped"
+          },
+          {
+            "evidence_id": "policies:delivery-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 delivery-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-18",
+      "category": "compliance",
+      "option_a": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_duplicate_charge_01:v1",
+          "orders:formal_duplicate_charge_01-order:v1",
+          "payments:formal_duplicate_charge_01-payments-1:v1",
+          "payments:formal_duplicate_charge_01-payments-2:v1",
+          "policies:duplicate-charge-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_duplicate_charge_01-order:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "撤销重复扣款并核验支付幂等链路",
+        "priority": "normal"
+      },
+      "option_b": {
+        "summary": "当前未记录业务事实冲突。订单状态为 paid，且存在两笔 debit/succeeded 支付事件；退款查询未返回业务记录。上述信息支持进一步人工复核，但不足以直接修改业务事实或确定最终责任。",
+        "evidence_ids": [
+          "conversation:formal_duplicate_charge_01:v1",
+          "orders:formal_duplicate_charge_01-order:v1",
+          "payments:formal_duplicate_charge_01-payments-1:v1",
+          "payments:formal_duplicate_charge_01-payments-2:v1",
+          "policies:duplicate-charge-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_duplicate_charge_01-order:v1"
+        ],
+        "questions": [
+          "两笔 debit/succeeded 支付事件是否均对应订单 formal_duplicate_charge_01-order？",
+          "退款查询未返回业务记录，是否存在尚未同步、处理中或通过其他渠道发起的退款？",
+          "人工复核结果是否已按 duplicate-charge-cn-standard v1 和 service-compliance-cn-standard v1 完成记录？",
+          "在冲突案件缺少必要人工升级的合规问题解决前，是否应暂停自动结案或责任结论变更？"
+        ],
+        "recommended_action": "依据 duplicate-charge-cn-standard v1 和 service-compliance-cn-standard v1，将该冲突案件立即人工升级复核；重点核验两笔成功扣款是否对应同一订单、是否已发生退款或退款处理中，并在核验完成前保留现有业务事实与责任结论不变。",
+        "priority": "high"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_duplicate_charge_01",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "同一个订单在银行卡账单里出现了两笔扣款。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在核验相关业务记录。"
+          }
+        ],
+        "system_decision": "duplicate_charge_confirmed",
+        "system_responsible_party": "payment_channel",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_duplicate_charge_01:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "orders:formal_duplicate_charge_01-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_duplicate_charge_01-order 状态为 paid"
+          },
+          {
+            "evidence_id": "payments:formal_duplicate_charge_01-payments-1:v1",
+            "kind": "payment",
+            "summary": "支付事件 formal_duplicate_charge_01-payments-1 为 debit/succeeded"
+          },
+          {
+            "evidence_id": "payments:formal_duplicate_charge_01-payments-2:v1",
+            "kind": "payment",
+            "summary": "支付事件 formal_duplicate_charge_01-payments-2 为 debit/succeeded"
+          },
+          {
+            "evidence_id": "policies:duplicate-charge-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 duplicate-charge-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:refunds:formal_duplicate_charge_01-order:v1",
+            "kind": "query",
+            "summary": "查询 refunds 未返回业务记录"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-19",
+      "category": "missing",
+      "option_a": {
+        "summary": "缺失证据：payment",
+        "evidence_ids": [
+          "conversation:formal_duplicate_charge_04:v1",
+          "orders:formal_duplicate_charge_04-order:v1",
+          "policies:duplicate-charge-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:payments:formal_duplicate_charge_04-order:v1",
+          "query:refunds:formal_duplicate_charge_04-order:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "补充缺失证据后人工复检",
+        "priority": "normal"
+      },
+      "option_b": {
+        "summary": "未发现已标识的证据冲突。当前缺少 payment 证据，且 payments 查询未返回业务记录；现有材料不足以完成重复扣款事实核验或确定最终责任。",
+        "evidence_ids": [
+          "conversation:formal_duplicate_charge_04:v1",
+          "orders:formal_duplicate_charge_04-order:v1",
+          "policies:duplicate-charge-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:payments:formal_duplicate_charge_04-order:v1",
+          "query:refunds:formal_duplicate_charge_04-order:v1"
+        ],
+        "questions": [
+          "是否存在可核验的 payment 记录，能够对应订单 formal_duplicate_charge_04-order？",
+          "在缺少 payment 证据的情况下，是否已按 service-compliance-cn-standard v1 完成人工升级？",
+          "补充 payment 证据后，是否能依据 duplicate-charge-cn-standard v1 核验是否构成重复扣款？"
+        ],
+        "recommended_action": "人工升级复检，补充并核验 payment 证据后再依据适用政策作出处理。不得仅凭当前订单状态为 paid 及 payments 查询无记录的结果认定责任或作出最终责任结论。",
+        "priority": "high"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_duplicate_charge_04",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "同一个订单在银行卡账单里出现了两笔扣款。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在核验相关业务记录。"
+          }
+        ],
+        "system_decision": "manual_review",
+        "system_responsible_party": "undetermined",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_duplicate_charge_04:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "orders:formal_duplicate_charge_04-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_duplicate_charge_04-order 状态为 paid"
+          },
+          {
+            "evidence_id": "policies:duplicate-charge-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 duplicate-charge-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:payments:formal_duplicate_charge_04-order:v1",
+            "kind": "query",
+            "summary": "查询 payments 未返回业务记录"
+          },
+          {
+            "evidence_id": "query:refunds:formal_duplicate_charge_04-order:v1",
+            "kind": "query",
+            "summary": "查询 refunds 未返回业务记录"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-20",
+      "category": "compliance",
+      "option_a": {
+        "summary": "当前给定材料未标示事实冲突或缺失证据。材料显示订单已支付，且存在两笔成功扣款；退款查询未返回业务记录。不得据此修改业务事实或直接确定最终责任。",
+        "evidence_ids": [
+          "conversation:formal_duplicate_charge_05:v1",
+          "orders:formal_duplicate_charge_05-order:v1",
+          "payments:formal_duplicate_charge_05-payments-1:v1",
+          "payments:formal_duplicate_charge_05-payments-2:v1",
+          "policies:duplicate-charge-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_duplicate_charge_05-order:v1"
+        ],
+        "questions": [
+          "是否已按 duplicate-charge-cn-standard v1 和 service-compliance-cn-standard v1 完成人工升级？",
+          "两笔成功扣款是否均对应同一订单且确认为重复扣款？",
+          "退款查询未返回业务记录是否表示尚未发起退款，或仅表示查询范围内无记录？",
+          "人工复核完成前，是否应暂缓作出最终责任结论？"
+        ],
+        "recommended_action": "按适用政策执行人工升级，复核两笔成功扣款与退款状态，并由人工依据政策确定后续处理及责任结论。补齐或确认冲突案件的人工升级记录。",
+        "priority": "high"
+      },
+      "option_b": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_duplicate_charge_05:v1",
+          "orders:formal_duplicate_charge_05-order:v1",
+          "payments:formal_duplicate_charge_05-payments-1:v1",
+          "payments:formal_duplicate_charge_05-payments-2:v1",
+          "policies:duplicate-charge-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_duplicate_charge_05-order:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "撤销重复扣款并核验支付幂等链路",
+        "priority": "normal"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_duplicate_charge_05",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "同一订单疑似出现重复扣款，这是第5种表达。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在按duplicate_charge_confirmed对应证据路径核验。"
+          }
+        ],
+        "system_decision": "duplicate_charge_confirmed",
+        "system_responsible_party": "payment_channel",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_duplicate_charge_05:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "orders:formal_duplicate_charge_05-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_duplicate_charge_05-order 状态为 paid"
+          },
+          {
+            "evidence_id": "payments:formal_duplicate_charge_05-payments-1:v1",
+            "kind": "payment",
+            "summary": "支付事件 formal_duplicate_charge_05-payments-1 为 debit/succeeded"
+          },
+          {
+            "evidence_id": "payments:formal_duplicate_charge_05-payments-2:v1",
+            "kind": "payment",
+            "summary": "支付事件 formal_duplicate_charge_05-payments-2 为 debit/succeeded"
+          },
+          {
+            "evidence_id": "policies:duplicate-charge-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 duplicate-charge-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:refunds:formal_duplicate_charge_05-order:v1",
+            "kind": "query",
+            "summary": "查询 refunds 未返回业务记录"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-21",
+      "category": "missing",
+      "option_a": {
+        "summary": "未发现已提供证据之间的事实冲突。当前订单状态为 paid，但 payments 查询未返回业务记录，且 refunds 查询未返回业务记录；payment 相关证据缺失，无法据此确认重复扣款或退款事实。",
+        "evidence_ids": [
+          "conversation:formal_duplicate_charge_08:v1",
+          "orders:formal_duplicate_charge_08-order:v1",
+          "policies:duplicate-charge-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:payments:formal_duplicate_charge_08-order:v1",
+          "query:refunds:formal_duplicate_charge_08-order:v1"
+        ],
+        "questions": [
+          "是否存在该订单对应的 payment 业务记录、支付流水号、支付状态及扣款时间？",
+          "如主张重复扣款，是否有两笔独立支付记录及其对应金额、渠道和状态？",
+          "是否存在订单外或渠道侧的支付记录，能够解释 payments 查询未返回业务记录的情况？",
+          "人工复检完成后，是否已依据 duplicate-charge-cn-standard v1 和 service-compliance-cn-standard v1 记录处理结论及升级结果？"
+        ],
+        "recommended_action": "按服务合规要求立即进行人工升级复检，补充并核验 payment 证据后再作责任判断或退款处理。现阶段不得基于缺失的 payment 记录修改业务事实或最终责任。",
+        "priority": "high"
+      },
+      "option_b": {
+        "summary": "缺失证据：payment",
+        "evidence_ids": [
+          "conversation:formal_duplicate_charge_08:v1",
+          "orders:formal_duplicate_charge_08-order:v1",
+          "policies:duplicate-charge-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:payments:formal_duplicate_charge_08-order:v1",
+          "query:refunds:formal_duplicate_charge_08-order:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "补充缺失证据后人工复检",
+        "priority": "normal"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_duplicate_charge_08",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "同一订单疑似出现重复扣款，这是第8种表达。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在按manual_review对应证据路径核验。"
+          }
+        ],
+        "system_decision": "manual_review",
+        "system_responsible_party": "undetermined",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_duplicate_charge_08:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "orders:formal_duplicate_charge_08-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_duplicate_charge_08-order 状态为 paid"
+          },
+          {
+            "evidence_id": "policies:duplicate-charge-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 duplicate-charge-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:payments:formal_duplicate_charge_08-order:v1",
+            "kind": "query",
+            "summary": "查询 payments 未返回业务记录"
+          },
+          {
+            "evidence_id": "query:refunds:formal_duplicate_charge_08-order:v1",
+            "kind": "query",
+            "summary": "查询 refunds 未返回业务记录"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-22",
+      "category": "compliance",
+      "option_a": {
+        "summary": "未发现给定证据之间的事实冲突。现有记录显示订单已支付，且存在两笔成功扣款；退款查询未返回业务记录。该结论不改变最终责任认定。",
+        "evidence_ids": [
+          "conversation:formal_duplicate_charge_09:v1",
+          "orders:formal_duplicate_charge_09-order:v1",
+          "payments:formal_duplicate_charge_09-payments-1:v1",
+          "payments:formal_duplicate_charge_09-payments-2:v1",
+          "policies:duplicate-charge-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_duplicate_charge_09-order:v1"
+        ],
+        "questions": [
+          "两笔 debit/succeeded 支付事件是否均对应同一订单及同一笔应付金额？",
+          "依据 duplicate-charge-cn-standard v1，当前重复扣款事实是否满足退款或其他处置条件？",
+          "退款查询未返回业务记录，是否存在尚未入账、异步处理或查询范围未覆盖的退款记录？",
+          "service-compliance-cn-standard v1 所要求的人工升级是否已完成并留存处理结果？"
+        ],
+        "recommended_action": "根据已标示的合规问题，对该案件执行必要的人工升级和复检。复检时核对重复扣款政策适用情况、两笔成功支付事件与退款查询结果，并在人工复检完成前不作超出证据范围的责任结论。",
+        "priority": "high"
+      },
+      "option_b": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_duplicate_charge_09:v1",
+          "orders:formal_duplicate_charge_09-order:v1",
+          "payments:formal_duplicate_charge_09-payments-1:v1",
+          "payments:formal_duplicate_charge_09-payments-2:v1",
+          "policies:duplicate-charge-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_duplicate_charge_09-order:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "撤销重复扣款并核验支付幂等链路",
+        "priority": "normal"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_duplicate_charge_09",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "同一订单疑似出现重复扣款，这是第9种表达。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在按duplicate_charge_confirmed对应证据路径核验。"
+          }
+        ],
+        "system_decision": "duplicate_charge_confirmed",
+        "system_responsible_party": "payment_channel",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_duplicate_charge_09:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "orders:formal_duplicate_charge_09-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_duplicate_charge_09-order 状态为 paid"
+          },
+          {
+            "evidence_id": "payments:formal_duplicate_charge_09-payments-1:v1",
+            "kind": "payment",
+            "summary": "支付事件 formal_duplicate_charge_09-payments-1 为 debit/succeeded"
+          },
+          {
+            "evidence_id": "payments:formal_duplicate_charge_09-payments-2:v1",
+            "kind": "payment",
+            "summary": "支付事件 formal_duplicate_charge_09-payments-2 为 debit/succeeded"
+          },
+          {
+            "evidence_id": "policies:duplicate-charge-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 duplicate-charge-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:refunds:formal_duplicate_charge_09-order:v1",
+            "kind": "query",
+            "summary": "查询 refunds 未返回业务记录"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-23",
+      "category": "compliance",
+      "option_a": {
+        "summary": "当前给定材料未标示事实冲突，缺失证据列表为空。现有证据显示订单状态为 failed，但对应支付事件为 debit/succeeded，且退款查询未返回业务记录，存在需要人工复核的状态与资金处理不一致风险。",
+        "evidence_ids": [
+          "conversation:formal_payment_order_failure_01:v1",
+          "orders:formal_payment_order_failure_01-order:v1",
+          "payments:formal_payment_order_failure_01-payments-1:v1",
+          "policies:payment-order-failure-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_payment_order_failure_01-order:v1"
+        ],
+        "questions": [
+          "支付事件 debit/succeeded 与订单 failed 是否符合适用支付订单失败政策的预期处理规则？",
+          "该支付事件是否已完成退款、冲正或其他资金处置；若已处置，为什么退款查询未返回业务记录？",
+          "是否已按服务合规政策完成冲突案件的人工升级、留痕和后续处理？"
+        ],
+        "recommended_action": "依据适用政策发起必要的人工升级，核查支付成功与订单失败之间的处理链路，以及退款查询无业务记录的原因。在人工复核完成前，不基于现有材料修改业务事实或作出最终责任认定。",
+        "priority": "high"
+      },
+      "option_b": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_payment_order_failure_01:v1",
+          "orders:formal_payment_order_failure_01-order:v1",
+          "payments:formal_payment_order_failure_01-payments-1:v1",
+          "policies:payment-order-failure-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_payment_order_failure_01-order:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "立即发起资金撤销并排查订单创建链路",
+        "priority": "normal"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_payment_order_failure_01",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "银行卡已经扣款，但订单页面显示创建失败。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在核验相关业务记录。"
+          }
+        ],
+        "system_decision": "captured_order_failed_unreversed",
+        "system_responsible_party": "platform",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_payment_order_failure_01:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "orders:formal_payment_order_failure_01-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_payment_order_failure_01-order 状态为 failed"
+          },
+          {
+            "evidence_id": "payments:formal_payment_order_failure_01-payments-1:v1",
+            "kind": "payment",
+            "summary": "支付事件 formal_payment_order_failure_01-payments-1 为 debit/succeeded"
+          },
+          {
+            "evidence_id": "policies:payment-order-failure-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 payment-order-failure-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:refunds:formal_payment_order_failure_01-order:v1",
+            "kind": "query",
+            "summary": "查询 refunds 未返回业务记录"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-24",
+      "category": "compliance",
+      "option_a": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_payment_order_failure_04:v1",
+          "orders:formal_payment_order_failure_04-order:v1",
+          "payments:formal_payment_order_failure_04-payments-1:v1",
+          "policies:payment-order-failure-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_payment_order_failure_04-order:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "补充订单创建和支付网关证据后复检",
+        "priority": "normal"
+      },
+      "option_b": {
+        "summary": "未发现证据之间存在冲突。现有材料显示订单状态为 failed，支付事件为 debit/failed，且 refunds 查询未返回业务记录；以上仅作复检依据，不改变业务事实或最终责任。",
+        "evidence_ids": [
+          "conversation:formal_payment_order_failure_04:v1",
+          "orders:formal_payment_order_failure_04-order:v1",
+          "payments:formal_payment_order_failure_04-payments-1:v1",
+          "policies:payment-order-failure-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_payment_order_failure_04-order:v1"
+        ],
+        "questions": [
+          "是否已按照 service-compliance-cn-standard v1 完成必要的人工升级？",
+          "人工复核时，是否确认支付事件 formal_payment_order_failure_04-payments-1 的 debit/failed 状态与订单 failed 状态相互对应？",
+          "退款查询未返回业务记录时，是否需要依据适用政策进一步核验退款处理状态？"
+        ],
+        "recommended_action": "依据 service-compliance-cn-standard v1 对该案件执行必要的人工升级，并由人工复核支付失败、订单失败及退款查询结果。当前材料不足以调整最终责任结论。",
+        "priority": "high"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_payment_order_failure_04",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "银行卡已经扣款，但订单页面显示创建失败。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在核验相关业务记录。"
+          }
+        ],
+        "system_decision": "payment_order_state_conflict",
+        "system_responsible_party": "undetermined",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_payment_order_failure_04:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "orders:formal_payment_order_failure_04-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_payment_order_failure_04-order 状态为 failed"
+          },
+          {
+            "evidence_id": "payments:formal_payment_order_failure_04-payments-1:v1",
+            "kind": "payment",
+            "summary": "支付事件 formal_payment_order_failure_04-payments-1 为 debit/failed"
+          },
+          {
+            "evidence_id": "policies:payment-order-failure-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 payment-order-failure-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:refunds:formal_payment_order_failure_04-order:v1",
+            "kind": "query",
+            "summary": "查询 refunds 未返回业务记录"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-25",
+      "category": "compliance",
+      "option_a": {
+        "summary": "输入标记冲突=[]；但现有证据显示订单状态为 failed，同时存在 debit/succeeded 支付事件，且退款查询未返回业务记录。该情况需要人工核验，不能据此确定最终责任。",
+        "evidence_ids": [
+          "conversation:formal_payment_order_failure_05:v1",
+          "orders:formal_payment_order_failure_05-order:v1",
+          "payments:formal_payment_order_failure_05-payments-1:v1",
+          "policies:payment-order-failure-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_payment_order_failure_05-order:v1"
+        ],
+        "questions": [
+          "支付事件 debit/succeeded 是否对应该 failed 订单，是否存在重复支付或订单状态同步延迟？",
+          "订单失败后是否已触发退款或原路退回流程？",
+          "退款查询未返回业务记录，是尚未发起、查询延迟，还是业务记录缺失？",
+          "会话中的用户诉求及平台处理是否符合适用政策要求？"
+        ],
+        "recommended_action": "按合规要求对案件进行人工升级复检。依据适用的支付订单失败政策和服务合规政策，核验支付成功与订单失败之间的处理链路、退款是否应发生及退款记录缺失原因；在核验完成前不作最终责任结论。",
+        "priority": "high"
+      },
+      "option_b": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_payment_order_failure_05:v1",
+          "orders:formal_payment_order_failure_05-order:v1",
+          "payments:formal_payment_order_failure_05-payments-1:v1",
+          "policies:payment-order-failure-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_payment_order_failure_05-order:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "立即发起资金撤销并排查订单创建链路",
+        "priority": "normal"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_payment_order_failure_05",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "银行卡扣款后订单状态异常，这是第5种表达。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在按captured_order_failed_unreversed对应证据路径核验。"
+          }
+        ],
+        "system_decision": "captured_order_failed_unreversed",
+        "system_responsible_party": "platform",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_payment_order_failure_05:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "orders:formal_payment_order_failure_05-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_payment_order_failure_05-order 状态为 failed"
+          },
+          {
+            "evidence_id": "payments:formal_payment_order_failure_05-payments-1:v1",
+            "kind": "payment",
+            "summary": "支付事件 formal_payment_order_failure_05-payments-1 为 debit/succeeded"
+          },
+          {
+            "evidence_id": "policies:payment-order-failure-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 payment-order-failure-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:refunds:formal_payment_order_failure_05-order:v1",
+            "kind": "query",
+            "summary": "查询 refunds 未返回业务记录"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-26",
+      "category": "compliance",
+      "option_a": {
+        "summary": "未发现证据之间存在冲突。现有证据显示订单状态为 failed，支付事件为 debit/failed，退款查询未返回业务记录；但仅凭这些摘要无法确定最终责任。",
+        "evidence_ids": [
+          "conversation:formal_payment_order_failure_08:v1",
+          "orders:formal_payment_order_failure_08-order:v1",
+          "payments:formal_payment_order_failure_08-payments-1:v1",
+          "policies:payment-order-failure-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_payment_order_failure_08-order:v1"
+        ],
+        "questions": [
+          "payment-order-failure-cn-standard v1 对该订单失败及 debit/failed 支付事件的适用处理结论是什么？",
+          "退款查询未返回业务记录是否符合适用政策，是否仍需进一步核查退款链路？",
+          "service-compliance-cn-standard v1 是否规定此类案件必须人工升级，以及升级后需要补充或核验哪些材料？"
+        ],
+        "recommended_action": "根据 service-compliance-cn-standard v1，对该案件执行人工升级复检；复检时结合 payment-order-failure-cn-standard v1 核对订单失败、支付失败及退款无业务记录的处理要求。不得基于当前证据直接修改业务事实或作出最终责任认定。",
+        "priority": "high"
+      },
+      "option_b": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_payment_order_failure_08:v1",
+          "orders:formal_payment_order_failure_08-order:v1",
+          "payments:formal_payment_order_failure_08-payments-1:v1",
+          "policies:payment-order-failure-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_payment_order_failure_08-order:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "补充订单创建和支付网关证据后复检",
+        "priority": "normal"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_payment_order_failure_08",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "银行卡扣款后订单状态异常，这是第8种表达。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在按payment_order_state_conflict对应证据路径核验。"
+          }
+        ],
+        "system_decision": "payment_order_state_conflict",
+        "system_responsible_party": "undetermined",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_payment_order_failure_08:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "orders:formal_payment_order_failure_08-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_payment_order_failure_08-order 状态为 failed"
+          },
+          {
+            "evidence_id": "payments:formal_payment_order_failure_08-payments-1:v1",
+            "kind": "payment",
+            "summary": "支付事件 formal_payment_order_failure_08-payments-1 为 debit/failed"
+          },
+          {
+            "evidence_id": "policies:payment-order-failure-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 payment-order-failure-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:refunds:formal_payment_order_failure_08-order:v1",
+            "kind": "query",
+            "summary": "查询 refunds 未返回业务记录"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-27",
+      "category": "compliance",
+      "option_a": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_payment_order_failure_09:v1",
+          "orders:formal_payment_order_failure_09-order:v1",
+          "payments:formal_payment_order_failure_09-payments-1:v1",
+          "policies:payment-order-failure-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_payment_order_failure_09-order:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "立即发起资金撤销并排查订单创建链路",
+        "priority": "normal"
+      },
+      "option_b": {
+        "summary": "当前材料记录订单状态为 failed，但对应支付事件为 debit/succeeded，且退款查询未返回业务记录。该组合需要人工核验，但不据此修改业务事实或预先认定最终责任。已知冲突列表为空。",
+        "evidence_ids": [
+          "conversation:formal_payment_order_failure_09:v1",
+          "orders:formal_payment_order_failure_09-order:v1",
+          "payments:formal_payment_order_failure_09-payments-1:v1",
+          "policies:payment-order-failure-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_payment_order_failure_09-order:v1"
+        ],
+        "questions": [
+          "支付事件 formal_payment_order_failure_09-payments-1 是否与订单 formal_payment_order_failure_09-order 直接对应？",
+          "订单失败后是否存在退款发起、处理中或已完成但尚未在当前查询结果中返回的记录？",
+          "支付成功资金当前是否已入账、冻结或需要执行退款？",
+          "会话中的用户诉求及平台处理承诺是否与订单和支付状态一致？",
+          "本案是否已完成 payment-order-failure-cn-standard v1 要求的异常支付订单处理及人工升级流程？"
+        ],
+        "recommended_action": "按照 service-compliance-cn-standard v1 对缺少必要人工升级的案件进行人工升级；由复核人员核验支付成功与订单失败的状态关联、资金是否已入账或冻结，以及是否应生成退款记录。人工复核完成前，不输出最终责任结论。",
+        "priority": "high"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_payment_order_failure_09",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "银行卡扣款后订单状态异常，这是第9种表达。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在按captured_order_failed_unreversed对应证据路径核验。"
+          }
+        ],
+        "system_decision": "captured_order_failed_unreversed",
+        "system_responsible_party": "platform",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_payment_order_failure_09:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "orders:formal_payment_order_failure_09-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_payment_order_failure_09-order 状态为 failed"
+          },
+          {
+            "evidence_id": "payments:formal_payment_order_failure_09-payments-1:v1",
+            "kind": "payment",
+            "summary": "支付事件 formal_payment_order_failure_09-payments-1 为 debit/succeeded"
+          },
+          {
+            "evidence_id": "policies:payment-order-failure-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 payment-order-failure-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:refunds:formal_payment_order_failure_09-order:v1",
+            "kind": "query",
+            "summary": "查询 refunds 未返回业务记录"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-28",
+      "category": "conflict",
+      "option_a": {
+        "summary": "退款系统记录退款 formal_refund_08-refunds-1 状态为 succeeded、金额为 199.0；支付记录仅显示支付事件 formal_refund_08-payments-1 为 debit/succeeded，当前给定证据中不存在与退款对应的入账流水。售后单状态为 approved。",
+        "evidence_ids": [
+          "refunds:formal_refund_08-refunds-1:v1",
+          "payments:formal_refund_08-payments-1:v1",
+          "after_sales_cases:formal_refund_08-after-sales:v1",
+          "policies:refund-cn-standard:v2",
+          "policies:service-compliance-cn-standard:v1"
+        ],
+        "questions": [
+          "退款记录 formal_refund_08-refunds-1 是否存在与支付事件 formal_refund_08-payments-1 对应的支付渠道流水或关联标识？",
+          "199.0 金额的退款是否已实际入账，还是仅在退款系统中标记为 succeeded？",
+          "人工升级完成后，是否能够补充支付渠道侧的入账结果以消除当前冲突？"
+        ],
+        "recommended_action": "依据适用的 refund-cn-standard v2 与 service-compliance-cn-standard v1，对该冲突案件执行必要的人工升级，核验退款与支付入账之间的关联及资金到账状态；在核验完成前，不新增或变更最终责任结论。",
+        "priority": "high"
+      },
+      "option_b": {
+        "summary": "退款系统显示成功，但支付记录中不存在匹配的入账流水",
+        "evidence_ids": [
+          "after_sales_cases:formal_refund_08-after-sales:v1",
+          "conversation:formal_refund_08:v1",
+          "orders:formal_refund_08-order:v1",
+          "payments:formal_refund_08-payments-1:v1",
+          "policies:refund-cn-standard:v2",
+          "policies:service-compliance-cn-standard:v1",
+          "refunds:formal_refund_08-refunds-1:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "携退款流水号向支付渠道核验，并转人工复检",
+        "priority": "high"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_refund_08",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "系统显示退款成功，但银行卡一直没入账。"
+          },
+          {
+            "speaker": "agent",
+            "text": "页面显示已退款，请再核对账单。"
+          }
+        ],
+        "system_decision": "refund_record_conflict",
+        "system_responsible_party": "undetermined",
+        "evidence": [
+          {
+            "evidence_id": "after_sales_cases:formal_refund_08-after-sales:v1",
+            "kind": "after_sales",
+            "summary": "售后单 formal_refund_08-after-sales 状态为 approved"
+          },
+          {
+            "evidence_id": "conversation:formal_refund_08:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "orders:formal_refund_08-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_refund_08-order 状态为 paid"
+          },
+          {
+            "evidence_id": "payments:formal_refund_08-payments-1:v1",
+            "kind": "payment",
+            "summary": "支付事件 formal_refund_08-payments-1 为 debit/succeeded"
+          },
+          {
+            "evidence_id": "policies:refund-cn-standard:v2",
+            "kind": "policy",
+            "summary": "适用政策 refund-cn-standard v2"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "refunds:formal_refund_08-refunds-1:v1",
+            "kind": "refund",
+            "summary": "退款 formal_refund_08-refunds-1 状态为 succeeded，金额 199.0"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-29",
+      "category": "conflict",
+      "option_a": {
+        "summary": "退款系统显示成功，但支付记录中不存在匹配的入账流水",
+        "evidence_ids": [
+          "after_sales_cases:formal_refund_09-after-sales:v1",
+          "conversation:formal_refund_09:v1",
+          "orders:formal_refund_09-order:v1",
+          "payments:formal_refund_09-payments-1:v1",
+          "payments:formal_refund_09-payments-2:v1",
+          "policies:refund-cn-standard:v2",
+          "policies:service-compliance-cn-standard:v1",
+          "refunds:formal_refund_09-refunds-1:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "携退款流水号向支付渠道核验，并转人工复检",
+        "priority": "high"
+      },
+      "option_b": {
+        "summary": "退款记录显示退款 formal_refund_09-refunds-1 状态为 succeeded、金额为 199.0；支付记录显示存在 debit/succeeded 与 credit/succeeded 事件，但当前材料无法确认 credit 事件是否为与该退款匹配的入账流水。因此，退款系统显示成功与支付记录中不存在匹配入账流水之间存在未解决冲突。售后单状态为 approved。",
+        "evidence_ids": [
+          "refunds:formal_refund_09-refunds-1:v1",
+          "payments:formal_refund_09-payments-1:v1",
+          "payments:formal_refund_09-payments-2:v1",
+          "after_sales_cases:formal_refund_09-after-sales:v1",
+          "policies:refund-cn-standard:v2",
+          "policies:service-compliance-cn-standard:v1"
+        ],
+        "questions": [
+          "payments:formal_refund_09-payments-2:v1 所示 credit/succeeded 事件是否能够通过交易标识、金额或其他现有关联字段匹配 refunds:formal_refund_09-refunds-1:v1？",
+          "是否已按照 policies:refund-cn-standard:v2 和 policies:service-compliance-cn-standard:v1 完成冲突案件的人工升级？",
+          "在匹配入账流水尚未确认前，是否已避免据此改变最终责任结论？"
+        ],
+        "recommended_action": "依据适用的退款及服务合规政策，将该冲突案件立即进行必要的人工升级和复核。人工复核应核对退款记录与支付 credit 事件的关联关系、金额及交易标识，并在核验完成前保持责任结论不变，不新增或推定业务事实。",
+        "priority": "high"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_refund_09",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "只到账九十九，订单明明是一百九十九。"
+          },
+          {
+            "speaker": "agent",
+            "text": "后台退款已经完成。"
+          }
+        ],
+        "system_decision": "refund_record_conflict",
+        "system_responsible_party": "undetermined",
+        "evidence": [
+          {
+            "evidence_id": "after_sales_cases:formal_refund_09-after-sales:v1",
+            "kind": "after_sales",
+            "summary": "售后单 formal_refund_09-after-sales 状态为 approved"
+          },
+          {
+            "evidence_id": "conversation:formal_refund_09:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "orders:formal_refund_09-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_refund_09-order 状态为 paid"
+          },
+          {
+            "evidence_id": "payments:formal_refund_09-payments-1:v1",
+            "kind": "payment",
+            "summary": "支付事件 formal_refund_09-payments-1 为 debit/succeeded"
+          },
+          {
+            "evidence_id": "payments:formal_refund_09-payments-2:v1",
+            "kind": "payment",
+            "summary": "支付事件 formal_refund_09-payments-2 为 credit/succeeded"
+          },
+          {
+            "evidence_id": "policies:refund-cn-standard:v2",
+            "kind": "policy",
+            "summary": "适用政策 refund-cn-standard v2"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "refunds:formal_refund_09-refunds-1:v1",
+            "kind": "refund",
+            "summary": "退款 formal_refund_09-refunds-1 状态为 succeeded，金额 199.0"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-30",
+      "category": "conflict",
+      "option_a": {
+        "summary": "退款系统显示成功，但支付记录中不存在匹配的入账流水",
+        "evidence_ids": [
+          "after_sales_cases:formal_refund_10-after-sales:v1",
+          "conversation:formal_refund_10:v1",
+          "orders:formal_refund_10-order:v1",
+          "payments:formal_refund_10-payments-1:v1",
+          "payments:formal_refund_10-payments-2:v1",
+          "policies:refund-cn-standard:v2",
+          "policies:service-compliance-cn-standard:v1",
+          "refunds:formal_refund_10-refunds-1:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "携退款流水号向支付渠道核验，并转人工复检",
+        "priority": "high"
+      },
+      "option_b": {
+        "summary": "退款记录显示 formal_refund_10-refunds-1 状态为 succeeded、金额为 199.0，但支付记录显示对应 credit 事件为 failed，且现有证据中未见匹配的成功入账流水。该状态冲突无法仅依据现有材料确认退款是否实际到账。",
+        "evidence_ids": [
+          "refunds:formal_refund_10-refunds-1:v1",
+          "payments:formal_refund_10-payments-2:v1",
+          "payments:formal_refund_10-payments-1:v1",
+          "after_sales_cases:formal_refund_10-after-sales:v1",
+          "policies:refund-cn-standard:v2",
+          "policies:service-compliance-cn-standard:v1"
+        ],
+        "questions": [
+          "退款记录 formal_refund_10-refunds-1 是否存在可核验的支付入账关联信息？",
+          "支付事件 formal_refund_10-payments-2 为 credit/failed 的最终处理结果是什么？",
+          "退款记录中的 199.0 是否与实际入账金额一致？",
+          "售后单已为 approved 的情况下，退款状态与支付入账状态不一致是否触发人工升级要求？",
+          "人工复检是否已依据 refund-cn-standard v2 与 service-compliance-cn-standard v1 完成并留存处理结果？"
+        ],
+        "recommended_action": "依据适用的退款与服务合规政策，将案件升级人工复检；核对退款成功记录与支付入账流水的关联、金额及最终状态。在完成支付侧核验前，不应仅凭退款记录认定已实际到账，也不应据此调整最终责任结论。",
+        "priority": "high"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_refund_10",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "退款成功为何没有到账？"
+          },
+          {
+            "speaker": "agent",
+            "text": "请核对支付账户。"
+          }
+        ],
+        "system_decision": "refund_record_conflict",
+        "system_responsible_party": "undetermined",
+        "evidence": [
+          {
+            "evidence_id": "after_sales_cases:formal_refund_10-after-sales:v1",
+            "kind": "after_sales",
+            "summary": "售后单 formal_refund_10-after-sales 状态为 approved"
+          },
+          {
+            "evidence_id": "conversation:formal_refund_10:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "orders:formal_refund_10-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_refund_10-order 状态为 paid"
+          },
+          {
+            "evidence_id": "payments:formal_refund_10-payments-1:v1",
+            "kind": "payment",
+            "summary": "支付事件 formal_refund_10-payments-1 为 debit/succeeded"
+          },
+          {
+            "evidence_id": "payments:formal_refund_10-payments-2:v1",
+            "kind": "payment",
+            "summary": "支付事件 formal_refund_10-payments-2 为 credit/failed"
+          },
+          {
+            "evidence_id": "policies:refund-cn-standard:v2",
+            "kind": "policy",
+            "summary": "适用政策 refund-cn-standard v2"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "refunds:formal_refund_10-refunds-1:v1",
+            "kind": "refund",
+            "summary": "退款 formal_refund_10-refunds-1 状态为 succeeded，金额 199.0"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-31",
+      "category": "compliance",
+      "option_a": {
+        "summary": "已给定材料未列明事实冲突；但案件存在合规问题：冲突案件缺少必要的人工升级。现有证据仅表明订单为已支付、存在成功扣款与成功入账事件，且退款已成功、金额为199.0，不能据此修改或确定最终责任。",
+        "evidence_ids": [
+          "conversation:formal_refund_amount_02:v1",
+          "orders:formal_refund_amount_02-order:v1",
+          "payments:formal_refund_amount_02-payments-1:v1",
+          "payments:formal_refund_amount_02-payments-2:v1",
+          "policies:refund-amount-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "refunds:formal_refund_amount_02-refunds-1:v1"
+        ],
+        "questions": [
+          "人工复检是否已按适用政策完成升级及留痕？",
+          "退款金额199.0是否符合 refund-amount-cn-standard v1 的适用规则？",
+          "成功扣款、成功入账与退款成功三项支付记录之间是否能完整对应本次争议？",
+          "service-compliance-cn-standard v1 下是否存在需要进一步核验的服务履约事实？"
+        ],
+        "recommended_action": "立即进行人工升级复检，依据 refund-amount-cn-standard v1 与 service-compliance-cn-standard v1 核验退款金额及服务合规性，并保留现有责任结论不变，直至人工复检完成。",
+        "priority": "high"
+      },
+      "option_b": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_refund_amount_02:v1",
+          "orders:formal_refund_amount_02-order:v1",
+          "payments:formal_refund_amount_02-payments-1:v1",
+          "payments:formal_refund_amount_02-payments-2:v1",
+          "policies:refund-amount-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "refunds:formal_refund_amount_02-refunds-1:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "携退款流水向支付渠道核验实际入账金额",
+        "priority": "normal"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_refund_amount_02",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "订单实付199元，但退款和实际到账金额对不上。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在核验相关业务记录。"
+          }
+        ],
+        "system_decision": "refund_credit_amount_mismatch",
+        "system_responsible_party": "payment_channel",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_refund_amount_02:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "orders:formal_refund_amount_02-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_refund_amount_02-order 状态为 paid"
+          },
+          {
+            "evidence_id": "payments:formal_refund_amount_02-payments-1:v1",
+            "kind": "payment",
+            "summary": "支付事件 formal_refund_amount_02-payments-1 为 debit/succeeded"
+          },
+          {
+            "evidence_id": "payments:formal_refund_amount_02-payments-2:v1",
+            "kind": "payment",
+            "summary": "支付事件 formal_refund_amount_02-payments-2 为 credit/succeeded"
+          },
+          {
+            "evidence_id": "policies:refund-amount-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 refund-amount-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "refunds:formal_refund_amount_02-refunds-1:v1",
+            "kind": "refund",
+            "summary": "退款 formal_refund_amount_02-refunds-1 状态为 succeeded，金额 199.0"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-32",
+      "category": "missing",
+      "option_a": {
+        "summary": "当前未发现已识别的证据冲突。现有材料显示订单为已支付状态，支付事件为成功扣款；退款查询未返回业务记录，但缺少退款证据，无法据此确认退款是否发生或完成。",
+        "evidence_ids": [
+          "conversation:formal_refund_amount_04:v1",
+          "orders:formal_refund_amount_04-order:v1",
+          "payments:formal_refund_amount_04-payments-1:v1",
+          "policies:refund-amount-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_refund_amount_04-order:v1"
+        ],
+        "questions": [
+          "是否存在未纳入当前材料的退款申请、退款处理或退款到账记录？",
+          "退款相关证据是否应关联至订单 formal_refund_amount_04-order？",
+          "人工升级是否已按 policies:service-compliance-cn-standard:v1 的要求执行？",
+          "在退款证据缺失的情况下，是否应继续暂缓责任认定？"
+        ],
+        "recommended_action": "暂停最终责任认定，按服务合规政策进行人工升级，并补充或核验退款相关证据。复检结论仅应基于新增的退款证据及现有订单、支付、会话和适用政策证据，不得将退款查询无记录直接等同于未退款。",
+        "priority": "high"
+      },
+      "option_b": {
+        "summary": "缺失证据：refund",
+        "evidence_ids": [
+          "conversation:formal_refund_amount_04:v1",
+          "orders:formal_refund_amount_04-order:v1",
+          "payments:formal_refund_amount_04-payments-1:v1",
+          "policies:refund-amount-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_refund_amount_04-order:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "补充缺失证据后人工复检",
+        "priority": "normal"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_refund_amount_04",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "订单实付199元，但退款和实际到账金额对不上。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在核验相关业务记录。"
+          }
+        ],
+        "system_decision": "manual_review",
+        "system_responsible_party": "undetermined",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_refund_amount_04:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "orders:formal_refund_amount_04-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_refund_amount_04-order 状态为 paid"
+          },
+          {
+            "evidence_id": "payments:formal_refund_amount_04-payments-1:v1",
+            "kind": "payment",
+            "summary": "支付事件 formal_refund_amount_04-payments-1 为 debit/succeeded"
+          },
+          {
+            "evidence_id": "policies:refund-amount-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 refund-amount-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:refunds:formal_refund_amount_04-order:v1",
+            "kind": "query",
+            "summary": "查询 refunds 未返回业务记录"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-33",
+      "category": "compliance",
+      "option_a": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_refund_amount_06:v1",
+          "orders:formal_refund_amount_06-order:v1",
+          "payments:formal_refund_amount_06-payments-1:v1",
+          "payments:formal_refund_amount_06-payments-2:v1",
+          "policies:refund-amount-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "refunds:formal_refund_amount_06-refunds-1:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "携退款流水向支付渠道核验实际入账金额",
+        "priority": "normal"
+      },
+      "option_b": {
+        "summary": "未发现已标注的业务事实冲突或缺失证据。现有材料显示订单已支付，存在一笔成功扣款和一笔成功入账退款，退款金额为199.0；具体是否符合退款金额政策及服务合规政策，仍应由人工依据适用政策复核。",
+        "evidence_ids": [
+          "conversation:formal_refund_amount_06:v1",
+          "orders:formal_refund_amount_06-order:v1",
+          "payments:formal_refund_amount_06-payments-1:v1",
+          "payments:formal_refund_amount_06-payments-2:v1",
+          "policies:refund-amount-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "refunds:formal_refund_amount_06-refunds-1:v1"
+        ],
+        "questions": [
+          "订单实际支付金额是否能够由现有支付证据确认，并与退款金额199.0一致？",
+          "退款金额199.0是否符合refund-amount-cn-standard v1的适用条件和计算规则？",
+          "成功扣款与成功退款是否对应同一订单及同一笔争议交易？",
+          "是否已完成service-compliance-cn-standard v1要求的必要人工升级及复核记录？"
+        ],
+        "recommended_action": "按服务合规要求升级人工复检，核对退款金额199.0与订单实际支付金额及退款金额政策的一致性，并确认成功扣款、成功退款及订单状态之间的业务链路。在人工复核完成前，不新增或变更责任结论。",
+        "priority": "high"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_refund_amount_06",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "退款金额和订单实付金额不一致，这是第6种表达。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在按refund_credit_amount_mismatch对应证据路径核验。"
+          }
+        ],
+        "system_decision": "refund_credit_amount_mismatch",
+        "system_responsible_party": "payment_channel",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_refund_amount_06:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "orders:formal_refund_amount_06-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_refund_amount_06-order 状态为 paid"
+          },
+          {
+            "evidence_id": "payments:formal_refund_amount_06-payments-1:v1",
+            "kind": "payment",
+            "summary": "支付事件 formal_refund_amount_06-payments-1 为 debit/succeeded"
+          },
+          {
+            "evidence_id": "payments:formal_refund_amount_06-payments-2:v1",
+            "kind": "payment",
+            "summary": "支付事件 formal_refund_amount_06-payments-2 为 credit/succeeded"
+          },
+          {
+            "evidence_id": "policies:refund-amount-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 refund-amount-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "refunds:formal_refund_amount_06-refunds-1:v1",
+            "kind": "refund",
+            "summary": "退款 formal_refund_amount_06-refunds-1 状态为 succeeded，金额 199.0"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-34",
+      "category": "missing",
+      "option_a": {
+        "summary": "缺失证据：refund",
+        "evidence_ids": [
+          "conversation:formal_refund_amount_08:v1",
+          "orders:formal_refund_amount_08-order:v1",
+          "payments:formal_refund_amount_08-payments-1:v1",
+          "policies:refund-amount-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_refund_amount_08-order:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "补充缺失证据后人工复检",
+        "priority": "normal"
+      },
+      "option_b": {
+        "summary": "当前未发现已识别的证据冲突。现有材料显示订单已支付，且存在成功扣款事件；但退款查询未返回业务记录，退款相关证据缺失。",
+        "evidence_ids": [
+          "conversation:formal_refund_amount_08:v1",
+          "orders:formal_refund_amount_08-order:v1",
+          "payments:formal_refund_amount_08-payments-1:v1",
+          "policies:refund-amount-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "query:refunds:formal_refund_amount_08-order:v1"
+        ],
+        "questions": [
+          "是否存在对应订单的退款申请或退款处理记录？",
+          "退款是否已创建、成功、失败、取消或仍在处理中？",
+          "如已退款，退款金额、时间及原路退回状态是什么？",
+          "如未退款，是否有符合退款政策的处理依据和操作记录？",
+          "案件是否已完成必要的人工升级，并由人工复核退款缺失情况？"
+        ],
+        "recommended_action": "暂不修改业务事实或最终责任结论。依据适用的退款与服务合规政策，补充调取退款处理记录、退款状态、退款金额、退款时间及相关操作日志；在退款证据补齐前，将案件升级人工复检，以处理当前缺失证据和合规问题。",
+        "priority": "high"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_refund_amount_08",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "退款金额和订单实付金额不一致，这是第8种表达。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在按manual_review对应证据路径核验。"
+          }
+        ],
+        "system_decision": "manual_review",
+        "system_responsible_party": "undetermined",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_refund_amount_08:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "orders:formal_refund_amount_08-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_refund_amount_08-order 状态为 paid"
+          },
+          {
+            "evidence_id": "payments:formal_refund_amount_08-payments-1:v1",
+            "kind": "payment",
+            "summary": "支付事件 formal_refund_amount_08-payments-1 为 debit/succeeded"
+          },
+          {
+            "evidence_id": "policies:refund-amount-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 refund-amount-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:refunds:formal_refund_amount_08-order:v1",
+            "kind": "query",
+            "summary": "查询 refunds 未返回业务记录"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-35",
+      "category": "compliance",
+      "option_a": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_refund_amount_10:v1",
+          "orders:formal_refund_amount_10-order:v1",
+          "payments:formal_refund_amount_10-payments-1:v1",
+          "payments:formal_refund_amount_10-payments-2:v1",
+          "policies:refund-amount-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "refunds:formal_refund_amount_10-refunds-1:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "携退款流水向支付渠道核验实际入账金额",
+        "priority": "normal"
+      },
+      "option_b": {
+        "summary": "当前未发现证据之间的明确冲突；现有材料显示订单已支付，存在一笔成功扣款和一笔成功退款，退款金额为 199.0。",
+        "evidence_ids": [
+          "conversation:formal_refund_amount_10:v1",
+          "orders:formal_refund_amount_10-order:v1",
+          "payments:formal_refund_amount_10-payments-1:v1",
+          "payments:formal_refund_amount_10-payments-2:v1",
+          "policies:refund-amount-cn-standard:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "refunds:formal_refund_amount_10-refunds-1:v1"
+        ],
+        "questions": [
+          "人工升级是否已按 service-compliance-cn-standard v1 的要求完成并留痕？",
+          "成功扣款与成功退款事件是否均属于该订单，且退款金额 199.0 是否符合 refund-amount-cn-standard v1？",
+          "会话中的 2 条消息是否包含足以支持退款金额或责任判断的关键信息？"
+        ],
+        "recommended_action": "因标记存在“冲突案件缺少必要的人工升级”合规问题，建议立即补充人工升级复检，并依据 refund-amount-cn-standard v1 与 service-compliance-cn-standard v1 核验退款金额及服务合规性。在完成升级前，不对最终责任作出调整或定性。",
+        "priority": "high"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_refund_amount_10",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "退款金额和订单实付金额不一致，这是第10种表达。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在按refund_credit_amount_mismatch对应证据路径核验。"
+          }
+        ],
+        "system_decision": "refund_credit_amount_mismatch",
+        "system_responsible_party": "payment_channel",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_refund_amount_10:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "orders:formal_refund_amount_10-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_refund_amount_10-order 状态为 paid"
+          },
+          {
+            "evidence_id": "payments:formal_refund_amount_10-payments-1:v1",
+            "kind": "payment",
+            "summary": "支付事件 formal_refund_amount_10-payments-1 为 debit/succeeded"
+          },
+          {
+            "evidence_id": "payments:formal_refund_amount_10-payments-2:v1",
+            "kind": "payment",
+            "summary": "支付事件 formal_refund_amount_10-payments-2 为 credit/succeeded"
+          },
+          {
+            "evidence_id": "policies:refund-amount-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 refund-amount-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "refunds:formal_refund_amount_10-refunds-1:v1",
+            "kind": "refund",
+            "summary": "退款 formal_refund_amount_10-refunds-1 状态为 succeeded，金额 199.0"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-36",
+      "category": "compliance",
+      "option_a": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_wrong_item_01:v1",
+          "order_items:formal_wrong_item_01-order_items-1:v1",
+          "orders:formal_wrong_item_01-order:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "policies:wrong-item-cn-standard:v1",
+          "query:claim_attachments:formal_wrong_item_01-order:v1",
+          "warehouse_pack_records:formal_wrong_item_01-warehouse_pack_records-1:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "补发正确商品并核验仓库分拣",
+        "priority": "normal"
+      },
+      "option_b": {
+        "summary": "未记录已识别的证据冲突。订单商品 SKU 为 sku-ordered，而仓配记录中的打包 SKU 为 sku-other；该差异属于需要人工复核的异常，但不能据此直接修改最终责任结论。",
+        "evidence_ids": [
+          "conversation:formal_wrong_item_01:v1",
+          "order_items:formal_wrong_item_01-order_items-1:v1",
+          "orders:formal_wrong_item_01-order:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "policies:wrong-item-cn-standard:v1",
+          "query:claim_attachments:formal_wrong_item_01-order:v1",
+          "warehouse_pack_records:formal_wrong_item_01-warehouse_pack_records-1:v1"
+        ],
+        "questions": [
+          "人工复检是否已完成必要升级？",
+          "会话中的用户主张是否与订单 SKU sku-ordered 及仓配记录 SKU sku-other 相互对应？",
+          "在缺少 claim_attachments 业务记录的情况下，是否仍有足够证据依据 wrong-item-cn-standard v1 作出责任判断？"
+        ],
+        "recommended_action": "按适用的 service-compliance-cn-standard v1 与 wrong-item-cn-standard v1 进行人工升级复检，核对会话内容、订单商品与仓配打包记录。当前 claim_attachments 查询未返回业务记录，复检时应保留该证据缺口，不应据此推定任一方责任。",
+        "priority": "high"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_wrong_item_01",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "收到的商品SKU与订单不一致，这是第1种表达。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在按wrong_item_warehouse_mismatch对应证据路径核验。"
+          }
+        ],
+        "system_decision": "wrong_item_warehouse_mismatch",
+        "system_responsible_party": "warehouse",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_wrong_item_01:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "order_items:formal_wrong_item_01-order_items-1:v1",
+            "kind": "order_item",
+            "summary": "order_item 记录 {'order_item_id': 'formal_wrong_item_01-order_items-1', 'order_id': 'formal_wrong_item_01-order', 'sku_id': 'sku-ordered', 'product_name': '测试商品', 'quantity': 2, 'unit_price': 99.5, 'category': 'general', 'version': 1}"
+          },
+          {
+            "evidence_id": "orders:formal_wrong_item_01-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_wrong_item_01-order 状态为 delivered"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:wrong-item-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 wrong-item-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:claim_attachments:formal_wrong_item_01-order:v1",
+            "kind": "query",
+            "summary": "查询 claim_attachments 未返回业务记录"
+          },
+          {
+            "evidence_id": "warehouse_pack_records:formal_wrong_item_01-warehouse_pack_records-1:v1",
+            "kind": "warehouse_pack",
+            "summary": "warehouse_pack 记录 {'pack_record_id': 'formal_wrong_item_01-warehouse_pack_records-1', 'order_id': 'formal_wrong_item_01-order', 'sku_id': 'sku-other', 'packed_quantity': 2, 'scanned_at': '2026-05-02T08:00:00', 'station_id': 'station-m10', 'version': 1}"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-37",
+      "category": "compliance",
+      "option_a": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_wrong_item_02:v1",
+          "order_items:formal_wrong_item_02-order_items-1:v1",
+          "orders:formal_wrong_item_02-order:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "policies:wrong-item-cn-standard:v1",
+          "query:claim_attachments:formal_wrong_item_02-order:v1",
+          "warehouse_pack_records:formal_wrong_item_02-warehouse_pack_records-1:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "仓库记录与订单一致，结合附件人工复检",
+        "priority": "normal"
+      },
+      "option_b": {
+        "summary": "未发现已记录的业务事实冲突。",
+        "evidence_ids": [
+          "conversation:formal_wrong_item_02:v1",
+          "order_items:formal_wrong_item_02-order_items-1:v1",
+          "orders:formal_wrong_item_02-order:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "policies:wrong-item-cn-standard:v1",
+          "query:claim_attachments:formal_wrong_item_02-order:v1",
+          "warehouse_pack_records:formal_wrong_item_02-warehouse_pack_records-1:v1"
+        ],
+        "questions": [
+          "人工复检时，是否已依据 policies:service-compliance-cn-standard:v1 和 policies:wrong-item-cn-standard:v1 完成必要的升级审核？",
+          "如何解释 order_items 与 warehouse_pack_records 均记录 sku-ordered、数量为 2，而案件主题涉及商品问题？",
+          "claim_attachments 查询未返回业务记录，是否需要在人工复检中确认相关申诉材料是否存在或是否可用？",
+          "在缺少申诉附件的情况下，是否具备形成最终责任结论所需的充分证据？"
+        ],
+        "recommended_action": "按适用政策执行人工升级复检。当前订单已送达，订单商品记录与仓库打包记录均显示 sku_id 为 sku-ordered、数量为 2；同时查询 claim_attachments 未返回业务记录。由于该冲突案件缺少必要的人工升级，应补充人工复检流程并由人工依据现有证据及适用政策判断，不能据此直接修改业务事实或最终责任结论。",
+        "priority": "high"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_wrong_item_02",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "收到的商品SKU与订单不一致，这是第2种表达。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在按wrong_item_not_verified对应证据路径核验。"
+          }
+        ],
+        "system_decision": "wrong_item_not_verified",
+        "system_responsible_party": "undetermined",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_wrong_item_02:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "order_items:formal_wrong_item_02-order_items-1:v1",
+            "kind": "order_item",
+            "summary": "order_item 记录 {'order_item_id': 'formal_wrong_item_02-order_items-1', 'order_id': 'formal_wrong_item_02-order', 'sku_id': 'sku-ordered', 'product_name': '测试商品', 'quantity': 2, 'unit_price': 99.5, 'category': 'general', 'version': 1}"
+          },
+          {
+            "evidence_id": "orders:formal_wrong_item_02-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_wrong_item_02-order 状态为 delivered"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:wrong-item-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 wrong-item-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:claim_attachments:formal_wrong_item_02-order:v1",
+            "kind": "query",
+            "summary": "查询 claim_attachments 未返回业务记录"
+          },
+          {
+            "evidence_id": "warehouse_pack_records:formal_wrong_item_02-warehouse_pack_records-1:v1",
+            "kind": "warehouse_pack",
+            "summary": "warehouse_pack 记录 {'pack_record_id': 'formal_wrong_item_02-warehouse_pack_records-1', 'order_id': 'formal_wrong_item_02-order', 'sku_id': 'sku-ordered', 'packed_quantity': 2, 'scanned_at': '2026-05-02T08:00:00', 'station_id': 'station-m10', 'version': 1}"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-38",
+      "category": "compliance",
+      "option_a": {
+        "summary": "订单商品记录显示订购 SKU 为 sku-ordered、数量为 2；仓库打包记录显示打包 SKU 为 sku-other、数量为 2，二者存在商品 SKU 不一致。订单当前状态为 delivered。会话共 2 条消息，且 claim_attachments 查询未返回业务记录，相关举证材料缺失。",
+        "evidence_ids": [
+          "conversation:formal_wrong_item_03:v1",
+          "order_items:formal_wrong_item_03-order_items-1:v1",
+          "orders:formal_wrong_item_03-order:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "policies:wrong-item-cn-standard:v1",
+          "query:claim_attachments:formal_wrong_item_03-order:v1",
+          "warehouse_pack_records:formal_wrong_item_03-warehouse_pack_records-1:v1"
+        ],
+        "questions": [
+          "是否已按 service-compliance-cn-standard v1 和 wrong-item-cn-standard v1 对该商品不一致情形完成必要的人工升级？",
+          "sku-ordered 与 sku-other 的差异是否能够由仓库打包记录确认，且两者数量均为 2？",
+          "claim_attachments 查询未返回业务记录时，是否存在其他可引用的索赔附件或业务记录？",
+          "在索赔附件缺失的情况下，是否具备足够证据作出最终责任结论？"
+        ],
+        "recommended_action": "依据适用的 service-compliance-cn-standard v1 与 wrong-item-cn-standard v1，暂停直接作出最终责任结论，补充人工升级复检。复检应核对订购商品与实际打包商品的对应关系，并确认缺失的索赔附件或记录；在证据补齐前，不应扩展或修改现有业务事实及责任认定。",
+        "priority": "high"
+      },
+      "option_b": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_wrong_item_03:v1",
+          "order_items:formal_wrong_item_03-order_items-1:v1",
+          "orders:formal_wrong_item_03-order:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "policies:wrong-item-cn-standard:v1",
+          "query:claim_attachments:formal_wrong_item_03-order:v1",
+          "warehouse_pack_records:formal_wrong_item_03-warehouse_pack_records-1:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "补发正确商品并核验仓库分拣",
+        "priority": "normal"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_wrong_item_03",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "收到的商品SKU与订单不一致，这是第3种表达。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在按wrong_item_warehouse_mismatch对应证据路径核验。"
+          }
+        ],
+        "system_decision": "wrong_item_warehouse_mismatch",
+        "system_responsible_party": "warehouse",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_wrong_item_03:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "order_items:formal_wrong_item_03-order_items-1:v1",
+            "kind": "order_item",
+            "summary": "order_item 记录 {'order_item_id': 'formal_wrong_item_03-order_items-1', 'order_id': 'formal_wrong_item_03-order', 'sku_id': 'sku-ordered', 'product_name': '测试商品', 'quantity': 2, 'unit_price': 99.5, 'category': 'general', 'version': 1}"
+          },
+          {
+            "evidence_id": "orders:formal_wrong_item_03-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_wrong_item_03-order 状态为 delivered"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:wrong-item-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 wrong-item-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:claim_attachments:formal_wrong_item_03-order:v1",
+            "kind": "query",
+            "summary": "查询 claim_attachments 未返回业务记录"
+          },
+          {
+            "evidence_id": "warehouse_pack_records:formal_wrong_item_03-warehouse_pack_records-1:v1",
+            "kind": "warehouse_pack",
+            "summary": "warehouse_pack 记录 {'pack_record_id': 'formal_wrong_item_03-warehouse_pack_records-1', 'order_id': 'formal_wrong_item_03-order', 'sku_id': 'sku-other', 'packed_quantity': 2, 'scanned_at': '2026-05-02T08:00:00', 'station_id': 'station-m10', 'version': 1}"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-39",
+      "category": "compliance",
+      "option_a": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_wrong_item_04:v1",
+          "order_items:formal_wrong_item_04-order_items-1:v1",
+          "orders:formal_wrong_item_04-order:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "policies:wrong-item-cn-standard:v1",
+          "query:claim_attachments:formal_wrong_item_04-order:v1",
+          "warehouse_pack_records:formal_wrong_item_04-warehouse_pack_records-1:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "仓库记录与订单一致，结合附件人工复检",
+        "priority": "normal"
+      },
+      "option_b": {
+        "summary": "当前未发现已明确记录的事实冲突。现有证据显示订单已送达，订单商品数量为 2，仓库打包记录数量也为 2；但会话仅包含 2 条消息，且 claim_attachments 查询未返回业务记录，相关争议材料有限。",
+        "evidence_ids": [
+          "conversation:formal_wrong_item_04:v1",
+          "order_items:formal_wrong_item_04-order_items-1:v1",
+          "orders:formal_wrong_item_04-order:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "policies:wrong-item-cn-standard:v1",
+          "query:claim_attachments:formal_wrong_item_04-order:v1",
+          "warehouse_pack_records:formal_wrong_item_04-warehouse_pack_records-1:v1"
+        ],
+        "questions": [
+          "会话中的具体争议内容是否明确支持“错发商品”主张？",
+          "订单商品 sku-ordered 与用户实际收到的商品是否存在可核验差异？",
+          "warehouse_pack 记录是否足以证明实际装箱商品，还是仅证明计划或扫描记录？",
+          "claim_attachments 查询未返回业务记录时，是否存在其他合规可用的举证材料？",
+          "人工升级是否已按 service-compliance-cn-standard v1 和 wrong-item-cn-standard v1 完成并留存复检结论？"
+        ],
+        "recommended_action": "依据 service-compliance-cn-standard v1 及 wrong-item-cn-standard v1，对案件执行必要的人工升级和复检。当前材料不足以据此修改业务事实或直接确定最终责任；应由人工结合现有会话、订单商品、订单状态、仓库打包记录及附件查询结果完成责任判断。",
+        "priority": "high"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_wrong_item_04",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "收到的商品SKU与订单不一致，这是第4种表达。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在按wrong_item_not_verified对应证据路径核验。"
+          }
+        ],
+        "system_decision": "wrong_item_not_verified",
+        "system_responsible_party": "undetermined",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_wrong_item_04:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "order_items:formal_wrong_item_04-order_items-1:v1",
+            "kind": "order_item",
+            "summary": "order_item 记录 {'order_item_id': 'formal_wrong_item_04-order_items-1', 'order_id': 'formal_wrong_item_04-order', 'sku_id': 'sku-ordered', 'product_name': '测试商品', 'quantity': 2, 'unit_price': 99.5, 'category': 'general', 'version': 1}"
+          },
+          {
+            "evidence_id": "orders:formal_wrong_item_04-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_wrong_item_04-order 状态为 delivered"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:wrong-item-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 wrong-item-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:claim_attachments:formal_wrong_item_04-order:v1",
+            "kind": "query",
+            "summary": "查询 claim_attachments 未返回业务记录"
+          },
+          {
+            "evidence_id": "warehouse_pack_records:formal_wrong_item_04-warehouse_pack_records-1:v1",
+            "kind": "warehouse_pack",
+            "summary": "warehouse_pack 记录 {'pack_record_id': 'formal_wrong_item_04-warehouse_pack_records-1', 'order_id': 'formal_wrong_item_04-order', 'sku_id': 'sku-ordered', 'packed_quantity': 2, 'scanned_at': '2026-05-02T08:00:00', 'station_id': 'station-m10', 'version': 1}"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "review-40",
+      "category": "compliance",
+      "option_a": {
+        "summary": "冲突案件缺少必要的人工升级",
+        "evidence_ids": [
+          "conversation:formal_wrong_item_05:v1",
+          "order_items:formal_wrong_item_05-order_items-1:v1",
+          "orders:formal_wrong_item_05-order:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "policies:wrong-item-cn-standard:v1",
+          "query:claim_attachments:formal_wrong_item_05-order:v1",
+          "warehouse_pack_records:formal_wrong_item_05-warehouse_pack_records-1:v1"
+        ],
+        "questions": [
+          "请核验冲突证据和缺失业务记录后确认系统结论。"
+        ],
+        "recommended_action": "补发正确商品并核验仓库分拣",
+        "priority": "normal"
+      },
+      "option_b": {
+        "summary": "当前记录未标注冲突。已知订单商品 sku-ordered 与仓库打包记录中的 sku-other 不一致，但仅凭现有证据不能确定最终责任。",
+        "evidence_ids": [
+          "conversation:formal_wrong_item_05:v1",
+          "order_items:formal_wrong_item_05-order_items-1:v1",
+          "orders:formal_wrong_item_05-order:v1",
+          "policies:service-compliance-cn-standard:v1",
+          "policies:wrong-item-cn-standard:v1",
+          "query:claim_attachments:formal_wrong_item_05-order:v1",
+          "warehouse_pack_records:formal_wrong_item_05-warehouse_pack_records-1:v1"
+        ],
+        "questions": [
+          "会话共 2 条消息是否明确描述了收货商品与下单商品不一致？",
+          "订单商品 sku-ordered 与仓库打包 sku-other 的不一致是否足以支持错发事实，是否存在可核验的替代解释？",
+          "claim_attachments 未返回业务记录时，是否仍有其他有效的签收、开箱或商品照片证据？",
+          "人工升级是否已按 service-compliance-cn-standard v1 和 wrong-item-cn-standard v1 的要求完成？"
+        ],
+        "recommended_action": "依据适用的 service-compliance-cn-standard v1 与 wrong-item-cn-standard v1，补充必要的人工升级复核。人工复核应核对会话内容、订单商品与仓库打包记录，并注意 claim_attachments 查询未返回业务记录；在证据不足时不得直接变更最终责任结论。",
+        "priority": "high"
+      },
+      "ratings": {
+        "option_a": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "option_b": {
+          "evidence_correctness": null,
+          "conflict_coverage": null,
+          "question_actionability": null,
+          "irrelevant_content": null
+        },
+        "overall_preference": null,
+        "comment": null
+      },
+      "case_id": "formal_wrong_item_05",
+      "case_context": {
+        "conversation": [
+          {
+            "speaker": "user",
+            "text": "收到的商品SKU与订单不一致，这是第5种表达。"
+          },
+          {
+            "speaker": "agent",
+            "text": "我正在按wrong_item_warehouse_mismatch对应证据路径核验。"
+          }
+        ],
+        "system_decision": "wrong_item_warehouse_mismatch",
+        "system_responsible_party": "warehouse",
+        "evidence": [
+          {
+            "evidence_id": "conversation:formal_wrong_item_05:v1",
+            "kind": "conversation",
+            "summary": "会话共 2 条消息"
+          },
+          {
+            "evidence_id": "order_items:formal_wrong_item_05-order_items-1:v1",
+            "kind": "order_item",
+            "summary": "order_item 记录 {'order_item_id': 'formal_wrong_item_05-order_items-1', 'order_id': 'formal_wrong_item_05-order', 'sku_id': 'sku-ordered', 'product_name': '测试商品', 'quantity': 2, 'unit_price': 99.5, 'category': 'general', 'version': 1}"
+          },
+          {
+            "evidence_id": "orders:formal_wrong_item_05-order:v1",
+            "kind": "order",
+            "summary": "订单 formal_wrong_item_05-order 状态为 delivered"
+          },
+          {
+            "evidence_id": "policies:service-compliance-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 service-compliance-cn-standard v1"
+          },
+          {
+            "evidence_id": "policies:wrong-item-cn-standard:v1",
+            "kind": "policy",
+            "summary": "适用政策 wrong-item-cn-standard v1"
+          },
+          {
+            "evidence_id": "query:claim_attachments:formal_wrong_item_05-order:v1",
+            "kind": "query",
+            "summary": "查询 claim_attachments 未返回业务记录"
+          },
+          {
+            "evidence_id": "warehouse_pack_records:formal_wrong_item_05-warehouse_pack_records-1:v1",
+            "kind": "warehouse_pack",
+            "summary": "warehouse_pack 记录 {'pack_record_id': 'formal_wrong_item_05-warehouse_pack_records-1', 'order_id': 'formal_wrong_item_05-order', 'sku_id': 'sku-other', 'packed_quantity': 2, 'scanned_at': '2026-05-02T08:00:00', 'station_id': 'station-m10', 'version': 1}"
+          }
+        ]
+      }
+    }
+  ]
+}

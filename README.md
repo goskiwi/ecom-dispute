@@ -23,7 +23,7 @@ EcomDispute 是一个面向电商售后争议的多阶段 Agent Harness。系统
 | 只读业务Tool | 14 |
 | live LLM Agent角色 | 3 |
 | 持久化回归案例 | 152 |
-| 自动化测试 | 63 |
+| 自动化测试 | 74 |
 
 ### Skill与Route
 
@@ -184,11 +184,17 @@ Temporal v5进一步删除`temporal_status`，拆分为`fact_mode + time_relatio
 
 v1.0发布后新建12条完整E2E案件，每个主Route一条。真实三Agent链路与共享Conversation的Core对照均为12/12，Route、Decision、Party、Review、Evidence和Tool检查全部通过；Gap/Review额外增加58,712输入Token和158.8秒累计延迟，没有提高本轮裁决准确率。详见[12-Route E2E报告](evals/v1_e2e_12route_report_2026-08-23.md)。
 
+正式120条E2E由84个业务模板和36个表达变体组成，首轮Live/Core均为116/120（96.7%），Evidence Grounded 100%。4个失败全部来自Route边界；Gap/Review没有提高准确率，额外增加530,033输入Token和1,214秒累计延迟。详见[Formal 120 E2E报告](evals/formal_e2e_120_report_2026-08-23.md)。
+
 共享Conversation输出的三层消融显示：GapAgent增加1条网关Evidence但不改变裁决，增量成本约4.7k输入Token；ReviewAgent增加1条复检Finding而不改确定性裁决，增量成本约4.8k输入Token。详见[V5 Agent Layer消融](evals/v5_agent_layer_ablation_report_2026-08-23.md)。
 
 ### 外部数据
 
-ABCD适配器已在官方 `abcd_v1.1.json.gz` 上实测选择50条test对话，覆盖退款、退货、物流和退货后计费场景。外部对话只用于语义和Action评测，不与本项目订单硬拼成“真实案件”。
+ABCD正式外部集包含160条受支持对话和40条拒识对话。首轮199条有效结果中，总Route Accuracy 71.9%、受支持Route 66.7%、unsupported拒识92.5%；Action-presence代理P/R为100%/64.8%。详见[Formal ABCD 200报告](evals/formal_abcd_200_report_2026-08-23.md)。外部对话不与本项目订单硬拼成“真实案件”。
+
+### Review人工评测
+
+40条固定模板/ReviewAgent匿名A/B已生成，分布为5条冲突、4条证据缺失、31条合规。当前人工评分为0/40，尚不能声称ReviewAgent优于模板。评审方法见[Review A/B说明](docs/review_rubric_instructions.md)。
 
 ## 已有架构取舍
 
@@ -199,7 +205,9 @@ ABCD适配器已在官方 `abcd_v1.1.json.gz` 上实测选择50条test对话，�
 - 业务数据主要为人工和规则构造，不是企业生产流量。
 - 工具后端主要为本地SQLite，不代表远程微服务可靠性。
 - 152/152是确定性回归，不是LLM准确率。
-- 独立Route盲测只有8条；虽然Route为8/8，但事实和交互行为合同仍需扩展。
+- 正式120条E2E仍包含36条同业务表达变体，并非120个完全独立业务模板。
+- ABCD受支持Route准确率只有66.7%，外部分布泛化仍弱。
+- Review A/B尚未完成人工评分，不能声称提升审核效率。
 - 没有写操作、审批、沙箱、长期记忆、完整DAG或分布式恢复。
 - 多Agent串行延迟仍高，真实复检案例累计模型延迟约57秒。
 

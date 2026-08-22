@@ -92,7 +92,25 @@ def generate_review_ab(
             "recommended_action": generated.telemetry["recommended_action"],
             "priority": generated.telemetry["priority"],
         }
-        return {**item, "fixed": fixed, "llm": llm, "telemetry": generated.telemetry}
+        return {
+            **item,
+            "context": {
+                "conversation": case.conversation,
+                "system_decision": report.decision,
+                "system_responsible_party": report.responsible_party,
+                "evidence": [
+                    {
+                        "evidence_id": entry.evidence_id,
+                        "kind": entry.kind.value,
+                        "summary": entry.summary,
+                    }
+                    for entry in report.evidence
+                ],
+            },
+            "fixed": fixed,
+            "llm": llm,
+            "telemetry": generated.telemetry,
+        }
 
     rows = []
     with ThreadPoolExecutor(max_workers=workers) as executor:
@@ -115,7 +133,9 @@ def generate_review_ab(
         forms.append(
             {
                 "review_id": review_id,
+                "case_id": row["case_id"],
                 "category": row["category"],
+                "case_context": row["context"],
                 "option_a": option_a,
                 "option_b": option_b,
                 "ratings": {
@@ -140,6 +160,36 @@ def generate_review_ab(
         "output_tokens": sum(item.get("telemetry", {}).get("output_tokens", 0) for item in rows),
         "latency_ms": sum(item.get("telemetry", {}).get("latency_ms", 0) for item in rows),
     }
+
+
+def enrich_review_form(
+    input_path: Path,
+    manifest_path: Path,
+    form_path: Path,
+    db_path: Path,
+) -> None:
+    repository, _ = prepare_e2e_database(db_path, input_path)
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    case_ids = sorted(item["case_id"] for item in manifest["items"])
+    form = json.loads(form_path.read_text(encoding="utf-8"))
+    for item, case_id in zip(form["items"], case_ids, strict=True):
+        case = repository.case(case_id)
+        report = DiagnosticHarness.heuristic_tests(repository).diagnose_sync(case)
+        item["case_id"] = case_id
+        item["case_context"] = {
+            "conversation": case.conversation,
+            "system_decision": report.decision,
+            "system_responsible_party": report.responsible_party,
+            "evidence": [
+                {
+                    "evidence_id": entry.evidence_id,
+                    "kind": entry.kind.value,
+                    "summary": entry.summary,
+                }
+                for entry in report.evidence
+            ],
+        }
+    form_path.write_text(json.dumps(form, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def _review_category(report: object) -> str:

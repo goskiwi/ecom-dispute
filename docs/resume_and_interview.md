@@ -31,6 +31,8 @@ EcomDispute解决的是电商争议中“对话说法、系统事实和政策版
 - 破坏性扩展Fact ontology后，第二批8条新holdout的FactType-only P/R为90.9%/100%，用户InteractionAct P/R为88.9%/100%，客服为100%/100%；全项Exact 2/8，主要受TemporalStatus边界影响。
 - Temporal v5删除旧`temporal_status`并拆分event/state与past/present/future；16条新holdout首轮全项11/16，用户BusinessFact P/R为88.9%/94.1%，用户InteractionAct为100%/100%。
 - v1.0发布后新建12条全链路E2E盲测，12个主Route的Route、Decision、Party、Review、Evidence和Tool检查均通过；三Agent相对Core未提高准确率，额外增加约5.9万输入Token和159秒累计延迟。
+- 正式120条E2E由84个独立业务模板和36个表达变体组成，首轮Live/Core均为116/120，Evidence Grounded 100%；4个失败均来自Route重叠，Gap/Review未提高准确率且增加约53万输入Token。
+- ABCD外部200条首轮总Route Accuracy 71.9%、受支持Route 66.7%、unsupported拒识92.5%，不能表述为已实现稳定跨语言泛化。
 
 ## 不能使用的表述
 
@@ -40,6 +42,7 @@ EcomDispute解决的是电商争议中“对话说法、系统事实和政策版
 - 152条真实LLM准确率。
 - 日均处理量、采纳率或人工提效比例。
 - 多地区、多语言已经完成。
+- ReviewAgent提升人工审核效率（40条A/B尚未完成人工评分）。
 - 所有14个工具都是远程微服务。
 
 ## 常见追问

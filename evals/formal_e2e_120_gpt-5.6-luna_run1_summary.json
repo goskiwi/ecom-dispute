@@ -1,0 +1,55 @@
+{
+  "model": "gpt-5.6-luna",
+  "case_count": 120,
+  "independent_business_templates": 84,
+  "expression_variants": 36,
+  "evaluated": 120,
+  "api_errors": 0,
+  "live": {
+    "passed": 116,
+    "pass_rate": 0.9666666667,
+    "route_type_accuracy": 0.9666666667,
+    "decision_accuracy": 0.9666666667,
+    "responsible_party_accuracy": 0.9666666667,
+    "review_accuracy": 0.975,
+    "review_precision": 0.9558823529,
+    "review_recall": 1.0,
+    "required_evidence_rate": 0.9916666667,
+    "required_tools_rate": 0.9916666667,
+    "evidence_grounded_rate": 1.0,
+    "average_tool_calls": 4.7416666667,
+    "agent_input_tokens": 1226301,
+    "agent_output_tokens": 69115,
+    "agent_latency_ms": 2380250,
+    "per_case_latency_p50_ms": 20624.5,
+    "per_case_latency_p95_ms": 32182,
+    "agent_invocations": {"conversation": 120, "evidence_gap": 41, "review": 68}
+  },
+  "core": {
+    "passed": 116,
+    "pass_rate": 0.9666666667,
+    "average_tool_calls": 4.4666666667,
+    "agent_input_tokens": 696268,
+    "agent_output_tokens": 31444,
+    "agent_latency_ms": 1166291
+  },
+  "gap_review_increment": {
+    "input_tokens": 530033,
+    "output_tokens": 37671,
+    "latency_ms": 1213959
+  },
+  "per_route_passed": {
+    "refund": "9/10",
+    "refund_amount": "10/10",
+    "duplicate_charge": "10/10",
+    "payment_order_failure": "10/10",
+    "delivery": "7/10",
+    "merchant_not_shipped": "10/10",
+    "delivered_not_received": "10/10",
+    "cancellation_in_transit": "10/10",
+    "return_eligibility": "10/10",
+    "wrong_item": "10/10",
+    "missing_item": "10/10",
+    "damaged_item": "10/10"
+  }
+}
