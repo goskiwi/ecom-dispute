@@ -1,0 +1,2852 @@
+{
+  "mode": "semantic_holdout",
+  "case_count": 30,
+  "repeats": 3,
+  "per_repeat": [
+    {
+      "repeat": 1,
+      "passed": 11,
+      "case_count": 30,
+      "evaluated": 30,
+      "api_errors": 0,
+      "pass_rate": 0.36666666666666664
+    },
+    {
+      "repeat": 2,
+      "passed": 8,
+      "case_count": 30,
+      "evaluated": 23,
+      "api_errors": 7,
+      "pass_rate": 0.34782608695652173
+    },
+    {
+      "repeat": 3,
+      "passed": 0,
+      "case_count": 30,
+      "evaluated": 0,
+      "api_errors": 30,
+      "pass_rate": null
+    }
+  ],
+  "evaluated": 53,
+  "api_errors": 37,
+  "business_type_accuracy": 0.9622641509433962,
+  "has_dispute_accuracy": 0.9622641509433962,
+  "user_fact_exact_match": 0.6415094339622641,
+  "agent_fact_exact_match": 0.5471698113207547,
+  "user_fact_precision": 0.8,
+  "user_fact_recall": 0.7894736842105263,
+  "agent_fact_precision": 0.7045454545454546,
+  "agent_fact_recall": 0.5849056603773585,
+  "input_tokens": 278992,
+  "output_tokens": 9944,
+  "latency_ms": 356945,
+  "results": [
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_001",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "delivery_not_received",
+          "current"
+        ],
+        [
+          "delivery_promised",
+          "future"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_not_received",
+          "current"
+        ],
+        [
+          "delivery_promised",
+          "future"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "wait_advice",
+          "future"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "wait_advice",
+          "future"
+        ]
+      ],
+      "response_id": "resp_082b7a7458dae093016a89857b842c87d0a5b08c5234e16539",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5265,
+      "output_tokens": 225,
+      "latency_ms": 8570
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_002",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "delivery_delayed",
+          "current"
+        ],
+        [
+          "delivery_not_received",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_delayed",
+          "current"
+        ],
+        [
+          "delivery_not_received",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "response_id": "resp_01b5f641a094a222016a898583e74087d0a97ab5f8690aa8aa",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5264,
+      "output_tokens": 102,
+      "latency_ms": 5108
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_003",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "delivery_completed",
+          "completed"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_completed",
+          "completed"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "delivery_completed",
+          "completed"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "delivery_completed",
+          "completed"
+        ]
+      ],
+      "response_id": "resp_075538c7c8bb6932016a8985891fd887d0b6114294cbd1d78a",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5258,
+      "output_tokens": 154,
+      "latency_ms": 5773
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_004",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "delivery_completed",
+          "completed"
+        ],
+        [
+          "delivery_delayed",
+          "completed"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_completed",
+          "completed"
+        ],
+        [
+          "delivery_delayed",
+          "completed"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "delivery_completed",
+          "completed"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "delivery_completed",
+          "completed"
+        ]
+      ],
+      "response_id": "resp_02175cc0acc78a24016a89858edc9487d0b6cfd53b57d2bb02",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5267,
+      "output_tokens": 107,
+      "latency_ms": 4896
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_005",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_delayed",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_delayed",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "other",
+          "current"
+        ]
+      ],
+      "response_id": "resp_05d6f7ab47790910016a898593c55087d0981fcceab8aecb4e",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5270,
+      "output_tokens": 236,
+      "latency_ms": 7295
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_006",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_not_received",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_not_received",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "delivery_completed",
+          "completed"
+        ]
+      ],
+      "observed_agent_facts": [],
+      "response_id": "resp_04b091a3092e34d1016a89859b014887d093475399a432ea3f",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5261,
+      "output_tokens": 70,
+      "latency_ms": 4328
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_007",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "delivery_delayed",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_delayed",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "delivery_promised",
+          "future"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "delivery_promised",
+          "future"
+        ]
+      ],
+      "response_id": "resp_0e203c5169bf7480016a89859f5ec887d08b7c2ae4d0c8e5f8",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5264,
+      "output_tokens": 100,
+      "latency_ms": 4695
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_008",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": true
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_not_received",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_delayed",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "other",
+          "current"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "other",
+          "current"
+        ]
+      ],
+      "response_id": "resp_05f69c2699df9142016a8985a411e087d08e4daaaa3164c199",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5263,
+      "output_tokens": 95,
+      "latency_ms": 6132
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_009",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_delayed",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_delayed",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "other",
+          "current"
+        ]
+      ],
+      "observed_agent_facts": [],
+      "response_id": "resp_0cdbb3a8e8defe4a016a8985aa44a887d08eaba223f3f13a46",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5259,
+      "output_tokens": 229,
+      "latency_ms": 7229
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_010",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_completed",
+          "completed"
+        ],
+        [
+          "delivery_not_received",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_not_received",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "delivery_completed",
+          "completed"
+        ]
+      ],
+      "observed_agent_facts": [],
+      "response_id": "resp_06931ff74bddbcbc016a8985b136c087d089b3d65189aa544f",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5266,
+      "output_tokens": 76,
+      "latency_ms": 4048
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_011",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": true
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "verify_status",
+          "unknown"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "response_id": "resp_0037e49d68321048016a8985b554ec87d09b100656c5dbf716",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5263,
+      "output_tokens": 232,
+      "latency_ms": 9389
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_012",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "delivery_promised",
+          "future"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_promised",
+          "future"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "delivery_promised",
+          "future"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "delivery_promised",
+          "future"
+        ]
+      ],
+      "response_id": "resp_0449e68d830145b3016a8985bf318487d0ab57b18d1df3b523",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5264,
+      "output_tokens": 100,
+      "latency_ms": 5259
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_013",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_delayed",
+          "current"
+        ],
+        [
+          "delivery_not_received",
+          "current"
+        ],
+        [
+          "delivery_promised",
+          "completed"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_delayed",
+          "current"
+        ],
+        [
+          "delivery_not_received",
+          "current"
+        ],
+        [
+          "delivery_promised",
+          "completed"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "other",
+          "current"
+        ]
+      ],
+      "observed_agent_facts": [],
+      "response_id": "resp_02059d3f392597b5016a8985c4c1fc87d0ad1f19dfaaaa7a97",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5269,
+      "output_tokens": 519,
+      "latency_ms": 13161
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_014",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_completed",
+          "completed"
+        ],
+        [
+          "delivery_delayed",
+          "completed"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_completed",
+          "completed"
+        ],
+        [
+          "delivery_delayed",
+          "completed"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "delivery_completed",
+          "completed"
+        ]
+      ],
+      "observed_agent_facts": [],
+      "response_id": "resp_0b70dc31f1008f11016a8985d27dc887d0b3e40b51642f2eaf",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5263,
+      "output_tokens": 70,
+      "latency_ms": 5383
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_015",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "delivery_completed",
+          "completed"
+        ],
+        [
+          "delivery_not_received",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_completed",
+          "completed"
+        ],
+        [
+          "delivery_not_received",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "delivery_completed",
+          "completed"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "delivery_completed",
+          "completed"
+        ]
+      ],
+      "response_id": "resp_0524acb987b3240d016a8985d68e3c87d0802680f21acd56d6",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5268,
+      "output_tokens": 126,
+      "latency_ms": 5021
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_001",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_not_received",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_not_received",
+          "current"
+        ],
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "wait_advice",
+          "future"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_processing",
+          "future"
+        ],
+        [
+          "wait_advice",
+          "future"
+        ]
+      ],
+      "response_id": "resp_09983b4c51b10281016a8985179ac487d0a16dbabb6d7d0b83",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5269,
+      "output_tokens": 110,
+      "latency_ms": 5294
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_002",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": true
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_completed",
+          "completed"
+        ],
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_completed",
+          "completed"
+        ],
+        [
+          "verify_status",
+          "completed"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "response_id": "resp_02112eab446b8759016a89851c598c87d0a39b249a53d7a0de",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5269,
+      "output_tokens": 103,
+      "latency_ms": 4750
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_003",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": true
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_not_initiated",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_not_initiated",
+          "current"
+        ],
+        [
+          "refund_requested",
+          "completed"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_initiated",
+          "future"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_initiated",
+          "future"
+        ]
+      ],
+      "response_id": "resp_0c4606021d3c9c96016a898522f43c87d092c7a869bdb14247",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5268,
+      "output_tokens": 124,
+      "latency_ms": 7320
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_004",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_completed",
+          "completed"
+        ],
+        [
+          "refund_not_received",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_completed",
+          "completed"
+        ],
+        [
+          "refund_not_received",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_completed",
+          "completed"
+        ]
+      ],
+      "observed_agent_facts": [],
+      "response_id": "resp_0070cf2d3860fafa016a898528883487d0b1c49e504d7ad9e6",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5269,
+      "output_tokens": 98,
+      "latency_ms": 5625
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_005",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": true
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_amount_mismatch",
+          "completed"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_amount_mismatch",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "verify_status",
+          "future"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "verify_status",
+          "future"
+        ]
+      ],
+      "response_id": "resp_02e87397a4108e20016a89852e0fc887d0bd336d5d85667691",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5262,
+      "output_tokens": 212,
+      "latency_ms": 6669
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_006",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "refund_processing",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_processing",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_processing",
+          "current"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_processing",
+          "current"
+        ]
+      ],
+      "response_id": "resp_0f1a5c0c8f42f1aa016a8985356ad887d0a1473852dbee46fb",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5260,
+      "output_tokens": 95,
+      "latency_ms": 5336
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_007",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_requested",
+          "completed"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_requested",
+          "completed"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_requested",
+          "completed"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_processing",
+          "future"
+        ]
+      ],
+      "response_id": "resp_0116f5715295ddb3016a89853a03f887d0adaa686e61853f8c",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5261,
+      "output_tokens": 226,
+      "latency_ms": 8125
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_008",
+      "checks": {
+        "business_type": true,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": true
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_initiated",
+          "future"
+        ]
+      ],
+      "observed_user_facts": [],
+      "expected_agent_facts": [
+        [
+          "refund_processing",
+          "future"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_processing",
+          "future"
+        ]
+      ],
+      "response_id": "resp_093ae72a7a17dc30016a898542451487d0b2a30a884bd1e0f2",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5263,
+      "output_tokens": 216,
+      "latency_ms": 7728
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_009",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "response_id": "resp_0c9faeb961461379016a898549c28087d0856c425a68f502b5",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5260,
+      "output_tokens": 137,
+      "latency_ms": 5397
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_010",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "refund_not_received",
+          "current"
+        ],
+        [
+          "refund_processing",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_not_received",
+          "current"
+        ],
+        [
+          "refund_processing",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "verify_status",
+          "future"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "verify_status",
+          "future"
+        ]
+      ],
+      "response_id": "resp_0eedf206abe4307c016a89854f95d087d0a20e157b56974ed9",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5266,
+      "output_tokens": 105,
+      "latency_ms": 5257
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_011",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "refund_not_initiated",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_not_initiated",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_completed",
+          "completed"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_completed",
+          "completed"
+        ]
+      ],
+      "response_id": "resp_060674086db609e3016a898554a40887d0b0017053b3f7e82d",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5259,
+      "output_tokens": 236,
+      "latency_ms": 7141
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_012",
+      "checks": {
+        "business_type": false,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_completed",
+          "completed"
+        ],
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "other",
+          "completed"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "verify_status",
+          "future"
+        ]
+      ],
+      "response_id": "resp_0121351c3e51d97d016a89855b6c6887d0a162a92e57e62237",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5264,
+      "output_tokens": 434,
+      "latency_ms": 10458
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_013",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": true
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_not_received",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_initiated",
+          "current"
+        ],
+        [
+          "refund_not_received",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_processing",
+          "current"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_processing",
+          "current"
+        ]
+      ],
+      "response_id": "resp_00648d52964ee462016a8985663d4887d086f6ec16a344d952",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5260,
+      "output_tokens": 100,
+      "latency_ms": 4812
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_014",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "other",
+          "unknown"
+        ]
+      ],
+      "observed_user_facts": [],
+      "expected_agent_facts": [
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "verify_status",
+          "future"
+        ]
+      ],
+      "response_id": "resp_02bc99311a3bbda2016a89856cd08887d08832a0506e43a06a",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5262,
+      "output_tokens": 198,
+      "latency_ms": 10737
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_015",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_not_received",
+          "current"
+        ],
+        [
+          "refund_processing",
+          "current"
+        ],
+        [
+          "refund_requested",
+          "completed"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_not_received",
+          "current"
+        ],
+        [
+          "refund_processing",
+          "current"
+        ],
+        [
+          "refund_requested",
+          "completed"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "wait_advice",
+          "future"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_completed",
+          "future"
+        ]
+      ],
+      "response_id": "resp_0be916613b5361d5016a898575c58887d09d6dc31c055e1fd0",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5266,
+      "output_tokens": 144,
+      "latency_ms": 5609
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_delivery_001",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_not_received",
+          "current"
+        ],
+        [
+          "delivery_promised",
+          "future"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_not_received",
+          "current"
+        ],
+        [
+          "delivery_promised",
+          "future"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "wait_advice",
+          "future"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "wait_advice",
+          "current"
+        ]
+      ],
+      "response_id": "resp_04b43d63249b97fe016a89864544b887d08048230eedc7cf0c",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5265,
+      "output_tokens": 275,
+      "latency_ms": 8044
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_delivery_002",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "delivery_delayed",
+          "current"
+        ],
+        [
+          "delivery_not_received",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_delayed",
+          "current"
+        ],
+        [
+          "delivery_not_received",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "response_id": "resp_04c80a08e72b9563016a89864ce7e887d0a042c79d671ad33c",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5264,
+      "output_tokens": 102,
+      "latency_ms": 4910
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_delivery_003",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_completed",
+          "completed"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_completed",
+          "completed"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "delivery_completed",
+          "completed"
+        ]
+      ],
+      "observed_agent_facts": [],
+      "response_id": "resp_08adc742507005bc016a898651d5a487d0b3412c36cd1f9b69",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5258,
+      "output_tokens": 191,
+      "latency_ms": 6553
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_delivery_004",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_completed",
+          "completed"
+        ],
+        [
+          "delivery_delayed",
+          "completed"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_completed",
+          "completed"
+        ],
+        [
+          "delivery_delayed",
+          "completed"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "delivery_completed",
+          "completed"
+        ]
+      ],
+      "observed_agent_facts": [],
+      "response_id": "resp_0f4284069697572a016a8986589c7087d0bb5912499939c702",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5267,
+      "output_tokens": 220,
+      "latency_ms": 6818
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_delivery_005",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_delayed",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_delayed",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "other",
+          "current"
+        ]
+      ],
+      "response_id": "resp_036ea90b2b06e54a016a89865f653887d09be5e7d85f420cdb",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5270,
+      "output_tokens": 240,
+      "latency_ms": 7450
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_delivery_006",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_not_received",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_not_received",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "delivery_completed",
+          "completed"
+        ]
+      ],
+      "observed_agent_facts": [],
+      "response_id": "resp_045a605884a5e7f3016a898667484087d0bf1955d7114fa91b",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5261,
+      "output_tokens": 70,
+      "latency_ms": 5546
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_delivery_007",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "delivery_delayed",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_delayed",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "delivery_promised",
+          "future"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "delivery_promised",
+          "future"
+        ]
+      ],
+      "response_id": "resp_0219fbe439776f1d016a89866c835c87d0a4a25a30d1dfef1e",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5264,
+      "output_tokens": 195,
+      "latency_ms": 6522
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_delivery_008",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_not_received",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_delayed",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "other",
+          "current"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "delivery_delayed",
+          "current"
+        ]
+      ],
+      "response_id": "resp_0f700167c320c5c0016a898672ff1c87d089f8d38cf5138046",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5263,
+      "output_tokens": 342,
+      "latency_ms": 9157
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_delivery_009",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_delivery_010",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_delivery_011",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_delivery_012",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_delivery_013",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_delivery_014",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_delivery_015",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_refund_001",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "refund_not_received",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_not_received",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "wait_advice",
+          "future"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "wait_advice",
+          "future"
+        ]
+      ],
+      "response_id": "resp_0b2c6a8e130f1130016a8985dbda3887d08e9016db70cccd44",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5269,
+      "output_tokens": 396,
+      "latency_ms": 10275
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_refund_002",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_completed",
+          "completed"
+        ],
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_completed",
+          "completed"
+        ],
+        [
+          "verify_status",
+          "future"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "verify_status",
+          "future"
+        ]
+      ],
+      "response_id": "resp_0740dd06809a4783016a8985e5d87c87d0b4e1d1eb9de0556c",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5269,
+      "output_tokens": 335,
+      "latency_ms": 8699
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_refund_003",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "refund_not_initiated",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_not_initiated",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_initiated",
+          "future"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_initiated",
+          "future"
+        ]
+      ],
+      "response_id": "resp_0aecd0e4dc2ca103016a8985ef1e1887d0852381608a053dc3",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5268,
+      "output_tokens": 210,
+      "latency_ms": 7416
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_refund_004",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_completed",
+          "completed"
+        ],
+        [
+          "refund_not_received",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_completed",
+          "completed"
+        ],
+        [
+          "refund_not_received",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_completed",
+          "completed"
+        ]
+      ],
+      "observed_agent_facts": [],
+      "response_id": "resp_0e0df325a188c370016a8985f5dc2887d085667ca2f90ee305",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5269,
+      "output_tokens": 99,
+      "latency_ms": 4358
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_refund_005",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "refund_amount_mismatch",
+          "completed"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_amount_mismatch",
+          "completed"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "verify_status",
+          "future"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "verify_status",
+          "future"
+        ]
+      ],
+      "response_id": "resp_020112447e0f24ec016a8985fa22d087d0ad62f51d4fd4fa6c",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5262,
+      "output_tokens": 159,
+      "latency_ms": 5442
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_refund_006",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "refund_processing",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_processing",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_processing",
+          "current"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_processing",
+          "current"
+        ]
+      ],
+      "response_id": "resp_0985f361bb9588c2016a8985ffa51087d0a46713f0e45431ef",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5260,
+      "output_tokens": 264,
+      "latency_ms": 7407
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_refund_007",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_requested",
+          "completed"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_requested",
+          "completed"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_requested",
+          "completed"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "other",
+          "future"
+        ],
+        [
+          "refund_requested",
+          "completed"
+        ]
+      ],
+      "response_id": "resp_04709c4f67d2c906016a89860767f087d090a1c8ef1d879083",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5261,
+      "output_tokens": 232,
+      "latency_ms": 7635
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_refund_008",
+      "checks": {
+        "business_type": true,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": true
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_initiated",
+          "future"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "verify_status",
+          "future"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_processing",
+          "future"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_processing",
+          "future"
+        ]
+      ],
+      "response_id": "resp_004d90693ccf860d016a89860ed67887d0ad3f58e3a77e1dc8",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5263,
+      "output_tokens": 287,
+      "latency_ms": 8055
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_refund_009",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "response_id": "resp_0e9604c0cf01854e016a898616eb0487d095fb53625aaa7e82",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5260,
+      "output_tokens": 165,
+      "latency_ms": 5758
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_refund_010",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_not_received",
+          "current"
+        ],
+        [
+          "refund_processing",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_not_received",
+          "current"
+        ],
+        [
+          "refund_processing",
+          "current"
+        ],
+        [
+          "verify_status",
+          "future"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "verify_status",
+          "future"
+        ]
+      ],
+      "observed_agent_facts": [],
+      "response_id": "resp_06051b832a855406016a89861c99bc87d0a1e0a4190d6634e9",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5266,
+      "output_tokens": 104,
+      "latency_ms": 5527
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_refund_011",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "refund_not_initiated",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_not_initiated",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_completed",
+          "completed"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_completed",
+          "completed"
+        ]
+      ],
+      "response_id": "resp_0819fce1c954182c016a898621f9a087d0a508b754e0357243",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5259,
+      "output_tokens": 171,
+      "latency_ms": 6102
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_refund_012",
+      "checks": {
+        "business_type": false,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_completed",
+          "completed"
+        ],
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "other",
+          "completed"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "verify_status",
+          "future"
+        ]
+      ],
+      "response_id": "resp_07823b74d144eb4e016a8986282c1887d0817aec06a1ca116f",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5264,
+      "output_tokens": 233,
+      "latency_ms": 7115
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_refund_013",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": true
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_not_received",
+          "current"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_not_received",
+          "current"
+        ],
+        [
+          "refund_processing",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_processing",
+          "current"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_processing",
+          "current"
+        ]
+      ],
+      "response_id": "resp_061de4ffb8a0f74c016a89862f985487d0acc6768c5956e68e",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5260,
+      "output_tokens": 98,
+      "latency_ms": 4733
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_refund_014",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "other",
+          "unknown"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "verify_status",
+          "unknown"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "verify_status",
+          "current"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "verify_status",
+          "future"
+        ]
+      ],
+      "response_id": "resp_02381cddc907be46016a89863417e487d08c30f4c6cd5d3f4b",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5262,
+      "output_tokens": 241,
+      "latency_ms": 7048
+    },
+    {
+      "repeat": 2,
+      "case_id": "holdout_refund_015",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": true
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_not_received",
+          "current"
+        ],
+        [
+          "refund_processing",
+          "current"
+        ],
+        [
+          "refund_requested",
+          "completed"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_not_received",
+          "current"
+        ],
+        [
+          "refund_processing",
+          "current"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "wait_advice",
+          "future"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "wait_advice",
+          "future"
+        ]
+      ],
+      "response_id": "resp_00db267fc9f195c0016a89863b9f9c87d085ddbc4d060218bc",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5266,
+      "output_tokens": 336,
+      "latency_ms": 9830
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_delivery_001",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_delivery_002",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_delivery_003",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_delivery_004",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_delivery_005",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_delivery_006",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_delivery_007",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_delivery_008",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_delivery_009",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_delivery_010",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_delivery_011",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_delivery_012",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_delivery_013",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_delivery_014",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_delivery_015",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_refund_001",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_refund_002",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_refund_003",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_refund_004",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_refund_005",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_refund_006",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_refund_007",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_refund_008",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_refund_009",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_refund_010",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_refund_011",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_refund_012",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_refund_013",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_refund_014",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    },
+    {
+      "repeat": 3,
+      "case_id": "holdout_refund_015",
+      "checks": {
+        "business_type": false,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "error": "LLM request failed with HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0
+    }
+  ]
+}

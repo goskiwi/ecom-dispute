@@ -63,9 +63,9 @@ M4 扩展至 60 个跨 Skill 案例。审计后 `business_type`、`has_dispute`�
 
 M5 曾针对三个冲突误报增加 `temporal_status` 和原文一致性校验；M6 审计后保留时态合同、删除 live 路径中的关键词一致性校验，历史回归不再代表当前主链路。
 
-M6 新主链路已完成一个真实端到端冒烟案例：工具 Agent 分三轮查询并停止，Trace 保存每轮 Response ID、Token、延迟和工具结果。30 条后置语义 holdout 已建立，但当前网关 30/30 返回 HTTP 502，没有有效新指标。
+M6 新主链路已完成一个真实端到端冒烟案例：工具 Agent 分三轮查询并停止，Trace 保存每轮 Response ID、Token、延迟和工具结果。30 条后置语义 holdout 使用 `gpt-5.6-luna` 完成一个完整 Run 1：业务类型/争议判断均为 96.7%，用户事实 Precision/Recall 为 81.4%/79.5%，客服事实为 76.0%/63.3%，全项精确匹配 11/30。Run 2 仅完成 23 条，Run 3 因 502 无有效响应。
 
-实测单次短请求仍约产生 4.7k 输入 Token。新主链路增加 Tool Query Agent 后必须重新测量收益与额外成本；在 holdout 获得有效结果前不写最终简历指标。
+实测单次短请求仍约产生 4.7k 输入 Token。新主链路增加 Tool Query Agent 后仍需全量测量裁决收益与额外成本；当前 holdout 是后置编写语义集且三次重复未完成，暂不把指标写入正式简历。
 
 ## 2. 版本目标
 

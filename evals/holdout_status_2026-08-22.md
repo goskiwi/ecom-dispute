@@ -11,9 +11,9 @@
 
 原计划使用另一个模型生成 holdout，但当前网关对 `gpt-5.6`、`gpt-5.5`、`gpt-5.4` 的生成请求均返回 HTTP 502；`gpt-5.4-mini` 随后也返回 502。因此当前 30 条由实现完成后另行编写，属于 post-implementation authored holdout，不是外部数据或跨模型生成数据。
 
-## 评测阻塞
+## 评测进展
 
-2026-08-22 运行 `gpt-5.4-mini` 串行评测时，30/30 请求均收到相同 HTTP 502。没有成功样本，因此不产生准确率，也不把 API 错误计为模型错误。
+`gpt-5.4-mini` 首次串行评测时 30/30 收到 HTTP 502。网关恢复后改用用户指定的 `gpt-5.6-luna`：Run 1 完成 30/30，Run 2 完成 23/30，Run 3 为 0/30。完整 Run 1 结果见 `semantic_holdout_gpt-5.6-luna_report_2026-08-22.md`。
 
 网关恢复后执行：
 
@@ -21,8 +21,8 @@
 export ECOM_DISPUTE_API_KEY='...'
 python -m ecom_dispute \
   --base-url 'https://example.com' \
-  --model 'gpt-5.4-mini' \
+  --model 'gpt-5.6-luna' \
   holdout eval --repeats 3 --workers 1
 ```
 
-在获得有效输出前，项目没有独立 holdout 的真实 LLM 指标。
+当前已有一次完整 Run 1 指标，但三次重复稳定性评测未完成；API 502 不计入模型准确率。

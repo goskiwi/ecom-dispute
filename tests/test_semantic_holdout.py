@@ -76,5 +76,7 @@ def test_semantic_holdout_repeats_without_exposing_oracle(tmp_path: Path) -> Non
     )
     assert result["case_count"] == 1
     assert result["repeats"] == 2
+    assert result["user_fact_exact_match"] == 1.0
+    assert result["user_fact_precision"] == 1.0
     assert result["user_fact_recall"] == 1.0
     assert result["input_tokens"] == 20

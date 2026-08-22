@@ -180,8 +180,8 @@ def evaluate_holdout(
         checks = {
             "business_type": result.semantics.business_type == expected["business_type"],
             "has_dispute": result.semantics.has_dispute == expected["has_dispute"],
-            "user_facts": expected_user.issubset(observed_user),
-            "agent_facts": expected_agent.issubset(observed_agent),
+            "user_facts": expected_user == observed_user,
+            "agent_facts": expected_agent == observed_agent,
         }
         return {
             "repeat": repeat,
@@ -223,6 +223,8 @@ def evaluate_holdout(
             }
         )
     evaluated_results = [item for item in results if "error" not in item]
+    user_precision, user_recall = _fact_precision_recall(evaluated_results, "user")
+    agent_precision, agent_recall = _fact_precision_recall(evaluated_results, "agent")
     return {
         "mode": "semantic_holdout",
         "case_count": len(inputs),
@@ -232,8 +234,12 @@ def evaluate_holdout(
         "api_errors": len(results) - len(evaluated_results),
         "business_type_accuracy": _check_rate(evaluated_results, "business_type"),
         "has_dispute_accuracy": _check_rate(evaluated_results, "has_dispute"),
-        "user_fact_recall": _check_rate(evaluated_results, "user_facts"),
-        "agent_fact_recall": _check_rate(evaluated_results, "agent_facts"),
+        "user_fact_exact_match": _check_rate(evaluated_results, "user_facts"),
+        "agent_fact_exact_match": _check_rate(evaluated_results, "agent_facts"),
+        "user_fact_precision": user_precision,
+        "user_fact_recall": user_recall,
+        "agent_fact_precision": agent_precision,
+        "agent_fact_recall": agent_recall,
         "input_tokens": sum(item["input_tokens"] for item in results),
         "output_tokens": sum(item["output_tokens"] for item in results),
         "latency_ms": sum(item["latency_ms"] for item in results),
@@ -243,3 +249,16 @@ def evaluate_holdout(
 
 def _check_rate(results: list[dict], name: str) -> float | None:
     return sum(item["checks"][name] for item in results) / len(results) if results else None
+
+
+def _fact_precision_recall(results: list[dict], speaker: str) -> tuple[float | None, float | None]:
+    expected_total = observed_total = matched_total = 0
+    for item in results:
+        expected = {tuple(value) for value in item[f"expected_{speaker}_facts"]}
+        observed = {tuple(value) for value in item[f"observed_{speaker}_facts"]}
+        expected_total += len(expected)
+        observed_total += len(observed)
+        matched_total += len(expected & observed)
+    precision = matched_total / observed_total if observed_total else None
+    recall = matched_total / expected_total if expected_total else None
+    return precision, recall

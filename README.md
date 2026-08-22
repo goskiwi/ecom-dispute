@@ -90,6 +90,6 @@ M3 详见 [语义融合报告](evals/semantic_fusion_report_2026-08-22.md)、[�
 
 本地 Demo 默认使用保存的真实 LLM 记录，顶栏显示 `recorded`；`--agent-mode live-llm` 才调用实时模型，`--agent-mode heuristic-test` 仅用于测试。控制台支持人工复检操作。
 
-30 条后置 holdout 已建立，但网关当前 30/30 返回 HTTP 502，没有有效指标。详见 [Holdout 状态](evals/holdout_status_2026-08-22.md)。
+30 条后置 holdout 已使用 `gpt-5.6-luna` 完成一次完整评测：业务类型/争议判断均为 96.7%，用户事实 Precision/Recall 为 81.4%/79.5%，客服事实 Precision/Recall 为 76.0%/63.3%，全项精确匹配 11/30。第二轮仅完成 23 条，第三轮因网关 502 无有效响应，因此不报告三轮均值。详见 [GPT-5.6-Luna Holdout 报告](evals/semantic_holdout_gpt-5.6-luna_report_2026-08-22.md)。
 
 M5 针对 M4 的三个冲突误报增加时态约束并完成真实 LLM 定向回归，详见 [时态回归报告](evals/temporal_regression_report_2026-08-22.md)。该回归不替代 60 案例首轮指标。
