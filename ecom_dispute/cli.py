@@ -11,6 +11,7 @@ from .evaluation import evaluate, evaluate_baseline
 from .harness import DiagnosticHarness
 from .llm import ResponsesClient
 from .repository import DEFAULT_DB, Repository, rebuild_database
+from .review_ab_evaluation import build_review_manifest, generate_review_ab
 from .semantic_holdout import evaluate_holdout
 from .web import serve
 
@@ -59,6 +60,29 @@ def _parser() -> argparse.ArgumentParser:
         "--manifest", type=Path, default=Path("evals/formal_abcd_200_manifest.json")
     )
     abcd_eval.add_argument("--workers", type=int, default=4)
+    review_manifest = commands.add_parser("review-manifest")
+    review_manifest.add_argument(
+        "--inputs", type=Path, default=Path("data/formal_e2e_120_inputs.json")
+    )
+    review_manifest.add_argument(
+        "--manifest", type=Path, default=Path("evals/formal_review_40_manifest.json")
+    )
+    review_manifest.add_argument("--review-db", type=Path, default=Path("/tmp/review-manifest.db"))
+    review_ab = commands.add_parser("review-ab")
+    review_ab.add_argument(
+        "--inputs", type=Path, default=Path("data/formal_e2e_120_inputs.json")
+    )
+    review_ab.add_argument(
+        "--manifest", type=Path, default=Path("evals/formal_review_40_manifest.json")
+    )
+    review_ab.add_argument(
+        "--output", type=Path, default=Path("evals/formal_review_40_blind_form.json")
+    )
+    review_ab.add_argument(
+        "--key", type=Path, default=Path("evals/formal_review_40_ab_key.json")
+    )
+    review_ab.add_argument("--review-db", type=Path, default=Path("/tmp/review-ab.db"))
+    review_ab.add_argument("--workers", type=int, default=4)
     return parser
 
 
@@ -100,6 +124,23 @@ def main() -> None:
     if args.command == "abcd-eval":
         client = _llm_client(args, required=True)
         result = evaluate_abcd(client, args.dataset, args.manifest, args.workers)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return
+    if args.command == "review-manifest":
+        result = build_review_manifest(args.inputs, args.manifest, args.review_db)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return
+    if args.command == "review-ab":
+        client = _llm_client(args, required=True)
+        result = generate_review_ab(
+            client,
+            args.inputs,
+            args.manifest,
+            args.output,
+            args.key,
+            args.review_db,
+            args.workers,
+        )
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return
     repository = Repository(args.db)

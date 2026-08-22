@@ -1,0 +1,172 @@
+{
+  "source": "formal_e2e_120_pre_review_agent",
+  "rubric": {
+    "evidence_correctness": "1-5",
+    "conflict_coverage": "1-5",
+    "question_actionability": "1-5",
+    "irrelevant_content": "1-5 (5 means no irrelevant content)",
+    "overall_preference": "A | B | tie"
+  },
+  "items": [
+    {
+      "case_id": "formal_refund_08",
+      "category": "conflict"
+    },
+    {
+      "case_id": "formal_refund_09",
+      "category": "conflict"
+    },
+    {
+      "case_id": "formal_refund_10",
+      "category": "conflict"
+    },
+    {
+      "case_id": "formal_delivery_01",
+      "category": "conflict"
+    },
+    {
+      "case_id": "formal_delivery_02",
+      "category": "conflict"
+    },
+    {
+      "case_id": "formal_refund_amount_04",
+      "category": "missing"
+    },
+    {
+      "case_id": "formal_refund_amount_08",
+      "category": "missing"
+    },
+    {
+      "case_id": "formal_duplicate_charge_04",
+      "category": "missing"
+    },
+    {
+      "case_id": "formal_duplicate_charge_08",
+      "category": "missing"
+    },
+    {
+      "case_id": "formal_refund_amount_02",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_refund_amount_06",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_refund_amount_10",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_duplicate_charge_01",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_duplicate_charge_05",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_duplicate_charge_09",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_payment_order_failure_01",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_payment_order_failure_04",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_payment_order_failure_05",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_payment_order_failure_08",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_payment_order_failure_09",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_delivered_not_received_01",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_delivered_not_received_02",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_delivered_not_received_03",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_delivered_not_received_04",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_delivered_not_received_05",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_delivered_not_received_06",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_delivered_not_received_07",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_delivered_not_received_08",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_delivered_not_received_09",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_delivered_not_received_10",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_cancellation_in_transit_01",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_cancellation_in_transit_04",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_cancellation_in_transit_05",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_cancellation_in_transit_08",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_cancellation_in_transit_09",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_wrong_item_01",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_wrong_item_02",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_wrong_item_03",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_wrong_item_04",
+      "category": "compliance"
+    },
+    {
+      "case_id": "formal_wrong_item_05",
+      "category": "compliance"
+    }
+  ]
+}
