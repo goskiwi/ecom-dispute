@@ -45,8 +45,8 @@ def test_conflict_is_evidence_grounded(repository: Repository) -> None:
 
 def test_fixed_eval_set(repository: Repository) -> None:
     result = evaluate(repository)
-    assert result["case_count"] == 20
-    assert result["passed"] == 20
+    assert result["case_count"] == 40
+    assert result["passed"] == 40
     assert result["pass_rate"] == 1.0
 
 
@@ -56,3 +56,30 @@ def test_dataset_has_manual_and_policy_boundary_cases(repository: Repository) ->
     historical = repository.case("refund_historical_policy_001")
     report = DiagnosticHarness(repository).diagnose_sync(historical)
     assert report.policy_evidence_ids == ["policies:refund-cn-standard:v1"]
+
+
+@pytest.mark.parametrize(
+    ("case_id", "expected"),
+    [
+        ("refund_missing_005", True),
+        ("refund_missing_008", True),
+        ("refund_pending_005", True),
+        ("refund_within_003", True),
+        ("refund_missing_007", False),
+    ],
+)
+def test_conversation_commitments_join_fact_fusion(
+    repository: Repository, case_id: str, expected: bool
+) -> None:
+    report = DiagnosticHarness(repository).diagnose_sync(repository.case(case_id))
+    actual = any(item.category == "conversation_fact_conflict" for item in report.findings)
+    assert actual is expected
+
+
+def test_false_commitment_cites_negative_refund_query(repository: Repository) -> None:
+    report = DiagnosticHarness(repository).diagnose_sync(repository.case("refund_missing_005"))
+    conflict = next(
+        item for item in report.findings if item.category == "conversation_fact_conflict"
+    )
+    assert any(item.startswith("query:refunds:") for item in conflict.evidence_ids)
+    assert any(item.startswith("query:refunds:") for item in report.evidence_ids)

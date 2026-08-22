@@ -1,0 +1,1601 @@
+{
+  "mode": "llm",
+  "case_count": 40,
+  "passed": 29,
+  "pass_rate": 0.725,
+  "llm_calls": 40,
+  "input_tokens": 194366,
+  "output_tokens": 3436,
+  "latency_ms": 223020,
+  "semantic_metrics": {
+    "user_type_recall": 0.8372093023255814,
+    "agent_type_recall": 0.9285714285714286,
+    "conversation_conflict_precision": 1.0,
+    "conversation_conflict_recall": 0.8571428571428571,
+    "conflict_tp": 6,
+    "conflict_fp": 0,
+    "conflict_fn": 1
+  },
+  "results": [
+    {
+      "case_id": "refund_complete_001",
+      "source_type": "manual",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "verify_status"
+        ],
+        "observed_agent_types": [
+          "verify_status"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_0960dc2672f52654016a89694109c887d0a8a053901a858b17",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4856,
+        "output_tokens": 76,
+        "latency_ms": 6158,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "verify_status"
+        ],
+        "agent_commitment_types": [
+          "verify_status"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_complete_002",
+      "source_type": "manual",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": false,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": false,
+      "semantics": {
+        "observed_user_types": [
+          "verify_status"
+        ],
+        "observed_agent_types": [
+          "refund_completed"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_07387a9a3834648a016a8969484d0c87d09041076aae34162d",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4863,
+        "output_tokens": 85,
+        "latency_ms": 8020,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "verify_status"
+        ],
+        "agent_commitment_types": [
+          "refund_completed"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_complete_003",
+      "source_type": "rule_generated",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "verify_status"
+        ],
+        "observed_agent_types": [
+          "verify_status"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_0ca77db4a04450d3016a89694f6e4c87d0a63d6c961cb5e081",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4847,
+        "output_tokens": 73,
+        "latency_ms": 5699,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "verify_status"
+        ],
+        "agent_commitment_types": [
+          "verify_status"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_complete_004",
+      "source_type": "manual",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "refund_amount_mismatch",
+          "refund_completed"
+        ],
+        "observed_agent_types": [
+          "refund_completed",
+          "verify_status"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_0e2034ec330d1e1e016a896954623887d0b6db68d0f74ac662",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4898,
+        "output_tokens": 127,
+        "latency_ms": 5669,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_amount_mismatch",
+          "refund_completed"
+        ],
+        "agent_commitment_types": [
+          "verify_status",
+          "refund_completed"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_complete_005",
+      "source_type": "manual",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "refund_completed",
+          "verify_status"
+        ],
+        "observed_agent_types": [
+          "refund_completed"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_005175066a0acaf0016a896959c1bc87d095f71cbf74d41b70",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4875,
+        "output_tokens": 105,
+        "latency_ms": 5175,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "verify_status",
+          "refund_completed"
+        ],
+        "agent_commitment_types": [
+          "refund_completed"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_complete_006",
+      "source_type": "rule_generated",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": false,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": false,
+      "semantics": {
+        "observed_user_types": [
+          "refund_completed"
+        ],
+        "observed_agent_types": [
+          "refund_completed"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_087b46c9c1d011b8016a8969643cd087d0bf98b4d27c09a3be",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4849,
+        "output_tokens": 69,
+        "latency_ms": 9722,
+        "dispute_type": "other",
+        "user_claim_types": [
+          "refund_completed"
+        ],
+        "agent_commitment_types": [
+          "refund_completed"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_complete_007",
+      "source_type": "rule_generated",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "verify_status"
+        ],
+        "observed_agent_types": [
+          "refund_completed",
+          "verify_status"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_0635b01716c800a3016a896968100087d09b2d98b758c38255",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4866,
+        "output_tokens": 95,
+        "latency_ms": 4299,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "verify_status"
+        ],
+        "agent_commitment_types": [
+          "verify_status",
+          "refund_completed"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_conflict_001",
+      "source_type": "manual",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": false,
+        "conversation_conflict": true
+      },
+      "passed": false,
+      "semantics": {
+        "observed_user_types": [
+          "refund_not_received"
+        ],
+        "observed_agent_types": [
+          "wait_advice"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_0844cfad8c0c83c6016a89696c400887d0867f1080f0b0050a",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4862,
+        "output_tokens": 88,
+        "latency_ms": 3976,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_not_received"
+        ],
+        "agent_commitment_types": [
+          "wait_advice"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_conflict_002",
+      "source_type": "manual",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "refund_amount_mismatch"
+        ],
+        "observed_agent_types": [
+          "refund_completed"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_098f3028a4c78f2c016a8969706c4487d0ad48013dea814e1f",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4858,
+        "output_tokens": 82,
+        "latency_ms": 4092,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_amount_mismatch"
+        ],
+        "agent_commitment_types": [
+          "refund_completed"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_conflict_003",
+      "source_type": "rule_generated",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "refund_not_received"
+        ],
+        "observed_agent_types": [
+          "verify_status"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_032d2348770189b6016a89697492f087d0a41a386bc498323b",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4852,
+        "output_tokens": 75,
+        "latency_ms": 3985,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_not_received"
+        ],
+        "agent_commitment_types": [
+          "verify_status"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_conflict_004",
+      "source_type": "rule_generated",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": false,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": false,
+      "semantics": {
+        "observed_user_types": [
+          "refund_amount_mismatch"
+        ],
+        "observed_agent_types": [
+          "refund_completed"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_04490dea279c20c9016a8969788e0c87d087006a6d30d151a8",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4854,
+        "output_tokens": 78,
+        "latency_ms": 4163,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_amount_mismatch"
+        ],
+        "agent_commitment_types": [
+          "refund_completed"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_conflict_005",
+      "source_type": "manual",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "other",
+          "refund_not_received"
+        ],
+        "observed_agent_types": [
+          "refund_completed"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_0efb658464a960ea016a89697cef6087d09207a0b6ca8e7d24",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4877,
+        "output_tokens": 101,
+        "latency_ms": 7537,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_not_received",
+          "other"
+        ],
+        "agent_commitment_types": [
+          "refund_completed"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_conflict_006",
+      "source_type": "manual",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "refund_not_received"
+        ],
+        "observed_agent_types": [
+          "refund_completed"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_03da17bbfa7c6ea9016a896985217887d09e197fe6823562b6",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4856,
+        "output_tokens": 79,
+        "latency_ms": 5298,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_not_received"
+        ],
+        "agent_commitment_types": [
+          "refund_completed"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_historical_policy_001",
+      "source_type": "rule_generated",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "refund_not_initiated"
+        ],
+        "observed_agent_types": [
+          "wait_advice"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_08785c8ec03c9c99016a89698c957887d09368e325da774015",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4860,
+        "output_tokens": 88,
+        "latency_ms": 7377,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_not_initiated"
+        ],
+        "agent_commitment_types": [
+          "wait_advice"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_historical_policy_002",
+      "source_type": "manual",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": false,
+        "conversation_conflict": true
+      },
+      "passed": false,
+      "semantics": {
+        "observed_user_types": [
+          "refund_not_initiated"
+        ],
+        "observed_agent_types": [
+          "other"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_02ff102c64601b44016a896991bd3887d0bbffb17861f052b4",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4863,
+        "output_tokens": 89,
+        "latency_ms": 5299,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_not_initiated"
+        ],
+        "agent_commitment_types": [
+          "other"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_missing_001",
+      "source_type": "manual",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": false,
+        "conversation_conflict": false
+      },
+      "passed": false,
+      "semantics": {
+        "observed_user_types": [
+          "refund_not_received"
+        ],
+        "observed_agent_types": [
+          "refund_requested"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_0736727484bcabcd016a896997466087d0bb18d0a68361d07a",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4863,
+        "output_tokens": 88,
+        "latency_ms": 5610,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_not_received"
+        ],
+        "agent_commitment_types": [
+          "refund_requested"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_missing_002",
+      "source_type": "manual",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "refund_not_initiated"
+        ],
+        "observed_agent_types": [
+          "wait_advice"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_0cd397479b520696016a89699cc3f887d0b65ded8fa25feb89",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4859,
+        "output_tokens": 87,
+        "latency_ms": 5201,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_not_initiated"
+        ],
+        "agent_commitment_types": [
+          "wait_advice"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_missing_003",
+      "source_type": "rule_generated",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": false,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": false,
+      "semantics": {
+        "observed_user_types": [
+          "refund_requested"
+        ],
+        "observed_agent_types": [
+          "wait_advice"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_0511723a03ccb985016a8969a1e86487d087ee0131886d1c1d",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4851,
+        "output_tokens": 76,
+        "latency_ms": 4874,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_requested"
+        ],
+        "agent_commitment_types": [
+          "wait_advice"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_missing_004",
+      "source_type": "rule_generated",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "refund_not_initiated"
+        ],
+        "observed_agent_types": [
+          "other"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_020b7a1b7f9d0389016a8969a5f84487d09649613268e91716",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4853,
+        "output_tokens": 79,
+        "latency_ms": 4029,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_not_initiated"
+        ],
+        "agent_commitment_types": [
+          "other"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_missing_005",
+      "source_type": "manual",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "refund_not_initiated",
+          "refund_not_received"
+        ],
+        "observed_agent_types": [
+          "refund_initiated",
+          "wait_advice"
+        ],
+        "conversation_conflict": true
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_072f6331bd36cb75016a8969ab439c87d09e60291854867d5d",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4881,
+        "output_tokens": 125,
+        "latency_ms": 6282,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_not_received",
+          "refund_not_initiated"
+        ],
+        "agent_commitment_types": [
+          "refund_initiated",
+          "wait_advice"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_missing_006",
+      "source_type": "manual",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "refund_not_initiated",
+          "refund_not_received"
+        ],
+        "observed_agent_types": [
+          "refund_completed"
+        ],
+        "conversation_conflict": true
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_008281b2e5af7bc0016a8969b0845087d0a8f00e890cfeece9",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4855,
+        "output_tokens": 97,
+        "latency_ms": 4602,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_not_received",
+          "refund_not_initiated"
+        ],
+        "agent_commitment_types": [
+          "refund_completed"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_missing_007",
+      "source_type": "rule_generated",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "refund_not_initiated"
+        ],
+        "observed_agent_types": [
+          "wait_advice"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_0d2b70e4d8f3b18c016a8969b52ed887d0b3dd26eb60d16954",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4854,
+        "output_tokens": 82,
+        "latency_ms": 4347,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_not_initiated"
+        ],
+        "agent_commitment_types": [
+          "wait_advice"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_missing_008",
+      "source_type": "rule_generated",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "refund_not_initiated"
+        ],
+        "observed_agent_types": [
+          "refund_processing"
+        ],
+        "conversation_conflict": true
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_0d5655110127276a016a8969b9a2a887d08ffc849723776c48",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4851,
+        "output_tokens": 78,
+        "latency_ms": 4411,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_not_initiated"
+        ],
+        "agent_commitment_types": [
+          "refund_processing"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_missing_009",
+      "source_type": "rule_generated",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "refund_not_initiated"
+        ],
+        "observed_agent_types": [
+          "verify_status"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_044f6822f2b25fb1016a8969bd788887d08aef13660c66ed0d",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4857,
+        "output_tokens": 81,
+        "latency_ms": 4010,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_not_initiated"
+        ],
+        "agent_commitment_types": [
+          "verify_status"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_missing_evidence_001",
+      "source_type": "rule_generated",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "refund_requested"
+        ],
+        "observed_agent_types": [
+          "verify_status"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_0eafa8f7c161197d016a8969c181bc87d0add8537f5c01004d",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4857,
+        "output_tokens": 81,
+        "latency_ms": 3967,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_requested"
+        ],
+        "agent_commitment_types": [
+          "verify_status"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_missing_evidence_002",
+      "source_type": "rule_generated",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "refund_not_initiated",
+          "refund_requested"
+        ],
+        "observed_agent_types": [
+          "verify_status"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_01316a704cf0a8fe016a8969c59aac87d09ef301f348a7c461",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4876,
+        "output_tokens": 108,
+        "latency_ms": 4610,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_requested",
+          "refund_not_initiated"
+        ],
+        "agent_commitment_types": [
+          "verify_status"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_overdue_001",
+      "source_type": "manual",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "refund_processing"
+        ],
+        "observed_agent_types": [
+          "refund_processing"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_00ea3da4f99f22bb016a8969ca548487d0a0734a81a8a5bc67",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4856,
+        "output_tokens": 78,
+        "latency_ms": 4168,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_processing"
+        ],
+        "agent_commitment_types": [
+          "refund_processing"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_overdue_002",
+      "source_type": "rule_generated",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": false,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": false,
+      "semantics": {
+        "observed_user_types": [
+          "wait_advice"
+        ],
+        "observed_agent_types": [
+          "verify_status"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_0ede4d454f5669c9016a8969ce6dc887d0a1e9dab029b6ab07",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4852,
+        "output_tokens": 83,
+        "latency_ms": 4129,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "wait_advice"
+        ],
+        "agent_commitment_types": [
+          "verify_status"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_overdue_003",
+      "source_type": "manual",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": false,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": false,
+      "semantics": {
+        "observed_user_types": [
+          "refund_not_received"
+        ],
+        "observed_agent_types": [
+          "refund_processing"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_043df2ed5fbdc22a016a8969d272e087d0a2acb11522bb92d8",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4855,
+        "output_tokens": 86,
+        "latency_ms": 4079,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_not_received"
+        ],
+        "agent_commitment_types": [
+          "refund_processing"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_overdue_004",
+      "source_type": "rule_generated",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "refund_processing"
+        ],
+        "observed_agent_types": [
+          "refund_processing"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_076a27df68d08d4d016a8969d7906c87d096d3ef19de70712f",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4852,
+        "output_tokens": 76,
+        "latency_ms": 6625,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_processing"
+        ],
+        "agent_commitment_types": [
+          "refund_processing"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_pending_001",
+      "source_type": "manual",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "refund_not_received"
+        ],
+        "observed_agent_types": [
+          "refund_initiated",
+          "wait_advice"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_0e257afacdcbb498016a8969dd583887d09cc863dbc57648e7",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4860,
+        "output_tokens": 98,
+        "latency_ms": 7565,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_not_received"
+        ],
+        "agent_commitment_types": [
+          "refund_initiated",
+          "wait_advice"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_pending_002",
+      "source_type": "manual",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "refund_processing"
+        ],
+        "observed_agent_types": [
+          "refund_processing"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_03aec28d2a741d90016a8969e74c1887d0826c9030dbb8140d",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4854,
+        "output_tokens": 78,
+        "latency_ms": 9314,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_processing"
+        ],
+        "agent_commitment_types": [
+          "refund_processing"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_pending_003",
+      "source_type": "rule_generated",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "refund_processing"
+        ],
+        "observed_agent_types": [
+          "wait_advice"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_015fbbaeeabeedf8016a8969f11ec887d0beb81672e4a11a31",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4853,
+        "output_tokens": 76,
+        "latency_ms": 10883,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_processing"
+        ],
+        "agent_commitment_types": [
+          "wait_advice"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_pending_004",
+      "source_type": "manual",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "refund_processing"
+        ],
+        "observed_agent_types": [
+          "refund_processing"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_02501554314d09cf016a8969fb64a487d095b7fbc2a195c0a3",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4854,
+        "output_tokens": 76,
+        "latency_ms": 6598,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_processing"
+        ],
+        "agent_commitment_types": [
+          "refund_processing"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_pending_005",
+      "source_type": "manual",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": false,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": false,
+      "semantics": {
+        "observed_user_types": [
+          "verify_status"
+        ],
+        "observed_agent_types": [
+          "refund_completed"
+        ],
+        "conversation_conflict": true
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_02090d0009324e06016a8969fff5ec87d0b1c81da5938a85fe",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4854,
+        "output_tokens": 78,
+        "latency_ms": 4530,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "verify_status"
+        ],
+        "agent_commitment_types": [
+          "refund_completed"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_pending_006",
+      "source_type": "rule_generated",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "refund_processing"
+        ],
+        "observed_agent_types": [
+          "wait_advice"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_0e22a98900305621016a896a045a4487d0a9f9c3f48df6585b",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4853,
+        "output_tokens": 76,
+        "latency_ms": 4191,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_processing"
+        ],
+        "agent_commitment_types": [
+          "wait_advice"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_within_001",
+      "source_type": "manual",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "refund_not_initiated"
+        ],
+        "observed_agent_types": [
+          "wait_advice"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_0f47c34d9524874d016a896a084a6487d0bc3432d62e3b6a6c",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4860,
+        "output_tokens": 87,
+        "latency_ms": 4356,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_not_initiated"
+        ],
+        "agent_commitment_types": [
+          "wait_advice"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_within_002",
+      "source_type": "rule_generated",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": false,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": false,
+      "semantics": {
+        "observed_user_types": [
+          "refund_not_received"
+        ],
+        "observed_agent_types": [
+          "refund_processing"
+        ],
+        "conversation_conflict": true
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_0c8533d98f0362fd016a896a0d094487d09f5fb808f7ad5fda",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4856,
+        "output_tokens": 81,
+        "latency_ms": 6894,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_not_received"
+        ],
+        "agent_commitment_types": [
+          "refund_processing"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_within_003",
+      "source_type": "manual",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "refund_not_initiated"
+        ],
+        "observed_agent_types": [
+          "refund_initiated"
+        ],
+        "conversation_conflict": true
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_0620e93a0393ae01016a896a14ae6487d091f73439ee4971b9",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4856,
+        "output_tokens": 85,
+        "latency_ms": 5318,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_not_initiated"
+        ],
+        "agent_commitment_types": [
+          "refund_initiated"
+        ],
+        "uncertainty": null
+      }
+    },
+    {
+      "case_id": "refund_within_004",
+      "source_type": "rule_generated",
+      "checks": {
+        "decision": true,
+        "responsible_party": true,
+        "review_required": true,
+        "semantic_route": true,
+        "user_claim_types": true,
+        "agent_commitment_types": true,
+        "conversation_conflict": true
+      },
+      "passed": true,
+      "semantics": {
+        "observed_user_types": [
+          "refund_not_initiated"
+        ],
+        "observed_agent_types": [
+          "wait_advice"
+        ],
+        "conversation_conflict": false
+      },
+      "llm": {
+        "mode": "llm",
+        "response_id": "resp_088c9d13a6f80d92016a896a1a995c87d09fdba662a91bfe7e",
+        "model": "gpt-5.4-mini-2026-03-17",
+        "input_tokens": 4858,
+        "output_tokens": 86,
+        "latency_ms": 5958,
+        "dispute_type": "refund_dispute",
+        "user_claim_types": [
+          "refund_not_initiated"
+        ],
+        "agent_commitment_types": [
+          "wait_advice"
+        ],
+        "uncertainty": null
+      }
+    }
+  ]
+}

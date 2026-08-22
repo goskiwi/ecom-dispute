@@ -1,6 +1,13 @@
 from __future__ import annotations
 
-from ..contracts import AgentResult, CaseInput, Evidence, EvidenceKind, Finding
+from ..contracts import (
+    AgentResult,
+    CaseInput,
+    Evidence,
+    EvidenceKind,
+    Finding,
+    StatementType,
+)
 from ..llm import ResponsesClient
 
 
@@ -35,6 +42,7 @@ class ConversationAgent:
                     finding_id=f"conversation-{index + 1}",
                     category=category,
                     claim=text,
+                    statement_type=self._offline_statement_type(text, speaker == "user"),
                     evidence_ids=[evidence.evidence_id],
                 )
             )
@@ -56,6 +64,7 @@ class ConversationAgent:
                     finding_id=f"llm-user-claim-{index}",
                     category="user_claim",
                     claim=statement.text,
+                    statement_type=statement.statement_type,
                     evidence_ids=[evidence.evidence_id],
                 )
             )
@@ -65,6 +74,7 @@ class ConversationAgent:
                     finding_id=f"llm-agent-commitment-{index}",
                     category="agent_commitment",
                     claim=statement.text,
+                    statement_type=statement.statement_type,
                     evidence_ids=[evidence.evidence_id],
                 )
             )
@@ -90,6 +100,34 @@ class ConversationAgent:
                 "output_tokens": result.output_tokens,
                 "latency_ms": result.latency_ms,
                 "dispute_type": result.semantics.dispute_type,
+                "user_claim_types": [
+                    item.statement_type.value for item in result.semantics.user_claims
+                ],
+                "agent_commitment_types": [
+                    item.statement_type.value for item in result.semantics.agent_commitments
+                ],
                 "uncertainty": result.semantics.uncertainty,
             },
         )
+
+    @staticmethod
+    def _offline_statement_type(text: str, is_user: bool) -> StatementType:
+        if any(token in text for token in ("金额不", "只到账", "少退", "少了")):
+            return StatementType.REFUND_AMOUNT_MISMATCH
+        if any(token in text for token in ("没发起", "未发起", "没有退款流水", "没有退款记录")):
+            return StatementType.REFUND_NOT_INITIATED
+        if any(token in text for token in ("没到账", "未到账", "没收到", "未入账")):
+            return StatementType.REFUND_NOT_RECEIVED
+        if any(token in text for token in ("已经完成", "已完成", "退款成功", "退回来了", "已经退回")):
+            return StatementType.REFUND_COMPLETED
+        if any(token in text for token in ("已经发起", "已发起", "为您申请", "申请成功")):
+            return StatementType.REFUND_INITIATED
+        if any(token in text for token in ("处理中", "正在处理", "支付渠道正在")):
+            return StatementType.REFUND_PROCESSING
+        if is_user and any(token in text for token in ("申请退款", "申请过退款", "点了退款")):
+            return StatementType.REFUND_REQUESTED
+        if any(token in text for token in ("等待", "耐心", "规定时间", "预计", "排队")):
+            return StatementType.WAIT_ADVICE
+        if any(token in text for token in ("查询", "确认", "核验", "看下", "核对")):
+            return StatementType.VERIFY_STATUS
+        return StatementType.OTHER

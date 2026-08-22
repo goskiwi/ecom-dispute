@@ -24,8 +24,9 @@ EcomDispute 是一个面向电商售后争议的证据化诊断项目。当前 M
 - `FactAgent` 与 `PolicyAgent`：并行查询独立信息源。
 - `CaseStateReducer`：确定性投影 Evidence、Finding、时间线和 Trace。
 - `EvidenceFusion`：过滤无证据 Finding、去重、检查必需证据、检测退款与支付冲突。
-- 20 个退款案例：10 个独立人工编写、10 个规则生成，覆盖未发起超时、处理中、到账超时、已完成、跨源冲突、证据缺失和历史政策版本。
+- 40 个退款案例：21 个人工编写、19 个规则生成，覆盖多轮与模糊表达、错误客服承诺、未发起超时、处理中、到账超时、已完成、跨源冲突、证据缺失和历史政策版本。
 - 单 LLM Agent Function Calling 基线：完整回传 `function_call` / `function_call_output` 历史，支持并行工具调用、严格最终 Schema、轮数预算和 Evidence ID 校验。
+- 语义 Evidence Fusion：LLM 将用户主张和客服承诺归一为 `statement_type`，代码核验客服所称退款状态与业务记录，并为 `not_found` 查询生成负向 Evidence ID。
 
 当前的 Fact/Policy 模块是确定性专项执行器，不包装成 LLM。真实评测显示当前网关单次短请求仍约含 4.7k 输入 Token，因此先验证一次语义调用的业务收益，再通过对照实验决定是否增加 LLM 调用。
 
@@ -70,6 +71,10 @@ LLM 只读取会话，不接触评测 Oracle。业务查询结果由工具产生
 
 ## 当前评测
 
-2026-08-22 使用 `gpt-5.4-mini-2026-03-17` 对 20 个固定案例完成首轮真实 LLM 对照。Hybrid 最终裁决、责任方和复检分流为 20/20，加入语义路由检查后全项通过 19/20；单 Agent Function Calling 基线全项通过 11/20，最终裁决正确 14/20。Baseline 使用约 2.32 倍输入 Token 和 3.33 倍模型累计延迟。数据仍为人工与规则构造，不表述为线上业务准确率。
+2026-08-22 使用 `gpt-5.4-mini-2026-03-17` 对 20 个案例完成 Function Calling 对照：Hybrid 最终裁决 20/20，单 Agent 基线最终裁决 14/20，Baseline 使用约 2.32 倍输入 Token 和 3.33 倍模型累计延迟。
+
+随后扩展至 40 个案例验证语义融合：最终裁决、责任方和复检均为 40/40，用户 statement type 召回 90.7%，客服承诺类型召回 97.6%，6 个对话-事实冲突的 Precision/Recall 均为 100%，全项通过 34/40。数据仍为人工与规则构造，不表述为线上业务准确率。
 
 详见 [M2 对照评测报告](evals/compare_report_2026-08-22.md) 和 [原始逐案结果](evals/compare_gpt-5.4-mini_2026-08-22.json)。
+
+M3 详见 [语义融合报告](evals/semantic_fusion_report_2026-08-22.md)、[原始首轮输出](evals/hybrid_semantic_gpt-5.4-mini_40cases_2026-08-22.json) 和 [审计后计分](evals/hybrid_semantic_rescored_40cases_2026-08-22.json)。

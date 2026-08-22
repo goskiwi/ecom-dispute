@@ -129,6 +129,26 @@ def _seed(connection: sqlite3.Connection) -> None:
         _case("refund_within_002", "rule_generated", "2026-01-08T10:00:00", "2026-01-10T09:00:00", "审核通过四十七小时尚无退款记录。", "正在排队处理。"),
         _case("refund_missing_evidence_001", "rule_generated", "2026-01-05T10:00:00", "2026-01-12T12:00:00", "我申请过退款但系统查不到售后单。", "需要进一步核验。", after_sales=False),
         _case("refund_historical_policy_001", "rule_generated", "2025-12-30T10:00:00", "2026-01-01T12:00:00", "两天前审核通过，退款还没发起。", "请按申请时的政策等待。"),
+        _case("refund_complete_004", "manual", "2026-02-01T09:00:00", "2026-02-05T12:00:00", "卡里收到一百九十九了，是这笔退款吗？", "我先核对订单和退款流水。", refund="succeeded", credit="succeeded", extra_messages=[{"speaker": "user", "text": "页面也显示退款成功。"}, {"speaker": "agent", "text": "确认已经原路退回。"}]),
+        _case("refund_complete_005", "manual", "2026-02-02T09:00:00", "2026-02-06T12:00:00", "帮我查下这单退款进度。", "退款已经完成。", refund="succeeded", credit="succeeded", extra_messages=[{"speaker": "user", "text": "我看到账单了，确实到账。"}]),
+        _case("refund_complete_006", "rule_generated", "2026-02-03T09:00:00", "2026-02-07T12:00:00", "退款已到账。", "系统确认退款成功。", refund="succeeded", credit="succeeded"),
+        _case("refund_complete_007", "rule_generated", "2026-02-04T09:00:00", "2026-02-08T12:00:00", "核验退款状态。", "正在查询。", refund="succeeded", credit="succeeded", extra_messages=[{"speaker": "agent", "text": "查询结果为退款已完成。"}]),
+        _case("refund_conflict_005", "manual", "2026-02-05T09:00:00", "2026-02-12T12:00:00", "我没有收到退款，银行流水也没有。", "系统显示退款已经完成。", refund="succeeded", extra_messages=[{"speaker": "user", "text": "不是延迟一天，已经一周了。"}]),
+        _case("refund_conflict_006", "manual", "2026-02-06T09:00:00", "2026-02-13T12:00:00", "退款状态成功，但入账流水是失败的。", "页面显示已经退款。", refund="succeeded", credit="failed"),
+        _case("refund_missing_005", "manual", "2026-02-01T10:00:00", "2026-02-05T12:00:00", "售后通过四天了，还没看到退款记录。", "退款已经发起，请等待到账。", extra_messages=[{"speaker": "user", "text": "可是订单里完全查不到退款单号。"}]),
+        _case("refund_missing_006", "manual", "2026-02-02T10:00:00", "2026-02-07T12:00:00", "钱没回来，退款流水也没有。", "这笔退款已经完成。"),
+        _case("refund_missing_007", "rule_generated", "2026-02-03T10:00:00", "2026-02-08T12:00:00", "审核通过后未发起退款。", "请耐心等待处理。"),
+        _case("refund_missing_008", "rule_generated", "2026-02-04T10:00:00", "2026-02-09T12:00:00", "系统没有退款记录。", "退款正在支付渠道处理中。"),
+        _case("refund_missing_009", "rule_generated", "2026-02-05T10:00:00", "2026-02-10T12:00:00", "退款超过四十八小时仍未发起。", "我帮您查询退款状态。"),
+        _case("refund_pending_004", "manual", "2026-02-06T10:00:00", "2026-02-08T12:00:00", "前天发起退款，现在还在处理中。", "退款正在处理中。", refund="processing"),
+        _case("refund_pending_005", "manual", "2026-02-07T10:00:00", "2026-02-10T12:00:00", "页面还是处理中，怎么客服说完成了？", "退款已经完成。", refund="processing"),
+        _case("refund_pending_006", "rule_generated", "2026-02-08T10:00:00", "2026-02-12T12:00:00", "退款处理第四天。", "预计五日内到账，请等待。", refund="processing"),
+        _case("refund_overdue_003", "manual", "2026-02-01T10:00:00", "2026-02-09T12:00:00", "退款处理中超过六天还没到账。", "支付渠道仍在处理。", refund="processing", refund_at="2026-02-02T10:00:00"),
+        _case("refund_overdue_004", "rule_generated", "2026-02-02T10:00:00", "2026-02-12T12:00:00", "退款处理已经九天。", "退款仍处于处理中。", refund="processing", refund_at="2026-02-03T10:00:00"),
+        _case("refund_within_003", "manual", "2026-02-10T10:00:00", "2026-02-11T10:00:00", "售后昨天通过，但订单里没有退款记录。", "退款已经发起。"),
+        _case("refund_within_004", "rule_generated", "2026-02-11T10:00:00", "2026-02-13T09:00:00", "审核通过四十七小时，退款尚未发起。", "请等待系统处理。"),
+        _case("refund_missing_evidence_002", "rule_generated", "2026-02-08T10:00:00", "2026-02-15T12:00:00", "申请退款后找不到售后审核信息。", "我帮您核验申请状态。", after_sales=False, extra_messages=[{"speaker": "user", "text": "订单里也没有退款流水。"}]),
+        _case("refund_historical_policy_002", "manual", "2025-12-28T10:00:00", "2025-12-31T08:00:00", "旧政策下审核通过七十小时，还没发起退款。", "按申请时七十二小时政策处理。"),
     ]
     for index, spec in enumerate(specs, start=1):
         _insert_case(connection, index, spec)
@@ -147,6 +167,7 @@ def _case(
     credit: str | None = None,
     credit_amount: float = 199.0,
     after_sales: bool = True,
+    extra_messages: list[dict[str, str]] | None = None,
 ) -> dict[str, Any]:
     return {
         "case_id": case_id,
@@ -156,6 +177,7 @@ def _case(
         "conversation": [
             {"speaker": "user", "text": user_text},
             {"speaker": "agent", "text": agent_text},
+            *(extra_messages or []),
         ],
         "refund": refund,
         "refund_at": refund_at,

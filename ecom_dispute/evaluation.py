@@ -13,10 +13,16 @@ from .tool_registry import ToolRegistry
 def evaluate(
     repository: Repository,
     oracle_path: Path = ROOT / "evals" / "oracle.json",
+    semantic_oracle_path: Path = ROOT / "evals" / "semantic_oracle.json",
     llm_client: ResponsesClient | None = None,
     case_ids: list[str] | None = None,
 ) -> dict:
     oracle = json.loads(oracle_path.read_text(encoding="utf-8"))
+    semantic_oracle = (
+        json.loads(semantic_oracle_path.read_text(encoding="utf-8"))
+        if semantic_oracle_path.exists()
+        else {}
+    )
     harness = DiagnosticHarness(repository, llm_client=llm_client)
     results = []
     for case_id in case_ids or repository.case_ids():
@@ -45,16 +51,84 @@ def evaluate(
             else True
         )
         checks["semantic_route"] = semantic_ok
+        observed_user_types = {
+            finding.statement_type.value
+            for finding in report.findings
+            if finding.category == "user_claim" and finding.statement_type
+        }
+        observed_agent_types = {
+            finding.statement_type.value
+            for finding in report.findings
+            if finding.category == "agent_commitment" and finding.statement_type
+        }
+        observed_conversation_conflict = any(
+            finding.category == "conversation_fact_conflict" for finding in report.findings
+        )
+        semantic_expected = semantic_oracle.get(case_id, {})
+        if llm_client and semantic_expected:
+            checks["user_claim_types"] = set(
+                semantic_expected["required_user_types"]
+            ).issubset(observed_user_types)
+            checks["agent_commitment_types"] = set(
+                semantic_expected["required_agent_types"]
+            ).issubset(observed_agent_types)
+            checks["conversation_conflict"] = (
+                observed_conversation_conflict
+                == semantic_expected["conversation_conflict"]
+            )
         results.append(
             {
                 "case_id": case_id,
                 "source_type": case.source_type,
                 "checks": checks,
                 "passed": all(checks.values()),
+                "semantics": {
+                    "observed_user_types": sorted(observed_user_types),
+                    "observed_agent_types": sorted(observed_agent_types),
+                    "conversation_conflict": observed_conversation_conflict,
+                },
                 "llm": llm_trace,
             }
         )
     llm_calls = sum(item["llm"].get("mode") == "llm" for item in results)
+    semantic_cases = [item for item in results if item["case_id"] in semantic_oracle]
+    expected_user = sum(
+        len(semantic_oracle[item["case_id"]]["required_user_types"])
+        for item in semantic_cases
+    )
+    matched_user = sum(
+        len(
+            set(semantic_oracle[item["case_id"]]["required_user_types"])
+            & set(item["semantics"]["observed_user_types"])
+        )
+        for item in semantic_cases
+    )
+    expected_agent = sum(
+        len(semantic_oracle[item["case_id"]]["required_agent_types"])
+        for item in semantic_cases
+    )
+    matched_agent = sum(
+        len(
+            set(semantic_oracle[item["case_id"]]["required_agent_types"])
+            & set(item["semantics"]["observed_agent_types"])
+        )
+        for item in semantic_cases
+    )
+    conflict_tp = sum(
+        semantic_oracle[item["case_id"]]["conversation_conflict"]
+        and item["semantics"]["conversation_conflict"]
+        for item in semantic_cases
+    )
+    conflict_fp = sum(
+        not semantic_oracle[item["case_id"]]["conversation_conflict"]
+        and item["semantics"]["conversation_conflict"]
+        for item in semantic_cases
+    )
+    conflict_fn = sum(
+        semantic_oracle[item["case_id"]]["conversation_conflict"]
+        and not item["semantics"]["conversation_conflict"]
+        for item in semantic_cases
+    )
     return {
         "mode": "llm" if llm_client else "offline",
         "case_count": len(results),
@@ -64,6 +138,23 @@ def evaluate(
         "input_tokens": sum(item["llm"].get("input_tokens", 0) for item in results),
         "output_tokens": sum(item["llm"].get("output_tokens", 0) for item in results),
         "latency_ms": sum(item["llm"].get("latency_ms", 0) for item in results),
+        "semantic_metrics": {
+            "user_type_recall": matched_user / expected_user if expected_user else 1.0,
+            "agent_type_recall": matched_agent / expected_agent if expected_agent else 1.0,
+            "conversation_conflict_precision": (
+                conflict_tp / (conflict_tp + conflict_fp)
+                if conflict_tp + conflict_fp
+                else 1.0
+            ),
+            "conversation_conflict_recall": (
+                conflict_tp / (conflict_tp + conflict_fn)
+                if conflict_tp + conflict_fn
+                else 1.0
+            ),
+            "conflict_tp": conflict_tp,
+            "conflict_fp": conflict_fp,
+            "conflict_fn": conflict_fn,
+        },
         "results": results,
     }
 

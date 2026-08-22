@@ -15,6 +15,20 @@ class EvidenceKind(StrEnum):
     AFTER_SALES = "after_sales"
     LOGISTICS = "logistics"
     POLICY = "policy"
+    QUERY = "query"
+
+
+class StatementType(StrEnum):
+    REFUND_REQUESTED = "refund_requested"
+    REFUND_NOT_INITIATED = "refund_not_initiated"
+    REFUND_NOT_RECEIVED = "refund_not_received"
+    REFUND_AMOUNT_MISMATCH = "refund_amount_mismatch"
+    REFUND_INITIATED = "refund_initiated"
+    REFUND_PROCESSING = "refund_processing"
+    REFUND_COMPLETED = "refund_completed"
+    WAIT_ADVICE = "wait_advice"
+    VERIFY_STATUS = "verify_status"
+    OTHER = "other"
 
 
 class Evidence(BaseModel):
@@ -51,6 +65,7 @@ class Finding(BaseModel):
     finding_id: str
     category: str
     claim: str
+    statement_type: StatementType | None = None
     evidence_ids: list[str] = Field(default_factory=list)
     policy_rule_ids: list[str] = Field(default_factory=list)
     severity: Literal["info", "warning", "critical"] = "info"

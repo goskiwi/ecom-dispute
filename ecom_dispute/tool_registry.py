@@ -74,7 +74,15 @@ class ToolRegistry:
 
     def get_order(self, order_id: str) -> ToolResult:
         row = self.repository.one("orders", "order_id", order_id)
-        return self._single("get_order", EvidenceKind.ORDER, "orders", "order_id", row, "created_at")
+        return self._single(
+            "get_order",
+            EvidenceKind.ORDER,
+            "orders",
+            "order_id",
+            row,
+            "created_at",
+            order_id,
+        )
 
     def get_after_sales_case(self, order_id: str) -> ToolResult:
         row = self.repository.one("after_sales_cases", "order_id", order_id)
@@ -85,6 +93,7 @@ class ToolRegistry:
             "after_sales_id",
             row,
             "approved_at",
+            order_id,
         )
 
     def get_logistics_events(self, order_id: str) -> ToolResult:
@@ -95,6 +104,7 @@ class ToolRegistry:
             "event_id",
             self.repository.many("logistics_events", order_id),
             "occurred_at",
+            order_id,
         )
 
     def get_payment_records(self, order_id: str) -> ToolResult:
@@ -105,6 +115,7 @@ class ToolRegistry:
             "payment_id",
             self.repository.many("payments", order_id),
             "occurred_at",
+            order_id,
         )
 
     def get_refund_records(self, order_id: str) -> ToolResult:
@@ -115,6 +126,7 @@ class ToolRegistry:
             "refund_id",
             self.repository.many("refunds", order_id),
             "completed_at",
+            order_id,
         )
 
     def read_policy(self, region: str, business_type: str, effective_at: str) -> ToolResult:
@@ -122,7 +134,13 @@ class ToolRegistry:
         if row:
             row["rules"] = json.loads(row.pop("rules_json"))
         return self._single(
-            "read_policy", EvidenceKind.POLICY, "policies", "policy_id", row, "effective_from"
+            "read_policy",
+            EvidenceKind.POLICY,
+            "policies",
+            "policy_id",
+            row,
+            "effective_from",
+            f"{region}:{business_type}:{effective_at}",
         )
 
     @staticmethod
@@ -133,9 +151,15 @@ class ToolRegistry:
         key_field: str,
         row: dict | None,
         time_field: str,
+        query_key: str,
     ) -> ToolResult:
         if not row:
-            return ToolResult(tool_name=tool, status="not_found", message="business record not found")
+            return ToolResult(
+                tool_name=tool,
+                status="not_found",
+                evidence=[ToolRegistry._query_evidence(source, query_key)],
+                message="business record not found",
+            )
         return ToolResult(
             tool_name=tool,
             status="ok",
@@ -150,9 +174,15 @@ class ToolRegistry:
         key_field: str,
         rows: list[dict],
         time_field: str,
+        query_key: str,
     ) -> ToolResult:
         if not rows:
-            return ToolResult(tool_name=tool, status="not_found", message="business records not found")
+            return ToolResult(
+                tool_name=tool,
+                status="not_found",
+                evidence=[ToolRegistry._query_evidence(source, query_key)],
+                message="business records not found",
+            )
         return ToolResult(
             tool_name=tool,
             status="ok",
@@ -175,6 +205,17 @@ class ToolRegistry:
             occurred_at=datetime.fromisoformat(occurred) if occurred else None,
             facts=row,
             summary=ToolRegistry._summary(kind, row),
+        )
+
+    @staticmethod
+    def _query_evidence(source: str, query_key: str) -> Evidence:
+        return Evidence(
+            evidence_id=f"query:{source}:{query_key}:v1",
+            kind=EvidenceKind.QUERY,
+            source=f"query:{source}",
+            business_key=query_key,
+            facts={"query_key": query_key, "records_found": 0},
+            summary=f"查询 {source} 未返回业务记录",
         )
 
     @staticmethod

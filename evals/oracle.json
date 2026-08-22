@@ -14,6 +14,26 @@
     "responsible_party": "none",
     "review_required": false
   },
+  "refund_complete_004": {
+    "decision": "refund_completed",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "refund_complete_005": {
+    "decision": "refund_completed",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "refund_complete_006": {
+    "decision": "refund_completed",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "refund_complete_007": {
+    "decision": "refund_completed",
+    "responsible_party": "none",
+    "review_required": false
+  },
   "refund_conflict_001": {
     "decision": "refund_record_conflict",
     "responsible_party": "undetermined",
@@ -34,7 +54,22 @@
     "responsible_party": "undetermined",
     "review_required": true
   },
+  "refund_conflict_005": {
+    "decision": "refund_record_conflict",
+    "responsible_party": "undetermined",
+    "review_required": true
+  },
+  "refund_conflict_006": {
+    "decision": "refund_record_conflict",
+    "responsible_party": "undetermined",
+    "review_required": true
+  },
   "refund_historical_policy_001": {
+    "decision": "refund_pending_within_sla",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "refund_historical_policy_002": {
     "decision": "refund_pending_within_sla",
     "responsible_party": "none",
     "review_required": false
@@ -59,7 +94,37 @@
     "responsible_party": "platform",
     "review_required": false
   },
+  "refund_missing_005": {
+    "decision": "refund_not_initiated_overdue",
+    "responsible_party": "platform",
+    "review_required": false
+  },
+  "refund_missing_006": {
+    "decision": "refund_not_initiated_overdue",
+    "responsible_party": "platform",
+    "review_required": false
+  },
+  "refund_missing_007": {
+    "decision": "refund_not_initiated_overdue",
+    "responsible_party": "platform",
+    "review_required": false
+  },
+  "refund_missing_008": {
+    "decision": "refund_not_initiated_overdue",
+    "responsible_party": "platform",
+    "review_required": false
+  },
+  "refund_missing_009": {
+    "decision": "refund_not_initiated_overdue",
+    "responsible_party": "platform",
+    "review_required": false
+  },
   "refund_missing_evidence_001": {
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true
+  },
+  "refund_missing_evidence_002": {
     "decision": "manual_review",
     "responsible_party": "undetermined",
     "review_required": true
@@ -70,6 +135,16 @@
     "review_required": true
   },
   "refund_overdue_002": {
+    "decision": "refund_arrival_overdue",
+    "responsible_party": "payment_channel",
+    "review_required": true
+  },
+  "refund_overdue_003": {
+    "decision": "refund_arrival_overdue",
+    "responsible_party": "payment_channel",
+    "review_required": true
+  },
+  "refund_overdue_004": {
     "decision": "refund_arrival_overdue",
     "responsible_party": "payment_channel",
     "review_required": true
@@ -89,12 +164,37 @@
     "responsible_party": "none",
     "review_required": false
   },
+  "refund_pending_004": {
+    "decision": "refund_processing_within_sla",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "refund_pending_005": {
+    "decision": "refund_processing_within_sla",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "refund_pending_006": {
+    "decision": "refund_processing_within_sla",
+    "responsible_party": "none",
+    "review_required": false
+  },
   "refund_within_001": {
     "decision": "refund_pending_within_sla",
     "responsible_party": "none",
     "review_required": false
   },
   "refund_within_002": {
+    "decision": "refund_pending_within_sla",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "refund_within_003": {
+    "decision": "refund_pending_within_sla",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "refund_within_004": {
     "decision": "refund_pending_within_sla",
     "responsible_party": "none",
     "review_required": false

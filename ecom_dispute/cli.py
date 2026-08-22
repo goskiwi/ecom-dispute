@@ -9,6 +9,7 @@ from .evaluation import evaluate, evaluate_baseline
 from .harness import DiagnosticHarness
 from .llm import ResponsesClient
 from .repository import DEFAULT_DB, Repository, rebuild_database
+from .semantic_scoring import rescore_semantic_run
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -26,6 +27,11 @@ def _parser() -> argparse.ArgumentParser:
         "--mode", choices=["offline", "llm", "baseline", "compare"], default="offline"
     )
     evaluation.add_argument("--case-id", action="append", dest="case_ids")
+    rescore = commands.add_parser("rescore")
+    rescore.add_argument("--input", type=Path, required=True)
+    rescore.add_argument(
+        "--semantic-oracle", type=Path, default=Path("evals/semantic_oracle.json")
+    )
     return parser
 
 
@@ -42,6 +48,10 @@ def main() -> None:
     args = _parser().parse_args()
     if args.command == "data":
         print(rebuild_database(args.db))
+        return
+    if args.command == "rescore":
+        result = rescore_semantic_run(args.input, args.semantic_oracle)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
         return
     repository = Repository(args.db)
     if args.command == "demo":

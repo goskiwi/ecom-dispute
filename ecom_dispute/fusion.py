@@ -3,7 +3,15 @@ from __future__ import annotations
 from datetime import datetime
 
 from .case_state import evidence_ids_by_kind
-from .contracts import CaseInput, CaseState, DecisionReport, Evidence, EvidenceKind, Finding
+from .contracts import (
+    CaseInput,
+    CaseState,
+    DecisionReport,
+    Evidence,
+    EvidenceKind,
+    Finding,
+    StatementType,
+)
 from .skills.refund_dispute import RefundDisputeSkill
 
 
@@ -22,6 +30,7 @@ class EvidenceFusion:
         payments = self._of_kind(state, EvidenceKind.PAYMENT)
         after_sales = self._of_kind(state, EvidenceKind.AFTER_SALES)
         policies = self._of_kind(state, EvidenceKind.POLICY)
+        self._fuse_conversation_facts(state, refunds, payments)
 
         responsible_party = "undetermined"
         decision = "manual_review"
@@ -114,12 +123,17 @@ class EvidenceFusion:
     @staticmethod
     def _validated_findings(state: CaseState) -> list[Finding]:
         available = set(state.evidence)
-        seen: set[tuple[str, str, tuple[str, ...]]] = set()
+        seen: set[tuple[str, str, str | None, tuple[str, ...]]] = set()
         validated: list[Finding] = []
         for finding in state.findings:
             if not finding.evidence_ids or not set(finding.evidence_ids).issubset(available):
                 continue
-            key = (finding.category, finding.claim, tuple(sorted(finding.evidence_ids)))
+            key = (
+                finding.category,
+                finding.claim,
+                finding.statement_type.value if finding.statement_type else None,
+                tuple(sorted(finding.evidence_ids)),
+            )
             if key not in seen:
                 seen.add(key)
                 validated.append(finding)
@@ -129,3 +143,56 @@ class EvidenceFusion:
     def _of_kind(state: CaseState, kind: EvidenceKind) -> list[Evidence]:
         return [item for item in state.evidence.values() if item.kind == kind]
 
+    @staticmethod
+    def _fuse_conversation_facts(
+        state: CaseState, refunds: list[Evidence], payments: list[Evidence]
+    ) -> None:
+        succeeded_refund = any(item.facts.get("status") == "succeeded" for item in refunds)
+        matching_credit = any(
+            item.facts.get("event_type") == "credit" and item.facts.get("status") == "succeeded"
+            for item in payments
+        )
+        conversation_ids = evidence_ids_by_kind(state, EvidenceKind.CONVERSATION)
+        negative_refund_ids = [
+            item.evidence_id
+            for item in state.evidence.values()
+            if item.kind == EvidenceKind.QUERY and item.source == "query:refunds"
+        ]
+        fact_ids = [item.evidence_id for item in refunds + payments] + negative_refund_ids
+
+        for finding in list(state.findings):
+            conflict: str | None = None
+            if finding.category == "agent_commitment":
+                if finding.statement_type in {
+                    StatementType.REFUND_INITIATED,
+                    StatementType.REFUND_PROCESSING,
+                } and not refunds:
+                    conflict = "客服称退款已进入处理链路，但业务系统不存在退款记录"
+                elif finding.statement_type == StatementType.REFUND_COMPLETED and not succeeded_refund:
+                    conflict = "客服称退款已完成，但退款系统不存在成功记录"
+            elif (
+                finding.category == "user_claim"
+                and finding.statement_type == StatementType.REFUND_NOT_RECEIVED
+                and matching_credit
+            ):
+                conflict = "用户称退款未到账，但支付系统存在成功入账记录"
+            elif (
+                finding.category == "user_claim"
+                and finding.statement_type == StatementType.REFUND_NOT_INITIATED
+                and refunds
+            ):
+                conflict = "用户称退款未发起，但退款系统存在处理记录"
+
+            if not conflict or conflict in state.conflicts:
+                continue
+            state.conflicts.append(conflict)
+            state.findings.append(
+                Finding(
+                    finding_id=f"conversation-fact-conflict-{len(state.conflicts)}",
+                    category="conversation_fact_conflict",
+                    claim=conflict,
+                    evidence_ids=conversation_ids + fact_ids,
+                    severity="warning",
+                    review_recommended=False,
+                )
+            )

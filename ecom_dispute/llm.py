@@ -9,11 +9,14 @@ from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from .contracts import StatementType
+
 
 class ExtractedStatement(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     text: str
+    statement_type: StatementType
     message_indexes: list[int] = Field(min_length=1)
 
 
@@ -48,6 +51,12 @@ class ResponsesClient:
         prompt = (
             "你是电商售后争议的对话分析 Agent。仅依据下列对话提取信息，不推测订单、"
             "支付、退款或政策事实。dispute_type 只能是 refund_dispute 或 other。"
+            "逐条提取用户主张和客服承诺，不把询问或核验动作写成已发生事实。"
+            "statement_type 只能从以下类型选择：refund_requested（申请退款）、"
+            "refund_not_initiated（用户称退款未发起）、refund_not_received（用户否认到账）、"
+            "refund_amount_mismatch（退款金额不符）、refund_initiated（退款已发起）、"
+            "refund_processing（退款处理中）、refund_completed（退款或入账已完成）、"
+            "wait_advice（建议等待）、verify_status（查询或核验）、other。"
             "user_claims 与 agent_commitments 中的 text 使用原意简述，message_indexes 使用从 0 开始的消息序号。\n"
             f"对话：{json.dumps(messages, ensure_ascii=False)}"
         )
