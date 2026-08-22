@@ -90,6 +90,6 @@ M3 详见 [语义融合报告](evals/semantic_fusion_report_2026-08-22.md)、[�
 
 本地 Demo 默认使用 `live-llm`，必须配置模型接口；`--agent-mode heuristic-test` 只用于确定性测试。旧 Recorded Agent 和旧语义兼容层已经删除。控制台支持人工复检操作。
 
-旧 Luna 指标使用已删除的 schema v1，已移入 `evals/legacy/`，不代表当前系统。新 schema v2 已通过真实严格输出探针；首次 30 条运行暴露 Oracle 的 receipt/completion 机械迁移错误，因此只作为验证记录，不发布准确率。详见 [Schema v2 状态](evals/semantic_schema_v2_status.md)。
+旧 Luna 指标使用已删除的 schema v1，已移入 `evals/legacy/`。schema v2 使用全新 30 条盲测对话完成 `gpt-5.6-luna` Run 1：Business Type 100%、Has Dispute 93.3%、用户 Fact Precision/Recall 79.1%/82.9%、客服 Fact 41.9%/40.6%、全项 Exact Match 10/30。Oracle 在运行后未调整。详见 [v2 Blind Run 1](evals/semantic_holdout_schema-v2_blind_report_2026-08-22.md)。
 
 M5 针对 M4 的三个冲突误报增加时态约束并完成真实 LLM 定向回归，详见 [时态回归报告](evals/temporal_regression_report_2026-08-22.md)。该回归不替代 60 案例首轮指标。

@@ -63,7 +63,7 @@ M4 扩展至 60 个跨 Skill 案例。审计后 `business_type`、`has_dispute`�
 
 M5 曾针对三个冲突误报增加 `temporal_status` 和原文一致性校验；M6 审计后保留时态合同、删除 live 路径中的关键词一致性校验，历史回归不再代表当前主链路。
 
-M6 新主链路已完成一个真实端到端冒烟案例：工具 Agent 分三轮查询并停止。随后破坏性升级 semantic schema v2，删除旧 statement/commitment 字段，改为原子 Fact + Polarity + TemporalStatus + SpeechAct + 原文 quote。旧 Luna 指标已归档，不代表当前合同；v2 已通过真实 Schema 探针，但尚无新的独立准确率。
+M6 新主链路已完成真实端到端冒烟。随后破坏性升级 semantic schema v2，删除旧 statement/commitment 字段，改为原子 Fact + Polarity + TemporalStatus + SpeechAct + 原文 quote。使用全新 30 条后置盲测对话运行 `gpt-5.6-luna`：Business Type 100%、Has Dispute 93.3%、用户 Fact Precision/Recall 79.1%/82.9%、客服 Fact 41.9%/40.6%、全项 Exact Match 10/30；Oracle 在运行后未调整。
 
 实测单次短请求仍约产生 4.7k 输入 Token。新主链路增加 Tool Query Agent 后仍需全量测量裁决收益与额外成本；当前 holdout 是后置编写语义集且三次重复未完成，暂不把指标写入正式简历。
 

@@ -1,0 +1,1632 @@
+{
+  "schema_version": 2,
+  "mode": "semantic_holdout",
+  "case_count": 30,
+  "repeats": 1,
+  "per_repeat": [
+    {
+      "repeat": 1,
+      "passed": 10,
+      "case_count": 30,
+      "evaluated": 30,
+      "api_errors": 0,
+      "pass_rate": 0.3333333333333333
+    }
+  ],
+  "evaluated": 30,
+  "api_errors": 0,
+  "business_type_accuracy": 1.0,
+  "has_dispute_accuracy": 0.9333333333333333,
+  "user_fact_exact_match": 0.7333333333333333,
+  "agent_fact_exact_match": 0.4,
+  "user_fact_precision": 0.7906976744186046,
+  "user_fact_recall": 0.8292682926829268,
+  "agent_fact_precision": 0.41935483870967744,
+  "agent_fact_recall": 0.40625,
+  "input_tokens": 157072,
+  "output_tokens": 7459,
+  "latency_ms": 309116,
+  "results": [
+    {
+      "repeat": 1,
+      "case_id": "blind_delivery_001",
+      "checks": {
+        "business_type": true,
+        "has_dispute": false,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_promise",
+          "affirmed",
+          "future",
+          "assertion"
+        ],
+        [
+          "delivery_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_promise",
+          "affirmed",
+          "future",
+          "assertion"
+        ],
+        [
+          "delivery_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "other",
+          "uncertain",
+          "not_applicable",
+          "advice"
+        ],
+        [
+          "status",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "status",
+          "affirmed",
+          "current",
+          "assertion"
+        ],
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "advice"
+        ]
+      ],
+      "response_id": "resp_05d7b6554122802b016a89918c207887d0877552b984c4e1ea",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5239,
+      "output_tokens": 447,
+      "latency_ms": 17375
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_delivery_002",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_delay",
+          "affirmed",
+          "current",
+          "assertion"
+        ],
+        [
+          "delivery_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_delay",
+          "affirmed",
+          "current",
+          "assertion"
+        ],
+        [
+          "delivery_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "action"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "current",
+          "action"
+        ]
+      ],
+      "response_id": "resp_080c6dd76456a667016a89919c6ebc87d0bd0bbd0787ed253c",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5238,
+      "output_tokens": 348,
+      "latency_ms": 15425
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_delivery_003",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "delivery_receipt",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_receipt",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_0570d505d235815b016a8991ad84e087d09ea7e57589e63acc",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5228,
+      "output_tokens": 115,
+      "latency_ms": 14259
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_delivery_004",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "delivery_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "current",
+          "assertion"
+        ],
+        [
+          "delivery_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_010d9de3e354a857016a8991b7e6d887d0be3265188b36bd9f",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5238,
+      "output_tokens": 263,
+      "latency_ms": 10470
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_delivery_005",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_pickup",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_pickup",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "action"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "delivery_pickup",
+          "uncertain",
+          "current",
+          "action"
+        ]
+      ],
+      "response_id": "resp_06d9e8b3b9e6029d016a8991c2b34487d08e939e1aa3261b6f",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5241,
+      "output_tokens": 120,
+      "latency_ms": 8567
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_delivery_006",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "status",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "status",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_04c326f921ffe1c5016a8991ca95ac87d0ba1f9f361def84db",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5233,
+      "output_tokens": 119,
+      "latency_ms": 8496
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_delivery_007",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_delay",
+          "affirmed",
+          "current",
+          "assertion"
+        ],
+        [
+          "delivery_promise",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "delivery_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_delay",
+          "affirmed",
+          "current",
+          "assertion"
+        ],
+        [
+          "delivery_promise",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "delivery_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "action"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "current",
+          "action"
+        ]
+      ],
+      "response_id": "resp_042482068cdc26a0016a8991d1f9a887d0a193dac27af6f2b1",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5237,
+      "output_tokens": 407,
+      "latency_ms": 12085
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_delivery_008",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_delay",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_delay",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "other",
+          "affirmed",
+          "not_applicable",
+          "explanation"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "delivery_delay",
+          "affirmed",
+          "current",
+          "explanation"
+        ]
+      ],
+      "response_id": "resp_0ed8d804af935cd7016a8991e0040087d0a7ecbb48a1b8fc58",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5237,
+      "output_tokens": 235,
+      "latency_ms": 11408
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_delivery_009",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": true
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "other",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "status",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "status",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_0bab6bdd54a3f818016a8991ed549c87d0900c6ed61ff2067b",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5235,
+      "output_tokens": 310,
+      "latency_ms": 13870
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_delivery_010",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "delivery_delay",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "delivery_receipt",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_delay",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "delivery_receipt",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_05f4ea8451c9fb60016a8991f651fc87d0878c105c82ec864a",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5237,
+      "output_tokens": 157,
+      "latency_ms": 6318
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_delivery_011",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "query"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "query"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "action"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "current",
+          "action"
+        ]
+      ],
+      "response_id": "resp_0e7317c93d0eefd2016a8991fdd29c87d0989c02d701155278",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5234,
+      "output_tokens": 118,
+      "latency_ms": 6696
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_delivery_012",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_pickup",
+          "affirmed",
+          "future",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_pickup",
+          "affirmed",
+          "future",
+          "promise"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "delivery_pickup",
+          "affirmed",
+          "future",
+          "promise"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "delivery_pickup",
+          "affirmed",
+          "future",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_05d7ebea29317112016a899204393887d0b4f682e6247c2b4c",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5239,
+      "output_tokens": 292,
+      "latency_ms": 9569
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_delivery_013",
+      "checks": {
+        "business_type": true,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": true
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_delay",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "status",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "status",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "status",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_01a67b0f432564cd016a89920ebfa087d092a30af171093598",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5234,
+      "output_tokens": 456,
+      "latency_ms": 14238
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_delivery_014",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_completion",
+          "conflicting",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "delivery_completion",
+          "negated",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "action"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "current",
+          "action"
+        ]
+      ],
+      "response_id": "resp_020ae08ab4628ee9016a89921c995087d08556b5d4323d02f7",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5239,
+      "output_tokens": 412,
+      "latency_ms": 12261
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_delivery_015",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "delivery_receipt",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_receipt",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_092200d5cfbbefa5016a8992292a7487d095cf81b72ad53335",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5238,
+      "output_tokens": 125,
+      "latency_ms": 7309
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_refund_001",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "other",
+          "uncertain",
+          "not_applicable",
+          "advice"
+        ],
+        [
+          "refund_receipt",
+          "affirmed",
+          "future",
+          "promise"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "other",
+          "affirmed",
+          "not_applicable",
+          "advice"
+        ],
+        [
+          "refund_receipt",
+          "uncertain",
+          "future",
+          "promise"
+        ]
+      ],
+      "response_id": "resp_06a122632a9b3356016a8990f9e8ac87d0a048adaac04091c6",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5237,
+      "output_tokens": 160,
+      "latency_ms": 7259
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_refund_002",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "refund_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "refund_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "refund_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_0b78f062efb564e1016a899100e0dc87d084d6e797f853f7e3",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5235,
+      "output_tokens": 309,
+      "latency_ms": 9156
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_refund_003",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_request",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "query"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_request",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "query"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "action"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "status",
+          "affirmed",
+          "current",
+          "action"
+        ]
+      ],
+      "response_id": "resp_08f1b52700081eac016a89910cb8b487d0b3e569167309a96c",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5236,
+      "output_tokens": 294,
+      "latency_ms": 11960
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_refund_004",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "refund_initiation",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_initiation",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_initiation",
+          "affirmed",
+          "future",
+          "promise"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_initiation",
+          "affirmed",
+          "future",
+          "promise"
+        ]
+      ],
+      "response_id": "resp_0ccf3ddc61655033016a89911778dc87d0b7ecabab1bcfc3be",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5242,
+      "output_tokens": 123,
+      "latency_ms": 7103
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_refund_005",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "refund_processing",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_processing",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_processing",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_processing",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_01f9fb609f426ff5016a89911ed34887d08b9e3415ee93396e",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5231,
+      "output_tokens": 207,
+      "latency_ms": 8894
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_refund_006",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "refund_receipt",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_receipt",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_0407c1b97977e195016a899129403887d097b726acdaf6d333",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5230,
+      "output_tokens": 174,
+      "latency_ms": 9895
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_refund_007",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_amount",
+          "conflicting",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_amount",
+          "conflicting",
+          "completed",
+          "assertion"
+        ],
+        [
+          "refund_receipt",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "action"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "status",
+          "affirmed",
+          "current",
+          "action"
+        ]
+      ],
+      "response_id": "resp_0fa194252ba09c15016a899131889087d0814e374f0430497a",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5241,
+      "output_tokens": 488,
+      "latency_ms": 13953
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_refund_008",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "query"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "query"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "action"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "current",
+          "action"
+        ]
+      ],
+      "response_id": "resp_0490888953e14957016a89913fedf887d0872b6e90c2108d22",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5234,
+      "output_tokens": 215,
+      "latency_ms": 9548
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_refund_009",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "refund_initiation",
+          "uncertain",
+          "future",
+          "query"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_initiation",
+          "uncertain",
+          "future",
+          "query"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_initiation",
+          "affirmed",
+          "future",
+          "promise"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_initiation",
+          "affirmed",
+          "future",
+          "promise"
+        ]
+      ],
+      "response_id": "resp_09966866e6b847f0016a899147ad9887d0830fad4fa758ed47",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5236,
+      "output_tokens": 202,
+      "latency_ms": 7664
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_refund_010",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "refund_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "refund_receipt",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "refund_receipt",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_0c4975463254348b016a899150ce4487d0820977765be05870",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5234,
+      "output_tokens": 154,
+      "latency_ms": 8016
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_refund_011",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "refund_initiation",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_initiation",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_0999565df40afb32016a89915a934087d09136aabc2418a560",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5231,
+      "output_tokens": 139,
+      "latency_ms": 9629
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_refund_012",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_request",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "status",
+          "uncertain",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_request",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "status",
+          "uncertain",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "other",
+          "affirmed",
+          "future",
+          "promise"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "future",
+          "promise"
+        ]
+      ],
+      "response_id": "resp_09295490bdaafe95016a899161980087d0a4848718f5377933",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5236,
+      "output_tokens": 341,
+      "latency_ms": 10465
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_refund_013",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_processing",
+          "affirmed",
+          "current",
+          "assertion"
+        ],
+        [
+          "refund_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_processing",
+          "affirmed",
+          "current",
+          "assertion"
+        ],
+        [
+          "refund_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "action"
+        ]
+      ],
+      "observed_agent_facts": [],
+      "response_id": "resp_0006260242032c82016a89916c19d887d094a39e444869a54f",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5238,
+      "output_tokens": 390,
+      "latency_ms": 11317
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_refund_014",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "query"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_receipt",
+          "negated",
+          "current",
+          "query"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "other",
+          "affirmed",
+          "not_applicable",
+          "explanation"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_receipt",
+          "uncertain",
+          "future",
+          "explanation"
+        ]
+      ],
+      "response_id": "resp_04b6db76591bea63016a8991771ae887d0815380ab5a912f21",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5235,
+      "output_tokens": 122,
+      "latency_ms": 6276
+    },
+    {
+      "repeat": 1,
+      "case_id": "blind_refund_015",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_request",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_request",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "other",
+          "affirmed",
+          "future",
+          "promise"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "status",
+          "affirmed",
+          "future",
+          "promise"
+        ]
+      ],
+      "response_id": "resp_02339931cbd4e09c016a89917e15bc87d09aad5ec5ecd08917",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5229,
+      "output_tokens": 217,
+      "latency_ms": 9635
+    }
+  ]
+}
