@@ -2,7 +2,7 @@
 
 评审文件：`evals/formal_review_40_blind_form.json`
 
-请两位评审分别复制为本地文件：
+两位评审的本地文件已经生成：
 
 ```text
 evals/formal_review_40_rater1.json
@@ -13,6 +13,20 @@ evals/formal_review_40_rater2.json
 
 ```text
 evals/formal_review_40_ab_key.json
+```
+
+评审员1启动自动保存页面：
+
+```bash
+uv run python -m ecom_dispute review-ab-web \
+  --form evals/formal_review_40_rater1.json --port 8887
+```
+
+评审员2使用第二份文件和不同端口：
+
+```bash
+uv run python -m ecom_dispute review-ab-web \
+  --form evals/formal_review_40_rater2.json --port 8888
 ```
 
 ## 每个选项评分

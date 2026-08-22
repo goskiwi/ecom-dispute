@@ -18,6 +18,7 @@ from .harness import DiagnosticHarness
 from .llm import ResponsesClient
 from .repository import DEFAULT_DB, Repository, rebuild_database
 from .review_ab_evaluation import build_review_manifest, generate_review_ab
+from .review_web import serve_review_form
 from .semantic_holdout import evaluate_holdout
 from .web import serve
 
@@ -123,6 +124,10 @@ def _parser() -> argparse.ArgumentParser:
     annotation_rescore.add_argument(
         "--consensus", type=Path, default=Path("evals/formal_abcd_200_consensus.json")
     )
+    review_web = commands.add_parser("review-ab-web")
+    review_web.add_argument("--form", type=Path, required=True)
+    review_web.add_argument("--host", default="127.0.0.1")
+    review_web.add_argument("--port", type=int, default=8887)
     return parser
 
 
@@ -197,6 +202,9 @@ def main() -> None:
     if args.command == "abcd-annotation-rescore":
         result = rescore_first_run(args.raw, args.consensus)
         print(json.dumps(result, ensure_ascii=False, indent=2))
+        return
+    if args.command == "review-ab-web":
+        serve_review_form(args.form, args.host, args.port)
         return
     repository = Repository(args.db)
     harness = _build_harness(args, repository) if args.command in {"web", "demo"} else None
