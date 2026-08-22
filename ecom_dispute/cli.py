@@ -26,7 +26,6 @@ def _parser() -> argparse.ArgumentParser:
     demo = commands.add_parser("demo")
     demo.add_argument("--case-id", required=True)
     demo.add_argument("--agent-mode", choices=["live-llm", "heuristic-test"], default="live-llm")
-    demo.add_argument("--tool-mode", choices=["fixed", "agent"], default="fixed")
     evaluation = commands.add_parser("eval")
     evaluation.add_argument(
         "--mode",
@@ -38,7 +37,6 @@ def _parser() -> argparse.ArgumentParser:
     web.add_argument("--host", default="127.0.0.1")
     web.add_argument("--port", type=int, default=8765)
     web.add_argument("--agent-mode", choices=["live-llm", "heuristic-test"], default="live-llm")
-    web.add_argument("--tool-mode", choices=["fixed", "agent"], default="fixed")
     holdout = commands.add_parser("holdout")
     holdout.add_argument("--inputs", type=Path, default=Path("data/semantic_holdout_inputs.json"))
     holdout.add_argument("--oracle", type=Path, default=Path("evals/semantic_holdout_oracle.json"))
@@ -64,7 +62,7 @@ def _build_harness(args: argparse.Namespace, repository: Repository) -> Diagnost
     if args.agent_mode == "heuristic-test":
         return DiagnosticHarness.heuristic_tests(repository)
     client = _llm_client(args, required=True)
-    return DiagnosticHarness.live(repository, client, args.tool_mode)
+    return DiagnosticHarness.live(repository, client)
 
 
 def main() -> None:

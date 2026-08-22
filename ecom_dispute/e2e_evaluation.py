@@ -7,7 +7,7 @@ from typing import Any
 
 from pydantic import BaseModel, ConfigDict
 
-from .agents import ConversationAgent, ToolQueryAgent
+from .agents import ConversationAgent, EvidenceGapAgent, ReviewAgent
 from .contracts import AgentResult
 from .harness import DiagnosticHarness
 from .llm import ResponsesClient
@@ -150,7 +150,10 @@ def evaluate_e2e(
         try:
             conversation_result = asyncio.run(ConversationAgent(client).run(case))
             live = DiagnosticHarness(repository, PrecomputedConversationAgent(conversation_result))
-            live.tool_query_agent = ToolQueryAgent(client, live.registry)
+            live.evidence_gap_agent = EvidenceGapAgent(
+                client, live.tool_runtime, live.tool_surface_resolver
+            )
+            live.review_agent = ReviewAgent(client)
             fixed = DiagnosticHarness(repository, PrecomputedConversationAgent(conversation_result))
             live_report = live.diagnose_sync(case)
             fixed_report = fixed.diagnose_sync(case)
@@ -183,7 +186,7 @@ def _score_report(report: object, expected: dict) -> dict:
     called_tools = [
         tool
         for event in report.trace
-        if event.get("agent") in {"fact_query", "fixed_fact_executor", "policy_resolver"}
+        if event.get("agent") in {"evidence_gap", "core_evidence_executor"}
         for tool in event.get("tool_calls", [])
     ]
     evidence_ids = set(report.evidence_ids)
@@ -199,7 +202,7 @@ def _score_report(report: object, expected: dict) -> dict:
         "required_tools": set(expected["required_tools"]).issubset(called_tools),
         "evidence_grounded": unsupported == 0,
     }
-    tool_events = [event for event in report.trace if event.get("agent") == "fact_query"]
+    tool_events = [event for event in report.trace if event.get("agent") == "evidence_gap"]
     return {
         "checks": checks,
         "passed": all(checks.values()),

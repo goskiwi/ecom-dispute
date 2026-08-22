@@ -6,8 +6,9 @@ from dataclasses import replace
 from .agents import (
     ConversationAgent,
     CoreEvidenceExecutor,
+    EvidenceGapAgent,
     HeuristicConversationStub,
-    ToolQueryAgent,
+    ReviewAgent,
 )
 from .case_state import CaseStateReducer
 from .context_projector import ContextProjector
@@ -28,7 +29,8 @@ class DiagnosticHarness:
         self,
         repository: Repository,
         conversation_agent: object,
-        tool_query_agent: ToolQueryAgent | None = None,
+        evidence_gap_agent: EvidenceGapAgent | None = None,
+        review_agent: ReviewAgent | None = None,
     ):
         self.registry = ToolRegistry(repository)
         self.tool_runtime = ToolRuntime(self.registry)
@@ -40,20 +42,22 @@ class DiagnosticHarness:
         self.trace_recorder = TraceRecorder()
         self.skills = SkillRegistry(default_strategies(), known_tools=self.registry.names)
         self.conversation_agent = conversation_agent
-        self.tool_query_agent = tool_query_agent
+        self.evidence_gap_agent = evidence_gap_agent
+        self.review_agent = review_agent
 
     @classmethod
     def live(
         cls,
         repository: Repository,
         llm_client: ResponsesClient,
-        tool_mode: str = "fixed",
     ) -> DiagnosticHarness:
         harness = cls(repository, ConversationAgent(llm_client))
-        if tool_mode == "agent":
-            harness.tool_query_agent = ToolQueryAgent(llm_client, harness.tool_runtime)
-        elif tool_mode != "fixed":
-            raise ValueError(f"unknown tool mode: {tool_mode}")
+        harness.evidence_gap_agent = EvidenceGapAgent(
+            llm_client,
+            harness.tool_runtime,
+            harness.tool_surface_resolver,
+        )
+        harness.review_agent = ReviewAgent(llm_client)
         return harness
 
     @classmethod
@@ -107,19 +111,19 @@ class DiagnosticHarness:
             tool_ids=list(tool_surface.tool_ids),
         )
         trace_start = len(state.trace)
-        if self.tool_query_agent:
-            state = await self.tool_query_agent.run(
+        executor = CoreEvidenceExecutor(self.tool_runtime, tool_surface)
+        result = await executor.run(case)
+        state = self.reducer.apply(state, result)
+        agent_names.append(executor.name)
+        if self.evidence_gap_agent and skill.route.lazy_tools:
+            state = await self.evidence_gap_agent.run(
                 case,
                 state,
+                skill,
+                run_state,
                 self.reducer,
-                tool_surface,
             )
-            agent_names.append(self.tool_query_agent.name)
-        else:
-            executor = CoreEvidenceExecutor(self.tool_runtime, tool_surface)
-            result = await executor.run(case)
-            state = self.reducer.apply(state, result)
-            agent_names.append(executor.name)
+            agent_names.append(self.evidence_gap_agent.name)
         verification_calls = sum(
             len(event.get("tool_calls", [])) for event in state.trace[trace_start:]
         )
@@ -163,6 +167,9 @@ class DiagnosticHarness:
         )
         if compliance_review and not outcome.review_required:
             outcome = replace(outcome, review_required=True)
+        if self.review_agent and outcome.review_required:
+            review_result = await self.review_agent.run(case, state)
+            state = self.reducer.apply(state, review_result)
 
         run_state = run_state.move_to(HarnessStage.FUSE_AND_REVIEW)
         fuse_context = self.context_projector.project(case, state, run_state, skill)
