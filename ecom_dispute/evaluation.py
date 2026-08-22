@@ -48,8 +48,15 @@ def evaluate(
             (event["telemetry"] for event in report.trace if event.get("agent") == "conversation"),
             {},
         )
+        agent_usage = [
+            {"agent": event.get("agent"), **event.get("telemetry", {})}
+            for event in report.trace
+            if event.get("agent") in {"conversation", "evidence_gap", "review"}
+            and event.get("telemetry")
+            and event.get("telemetry", {}).get("mode") != "heuristic_test_stub"
+        ]
         if llm_client:
-            checks["business_type"] = llm_trace.get("business_type") == case.business_type
+            checks["route_type"] = llm_trace.get("route_type") == case.business_type
         results.append(
             {
                 "case_id": case_id,
@@ -57,18 +64,31 @@ def evaluate(
                 "checks": checks,
                 "passed": all(checks.values()),
                 "llm": llm_trace,
+                "agent_usage": agent_usage,
             }
         )
-    llm_calls = sum(item["llm"].get("mode") == "llm" for item in results)
+    llm_calls = sum(len(item["agent_usage"]) for item in results)
     return {
         "mode": "llm" if llm_client else "deterministic_test",
         "case_count": len(results),
         "passed": sum(item["passed"] for item in results),
         "pass_rate": sum(item["passed"] for item in results) / len(results) if results else 0,
         "llm_calls": llm_calls,
-        "input_tokens": sum(item["llm"].get("input_tokens", 0) for item in results),
-        "output_tokens": sum(item["llm"].get("output_tokens", 0) for item in results),
-        "latency_ms": sum(item["llm"].get("latency_ms", 0) for item in results),
+        "input_tokens": sum(
+            usage.get("input_tokens", 0)
+            for item in results
+            for usage in item["agent_usage"]
+        ),
+        "output_tokens": sum(
+            usage.get("output_tokens", 0)
+            for item in results
+            for usage in item["agent_usage"]
+        ),
+        "latency_ms": sum(
+            usage.get("latency_ms", 0)
+            for item in results
+            for usage in item["agent_usage"]
+        ),
         "results": results,
     }
 

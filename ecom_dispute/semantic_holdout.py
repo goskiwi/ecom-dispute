@@ -25,7 +25,7 @@ def evaluate_holdout(
             result = client.extract_conversation(case["conversation"])
         except (RuntimeError, ValueError) as exc:
             checks = {
-                "business_type": False,
+                "route_type": False,
                 "has_dispute": False,
                 "user_business_facts": False,
                 "agent_business_facts": False,
@@ -72,7 +72,7 @@ def evaluate_holdout(
         expected_user_acts = set(expected["expected_user_interaction_acts"])
         expected_agent_acts = set(expected["expected_agent_interaction_acts"])
         checks = {
-            "business_type": result.semantics.business_type == expected["business_type"],
+            "route_type": result.semantics.route_type == expected["route_type"],
             "has_dispute": result.semantics.has_dispute == expected["has_dispute"],
             "user_business_facts": expected_user_facts == observed_user_facts,
             "agent_business_facts": expected_agent_facts == observed_agent_facts,
@@ -140,7 +140,7 @@ def evaluate_holdout(
         "per_repeat": per_repeat,
         "evaluated": len(evaluated_results),
         "api_errors": len(results) - len(evaluated_results),
-        "business_type_accuracy": _check_rate(evaluated_results, "business_type"),
+        "route_type_accuracy": _check_rate(evaluated_results, "route_type"),
         "has_dispute_accuracy": _check_rate(evaluated_results, "has_dispute"),
         "user_business_fact_exact_match": _check_rate(evaluated_results, "user_business_facts"),
         "agent_business_fact_exact_match": _check_rate(evaluated_results, "agent_business_facts"),

@@ -35,7 +35,21 @@ class InteractionAct(BaseModel):
 class ConversationSemantics(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    business_type: Literal["refund", "delivery", "other"]
+    route_type: Literal[
+        "refund",
+        "refund_amount",
+        "duplicate_charge",
+        "payment_order_failure",
+        "delivery",
+        "merchant_not_shipped",
+        "delivered_not_received",
+        "cancellation_in_transit",
+        "return_eligibility",
+        "wrong_item",
+        "missing_item",
+        "damaged_item",
+        "other",
+    ]
     has_dispute: bool
     business_facts: list[BusinessFact]
     interaction_acts: list[InteractionAct]
@@ -85,7 +99,7 @@ class ResponsesClient:
     ) -> LLMResult:
         prompt = (
             "你是电商售后争议的对话分析 Agent。仅依据下列对话提取信息，不推测订单、"
-            "支付、退款、物流或政策事实。business_type 只能是 refund、delivery 或 other；"
+            "支付、退款、物流或政策事实。route_type 必须从Schema列出的具体Route中选择；"
             "has_dispute 表示用户是否表达业务异常或对处理结果不满，正常查询或问题已解决为 false。"
             "只要用户明确陈述晚到、未收到、未发起、未到账或金额不符等异常，has_dispute 必须为 true，"
             "即使用户同时在询问政策；只有没有异常的状态查询或已正常解决才为 false。"

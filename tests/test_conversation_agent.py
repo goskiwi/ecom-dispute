@@ -23,7 +23,7 @@ class FakeConversationClient:
         self.repair_hints.append(repair_hint)
         return LLMResult(
             semantics=ConversationSemantics(
-                business_type="refund",
+                route_type="refund",
                 has_dispute=True,
                 business_facts=[self.fact],
                 interaction_acts=[

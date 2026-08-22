@@ -68,7 +68,7 @@ class ConversationAgent:
                 "latency_ms": result.latency_ms,
                 "request_attempts": result.request_attempts,
                 "model_repairs": model_repairs,
-                "business_type": result.semantics.business_type,
+                "route_type": result.semantics.route_type,
                 "has_dispute": result.semantics.has_dispute,
                 "business_facts": [
                     fact.model_dump(mode="json") for fact in result.semantics.business_facts
@@ -121,9 +121,9 @@ class ConversationAgent:
             )
         findings.append(
             Finding(
-                finding_id="llm-business-type",
-                category="candidate_business_type",
-                claim=result.semantics.business_type,
+                finding_id="llm-route-type",
+                category="candidate_route_type",
+                claim=result.semantics.route_type,
                 evidence_ids=[evidence.evidence_id],
                 review_recommended=result.semantics.uncertainty is not None,
             )

@@ -69,7 +69,11 @@ class DiagnosticHarness:
         state = CaseState(case_id=case.case_id)
         self.trace_recorder.record(state, run_state, "TASK_STARTED")
 
-        skill = self.skills.resolve(case.business_type)
+        conversation_result = await self.conversation_agent.run(case)
+        route_type = conversation_result.telemetry.get("route_type")
+        if not route_type:
+            raise ValueError("ConversationAgent did not return route_type")
+        skill = self.skills.resolve(str(route_type))
         run_state = run_state.activate(
             skill.skill_id,
             skill.route_id,
@@ -79,7 +83,7 @@ class DiagnosticHarness:
             state,
             run_state,
             "ROUTE_SELECTED",
-            business_type=case.business_type,
+            route_type=route_type,
         )
 
         analyze_context = self.context_projector.project(case, state, run_state, skill)
@@ -90,7 +94,6 @@ class DiagnosticHarness:
             objective=analyze_context.stage_objective,
             tool_ids=list(analyze_context.tool_ids),
         )
-        conversation_result = await self.conversation_agent.run(case)
         state = self.reducer.apply(state, conversation_result)
         agent_names = [self.conversation_agent.name]
 

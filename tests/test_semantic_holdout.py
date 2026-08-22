@@ -10,7 +10,7 @@ class FakeSemanticClient:
     def extract_conversation(self, messages: list[dict[str, str]]) -> LLMResult:
         return LLMResult(
             semantics=ConversationSemantics(
-                business_type="refund",
+                route_type="refund",
                 has_dispute=True,
                 business_facts=[
                     BusinessFact(
@@ -61,7 +61,7 @@ def test_semantic_holdout_repeats_without_exposing_oracle(tmp_path: Path) -> Non
         json.dumps(
             {
                 "holdout_refund_001": {
-                    "business_type": "refund",
+                    "route_type": "refund",
                     "has_dispute": True,
                     "expected_user_business_facts": [
                         {

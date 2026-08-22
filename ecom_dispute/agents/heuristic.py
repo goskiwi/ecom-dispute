@@ -72,7 +72,7 @@ class HeuristicConversationStub:
             agent=self.name,
             findings=findings,
             evidence=[evidence],
-            telemetry={"mode": "heuristic_test_stub"},
+            telemetry={"mode": "heuristic_test_stub", "route_type": case.business_type},
         )
 
     @staticmethod
