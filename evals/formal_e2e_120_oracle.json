@@ -1,0 +1,2761 @@
+{
+  "formal_refund_01": {
+    "decision": "refund_completed",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "refund",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "get_after_sales_case",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "after_sales",
+      "conversation",
+      "order",
+      "payment",
+      "policy",
+      "refund"
+    ]
+  },
+  "formal_refund_02": {
+    "decision": "refund_completed",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "refund",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "get_after_sales_case",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "after_sales",
+      "conversation",
+      "order",
+      "payment",
+      "policy",
+      "refund"
+    ]
+  },
+  "formal_refund_03": {
+    "decision": "refund_completed",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "refund",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "get_after_sales_case",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "after_sales",
+      "conversation",
+      "order",
+      "payment",
+      "policy",
+      "refund"
+    ]
+  },
+  "formal_refund_04": {
+    "decision": "refund_completed",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "refund",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "get_after_sales_case",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "after_sales",
+      "conversation",
+      "order",
+      "payment",
+      "policy",
+      "refund"
+    ]
+  },
+  "formal_refund_05": {
+    "decision": "refund_completed",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "refund",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "get_after_sales_case",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "after_sales",
+      "conversation",
+      "order",
+      "payment",
+      "policy",
+      "refund"
+    ]
+  },
+  "formal_refund_06": {
+    "decision": "refund_completed",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "refund",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "get_after_sales_case",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "after_sales",
+      "conversation",
+      "order",
+      "payment",
+      "policy",
+      "refund"
+    ]
+  },
+  "formal_refund_07": {
+    "decision": "refund_completed",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "refund",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "get_after_sales_case",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "after_sales",
+      "conversation",
+      "order",
+      "payment",
+      "policy",
+      "refund"
+    ]
+  },
+  "formal_refund_08": {
+    "decision": "refund_record_conflict",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "refund",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "get_after_sales_case",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "after_sales",
+      "conversation",
+      "order",
+      "payment",
+      "policy",
+      "refund"
+    ]
+  },
+  "formal_refund_09": {
+    "decision": "refund_record_conflict",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "refund",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "get_after_sales_case",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "after_sales",
+      "conversation",
+      "order",
+      "payment",
+      "policy",
+      "refund"
+    ]
+  },
+  "formal_refund_10": {
+    "decision": "refund_record_conflict",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "refund",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "get_after_sales_case",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "after_sales",
+      "conversation",
+      "order",
+      "payment",
+      "policy",
+      "refund"
+    ]
+  },
+  "formal_refund_amount_01": {
+    "decision": "refund_amount_incorrect",
+    "responsible_party": "platform",
+    "review_required": false,
+    "route_type": "refund_amount",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy",
+      "refund"
+    ]
+  },
+  "formal_refund_amount_02": {
+    "decision": "refund_credit_amount_mismatch",
+    "responsible_party": "payment_channel",
+    "review_required": true,
+    "route_type": "refund_amount",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy",
+      "refund"
+    ]
+  },
+  "formal_refund_amount_03": {
+    "decision": "refund_amount_correct",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "refund_amount",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy",
+      "refund"
+    ]
+  },
+  "formal_refund_amount_04": {
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "refund_amount",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy"
+    ]
+  },
+  "formal_refund_amount_05": {
+    "decision": "refund_amount_incorrect",
+    "responsible_party": "platform",
+    "review_required": false,
+    "route_type": "refund_amount",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy",
+      "refund"
+    ]
+  },
+  "formal_refund_amount_06": {
+    "decision": "refund_credit_amount_mismatch",
+    "responsible_party": "payment_channel",
+    "review_required": true,
+    "route_type": "refund_amount",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy",
+      "refund"
+    ]
+  },
+  "formal_refund_amount_07": {
+    "decision": "refund_amount_correct",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "refund_amount",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy",
+      "refund"
+    ]
+  },
+  "formal_refund_amount_08": {
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "refund_amount",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy"
+    ]
+  },
+  "formal_refund_amount_09": {
+    "decision": "refund_amount_incorrect",
+    "responsible_party": "platform",
+    "review_required": false,
+    "route_type": "refund_amount",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy",
+      "refund"
+    ]
+  },
+  "formal_refund_amount_10": {
+    "decision": "refund_credit_amount_mismatch",
+    "responsible_party": "payment_channel",
+    "review_required": true,
+    "route_type": "refund_amount",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy",
+      "refund"
+    ]
+  },
+  "formal_duplicate_charge_01": {
+    "decision": "duplicate_charge_confirmed",
+    "responsible_party": "payment_channel",
+    "review_required": true,
+    "route_type": "duplicate_charge",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy"
+    ]
+  },
+  "formal_duplicate_charge_02": {
+    "decision": "duplicate_charge_pending_authorization",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "duplicate_charge",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy"
+    ]
+  },
+  "formal_duplicate_charge_03": {
+    "decision": "duplicate_charge_not_found",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "duplicate_charge",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy"
+    ]
+  },
+  "formal_duplicate_charge_04": {
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "duplicate_charge",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_duplicate_charge_05": {
+    "decision": "duplicate_charge_confirmed",
+    "responsible_party": "payment_channel",
+    "review_required": true,
+    "route_type": "duplicate_charge",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy"
+    ]
+  },
+  "formal_duplicate_charge_06": {
+    "decision": "duplicate_charge_pending_authorization",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "duplicate_charge",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy"
+    ]
+  },
+  "formal_duplicate_charge_07": {
+    "decision": "duplicate_charge_not_found",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "duplicate_charge",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy"
+    ]
+  },
+  "formal_duplicate_charge_08": {
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "duplicate_charge",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_duplicate_charge_09": {
+    "decision": "duplicate_charge_confirmed",
+    "responsible_party": "payment_channel",
+    "review_required": true,
+    "route_type": "duplicate_charge",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy"
+    ]
+  },
+  "formal_duplicate_charge_10": {
+    "decision": "duplicate_charge_pending_authorization",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "duplicate_charge",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy"
+    ]
+  },
+  "formal_payment_order_failure_01": {
+    "decision": "captured_order_failed_unreversed",
+    "responsible_party": "platform",
+    "review_required": true,
+    "route_type": "payment_order_failure",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy"
+    ]
+  },
+  "formal_payment_order_failure_02": {
+    "decision": "captured_order_failed_reversed",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "payment_order_failure",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy"
+    ]
+  },
+  "formal_payment_order_failure_03": {
+    "decision": "captured_order_failed_reversed",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "payment_order_failure",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy",
+      "refund"
+    ]
+  },
+  "formal_payment_order_failure_04": {
+    "decision": "payment_order_state_conflict",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "payment_order_failure",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy"
+    ]
+  },
+  "formal_payment_order_failure_05": {
+    "decision": "captured_order_failed_unreversed",
+    "responsible_party": "platform",
+    "review_required": true,
+    "route_type": "payment_order_failure",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy"
+    ]
+  },
+  "formal_payment_order_failure_06": {
+    "decision": "captured_order_failed_reversed",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "payment_order_failure",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy"
+    ]
+  },
+  "formal_payment_order_failure_07": {
+    "decision": "captured_order_failed_reversed",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "payment_order_failure",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy",
+      "refund"
+    ]
+  },
+  "formal_payment_order_failure_08": {
+    "decision": "payment_order_state_conflict",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "payment_order_failure",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy"
+    ]
+  },
+  "formal_payment_order_failure_09": {
+    "decision": "captured_order_failed_unreversed",
+    "responsible_party": "platform",
+    "review_required": true,
+    "route_type": "payment_order_failure",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy"
+    ]
+  },
+  "formal_payment_order_failure_10": {
+    "decision": "captured_order_failed_reversed",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "payment_order_failure",
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy"
+    ]
+  },
+  "formal_delivery_01": {
+    "decision": "delivery_event_conflict",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "delivery",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_delivery_02": {
+    "decision": "delivery_event_conflict",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "delivery",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_delivery_03": {
+    "decision": "delivery_delay_force_majeure",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "delivery",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_delivery_04": {
+    "decision": "delivery_delay_force_majeure",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "delivery",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_delivery_05": {
+    "decision": "delivery_completed_late",
+    "responsible_party": "logistics_provider",
+    "review_required": false,
+    "route_type": "delivery",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_delivery_06": {
+    "decision": "delivery_delay_logistics",
+    "responsible_party": "logistics_provider",
+    "review_required": false,
+    "route_type": "delivery",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_delivery_07": {
+    "decision": "delivery_delay_logistics",
+    "responsible_party": "logistics_provider",
+    "review_required": false,
+    "route_type": "delivery",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_delivery_08": {
+    "decision": "delivery_delay_logistics",
+    "responsible_party": "logistics_provider",
+    "review_required": false,
+    "route_type": "delivery",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_delivery_09": {
+    "decision": "delivery_delay_logistics",
+    "responsible_party": "logistics_provider",
+    "review_required": false,
+    "route_type": "delivery",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_delivery_10": {
+    "decision": "delivery_delay_logistics",
+    "responsible_party": "logistics_provider",
+    "review_required": false,
+    "route_type": "delivery",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_merchant_not_shipped_01": {
+    "decision": "merchant_ship_overdue",
+    "responsible_party": "merchant",
+    "review_required": false,
+    "route_type": "merchant_not_shipped",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_merchant_not_shipped_02": {
+    "decision": "merchant_ship_within_sla",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "merchant_not_shipped",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_merchant_not_shipped_03": {
+    "decision": "shipment_already_picked_up",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "merchant_not_shipped",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_merchant_not_shipped_04": {
+    "decision": "merchant_ship_overdue",
+    "responsible_party": "merchant",
+    "review_required": false,
+    "route_type": "merchant_not_shipped",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_merchant_not_shipped_05": {
+    "decision": "merchant_ship_overdue",
+    "responsible_party": "merchant",
+    "review_required": false,
+    "route_type": "merchant_not_shipped",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_merchant_not_shipped_06": {
+    "decision": "merchant_ship_within_sla",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "merchant_not_shipped",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_merchant_not_shipped_07": {
+    "decision": "shipment_already_picked_up",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "merchant_not_shipped",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_merchant_not_shipped_08": {
+    "decision": "merchant_ship_overdue",
+    "responsible_party": "merchant",
+    "review_required": false,
+    "route_type": "merchant_not_shipped",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_merchant_not_shipped_09": {
+    "decision": "merchant_ship_overdue",
+    "responsible_party": "merchant",
+    "review_required": false,
+    "route_type": "merchant_not_shipped",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_merchant_not_shipped_10": {
+    "decision": "merchant_ship_within_sla",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "merchant_not_shipped",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_delivered_not_received_01": {
+    "decision": "delivery_receipt_disputed",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "delivered_not_received",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_delivery_proof",
+      "get_delivery_address",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "delivery_address",
+      "delivery_proof",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_delivered_not_received_02": {
+    "decision": "delivery_proof_missing",
+    "responsible_party": "logistics_provider",
+    "review_required": true,
+    "route_type": "delivered_not_received",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_delivery_proof",
+      "get_delivery_address",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "delivery_address",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_delivered_not_received_03": {
+    "decision": "delivery_not_marked_delivered",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "delivered_not_received",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_delivery_proof",
+      "get_delivery_address",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "delivery_address",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_delivered_not_received_04": {
+    "decision": "delivery_receipt_disputed",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "delivered_not_received",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_delivery_proof",
+      "get_delivery_address",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "delivery_address",
+      "delivery_proof",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_delivered_not_received_05": {
+    "decision": "delivery_receipt_disputed",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "delivered_not_received",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_delivery_proof",
+      "get_delivery_address",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "delivery_address",
+      "delivery_proof",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_delivered_not_received_06": {
+    "decision": "delivery_proof_missing",
+    "responsible_party": "logistics_provider",
+    "review_required": true,
+    "route_type": "delivered_not_received",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_delivery_proof",
+      "get_delivery_address",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "delivery_address",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_delivered_not_received_07": {
+    "decision": "delivery_not_marked_delivered",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "delivered_not_received",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_delivery_proof",
+      "get_delivery_address",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "delivery_address",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_delivered_not_received_08": {
+    "decision": "delivery_receipt_disputed",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "delivered_not_received",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_delivery_proof",
+      "get_delivery_address",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "delivery_address",
+      "delivery_proof",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_delivered_not_received_09": {
+    "decision": "delivery_receipt_disputed",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "delivered_not_received",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_delivery_proof",
+      "get_delivery_address",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "delivery_address",
+      "delivery_proof",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_delivered_not_received_10": {
+    "decision": "delivery_proof_missing",
+    "responsible_party": "logistics_provider",
+    "review_required": true,
+    "route_type": "delivered_not_received",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_delivery_proof",
+      "get_delivery_address",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "delivery_address",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_cancellation_in_transit_01": {
+    "decision": "cancel_before_pickup_but_shipped",
+    "responsible_party": "merchant",
+    "review_required": true,
+    "route_type": "cancellation_in_transit",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_cancellation_request",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "cancellation_request",
+      "conversation",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_cancellation_in_transit_02": {
+    "decision": "cancel_after_pickup",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "cancellation_in_transit",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_cancellation_request",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "cancellation_request",
+      "conversation",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_cancellation_in_transit_03": {
+    "decision": "cancellation_completed",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "cancellation_in_transit",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_cancellation_request",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "cancellation_request",
+      "conversation",
+      "logistics",
+      "order",
+      "policy",
+      "refund"
+    ]
+  },
+  "formal_cancellation_in_transit_04": {
+    "decision": "cancellation_refund_missing",
+    "responsible_party": "platform",
+    "review_required": true,
+    "route_type": "cancellation_in_transit",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_cancellation_request",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "cancellation_request",
+      "conversation",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_cancellation_in_transit_05": {
+    "decision": "cancel_before_pickup_but_shipped",
+    "responsible_party": "merchant",
+    "review_required": true,
+    "route_type": "cancellation_in_transit",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_cancellation_request",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "cancellation_request",
+      "conversation",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_cancellation_in_transit_06": {
+    "decision": "cancel_after_pickup",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "cancellation_in_transit",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_cancellation_request",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "cancellation_request",
+      "conversation",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_cancellation_in_transit_07": {
+    "decision": "cancellation_completed",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "cancellation_in_transit",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_cancellation_request",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "cancellation_request",
+      "conversation",
+      "logistics",
+      "order",
+      "policy",
+      "refund"
+    ]
+  },
+  "formal_cancellation_in_transit_08": {
+    "decision": "cancellation_refund_missing",
+    "responsible_party": "platform",
+    "review_required": true,
+    "route_type": "cancellation_in_transit",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_cancellation_request",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "cancellation_request",
+      "conversation",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_cancellation_in_transit_09": {
+    "decision": "cancel_before_pickup_but_shipped",
+    "responsible_party": "merchant",
+    "review_required": true,
+    "route_type": "cancellation_in_transit",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_cancellation_request",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "cancellation_request",
+      "conversation",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_cancellation_in_transit_10": {
+    "decision": "cancel_after_pickup",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "cancellation_in_transit",
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_cancellation_request",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "required_evidence_kinds": [
+      "cancellation_request",
+      "conversation",
+      "logistics",
+      "order",
+      "policy"
+    ]
+  },
+  "formal_return_eligibility_01": {
+    "decision": "return_eligible",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "return_eligibility",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_return_request",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "return_request"
+    ]
+  },
+  "formal_return_eligibility_02": {
+    "decision": "return_window_expired",
+    "responsible_party": "user",
+    "review_required": false,
+    "route_type": "return_eligibility",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_return_request",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "return_request"
+    ]
+  },
+  "formal_return_eligibility_03": {
+    "decision": "return_category_excluded",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "return_eligibility",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_return_request",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "return_request"
+    ]
+  },
+  "formal_return_eligibility_04": {
+    "decision": "return_condition_ineligible",
+    "responsible_party": "user",
+    "review_required": false,
+    "route_type": "return_eligibility",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_return_request",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "return_request"
+    ]
+  },
+  "formal_return_eligibility_05": {
+    "decision": "return_eligible",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "return_eligibility",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_return_request",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "return_request"
+    ]
+  },
+  "formal_return_eligibility_06": {
+    "decision": "return_window_expired",
+    "responsible_party": "user",
+    "review_required": false,
+    "route_type": "return_eligibility",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_return_request",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "return_request"
+    ]
+  },
+  "formal_return_eligibility_07": {
+    "decision": "return_category_excluded",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "return_eligibility",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_return_request",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "return_request"
+    ]
+  },
+  "formal_return_eligibility_08": {
+    "decision": "return_condition_ineligible",
+    "responsible_party": "user",
+    "review_required": false,
+    "route_type": "return_eligibility",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_return_request",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "return_request"
+    ]
+  },
+  "formal_return_eligibility_09": {
+    "decision": "return_eligible",
+    "responsible_party": "none",
+    "review_required": false,
+    "route_type": "return_eligibility",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_return_request",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "return_request"
+    ]
+  },
+  "formal_return_eligibility_10": {
+    "decision": "return_window_expired",
+    "responsible_party": "user",
+    "review_required": false,
+    "route_type": "return_eligibility",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_return_request",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "evidence_gap"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "return_request"
+    ]
+  },
+  "formal_wrong_item_01": {
+    "decision": "wrong_item_warehouse_mismatch",
+    "responsible_party": "warehouse",
+    "review_required": true,
+    "route_type": "wrong_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_wrong_item_02": {
+    "decision": "wrong_item_not_verified",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "wrong_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_wrong_item_03": {
+    "decision": "wrong_item_warehouse_mismatch",
+    "responsible_party": "warehouse",
+    "review_required": true,
+    "route_type": "wrong_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_wrong_item_04": {
+    "decision": "wrong_item_not_verified",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "wrong_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_wrong_item_05": {
+    "decision": "wrong_item_warehouse_mismatch",
+    "responsible_party": "warehouse",
+    "review_required": true,
+    "route_type": "wrong_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_wrong_item_06": {
+    "decision": "wrong_item_not_verified",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "wrong_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_wrong_item_07": {
+    "decision": "wrong_item_warehouse_mismatch",
+    "responsible_party": "warehouse",
+    "review_required": true,
+    "route_type": "wrong_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_wrong_item_08": {
+    "decision": "wrong_item_not_verified",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "wrong_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_wrong_item_09": {
+    "decision": "wrong_item_warehouse_mismatch",
+    "responsible_party": "warehouse",
+    "review_required": true,
+    "route_type": "wrong_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_wrong_item_10": {
+    "decision": "wrong_item_not_verified",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "wrong_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_missing_item_01": {
+    "decision": "missing_item_warehouse_shortage",
+    "responsible_party": "warehouse",
+    "review_required": true,
+    "route_type": "missing_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_missing_item_02": {
+    "decision": "missing_item_not_verified",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "missing_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_missing_item_03": {
+    "decision": "missing_item_warehouse_shortage",
+    "responsible_party": "warehouse",
+    "review_required": true,
+    "route_type": "missing_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_missing_item_04": {
+    "decision": "missing_item_not_verified",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "missing_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_missing_item_05": {
+    "decision": "missing_item_warehouse_shortage",
+    "responsible_party": "warehouse",
+    "review_required": true,
+    "route_type": "missing_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_missing_item_06": {
+    "decision": "missing_item_not_verified",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "missing_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_missing_item_07": {
+    "decision": "missing_item_warehouse_shortage",
+    "responsible_party": "warehouse",
+    "review_required": true,
+    "route_type": "missing_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_missing_item_08": {
+    "decision": "missing_item_not_verified",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "missing_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_missing_item_09": {
+    "decision": "missing_item_warehouse_shortage",
+    "responsible_party": "warehouse",
+    "review_required": true,
+    "route_type": "missing_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_missing_item_10": {
+    "decision": "missing_item_not_verified",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "missing_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_damaged_item_01": {
+    "decision": "damaged_item_evidence_confirmed",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "damaged_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "claim_attachment",
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_damaged_item_02": {
+    "decision": "damaged_item_attachment_missing",
+    "responsible_party": "user",
+    "review_required": true,
+    "route_type": "damaged_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_damaged_item_03": {
+    "decision": "damaged_item_insufficient_evidence",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "damaged_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy"
+    ]
+  },
+  "formal_damaged_item_04": {
+    "decision": "damaged_item_evidence_confirmed",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "damaged_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "claim_attachment",
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_damaged_item_05": {
+    "decision": "damaged_item_attachment_missing",
+    "responsible_party": "user",
+    "review_required": true,
+    "route_type": "damaged_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_damaged_item_06": {
+    "decision": "damaged_item_insufficient_evidence",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "damaged_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy"
+    ]
+  },
+  "formal_damaged_item_07": {
+    "decision": "damaged_item_evidence_confirmed",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "damaged_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "claim_attachment",
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_damaged_item_08": {
+    "decision": "damaged_item_attachment_missing",
+    "responsible_party": "user",
+    "review_required": true,
+    "route_type": "damaged_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  },
+  "formal_damaged_item_09": {
+    "decision": "damaged_item_insufficient_evidence",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "damaged_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy"
+    ]
+  },
+  "formal_damaged_item_10": {
+    "decision": "damaged_item_evidence_confirmed",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "route_type": "damaged_item",
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "required_evidence_kinds": [
+      "claim_attachment",
+      "conversation",
+      "order",
+      "order_item",
+      "policy",
+      "warehouse_pack"
+    ]
+  }
+}
