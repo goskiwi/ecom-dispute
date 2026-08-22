@@ -89,6 +89,7 @@ class ConversationAgent:
                 "input_tokens": result.input_tokens,
                 "output_tokens": result.output_tokens,
                 "latency_ms": result.latency_ms,
+                "dispute_type": result.semantics.dispute_type,
                 "uncertainty": result.semantics.uncertainty,
             },
         )

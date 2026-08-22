@@ -39,6 +39,7 @@ class ToolResult(BaseModel):
 class CaseInput(BaseModel):
     case_id: str
     order_id: str
+    source_type: Literal["manual", "rule_generated"]
     region: str
     business_type: str
     occurred_at: datetime

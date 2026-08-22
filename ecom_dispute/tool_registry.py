@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Callable
 from datetime import datetime
-from typing import Callable
 
 from .contracts import Evidence, EvidenceKind, ToolResult
 from .repository import Repository
@@ -24,6 +24,45 @@ class ToolRegistry:
     @property
     def names(self) -> set[str]:
         return set(self._tools)
+
+    def response_tools(self, allowed: set[str] | None = None) -> list[dict]:
+        descriptions = {
+            "get_order": "按订单号查询订单状态、金额、地区和业务类型。",
+            "get_logistics_events": "按订单号查询物流事件。",
+            "get_payment_records": "按订单号查询扣款和入账支付流水。",
+            "get_refund_records": "按订单号查询退款发起、处理和完成记录。",
+            "get_after_sales_case": "按订单号查询售后申请、审核状态和通过时间。",
+            "read_policy": "按地区、业务类型和事件时间查询当时生效的政策版本。",
+        }
+        tools = []
+        for name in sorted(allowed or self.names):
+            if name not in self._tools:
+                continue
+            if name == "read_policy":
+                properties = {
+                    "region": {"type": "string"},
+                    "business_type": {"type": "string"},
+                    "effective_at": {"type": "string", "description": "ISO-8601 时间"},
+                }
+                required = ["region", "business_type", "effective_at"]
+            else:
+                properties = {"order_id": {"type": "string"}}
+                required = ["order_id"]
+            tools.append(
+                {
+                    "type": "function",
+                    "name": name,
+                    "description": descriptions[name],
+                    "strict": True,
+                    "parameters": {
+                        "type": "object",
+                        "properties": properties,
+                        "required": required,
+                        "additionalProperties": False,
+                    },
+                }
+            )
+        return tools
 
     def execute(self, name: str, **arguments: str) -> ToolResult:
         if name not in self._tools:
@@ -151,4 +190,3 @@ class ToolRegistry:
         if kind == EvidenceKind.ORDER:
             return f"订单 {row['order_id']} 状态为 {row['status']}"
         return f"{kind.value} 记录 {row}"
-

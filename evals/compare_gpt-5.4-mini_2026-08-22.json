@@ -1,0 +1,1612 @@
+{
+  "hybrid": {
+    "mode": "llm",
+    "case_count": 20,
+    "passed": 19,
+    "pass_rate": 0.95,
+    "llm_calls": 20,
+    "input_tokens": 93466,
+    "output_tokens": 1344,
+    "latency_ms": 115866,
+    "results": [
+      {
+        "case_id": "refund_complete_001",
+        "source_type": "manual",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "semantic_route": true
+        },
+        "passed": true,
+        "llm": {
+          "mode": "llm",
+          "response_id": "resp_0cd7bc154fcf3e56016a896468f16487d08cec85e4b239e410",
+          "model": "gpt-5.4-mini-2026-03-17",
+          "input_tokens": 4673,
+          "output_tokens": 64,
+          "latency_ms": 3807,
+          "uncertainty": null
+        }
+      },
+      {
+        "case_id": "refund_complete_002",
+        "source_type": "manual",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "semantic_route": true
+        },
+        "passed": true,
+        "llm": {
+          "mode": "llm",
+          "response_id": "resp_059ec6828f2733d5016a89646d617487d09c00a0d3dba6af2e",
+          "model": "gpt-5.4-mini-2026-03-17",
+          "input_tokens": 4680,
+          "output_tokens": 77,
+          "latency_ms": 4753,
+          "uncertainty": null
+        }
+      },
+      {
+        "case_id": "refund_complete_003",
+        "source_type": "rule_generated",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "semantic_route": true
+        },
+        "passed": true,
+        "llm": {
+          "mode": "llm",
+          "response_id": "resp_08afdfa2a247f3f8016a896471958c87d0a794a46b5e74cf11",
+          "model": "gpt-5.4-mini-2026-03-17",
+          "input_tokens": 4664,
+          "output_tokens": 61,
+          "latency_ms": 3980,
+          "uncertainty": null
+        }
+      },
+      {
+        "case_id": "refund_conflict_001",
+        "source_type": "manual",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "semantic_route": true
+        },
+        "passed": true,
+        "llm": {
+          "mode": "llm",
+          "response_id": "resp_045e5daa1fafca25016a896476ae9487d08696b95ae33c613e",
+          "model": "gpt-5.4-mini-2026-03-17",
+          "input_tokens": 4679,
+          "output_tokens": 72,
+          "latency_ms": 5206,
+          "uncertainty": null
+        }
+      },
+      {
+        "case_id": "refund_conflict_002",
+        "source_type": "manual",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "semantic_route": true
+        },
+        "passed": true,
+        "llm": {
+          "mode": "llm",
+          "response_id": "resp_04172ee317f13e8e016a89647ac50887d096f4ea746af279b4",
+          "model": "gpt-5.4-mini-2026-03-17",
+          "input_tokens": 4675,
+          "output_tokens": 70,
+          "latency_ms": 4250,
+          "uncertainty": null
+        }
+      },
+      {
+        "case_id": "refund_conflict_003",
+        "source_type": "rule_generated",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "semantic_route": true
+        },
+        "passed": true,
+        "llm": {
+          "mode": "llm",
+          "response_id": "resp_064395faa24e6794016a89648245a887d0860ee602c9d3d5e5",
+          "model": "gpt-5.4-mini-2026-03-17",
+          "input_tokens": 4669,
+          "output_tokens": 62,
+          "latency_ms": 8426,
+          "uncertainty": null
+        }
+      },
+      {
+        "case_id": "refund_conflict_004",
+        "source_type": "rule_generated",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "semantic_route": true
+        },
+        "passed": true,
+        "llm": {
+          "mode": "llm",
+          "response_id": "resp_026f761c40a77fca016a89648c16fc87d0ab343a44944938ac",
+          "model": "gpt-5.4-mini-2026-03-17",
+          "input_tokens": 4671,
+          "output_tokens": 65,
+          "latency_ms": 8562,
+          "uncertainty": null
+        }
+      },
+      {
+        "case_id": "refund_historical_policy_001",
+        "source_type": "rule_generated",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "semantic_route": true
+        },
+        "passed": true,
+        "llm": {
+          "mode": "llm",
+          "response_id": "resp_070aebc352f05fed016a896491d0bc87d090b451a8514d86fd",
+          "model": "gpt-5.4-mini-2026-03-17",
+          "input_tokens": 4677,
+          "output_tokens": 70,
+          "latency_ms": 6118,
+          "uncertainty": null
+        }
+      },
+      {
+        "case_id": "refund_missing_001",
+        "source_type": "manual",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "semantic_route": true
+        },
+        "passed": true,
+        "llm": {
+          "mode": "llm",
+          "response_id": "resp_05e02ffc8e8876bd016a896497a3e087d0ba6f404c0ca3ad6a",
+          "model": "gpt-5.4-mini-2026-03-17",
+          "input_tokens": 4680,
+          "output_tokens": 74,
+          "latency_ms": 6771,
+          "uncertainty": null
+        }
+      },
+      {
+        "case_id": "refund_missing_002",
+        "source_type": "manual",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "semantic_route": true
+        },
+        "passed": true,
+        "llm": {
+          "mode": "llm",
+          "response_id": "resp_098eb5fbd5dc16cc016a89649cb8c887d09f918990bf970afc",
+          "model": "gpt-5.4-mini-2026-03-17",
+          "input_tokens": 4676,
+          "output_tokens": 68,
+          "latency_ms": 4463,
+          "uncertainty": null
+        }
+      },
+      {
+        "case_id": "refund_missing_003",
+        "source_type": "rule_generated",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "semantic_route": true
+        },
+        "passed": true,
+        "llm": {
+          "mode": "llm",
+          "response_id": "resp_09412f0efb9e3a47016a8964a4012887d084998f48c919d6d8",
+          "model": "gpt-5.4-mini-2026-03-17",
+          "input_tokens": 4668,
+          "output_tokens": 61,
+          "latency_ms": 6983,
+          "uncertainty": null
+        }
+      },
+      {
+        "case_id": "refund_missing_004",
+        "source_type": "rule_generated",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "semantic_route": true
+        },
+        "passed": true,
+        "llm": {
+          "mode": "llm",
+          "response_id": "resp_04439c2e824e0e02016a8964aab75487d0972fad12f9bda500",
+          "model": "gpt-5.4-mini-2026-03-17",
+          "input_tokens": 4670,
+          "output_tokens": 65,
+          "latency_ms": 6208,
+          "uncertainty": null
+        }
+      },
+      {
+        "case_id": "refund_missing_evidence_001",
+        "source_type": "rule_generated",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "semantic_route": false
+        },
+        "passed": false,
+        "llm": {
+          "mode": "llm",
+          "response_id": "resp_0332bc52597de287016a8964ae9e5087d08d433cefaee9e85a",
+          "model": "gpt-5.4-mini-2026-03-17",
+          "input_tokens": 4674,
+          "output_tokens": 65,
+          "latency_ms": 4095,
+          "uncertainty": null
+        }
+      },
+      {
+        "case_id": "refund_overdue_001",
+        "source_type": "manual",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "semantic_route": true
+        },
+        "passed": true,
+        "llm": {
+          "mode": "llm",
+          "response_id": "resp_0bce84d5f1519834016a8964b4f03087d08bec76fae6105682",
+          "model": "gpt-5.4-mini-2026-03-17",
+          "input_tokens": 4673,
+          "output_tokens": 66,
+          "latency_ms": 6300,
+          "uncertainty": null
+        }
+      },
+      {
+        "case_id": "refund_overdue_002",
+        "source_type": "rule_generated",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "semantic_route": true
+        },
+        "passed": true,
+        "llm": {
+          "mode": "llm",
+          "response_id": "resp_020195ef14ff9b6f016a8964ba315487d08d0b7860968ecf26",
+          "model": "gpt-5.4-mini-2026-03-17",
+          "input_tokens": 4669,
+          "output_tokens": 62,
+          "latency_ms": 5551,
+          "uncertainty": null
+        }
+      },
+      {
+        "case_id": "refund_pending_001",
+        "source_type": "manual",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "semantic_route": true
+        },
+        "passed": true,
+        "llm": {
+          "mode": "llm",
+          "response_id": "resp_08e74fdbdd6f8e62016a8964bf85c487d0a43decddd8fc2f40",
+          "model": "gpt-5.4-mini-2026-03-17",
+          "input_tokens": 4677,
+          "output_tokens": 74,
+          "latency_ms": 5010,
+          "uncertainty": null
+        }
+      },
+      {
+        "case_id": "refund_pending_002",
+        "source_type": "manual",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "semantic_route": true
+        },
+        "passed": true,
+        "llm": {
+          "mode": "llm",
+          "response_id": "resp_0b2400fbb76fa923016a8964c43a1087d0baeddea5f392e98b",
+          "model": "gpt-5.4-mini-2026-03-17",
+          "input_tokens": 4671,
+          "output_tokens": 66,
+          "latency_ms": 4597,
+          "uncertainty": null
+        }
+      },
+      {
+        "case_id": "refund_pending_003",
+        "source_type": "rule_generated",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "semantic_route": true
+        },
+        "passed": true,
+        "llm": {
+          "mode": "llm",
+          "response_id": "resp_049a9525cc18a3e6016a8964cafdd087d0a72d134bac8dd4fb",
+          "model": "gpt-5.4-mini-2026-03-17",
+          "input_tokens": 4670,
+          "output_tokens": 64,
+          "latency_ms": 6773,
+          "uncertainty": null
+        }
+      },
+      {
+        "case_id": "refund_within_001",
+        "source_type": "manual",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "semantic_route": true
+        },
+        "passed": true,
+        "llm": {
+          "mode": "llm",
+          "response_id": "resp_0d46391e53b902f6016a8964d2930887d0baa89eac24ff19be",
+          "model": "gpt-5.4-mini-2026-03-17",
+          "input_tokens": 4677,
+          "output_tokens": 70,
+          "latency_ms": 8241,
+          "uncertainty": null
+        }
+      },
+      {
+        "case_id": "refund_within_002",
+        "source_type": "rule_generated",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "semantic_route": true
+        },
+        "passed": true,
+        "llm": {
+          "mode": "llm",
+          "response_id": "resp_00d68da83fb5d011016a8964d8f76887d0877a8d5a95e88ec0",
+          "model": "gpt-5.4-mini-2026-03-17",
+          "input_tokens": 4673,
+          "output_tokens": 68,
+          "latency_ms": 5772,
+          "uncertainty": null
+        }
+      }
+    ]
+  },
+  "baseline": {
+    "mode": "tool_calling_baseline",
+    "case_count": 20,
+    "passed": 11,
+    "pass_rate": 0.55,
+    "llm_calls": 40,
+    "tool_calls": 100,
+    "input_tokens": 216619,
+    "output_tokens": 5760,
+    "latency_ms": 385275,
+    "results": [
+      {
+        "case_id": "refund_complete_001",
+        "source_type": "manual",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "evidence_grounded": true,
+          "required_evidence": true
+        },
+        "passed": true,
+        "decision": {
+          "dispute_type": "refund_dispute",
+          "responsible_party": "none",
+          "decision": "refund_completed",
+          "evidence_ids": [
+            "orders:ord-1001:v1",
+            "after_sales_cases:as-1:v1",
+            "refunds:ref-1:v1",
+            "payments:pay-1-debit:v1",
+            "payments:pay-1-credit:v1",
+            "policies:refund-cn-standard:v2"
+          ],
+          "missing_evidence": [],
+          "recommended_action": "退款记录已成功且存在对应入账记录，按已完成处理并告知用户退款已到账。",
+          "review_required": false
+        },
+        "invalid_evidence_ids": [],
+        "llm_calls": 2,
+        "tool_calls": 5,
+        "input_tokens": 10980,
+        "output_tokens": 259,
+        "latency_ms": 13278,
+        "trace": [
+          {
+            "round": 1,
+            "response_id": "resp_0e2baabf7e807f5b016a8964dd850887d08397a1db91438922",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 4948,
+            "output_tokens": 132,
+            "latency_ms": 5563,
+            "function_calls": [
+              "get_order",
+              "get_after_sales_case",
+              "get_refund_records",
+              "get_payment_records",
+              "read_policy"
+            ]
+          },
+          {
+            "round": 2,
+            "response_id": "resp_032477316e1ef09c016a8964e53f0c87d09928ea9dcb619850",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 6032,
+            "output_tokens": 127,
+            "latency_ms": 7715,
+            "function_calls": []
+          }
+        ]
+      },
+      {
+        "case_id": "refund_complete_002",
+        "source_type": "manual",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "evidence_grounded": true,
+          "required_evidence": true
+        },
+        "passed": true,
+        "decision": {
+          "dispute_type": "refund_dispute",
+          "responsible_party": "none",
+          "decision": "refund_completed",
+          "evidence_ids": [
+            "orders:ord-1002:v1",
+            "after_sales_cases:as-2:v1",
+            "refunds:ref-2:v1",
+            "payments:pay-2-debit:v1",
+            "payments:pay-2-credit:v1",
+            "policies:refund-cn-standard:v2"
+          ],
+          "missing_evidence": [],
+          "recommended_action": "退款已完成且存在匹配入账记录，争议不成立。",
+          "review_required": false
+        },
+        "invalid_evidence_ids": [],
+        "llm_calls": 2,
+        "tool_calls": 5,
+        "input_tokens": 10994,
+        "output_tokens": 252,
+        "latency_ms": 13544,
+        "trace": [
+          {
+            "round": 1,
+            "response_id": "resp_033ce20bb9336add016a8964eb9b2887d0897066667c4d54db",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 4955,
+            "output_tokens": 132,
+            "latency_ms": 6478,
+            "function_calls": [
+              "get_order",
+              "get_after_sales_case",
+              "get_refund_records",
+              "get_payment_records",
+              "read_policy"
+            ]
+          },
+          {
+            "round": 2,
+            "response_id": "resp_0abf96360c4751aa016a8964f1857087d097d8ea80e66fc8f4",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 6039,
+            "output_tokens": 120,
+            "latency_ms": 7066,
+            "function_calls": []
+          }
+        ]
+      },
+      {
+        "case_id": "refund_complete_003",
+        "source_type": "rule_generated",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "evidence_grounded": true,
+          "required_evidence": true
+        },
+        "passed": true,
+        "decision": {
+          "dispute_type": "refund_dispute",
+          "responsible_party": "none",
+          "decision": "refund_completed",
+          "evidence_ids": [
+            "orders:ord-1003:v1",
+            "after_sales_cases:as-3:v1",
+            "payments:pay-3-debit:v1",
+            "payments:pay-3-credit:v1",
+            "refunds:ref-3:v1",
+            "policies:refund-cn-standard:v2"
+          ],
+          "missing_evidence": [],
+          "recommended_action": "退款已成功完成，且存在对应入账记录；无需继续追踪。",
+          "review_required": false
+        },
+        "invalid_evidence_ids": [],
+        "llm_calls": 2,
+        "tool_calls": 5,
+        "input_tokens": 10962,
+        "output_tokens": 253,
+        "latency_ms": 11337,
+        "trace": [
+          {
+            "round": 1,
+            "response_id": "resp_046ede2beca5ea5d016a8964f81c0487d082569f8709d06211",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 4939,
+            "output_tokens": 132,
+            "latency_ms": 5882,
+            "function_calls": [
+              "get_order",
+              "get_after_sales_case",
+              "get_payment_records",
+              "get_refund_records",
+              "read_policy"
+            ]
+          },
+          {
+            "round": 2,
+            "response_id": "resp_043911d84b77601b016a8964fe3ca087d0932a9de243bb00bd",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 6023,
+            "output_tokens": 121,
+            "latency_ms": 5455,
+            "function_calls": []
+          }
+        ]
+      },
+      {
+        "case_id": "refund_conflict_001",
+        "source_type": "manual",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "evidence_grounded": true,
+          "required_evidence": true
+        },
+        "passed": true,
+        "decision": {
+          "dispute_type": "refund_dispute",
+          "responsible_party": "undetermined",
+          "decision": "refund_record_conflict",
+          "evidence_ids": [
+            "orders:ord-1004:v1",
+            "after_sales_cases:as-4:v1",
+            "payments:pay-4-debit:v1",
+            "refunds:ref-4:v1",
+            "policies:refund-cn-standard:v2"
+          ],
+          "missing_evidence": [],
+          "recommended_action": "退款记录已显示 succeeded，但当前缺少与银行卡入账相匹配的到账流水证据，且用户主张与系统退款记录形成事实冲突。建议转人工核验收款渠道入账明细与退款通道对账结果，确认是否存在渠道延迟、入账失败或错配。",
+          "review_required": true
+        },
+        "invalid_evidence_ids": [],
+        "llm_calls": 2,
+        "tool_calls": 5,
+        "input_tokens": 10876,
+        "output_tokens": 299,
+        "latency_ms": 13752,
+        "trace": [
+          {
+            "round": 1,
+            "response_id": "resp_0abcb7004c8c3e1d016a89650616fc87d09e71ba33b11bda29",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 4955,
+            "output_tokens": 132,
+            "latency_ms": 8031,
+            "function_calls": [
+              "get_order",
+              "get_after_sales_case",
+              "get_payment_records",
+              "get_refund_records",
+              "read_policy"
+            ]
+          },
+          {
+            "round": 2,
+            "response_id": "resp_038e4856a18a3d0f016a89650b969887d0aea6ee490e0195d9",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 5921,
+            "output_tokens": 167,
+            "latency_ms": 5721,
+            "function_calls": []
+          }
+        ]
+      },
+      {
+        "case_id": "refund_conflict_002",
+        "source_type": "manual",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "evidence_grounded": true,
+          "required_evidence": true
+        },
+        "passed": true,
+        "decision": {
+          "dispute_type": "refund_dispute",
+          "responsible_party": "undetermined",
+          "decision": "refund_record_conflict",
+          "evidence_ids": [
+            "orders:ord-1005:v1",
+            "after_sales_cases:as-5:v1",
+            "payments:pay-5-debit:v1",
+            "payments:pay-5-credit:v1",
+            "refunds:ref-5:v1",
+            "policies:refund-cn-standard:v2"
+          ],
+          "missing_evidence": [],
+          "recommended_action": "退款记录显示 199.0 元退款已成功完成，但支付流水仅有 99.0 元入账记录，且与订单应退 199.0 元不一致；按规则属于事实冲突，需人工复核退款链路、渠道回执和入账分录。",
+          "review_required": true
+        },
+        "invalid_evidence_ids": [],
+        "llm_calls": 2,
+        "tool_calls": 5,
+        "input_tokens": 10986,
+        "output_tokens": 302,
+        "latency_ms": 13555,
+        "trace": [
+          {
+            "round": 1,
+            "response_id": "resp_0c773fc797dbdb70016a89651198c087d0823e841b33172ca5",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 4951,
+            "output_tokens": 132,
+            "latency_ms": 6448,
+            "function_calls": [
+              "get_order",
+              "get_after_sales_case",
+              "get_payment_records",
+              "get_refund_records",
+              "read_policy"
+            ]
+          },
+          {
+            "round": 2,
+            "response_id": "resp_0a30069c01d65fd2016a896518ea9487d0bd72d4e7d2ae076a",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 6035,
+            "output_tokens": 170,
+            "latency_ms": 7107,
+            "function_calls": []
+          }
+        ]
+      },
+      {
+        "case_id": "refund_conflict_003",
+        "source_type": "rule_generated",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "evidence_grounded": true,
+          "required_evidence": true
+        },
+        "passed": true,
+        "decision": {
+          "dispute_type": "refund_dispute",
+          "responsible_party": "undetermined",
+          "decision": "refund_record_conflict",
+          "evidence_ids": [
+            "orders:ord-1006:v1",
+            "after_sales_cases:as-6:v1",
+            "refunds:ref-6:v1",
+            "payments:pay-6-debit:v1",
+            "payments:pay-6-credit:v1",
+            "policies:refund-cn-standard:v2"
+          ],
+          "missing_evidence": [],
+          "recommended_action": "退款记录显示已成功完成，但支付记录中仅有借记成功和一条信用失败记录，没有匹配的入账成功证据；按政策属于事实冲突，需转人工核对收款渠道和支付账户。",
+          "review_required": true
+        },
+        "invalid_evidence_ids": [],
+        "llm_calls": 2,
+        "tool_calls": 5,
+        "input_tokens": 10973,
+        "output_tokens": 289,
+        "latency_ms": 13674,
+        "trace": [
+          {
+            "round": 1,
+            "response_id": "resp_0949caf2a1de91a1016a89651ea9a087d0b732bcf5594110ac",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 4945,
+            "output_tokens": 132,
+            "latency_ms": 6990,
+            "function_calls": [
+              "get_order",
+              "get_after_sales_case",
+              "get_refund_records",
+              "get_payment_records",
+              "read_policy"
+            ]
+          },
+          {
+            "round": 2,
+            "response_id": "resp_067dbf885e980789016a896526cbec87d0bde0180835f44c22",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 6028,
+            "output_tokens": 157,
+            "latency_ms": 6684,
+            "function_calls": []
+          }
+        ]
+      },
+      {
+        "case_id": "refund_conflict_004",
+        "source_type": "rule_generated",
+        "checks": {
+          "decision": false,
+          "responsible_party": false,
+          "review_required": false,
+          "evidence_grounded": true,
+          "required_evidence": true
+        },
+        "passed": false,
+        "decision": {
+          "dispute_type": "refund_dispute",
+          "responsible_party": "none",
+          "decision": "refund_completed",
+          "evidence_ids": [
+            "orders:ord-1007:v1",
+            "after_sales_cases:as-7:v1",
+            "payments:pay-7-debit:v1",
+            "refunds:ref-7:v1",
+            "policies:refund-cn-standard:v2"
+          ],
+          "missing_evidence": [],
+          "recommended_action": "退款记录已成功，且退款发生时间与审核通过时间一致，未见超时或未发起问题；银行卡入账差异不构成当前系统内退款失败证据。建议向用户说明退款已完成，并如需核对到账路径可继续跟踪银行侧入账。",
+          "review_required": false
+        },
+        "invalid_evidence_ids": [],
+        "llm_calls": 2,
+        "tool_calls": 5,
+        "input_tokens": 10860,
+        "output_tokens": 291,
+        "latency_ms": 12229,
+        "trace": [
+          {
+            "round": 1,
+            "response_id": "resp_034415277cd40420016a89652c360c87d08fe80ffc0867d23e",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 4947,
+            "output_tokens": 132,
+            "latency_ms": 4987,
+            "function_calls": [
+              "get_order",
+              "get_after_sales_case",
+              "get_payment_records",
+              "get_refund_records",
+              "read_policy"
+            ]
+          },
+          {
+            "round": 2,
+            "response_id": "resp_016271d8c4c3ff2d016a896531360087d097bb6bf2d79f9f16",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 5913,
+            "output_tokens": 159,
+            "latency_ms": 7242,
+            "function_calls": []
+          }
+        ]
+      },
+      {
+        "case_id": "refund_historical_policy_001",
+        "source_type": "rule_generated",
+        "checks": {
+          "decision": false,
+          "responsible_party": false,
+          "review_required": true,
+          "evidence_grounded": true,
+          "required_evidence": true
+        },
+        "passed": false,
+        "decision": {
+          "dispute_type": "refund_dispute",
+          "responsible_party": "platform",
+          "decision": "refund_not_initiated_overdue",
+          "evidence_ids": [
+            "orders:ord-1020:v1",
+            "after_sales_cases:as-20:v1",
+            "payments:pay-20-debit:v1",
+            "policies:refund-cn-standard:v1"
+          ],
+          "missing_evidence": [],
+          "recommended_action": "售后已审核通过且订单已支付。按当时有效政策，退款应在审核通过后72小时内发起；当前距 2025-12-30T10:00:00 已超过 72 小时，但未查到任何退款发起/处理/完成记录。建议平台立即补发退款并向用户说明延迟原因。",
+          "review_required": false
+        },
+        "invalid_evidence_ids": [],
+        "llm_calls": 2,
+        "tool_calls": 5,
+        "input_tokens": 10756,
+        "output_tokens": 300,
+        "latency_ms": 62635,
+        "trace": [
+          {
+            "round": 1,
+            "response_id": "resp_045e626ade033300016a89653a7c6887d08c9258353dcbd535",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 4954,
+            "output_tokens": 132,
+            "latency_ms": 7320,
+            "function_calls": [
+              "get_order",
+              "get_after_sales_case",
+              "get_payment_records",
+              "get_refund_records",
+              "read_policy"
+            ]
+          },
+          {
+            "round": 2,
+            "response_id": "resp_0672557b281677b0016a89656d246087d0bb1e1ced1be5c5c8",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 5802,
+            "output_tokens": 168,
+            "latency_ms": 55315,
+            "function_calls": []
+          }
+        ]
+      },
+      {
+        "case_id": "refund_missing_001",
+        "source_type": "manual",
+        "checks": {
+          "decision": false,
+          "responsible_party": false,
+          "review_required": false,
+          "evidence_grounded": true,
+          "required_evidence": true
+        },
+        "passed": false,
+        "decision": {
+          "dispute_type": "refund_dispute",
+          "responsible_party": "undetermined",
+          "decision": "refund_record_conflict",
+          "evidence_ids": [
+            "orders:ord-1008:v1",
+            "after_sales_cases:as-8:v1",
+            "payments:pay-8-debit:v1",
+            "policies:refund-cn-standard:v2"
+          ],
+          "missing_evidence": [
+            "refund record showing refund initiation/processing/completion"
+          ],
+          "recommended_action": "退款系统显示已发起但当前未找到任何退款记录可与已扣款流水匹配。根据政策，审核通过后应在48小时内发起退款，现距售后通过已超过48小时且证据链缺少退款记录，属于事实冲突，转人工核查退款系统与支付通道对账结果。",
+          "review_required": true
+        },
+        "invalid_evidence_ids": [],
+        "llm_calls": 2,
+        "tool_calls": 5,
+        "input_tokens": 10747,
+        "output_tokens": 305,
+        "latency_ms": 11840,
+        "trace": [
+          {
+            "round": 1,
+            "response_id": "resp_0d3c750c0120ebb7016a896578012c87d09945e28358a8695c",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 4955,
+            "output_tokens": 132,
+            "latency_ms": 6191,
+            "function_calls": [
+              "get_order",
+              "get_after_sales_case",
+              "get_payment_records",
+              "get_refund_records",
+              "read_policy"
+            ]
+          },
+          {
+            "round": 2,
+            "response_id": "resp_07af83a4dc9ed9bb016a89657d48ec87d0b0ee2afa0e759aa5",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 5792,
+            "output_tokens": 173,
+            "latency_ms": 5649,
+            "function_calls": []
+          }
+        ]
+      },
+      {
+        "case_id": "refund_missing_002",
+        "source_type": "manual",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": false,
+          "evidence_grounded": true,
+          "required_evidence": false
+        },
+        "passed": false,
+        "decision": {
+          "dispute_type": "refund_dispute",
+          "responsible_party": "platform",
+          "decision": "refund_not_initiated_overdue",
+          "evidence_ids": [
+            "orders:ord-1009:v1",
+            "after_sales_cases:as-9:v1",
+            "policies:refund-cn-standard:v2"
+          ],
+          "missing_evidence": [
+            "refund records",
+            "refund completion record",
+            "matching inbound payment/arrival record"
+          ],
+          "recommended_action": "售后已审核通过，按现行政策应在 48 小时内发起退款。当前距审核通过已超过 48 小时，且未检索到任何退款发起/处理/完成记录，也没有匹配的退款入账记录。建议平台立即核查退款链路并补发或修正记录；如系统曾显示退款成功但账务仍无入账，则按事实冲突转人工复核。",
+          "review_required": true
+        },
+        "invalid_evidence_ids": [],
+        "llm_calls": 2,
+        "tool_calls": 5,
+        "input_tokens": 10739,
+        "output_tokens": 322,
+        "latency_ms": 10597,
+        "trace": [
+          {
+            "round": 1,
+            "response_id": "resp_08cf46840b779b95016a896582c45487d0b8ea217bc7cb1d00",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 4951,
+            "output_tokens": 132,
+            "latency_ms": 4973,
+            "function_calls": [
+              "get_order",
+              "get_after_sales_case",
+              "get_refund_records",
+              "get_payment_records",
+              "read_policy"
+            ]
+          },
+          {
+            "round": 2,
+            "response_id": "resp_0c28e9781c51f63b016a896587d04087d0b530526e809629af",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 5788,
+            "output_tokens": 190,
+            "latency_ms": 5624,
+            "function_calls": []
+          }
+        ]
+      },
+      {
+        "case_id": "refund_missing_003",
+        "source_type": "rule_generated",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "evidence_grounded": true,
+          "required_evidence": true
+        },
+        "passed": true,
+        "decision": {
+          "dispute_type": "refund_dispute",
+          "responsible_party": "platform",
+          "decision": "refund_not_initiated_overdue",
+          "evidence_ids": [
+            "orders:ord-1010:v1",
+            "after_sales_cases:as-10:v1",
+            "payments:pay-10-debit:v1",
+            "policies:refund-cn-standard:v2"
+          ],
+          "missing_evidence": [],
+          "recommended_action": "售后已审核通过，但未检索到任何退款发起/处理/完成记录。按现行政策，审核通过后应在48小时内发起退款；当前已超过时限，建议平台立即补发退款并同步状态。如果后续出现退款系统成功但仍无入账记录，再按事实冲突转人工复核。",
+          "review_required": false
+        },
+        "invalid_evidence_ids": [],
+        "llm_calls": 2,
+        "tool_calls": 5,
+        "input_tokens": 10723,
+        "output_tokens": 298,
+        "latency_ms": 12996,
+        "trace": [
+          {
+            "round": 1,
+            "response_id": "resp_0d5da5d7d41e384d016a89658d573487d0aa4da87d1c826695",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 4943,
+            "output_tokens": 132,
+            "latency_ms": 4989,
+            "function_calls": [
+              "get_order",
+              "get_after_sales_case",
+              "get_payment_records",
+              "get_refund_records",
+              "read_policy"
+            ]
+          },
+          {
+            "round": 2,
+            "response_id": "resp_0c2d4e7a032d92c9016a896595054887d0a14b2182c1673c10",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 5780,
+            "output_tokens": 166,
+            "latency_ms": 8007,
+            "function_calls": []
+          }
+        ]
+      },
+      {
+        "case_id": "refund_missing_004",
+        "source_type": "rule_generated",
+        "checks": {
+          "decision": false,
+          "responsible_party": false,
+          "review_required": false,
+          "evidence_grounded": true,
+          "required_evidence": true
+        },
+        "passed": false,
+        "decision": {
+          "dispute_type": "refund_dispute",
+          "responsible_party": "undetermined",
+          "decision": "refund_arrival_overdue",
+          "evidence_ids": [
+            "orders:ord-1011:v1",
+            "after_sales_cases:as-11:v1",
+            "payments:pay-11-debit:v1",
+            "policies:refund-cn-standard:v2"
+          ],
+          "missing_evidence": [],
+          "recommended_action": "售后已通过且退款应按政策在 48 小时内发起、5 日内到账。当前可见订单与支付已成功，但未查询到退款记录；由于未能看到退款发起/处理证据，且不存在到账证据，建议转人工核查退款是否已实际发起、是否存在渠道回执或记账延迟。",
+          "review_required": true
+        },
+        "invalid_evidence_ids": [],
+        "llm_calls": 2,
+        "tool_calls": 5,
+        "input_tokens": 10727,
+        "output_tokens": 301,
+        "latency_ms": 13679,
+        "trace": [
+          {
+            "round": 1,
+            "response_id": "resp_0d704261691e00e7016a89659b5a4c87d0a1fdf819d6158df9",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 4945,
+            "output_tokens": 132,
+            "latency_ms": 5994,
+            "function_calls": [
+              "get_order",
+              "get_after_sales_case",
+              "get_payment_records",
+              "get_refund_records",
+              "read_policy"
+            ]
+          },
+          {
+            "round": 2,
+            "response_id": "resp_09bf2cba36498172016a8965a2374487d09f4bc37b16c7a30e",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 5782,
+            "output_tokens": 169,
+            "latency_ms": 7685,
+            "function_calls": []
+          }
+        ]
+      },
+      {
+        "case_id": "refund_missing_evidence_001",
+        "source_type": "rule_generated",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "evidence_grounded": true,
+          "required_evidence": false
+        },
+        "passed": false,
+        "decision": {
+          "dispute_type": "refund_dispute",
+          "responsible_party": "undetermined",
+          "decision": "manual_review",
+          "evidence_ids": [
+            "orders:ord-1019:v1",
+            "payments:pay-19-debit:v1",
+            "policies:refund-cn-standard:v2"
+          ],
+          "missing_evidence": [
+            "after_sales_case",
+            "refund_records"
+          ],
+          "recommended_action": "售后单与退款记录均缺失，无法确认是否已进入退款流程；当前仅能确认订单已支付且存在扣款成功。请补充售后申请或退款流水，若后续出现退款系统成功但无匹配入账记录，则按事实冲突处理并转人工。",
+          "review_required": true
+        },
+        "invalid_evidence_ids": [],
+        "llm_calls": 2,
+        "tool_calls": 5,
+        "input_tokens": 10629,
+        "output_tokens": 281,
+        "latency_ms": 19164,
+        "trace": [
+          {
+            "round": 1,
+            "response_id": "resp_05ffc311f5b92171016a8965aad89c87d0ab19714822bb0613",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 4951,
+            "output_tokens": 132,
+            "latency_ms": 10428,
+            "function_calls": [
+              "get_order",
+              "get_after_sales_case",
+              "get_payment_records",
+              "get_refund_records",
+              "read_policy"
+            ]
+          },
+          {
+            "round": 2,
+            "response_id": "resp_0c022f382d7c856a016a8965b5ae8887d0be195d264620353a",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 5678,
+            "output_tokens": 149,
+            "latency_ms": 8736,
+            "function_calls": []
+          }
+        ]
+      },
+      {
+        "case_id": "refund_overdue_001",
+        "source_type": "manual",
+        "checks": {
+          "decision": false,
+          "responsible_party": false,
+          "review_required": false,
+          "evidence_grounded": true,
+          "required_evidence": true
+        },
+        "passed": false,
+        "decision": {
+          "dispute_type": "refund_dispute",
+          "responsible_party": "none",
+          "decision": "refund_processing_within_sla",
+          "evidence_ids": [
+            "orders:ord-1015:v1",
+            "after_sales_cases:as-15:v1",
+            "payments:pay-15-debit:v1",
+            "refunds:ref-15:v1",
+            "policies:refund-cn-standard:v2"
+          ],
+          "missing_evidence": [],
+          "recommended_action": "退款已在售后审核通过后发起，当前记录显示仍在处理中，且距离发起仅约 6 天，未超过政策所述通常 5 日到账的明确违约阈值之外的证据不足以认定逾期；继续跟踪处理进度。",
+          "review_required": false
+        },
+        "invalid_evidence_ids": [],
+        "llm_calls": 2,
+        "tool_calls": 5,
+        "input_tokens": 10841,
+        "output_tokens": 295,
+        "latency_ms": 18144,
+        "trace": [
+          {
+            "round": 1,
+            "response_id": "resp_0383bb598281788d016a8965bb55d887d0b5937796198c0c07",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 4949,
+            "output_tokens": 132,
+            "latency_ms": 5723,
+            "function_calls": [
+              "get_order",
+              "get_after_sales_case",
+              "get_payment_records",
+              "get_refund_records",
+              "read_policy"
+            ]
+          },
+          {
+            "round": 2,
+            "response_id": "resp_01cf528a47a620d0016a8965c71be087d09761aae25d0989fd",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 5892,
+            "output_tokens": 163,
+            "latency_ms": 12421,
+            "function_calls": []
+          }
+        ]
+      },
+      {
+        "case_id": "refund_overdue_002",
+        "source_type": "rule_generated",
+        "checks": {
+          "decision": false,
+          "responsible_party": false,
+          "review_required": false,
+          "evidence_grounded": true,
+          "required_evidence": true
+        },
+        "passed": false,
+        "decision": {
+          "dispute_type": "refund_dispute",
+          "responsible_party": "none",
+          "decision": "refund_processing_within_sla",
+          "evidence_ids": [
+            "orders:ord-1016:v1",
+            "after_sales_cases:as-16:v1",
+            "refunds:ref-16:v1",
+            "payments:pay-16-debit:v1",
+            "policies:refund-cn-standard:v2"
+          ],
+          "missing_evidence": [],
+          "recommended_action": "退款已发起且处于 processing。售后于 2026-01-03T10:00:00 审核通过，退款于 2026-01-04T10:00:00 发起，符合政策要求的 48 小时内发起；当前无完成记录，继续跟进退款处理即可。",
+          "review_required": false
+        },
+        "invalid_evidence_ids": [],
+        "llm_calls": 2,
+        "tool_calls": 5,
+        "input_tokens": 10833,
+        "output_tokens": 303,
+        "latency_ms": 15658,
+        "trace": [
+          {
+            "round": 1,
+            "response_id": "resp_01f2d908f232a668016a8965d01d3087d0afe69b4437ad194a",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 4945,
+            "output_tokens": 132,
+            "latency_ms": 7683,
+            "function_calls": [
+              "get_order",
+              "get_after_sales_case",
+              "get_refund_records",
+              "get_payment_records",
+              "read_policy"
+            ]
+          },
+          {
+            "round": 2,
+            "response_id": "resp_0217a482adb5ae8a016a8965d7444c87d0b47dac15f0e12850",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 5888,
+            "output_tokens": 171,
+            "latency_ms": 7975,
+            "function_calls": []
+          }
+        ]
+      },
+      {
+        "case_id": "refund_pending_001",
+        "source_type": "manual",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "evidence_grounded": true,
+          "required_evidence": true
+        },
+        "passed": true,
+        "decision": {
+          "dispute_type": "refund_dispute",
+          "responsible_party": "none",
+          "decision": "refund_processing_within_sla",
+          "evidence_ids": [
+            "orders:ord-1012:v1",
+            "after_sales_cases:as-12:v1",
+            "refunds:ref-12:v1",
+            "payments:pay-12-debit:v1",
+            "policies:refund-cn-standard:v2"
+          ],
+          "missing_evidence": [],
+          "recommended_action": "退款已发起且仍在处理期内。根据现行政策，退款通常在 5 日内到账；当前距发起仅 1 天，不构成超时。向用户说明正在处理中并继续跟踪退款状态。",
+          "review_required": false
+        },
+        "invalid_evidence_ids": [],
+        "llm_calls": 2,
+        "tool_calls": 5,
+        "input_tokens": 10847,
+        "output_tokens": 282,
+        "latency_ms": 32325,
+        "trace": [
+          {
+            "round": 1,
+            "response_id": "resp_02c701e3065f31fe016a8965dd648c87d08722526fd517235b",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 4952,
+            "output_tokens": 132,
+            "latency_ms": 5220,
+            "function_calls": [
+              "get_order",
+              "get_after_sales_case",
+              "get_refund_records",
+              "get_payment_records",
+              "read_policy"
+            ]
+          },
+          {
+            "round": 2,
+            "response_id": "resp_0bf14d86c0b184f0016a8965f78e5887d08df575c83e78ad0d",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 5895,
+            "output_tokens": 150,
+            "latency_ms": 27105,
+            "function_calls": []
+          }
+        ]
+      },
+      {
+        "case_id": "refund_pending_002",
+        "source_type": "manual",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "evidence_grounded": true,
+          "required_evidence": true
+        },
+        "passed": true,
+        "decision": {
+          "dispute_type": "refund_dispute",
+          "responsible_party": "none",
+          "decision": "refund_processing_within_sla",
+          "evidence_ids": [
+            "orders:ord-1013:v1",
+            "after_sales_cases:as-13:v1",
+            "refunds:ref-13:v1",
+            "payments:pay-13-debit:v1",
+            "policies:refund-cn-standard:v2"
+          ],
+          "missing_evidence": [],
+          "recommended_action": "退款已发起且处于处理中，且当前距离发起时间约 46 小时，未超过政策要求的 48 小时发起时限；继续跟踪退款处理结果即可。",
+          "review_required": false
+        },
+        "invalid_evidence_ids": [],
+        "llm_calls": 2,
+        "tool_calls": 5,
+        "input_tokens": 10835,
+        "output_tokens": 274,
+        "latency_ms": 57695,
+        "trace": [
+          {
+            "round": 1,
+            "response_id": "resp_0bca846b6a38c5ac016a896601633487d09b5e176deb8bb207",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 4946,
+            "output_tokens": 132,
+            "latency_ms": 10691,
+            "function_calls": [
+              "get_order",
+              "get_after_sales_case",
+              "get_refund_records",
+              "get_payment_records",
+              "read_policy"
+            ]
+          },
+          {
+            "round": 2,
+            "response_id": "resp_0b6ab2d9331bde8a016a8966312b7887d08edded6abffa0eef",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 5889,
+            "output_tokens": 142,
+            "latency_ms": 47004,
+            "function_calls": []
+          }
+        ]
+      },
+      {
+        "case_id": "refund_pending_003",
+        "source_type": "rule_generated",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "evidence_grounded": true,
+          "required_evidence": true
+        },
+        "passed": true,
+        "decision": {
+          "dispute_type": "refund_dispute",
+          "responsible_party": "none",
+          "decision": "refund_processing_within_sla",
+          "evidence_ids": [
+            "orders:ord-1014:v1",
+            "after_sales_cases:as-14:v1",
+            "payments:pay-14-debit:v1",
+            "refunds:ref-14:v1",
+            "policies:refund-cn-standard:v2"
+          ],
+          "missing_evidence": [],
+          "recommended_action": "退款已发起且当前处于 processing，按现行政策退款通常在 5 日内到账；继续跟踪到账结果，未超过到账 SLA 前无需升级。",
+          "review_required": false
+        },
+        "invalid_evidence_ids": [],
+        "llm_calls": 2,
+        "tool_calls": 5,
+        "input_tokens": 10833,
+        "output_tokens": 268,
+        "latency_ms": 12915,
+        "trace": [
+          {
+            "round": 1,
+            "response_id": "resp_058e77b05f2261f3016a89663975f487d0a4b226504aa4fa2b",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 4945,
+            "output_tokens": 132,
+            "latency_ms": 7518,
+            "function_calls": [
+              "get_order",
+              "get_after_sales_case",
+              "get_payment_records",
+              "get_refund_records",
+              "read_policy"
+            ]
+          },
+          {
+            "round": 2,
+            "response_id": "resp_017c62fbd2244ec9016a89663f145487d0a923af064a9812af",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 5888,
+            "output_tokens": 136,
+            "latency_ms": 5397,
+            "function_calls": []
+          }
+        ]
+      },
+      {
+        "case_id": "refund_within_001",
+        "source_type": "manual",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "evidence_grounded": true,
+          "required_evidence": true
+        },
+        "passed": true,
+        "decision": {
+          "dispute_type": "refund_dispute",
+          "responsible_party": "none",
+          "decision": "refund_pending_within_sla",
+          "evidence_ids": [
+            "orders:ord-1017:v1",
+            "after_sales_cases:as-17:v1",
+            "payments:pay-17-debit:v1",
+            "policies:refund-cn-standard:v2"
+          ],
+          "missing_evidence": [],
+          "recommended_action": "售后已于2026-01-07T10:00:00审核通过；按现行CN退款政策，退款应在48小时内发起。当前距离通过时间仅约24小时，且未到启动时限，建议继续等待至SLA窗口后再复核。",
+          "review_required": false
+        },
+        "invalid_evidence_ids": [],
+        "llm_calls": 2,
+        "tool_calls": 5,
+        "input_tokens": 10743,
+        "output_tokens": 285,
+        "latency_ms": 11709,
+        "trace": [
+          {
+            "round": 1,
+            "response_id": "resp_0aeae604ae46fb37016a8966440b8c87d08817bcfcb7a11694",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 4953,
+            "output_tokens": 132,
+            "latency_ms": 5264,
+            "function_calls": [
+              "get_order",
+              "get_after_sales_case",
+              "get_payment_records",
+              "get_refund_records",
+              "read_policy"
+            ]
+          },
+          {
+            "round": 2,
+            "response_id": "resp_0f00dfb69cee72a0016a89664a986087d083bfc76dddcbe749",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 5790,
+            "output_tokens": 153,
+            "latency_ms": 6445,
+            "function_calls": []
+          }
+        ]
+      },
+      {
+        "case_id": "refund_within_002",
+        "source_type": "rule_generated",
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": false,
+          "evidence_grounded": true,
+          "required_evidence": false
+        },
+        "passed": false,
+        "decision": {
+          "dispute_type": "refund_dispute",
+          "responsible_party": "none",
+          "decision": "refund_pending_within_sla",
+          "evidence_ids": [
+            "after_sales_cases:as-18:v1",
+            "policies:refund-cn-standard:v2"
+          ],
+          "missing_evidence": [
+            "refund_records for ord-1018",
+            "refund payment entry matching ord-1018"
+          ],
+          "recommended_action": "售后已审核通过且当前距离通过时间约 47 小时，仍在“审核通过后48小时内发起退款”的政策窗口内。当前未检索到退款发起/处理/完成记录，也未发现与该订单匹配的退款入账记录，因此不判定超时或已完成，继续观察或补充退款流水后再裁决。",
+          "review_required": true
+        },
+        "invalid_evidence_ids": [],
+        "llm_calls": 2,
+        "tool_calls": 5,
+        "input_tokens": 10735,
+        "output_tokens": 301,
+        "latency_ms": 14549,
+        "trace": [
+          {
+            "round": 1,
+            "response_id": "resp_08899ec38b5d6b67016a896650dfcc87d0a1064f09861fb204",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 4949,
+            "output_tokens": 132,
+            "latency_ms": 6900,
+            "function_calls": [
+              "get_order",
+              "get_after_sales_case",
+              "get_refund_records",
+              "get_payment_records",
+              "read_policy"
+            ]
+          },
+          {
+            "round": 2,
+            "response_id": "resp_03ad00bff58f385d016a8966586ce087d092affc133b0bfd8e",
+            "model": "gpt-5.4-mini-2026-03-17",
+            "input_tokens": 5786,
+            "output_tokens": 169,
+            "latency_ms": 7649,
+            "function_calls": []
+          }
+        ]
+      }
+    ]
+  }
+}

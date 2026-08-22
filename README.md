@@ -24,7 +24,8 @@ EcomDispute 是一个面向电商售后争议的证据化诊断项目。当前 M
 - `FactAgent` 与 `PolicyAgent`：并行查询独立信息源。
 - `CaseStateReducer`：确定性投影 Evidence、Finding、时间线和 Trace。
 - `EvidenceFusion`：过滤无证据 Finding、去重、检查必需证据、检测退款与支付冲突。
-- 4 个退款纵向案例：未发起超时、处理中、已完成、系统事实冲突。
+- 20 个退款案例：10 个独立人工编写、10 个规则生成，覆盖未发起超时、处理中、到账超时、已完成、跨源冲突、证据缺失和历史政策版本。
+- 单 LLM Agent Function Calling 基线：完整回传 `function_call` / `function_call_output` 历史，支持并行工具调用、严格最终 Schema、轮数预算和 Evidence ID 校验。
 
 当前的 Fact/Policy 模块是确定性专项执行器，不包装成 LLM。真实评测显示当前网关单次短请求仍约含 4.7k 输入 Token，因此先验证一次语义调用的业务收益，再通过对照实验决定是否增加 LLM 调用。
 
@@ -46,7 +47,7 @@ export ECOM_DISPUTE_API_KEY='your-key'
 python -m ecom_dispute \
   --base-url 'https://your-openai-compatible-endpoint.example' \
   --model 'gpt-5.4-mini' \
-  eval --mode llm
+  eval --mode compare
 ```
 
 ## 执行链路
@@ -69,7 +70,6 @@ LLM 只读取会话，不接触评测 Oracle。业务查询结果由工具产生
 
 ## 当前评测
 
-2026-08-22 使用 `gpt-5.4-mini-2026-03-17` 完成真实 LLM 冒烟评测：4 个固定案例全部通过语义路由、责任方、裁决与复检检查。该结果仅证明纵向链路可运行，不作为简历准确率；扩大独立人工案例并加入单 Agent 对照后，才形成可用于简历的指标。
+2026-08-22 使用 `gpt-5.4-mini-2026-03-17` 对 20 个固定案例完成首轮真实 LLM 对照。Hybrid 最终裁决、责任方和复检分流为 20/20，加入语义路由检查后全项通过 19/20；单 Agent Function Calling 基线全项通过 11/20，最终裁决正确 14/20。Baseline 使用约 2.32 倍输入 Token 和 3.33 倍模型累计延迟。数据仍为人工与规则构造，不表述为线上业务准确率。
 
-详见 [真实 LLM 评测报告](evals/real_llm_smoke_2026-08-22.md)。
-
+详见 [M2 对照评测报告](evals/compare_report_2026-08-22.md) 和 [原始逐案结果](evals/compare_gpt-5.4-mini_2026-08-22.json)。

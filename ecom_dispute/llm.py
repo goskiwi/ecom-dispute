@@ -67,7 +67,7 @@ class ResponsesClient:
             },
         }
         started = time.perf_counter()
-        response = self._post("/v1/responses", payload)
+        response = self.create_response(payload)
         latency_ms = round((time.perf_counter() - started) * 1000)
         output_text = self._output_text(response)
         usage = response.get("usage") or {}
@@ -80,9 +80,9 @@ class ResponsesClient:
             latency_ms=latency_ms,
         )
 
-    def _post(self, path: str, payload: dict[str, Any]) -> dict[str, Any]:
+    def create_response(self, payload: dict[str, Any]) -> dict[str, Any]:
         request = urllib.request.Request(
-            f"{self.base_url}{path}",
+            f"{self.base_url}/v1/responses",
             data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
             headers={
                 "Authorization": f"Bearer {self.api_key}",

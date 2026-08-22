@@ -5,7 +5,7 @@ import json
 import os
 from pathlib import Path
 
-from .evaluation import evaluate
+from .evaluation import evaluate, evaluate_baseline
 from .harness import DiagnosticHarness
 from .llm import ResponsesClient
 from .repository import DEFAULT_DB, Repository, rebuild_database
@@ -22,7 +22,10 @@ def _parser() -> argparse.ArgumentParser:
     demo = commands.add_parser("demo")
     demo.add_argument("--case-id", required=True)
     evaluation = commands.add_parser("eval")
-    evaluation.add_argument("--mode", choices=["offline", "llm"], default="offline")
+    evaluation.add_argument(
+        "--mode", choices=["offline", "llm", "baseline", "compare"], default="offline"
+    )
+    evaluation.add_argument("--case-id", action="append", dest="case_ids")
     return parser
 
 
@@ -48,8 +51,17 @@ def main() -> None:
         )
         print(report.model_dump_json(indent=2))
     elif args.command == "eval":
-        client = _llm_client(args, required=args.mode == "llm")
-        print(json.dumps(evaluate(repository, llm_client=client), ensure_ascii=False, indent=2))
+        client = _llm_client(args, required=args.mode in {"llm", "baseline", "compare"})
+        if args.mode == "baseline":
+            result = evaluate_baseline(repository, client, case_ids=args.case_ids)
+        elif args.mode == "compare":
+            result = {
+                "hybrid": evaluate(repository, llm_client=client, case_ids=args.case_ids),
+                "baseline": evaluate_baseline(repository, client, case_ids=args.case_ids),
+            }
+        else:
+            result = evaluate(repository, llm_client=client, case_ids=args.case_ids)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

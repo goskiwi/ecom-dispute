@@ -45,6 +45,14 @@ def test_conflict_is_evidence_grounded(repository: Repository) -> None:
 
 def test_fixed_eval_set(repository: Repository) -> None:
     result = evaluate(repository)
-    assert result["case_count"] == 4
-    assert result["passed"] == 4
+    assert result["case_count"] == 20
+    assert result["passed"] == 20
     assert result["pass_rate"] == 1.0
+
+
+def test_dataset_has_manual_and_policy_boundary_cases(repository: Repository) -> None:
+    cases = [repository.case(case_id) for case_id in repository.case_ids()]
+    assert sum(case.source_type == "manual" for case in cases) >= 8
+    historical = repository.case("refund_historical_policy_001")
+    report = DiagnosticHarness(repository).diagnose_sync(historical)
+    assert report.policy_evidence_ids == ["policies:refund-cn-standard:v1"]

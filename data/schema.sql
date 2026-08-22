@@ -3,6 +3,7 @@ PRAGMA foreign_keys = ON;
 CREATE TABLE IF NOT EXISTS cases (
     case_id TEXT PRIMARY KEY,
     order_id TEXT NOT NULL,
+    source_type TEXT NOT NULL,
     region TEXT NOT NULL,
     business_type TEXT NOT NULL,
     occurred_at TEXT NOT NULL,
@@ -71,4 +72,3 @@ CREATE TABLE IF NOT EXISTS policies (
     source_summary TEXT NOT NULL,
     PRIMARY KEY (policy_id, version)
 );
-
