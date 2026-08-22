@@ -1,0 +1,1407 @@
+{
+  "source": "ABCD v1.1 official dataset",
+  "supported_count": 160,
+  "unsupported_count": 40,
+  "items": [
+    {
+      "external_id": "abcd:10012",
+      "split": "test",
+      "subflow": "refund_status",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10124",
+      "split": "test",
+      "subflow": "return_size",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10127",
+      "split": "test",
+      "subflow": "refund_initiate",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10222",
+      "split": "test",
+      "subflow": "return_size",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10228",
+      "split": "test",
+      "subflow": "refund_initiate",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10259",
+      "split": "test",
+      "subflow": "refund_initiate",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10298",
+      "split": "test",
+      "subflow": "refund_initiate",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1037",
+      "split": "test",
+      "subflow": "return_color",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1064",
+      "split": "test",
+      "subflow": "refund_initiate",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1092",
+      "split": "test",
+      "subflow": "status_delivery_time",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1141",
+      "split": "dev",
+      "subflow": "mistimed_billing_already_returned",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1193",
+      "split": "dev",
+      "subflow": "status_shipping_question",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1210",
+      "split": "dev",
+      "subflow": "refund_status",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1230",
+      "split": "dev",
+      "subflow": "mistimed_billing_already_returned",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1315",
+      "split": "test",
+      "subflow": "bad_price_yesterday",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1322",
+      "split": "dev",
+      "subflow": "mistimed_billing_already_returned",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1399",
+      "split": "dev",
+      "subflow": "mistimed_billing_already_returned",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1447",
+      "split": "test",
+      "subflow": "boots_how_3",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1448",
+      "split": "test",
+      "subflow": "bad_price_competitor",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1526",
+      "split": "test",
+      "subflow": "return_size",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1529",
+      "split": "test",
+      "subflow": "refund_initiate",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:160",
+      "split": "train",
+      "subflow": "boots_other_1",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1602",
+      "split": "test",
+      "subflow": "status_delivery_time",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1652",
+      "split": "dev",
+      "subflow": "refund_status",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1655",
+      "split": "test",
+      "subflow": "bad_price_competitor",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:168",
+      "split": "train",
+      "subflow": "boots_how_1",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1707",
+      "split": "test",
+      "subflow": "status_delivery_time",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1747",
+      "split": "dev",
+      "subflow": "status_shipping_question",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1859",
+      "split": "test",
+      "subflow": "refund_update",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1957",
+      "split": "test",
+      "subflow": "bad_price_competitor",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1967",
+      "split": "dev",
+      "subflow": "status_delivery_time",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1972",
+      "split": "test",
+      "subflow": "return_size",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2002",
+      "split": "test",
+      "subflow": "bad_price_competitor",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2058",
+      "split": "test",
+      "subflow": "status_delivery_time",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2090",
+      "split": "test",
+      "subflow": "refund_initiate",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2153",
+      "split": "dev",
+      "subflow": "mistimed_billing_already_returned",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2162",
+      "split": "dev",
+      "subflow": "refund_initiate",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2178",
+      "split": "dev",
+      "subflow": "refund_status",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2183",
+      "split": "test",
+      "subflow": "boots_how_4",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2202",
+      "split": "test",
+      "subflow": "boots_other_2",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2265",
+      "split": "dev",
+      "subflow": "status_delivery_time",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2304",
+      "split": "dev",
+      "subflow": "mistimed_billing_already_returned",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2319",
+      "split": "dev",
+      "subflow": "status_delivery_time",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2334",
+      "split": "test",
+      "subflow": "return_size",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2362",
+      "split": "dev",
+      "subflow": "mistimed_billing_already_returned",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2503",
+      "split": "test",
+      "subflow": "bad_price_competitor",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2509",
+      "split": "test",
+      "subflow": "refund_update",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2520",
+      "split": "dev",
+      "subflow": "boots_other_2",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2565",
+      "split": "test",
+      "subflow": "status_delivery_time",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2669",
+      "split": "test",
+      "subflow": "return_color",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2673",
+      "split": "test",
+      "subflow": "return_color",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2707",
+      "split": "test",
+      "subflow": "bad_price_yesterday",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:276",
+      "split": "test",
+      "subflow": "status_shipping_question",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2794",
+      "split": "dev",
+      "subflow": "refund_update",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2885",
+      "split": "dev",
+      "subflow": "status_delivery_time",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2901",
+      "split": "test",
+      "subflow": "bad_price_yesterday",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2925",
+      "split": "dev",
+      "subflow": "status_shipping_question",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:298",
+      "split": "dev",
+      "subflow": "status_shipping_question",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2984",
+      "split": "test",
+      "subflow": "return_size",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:299",
+      "split": "test",
+      "subflow": "bad_price_yesterday",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2994",
+      "split": "dev",
+      "subflow": "status_shipping_question",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:3013",
+      "split": "test",
+      "subflow": "refund_initiate",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:3062",
+      "split": "dev",
+      "subflow": "boots_how_3",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:3068",
+      "split": "test",
+      "subflow": "bad_price_yesterday",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:3180",
+      "split": "test",
+      "subflow": "status_delivery_time",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:3182",
+      "split": "test",
+      "subflow": "refund_initiate",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:3219",
+      "split": "dev",
+      "subflow": "boots_how_2",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:3234",
+      "split": "test",
+      "subflow": "mistimed_billing_already_returned",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:3251",
+      "split": "dev",
+      "subflow": "refund_update",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:3262",
+      "split": "dev",
+      "subflow": "boots_how_2",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:3294",
+      "split": "test",
+      "subflow": "return_size",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:3332",
+      "split": "test",
+      "subflow": "refund_status",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:3336",
+      "split": "dev",
+      "subflow": "refund_status",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:3342",
+      "split": "test",
+      "subflow": "return_size",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:3349",
+      "split": "dev",
+      "subflow": "status_shipping_question",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:335",
+      "split": "dev",
+      "subflow": "refund_status",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:3450",
+      "split": "test",
+      "subflow": "return_color",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:3499",
+      "split": "test",
+      "subflow": "refund_update",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:3538",
+      "split": "test",
+      "subflow": "refund_update",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:3542",
+      "split": "dev",
+      "subflow": "status_shipping_question",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:3567",
+      "split": "test",
+      "subflow": "return_color",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:3649",
+      "split": "dev",
+      "subflow": "status_shipping_question",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:3662",
+      "split": "test",
+      "subflow": "refund_initiate",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:367",
+      "split": "test",
+      "subflow": "boots_how_4",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:3764",
+      "split": "test",
+      "subflow": "return_size",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:3823",
+      "split": "dev",
+      "subflow": "refund_update",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:3829",
+      "split": "dev",
+      "subflow": "refund_status",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:3839",
+      "split": "test",
+      "subflow": "return_color",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:389",
+      "split": "test",
+      "subflow": "return_color",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:4001",
+      "split": "test",
+      "subflow": "boots_how_3",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:4002",
+      "split": "dev",
+      "subflow": "boots_how_1",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:4107",
+      "split": "test",
+      "subflow": "status_delivery_time",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:4162",
+      "split": "test",
+      "subflow": "return_size",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:4197",
+      "split": "test",
+      "subflow": "status_delivery_time",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:4200",
+      "split": "test",
+      "subflow": "return_color",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:4227",
+      "split": "test",
+      "subflow": "return_color",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:431",
+      "split": "test",
+      "subflow": "mistimed_billing_already_returned",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:4310",
+      "split": "test",
+      "subflow": "boots_how_2",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:4332",
+      "split": "test",
+      "subflow": "return_size",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:4503",
+      "split": "dev",
+      "subflow": "status_shipping_question",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:4562",
+      "split": "test",
+      "subflow": "mistimed_billing_already_returned",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:4612",
+      "split": "dev",
+      "subflow": "mistimed_billing_already_returned",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:4685",
+      "split": "test",
+      "subflow": "status_shipping_question",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:4730",
+      "split": "test",
+      "subflow": "status_shipping_question",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:4761",
+      "split": "test",
+      "subflow": "mistimed_billing_already_returned",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:4784",
+      "split": "test",
+      "subflow": "boots_how_1",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:4837",
+      "split": "test",
+      "subflow": "boots_other_2",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:4961",
+      "split": "test",
+      "subflow": "refund_initiate",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:4968",
+      "split": "test",
+      "subflow": "status_shipping_question",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:4982",
+      "split": "test",
+      "subflow": "refund_initiate",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:5031",
+      "split": "test",
+      "subflow": "status_shipping_question",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:5046",
+      "split": "test",
+      "subflow": "return_size",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:5237",
+      "split": "test",
+      "subflow": "boots_how_4",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:533",
+      "split": "test",
+      "subflow": "return_size",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:5334",
+      "split": "test",
+      "subflow": "mistimed_billing_already_returned",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:5357",
+      "split": "test",
+      "subflow": "return_color",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:5374",
+      "split": "test",
+      "subflow": "refund_initiate",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:5381",
+      "split": "test",
+      "subflow": "boots_how_2",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:5410",
+      "split": "test",
+      "subflow": "refund_status",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:5436",
+      "split": "test",
+      "subflow": "refund_initiate",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:5492",
+      "split": "test",
+      "subflow": "mistimed_billing_already_returned",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:5521",
+      "split": "test",
+      "subflow": "status_delivery_time",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:5531",
+      "split": "test",
+      "subflow": "refund_update",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:567",
+      "split": "dev",
+      "subflow": "refund_update",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:5691",
+      "split": "test",
+      "subflow": "mistimed_billing_already_returned",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:575",
+      "split": "test",
+      "subflow": "status_delivery_time",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:5787",
+      "split": "test",
+      "subflow": "refund_update",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:6104",
+      "split": "test",
+      "subflow": "mistimed_billing_already_returned",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:611",
+      "split": "dev",
+      "subflow": "mistimed_billing_already_returned",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:6136",
+      "split": "test",
+      "subflow": "status_shipping_question",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:6255",
+      "split": "test",
+      "subflow": "return_size",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:6259",
+      "split": "test",
+      "subflow": "refund_update",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:6274",
+      "split": "test",
+      "subflow": "return_size",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:6380",
+      "split": "dev",
+      "subflow": "boots_other_2",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:6435",
+      "split": "test",
+      "subflow": "refund_initiate",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:6450",
+      "split": "test",
+      "subflow": "status_shipping_question",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:6587",
+      "split": "test",
+      "subflow": "return_color",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:664",
+      "split": "test",
+      "subflow": "boots_how_3",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:6688",
+      "split": "test",
+      "subflow": "refund_initiate",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:6805",
+      "split": "test",
+      "subflow": "refund_update",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:6856",
+      "split": "test",
+      "subflow": "boots_how_4",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:692",
+      "split": "test",
+      "subflow": "status_delivery_time",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:6942",
+      "split": "test",
+      "subflow": "refund_update",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:6957",
+      "split": "test",
+      "subflow": "refund_update",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:7079",
+      "split": "dev",
+      "subflow": "boots_other_2",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:7129",
+      "split": "test",
+      "subflow": "refund_status",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:7331",
+      "split": "test",
+      "subflow": "refund_initiate",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:7333",
+      "split": "test",
+      "subflow": "return_color",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:7354",
+      "split": "test",
+      "subflow": "return_color",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:7423",
+      "split": "test",
+      "subflow": "return_size",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:7530",
+      "split": "test",
+      "subflow": "status_shipping_question",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:7558",
+      "split": "test",
+      "subflow": "boots_how_3",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:7595",
+      "split": "test",
+      "subflow": "status_shipping_question",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:7722",
+      "split": "test",
+      "subflow": "refund_status",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:7747",
+      "split": "test",
+      "subflow": "mistimed_billing_already_returned",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:7772",
+      "split": "test",
+      "subflow": "status_delivery_time",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:7782",
+      "split": "test",
+      "subflow": "refund_update",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:7817",
+      "split": "test",
+      "subflow": "refund_status",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:7859",
+      "split": "test",
+      "subflow": "refund_update",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:7892",
+      "split": "dev",
+      "subflow": "boots_how_1",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:7947",
+      "split": "test",
+      "subflow": "return_color",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:7950",
+      "split": "test",
+      "subflow": "status_delivery_time",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:8092",
+      "split": "test",
+      "subflow": "return_color",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:8102",
+      "split": "test",
+      "subflow": "refund_status",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:812",
+      "split": "test",
+      "subflow": "status_delivery_time",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:8141",
+      "split": "test",
+      "subflow": "return_size",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:8197",
+      "split": "test",
+      "subflow": "return_color",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:8271",
+      "split": "test",
+      "subflow": "refund_status",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:8298",
+      "split": "dev",
+      "subflow": "boots_how_4",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:8330",
+      "split": "test",
+      "subflow": "refund_initiate",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:8352",
+      "split": "test",
+      "subflow": "mistimed_billing_already_returned",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:8354",
+      "split": "test",
+      "subflow": "refund_status",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:838",
+      "split": "test",
+      "subflow": "return_color",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:8428",
+      "split": "dev",
+      "subflow": "mistimed_billing_already_returned",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:853",
+      "split": "dev",
+      "subflow": "refund_update",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:8697",
+      "split": "test",
+      "subflow": "boots_other_1",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:8740",
+      "split": "test",
+      "subflow": "refund_update",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:8810",
+      "split": "test",
+      "subflow": "return_size",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:8849",
+      "split": "dev",
+      "subflow": "boots_other_1",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:8855",
+      "split": "test",
+      "subflow": "refund_status",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:8952",
+      "split": "test",
+      "subflow": "status_shipping_question",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:9070",
+      "split": "dev",
+      "subflow": "boots_other_1",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:9106",
+      "split": "test",
+      "subflow": "boots_other_1",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:9121",
+      "split": "test",
+      "subflow": "refund_update",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:9154",
+      "split": "test",
+      "subflow": "status_delivery_time",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:917",
+      "split": "dev",
+      "subflow": "status_shipping_question",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:9178",
+      "split": "test",
+      "subflow": "return_color",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:918",
+      "split": "train",
+      "subflow": "boots_how_1",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:9220",
+      "split": "test",
+      "subflow": "refund_status",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:9268",
+      "split": "test",
+      "subflow": "return_size",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:9310",
+      "split": "test",
+      "subflow": "refund_status",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:9311",
+      "split": "test",
+      "subflow": "boots_how_2",
+      "expected_route_type": "other",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:9340",
+      "split": "test",
+      "subflow": "return_color",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:9366",
+      "split": "test",
+      "subflow": "return_color",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:9452",
+      "split": "test",
+      "subflow": "refund_status",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:9454",
+      "split": "test",
+      "subflow": "refund_status",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:9651",
+      "split": "test",
+      "subflow": "status_delivery_time",
+      "expected_route_type": "delivery",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:968",
+      "split": "test",
+      "subflow": "refund_update",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:9737",
+      "split": "test",
+      "subflow": "refund_initiate",
+      "expected_route_type": "refund",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:9967",
+      "split": "test",
+      "subflow": "return_size",
+      "expected_route_type": "return_eligibility",
+      "expected_action_present": true
+    }
+  ]
+}

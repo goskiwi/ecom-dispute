@@ -36,7 +36,7 @@ def load_abcd_subset(
     path: Path,
     *,
     limit: int = 50,
-    subflows: set[str] | frozenset[str] = DEFAULT_SUBFLOWS,
+    subflows: set[str] | frozenset[str] | None = DEFAULT_SUBFLOWS,
     splits: tuple[str, ...] = ("test", "dev", "train"),
 ) -> list[ABCDRecord]:
     if limit < 1:
@@ -52,7 +52,7 @@ def load_abcd_subset(
         rows = dataset.get(split, [])
         for row in sorted(rows, key=lambda item: int(item["convo_id"])):
             scenario = row["scenario"]
-            if scenario["subflow"] not in subflows:
+            if subflows is not None and scenario["subflow"] not in subflows:
                 continue
             conversation = []
             actions = []

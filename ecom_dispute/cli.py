@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 
+from .abcd_evaluation import build_abcd_manifest, evaluate_abcd
 from .e2e_evaluation import evaluate_e2e
 from .evaluation import evaluate, evaluate_baseline
 from .harness import DiagnosticHarness
@@ -47,6 +48,17 @@ def _parser() -> argparse.ArgumentParser:
     e2e.add_argument("--oracle", type=Path, default=Path("evals/v1_e2e_12route_oracle.json"))
     e2e.add_argument("--e2e-db", type=Path, default=Path("data/v1_e2e_12route.db"))
     e2e.add_argument("--workers", type=int, default=1)
+    abcd_manifest = commands.add_parser("abcd-manifest")
+    abcd_manifest.add_argument("--dataset", type=Path, required=True)
+    abcd_manifest.add_argument(
+        "--manifest", type=Path, default=Path("evals/formal_abcd_200_manifest.json")
+    )
+    abcd_eval = commands.add_parser("abcd-eval")
+    abcd_eval.add_argument("--dataset", type=Path, required=True)
+    abcd_eval.add_argument(
+        "--manifest", type=Path, default=Path("evals/formal_abcd_200_manifest.json")
+    )
+    abcd_eval.add_argument("--workers", type=int, default=4)
     return parser
 
 
@@ -79,6 +91,15 @@ def main() -> None:
     if args.command == "e2e-eval":
         client = _llm_client(args, required=True)
         result = evaluate_e2e(client, args.e2e_db, args.inputs, args.oracle, args.workers)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return
+    if args.command == "abcd-manifest":
+        result = build_abcd_manifest(args.dataset, args.manifest)
+        print(json.dumps(result, ensure_ascii=False, indent=2, default=dict))
+        return
+    if args.command == "abcd-eval":
+        client = _llm_client(args, required=True)
+        result = evaluate_abcd(client, args.dataset, args.manifest, args.workers)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return
     repository = Repository(args.db)
