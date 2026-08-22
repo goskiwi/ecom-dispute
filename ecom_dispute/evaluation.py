@@ -18,6 +18,9 @@ def evaluate(
     case_ids: list[str] | None = None,
 ) -> dict:
     oracle = json.loads(oracle_path.read_text(encoding="utf-8"))
+    m6_oracle = oracle_path.with_name("oracle_m6.json")
+    if m6_oracle.is_file():
+        oracle.update(json.loads(m6_oracle.read_text(encoding="utf-8")))
     harness = (
         DiagnosticHarness.live(repository, llm_client)
         if llm_client

@@ -55,8 +55,8 @@ def test_conflict_is_evidence_grounded(repository: Repository) -> None:
 
 def test_fixed_eval_set(repository: Repository) -> None:
     result = evaluate(repository)
-    assert result["case_count"] == 60
-    assert result["passed"] == 60
+    assert result["case_count"] == 84
+    assert result["passed"] == 84
     assert result["pass_rate"] == 1.0
 
 

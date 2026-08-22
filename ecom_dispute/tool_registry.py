@@ -20,6 +20,10 @@ class ToolRegistry:
             "get_payment_records": self.get_payment_records,
             "get_refund_records": self.get_refund_records,
             "get_after_sales_case": self.get_after_sales_case,
+            "get_payment_gateway_events": self.get_payment_gateway_events,
+            "get_delivery_proof": self.get_delivery_proof,
+            "get_delivery_address": self.get_delivery_address,
+            "get_cancellation_request": self.get_cancellation_request,
             "read_policy": self.read_policy,
         }
         self._adapter_ids = {
@@ -28,6 +32,10 @@ class ToolRegistry:
             "payment_records",
             "refund_records",
             "after_sales_case",
+            "payment_gateway_events",
+            "delivery_proof",
+            "delivery_address",
+            "cancellation_request",
             "policy",
         }
         self._definitions = ToolDefinitionLoader(
@@ -113,6 +121,53 @@ class ToolRegistry:
             "event_id",
             self.repository.many("logistics_events", order_id),
             "occurred_at",
+            order_id,
+        )
+
+    def get_payment_gateway_events(self, order_id: str) -> ToolResult:
+        return self._many(
+            "get_payment_gateway_events",
+            EvidenceKind.PAYMENT_GATEWAY,
+            "payment_gateway_events",
+            "gateway_event_id",
+            self.repository.many("payment_gateway_events", order_id),
+            "occurred_at",
+            order_id,
+        )
+
+    def get_delivery_proof(self, order_id: str) -> ToolResult:
+        row = self.repository.one("delivery_proofs", "order_id", order_id)
+        return self._single(
+            "get_delivery_proof",
+            EvidenceKind.DELIVERY_PROOF,
+            "delivery_proofs",
+            "proof_id",
+            row,
+            "delivered_at",
+            order_id,
+        )
+
+    def get_delivery_address(self, order_id: str) -> ToolResult:
+        row = self.repository.one("delivery_addresses", "order_id", order_id)
+        return self._single(
+            "get_delivery_address",
+            EvidenceKind.DELIVERY_ADDRESS,
+            "delivery_addresses",
+            "address_id",
+            row,
+            "",
+            order_id,
+        )
+
+    def get_cancellation_request(self, order_id: str) -> ToolResult:
+        row = self.repository.one("cancellation_requests", "order_id", order_id)
+        return self._single(
+            "get_cancellation_request",
+            EvidenceKind.CANCELLATION_REQUEST,
+            "cancellation_requests",
+            "cancellation_id",
+            row,
+            "requested_at",
             order_id,
         )
 

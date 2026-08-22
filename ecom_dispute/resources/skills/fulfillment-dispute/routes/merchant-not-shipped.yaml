@@ -1,0 +1,20 @@
+route_id: merchant-not-shipped
+name: 商家未发货
+report_type: merchant_not_shipped
+match:
+  description: 订单超过商家发货时限但没有承运商揽收事件。
+  business_types: [merchant_not_shipped]
+  positive_examples: [商家一直不发货, 下单几天了还没揽收]
+  negative_examples: [已经揽收但运输太慢]
+start_stage: ANALYZE
+core_tools: [get_order, get_logistics_events, read_policy]
+lazy_tools: []
+required_evidence: [conversation, order, policy]
+optional_evidence: [logistics]
+allowed_decisions: [merchant_ship_overdue, merchant_ship_within_sla, shipment_already_picked_up, manual_review]
+decision_strategy: merchant_not_shipped
+stages:
+  ANALYZE: {mode: agent, objective: 提取未发货和揽收陈述, instruction_file: stages/analyze.md, default_next: VERIFY}
+  VERIFY: {mode: deterministic, objective: 查询订单、物流和发货政策, tools: [get_order, get_logistics_events, read_policy], default_next: DECIDE}
+  DECIDE: {mode: deterministic, objective: 计算商家发货时限, default_next: FUSE_AND_REVIEW}
+  FUSE_AND_REVIEW: {mode: deterministic, objective: 校验发货责任结论}

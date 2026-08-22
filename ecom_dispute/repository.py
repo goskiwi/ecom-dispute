@@ -11,6 +11,7 @@ from .contracts import CaseInput, DecisionReport, ReviewTask
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_DB = ROOT / "data" / "ecom_dispute.db"
 SCHEMA = ROOT / "data" / "schema.sql"
+M6_CASES = ROOT / "data" / "cases" / "m6_cases.json"
 
 
 def _rows(cursor: sqlite3.Cursor) -> list[dict[str, Any]]:
@@ -27,7 +28,13 @@ class Repository:
         return connection
 
     def one(self, table: str, key: str, value: str) -> dict[str, Any] | None:
-        allowed = {"orders": "order_id", "after_sales_cases": "order_id"}
+        allowed = {
+            "orders": "order_id",
+            "after_sales_cases": "order_id",
+            "delivery_proofs": "order_id",
+            "delivery_addresses": "order_id",
+            "cancellation_requests": "order_id",
+        }
         if allowed.get(table) != key:
             raise ValueError("unsupported lookup")
         with self.connect() as connection:
@@ -35,7 +42,12 @@ class Repository:
             return dict(row) if row else None
 
     def many(self, table: str, order_id: str) -> list[dict[str, Any]]:
-        if table not in {"logistics_events", "payments", "refunds"}:
+        if table not in {
+            "logistics_events",
+            "payments",
+            "refunds",
+            "payment_gateway_events",
+        }:
             raise ValueError("unsupported lookup")
         with self.connect() as connection:
             return _rows(
@@ -220,6 +232,66 @@ def _seed(connection: sqlite3.Connection) -> None:
                 ensure_ascii=False,
             ),
             "商家应在下单后 48 小时内交运；承诺送达后有 24 小时物流宽限期。",
+        ),
+        (
+            "refund-amount-cn-standard",
+            1,
+            "CN",
+            "refund_amount",
+            "2025-01-01T00:00:00",
+            None,
+            json.dumps({"expected_amount_source": "order_paid_amount"}, ensure_ascii=False),
+            "退款金额应以订单实付金额和售后审核结果为准。",
+        ),
+        (
+            "duplicate-charge-cn-standard",
+            1,
+            "CN",
+            "duplicate_charge",
+            "2025-01-01T00:00:00",
+            None,
+            json.dumps({"pending_authorization_hours": 72}, ensure_ascii=False),
+            "同一订单仅允许一笔成功扣款；待处理预授权通常在 72 小时内释放。",
+        ),
+        (
+            "payment-order-failure-cn-standard",
+            1,
+            "CN",
+            "payment_order_failure",
+            "2025-01-01T00:00:00",
+            None,
+            json.dumps({"reverse_within_hours": 24}, ensure_ascii=False),
+            "订单创建失败后，已扣资金应在 24 小时内撤销或发起退款。",
+        ),
+        (
+            "merchant-ship-cn-standard",
+            1,
+            "CN",
+            "merchant_not_shipped",
+            "2025-01-01T00:00:00",
+            None,
+            json.dumps({"merchant_ship_hours": 48}, ensure_ascii=False),
+            "商家应在下单后 48 小时内完成承运商揽收。",
+        ),
+        (
+            "delivered-receipt-cn-standard",
+            1,
+            "CN",
+            "delivered_not_received",
+            "2025-01-01T00:00:00",
+            None,
+            json.dumps({"proof_required": True}, ensure_ascii=False),
+            "用户否认收货时，承运商应提供可核验签收证明。",
+        ),
+        (
+            "cancellation-transit-cn-standard",
+            1,
+            "CN",
+            "cancellation_in_transit",
+            "2025-01-01T00:00:00",
+            None,
+            json.dumps({"refund_within_hours": 48}, ensure_ascii=False),
+            "取消申请与揽收时间决定拦截、拒收或退回路径，受理后应在 48 小时内发起退款。",
         ),
     ]
     connection.executemany("INSERT INTO policies VALUES (?, ?, ?, ?, ?, ?, ?, ?)", policies)
@@ -885,6 +957,175 @@ def _seed(connection: sqlite3.Connection) -> None:
     ]
     for index, spec in enumerate(delivery_specs, start=len(specs) + 1):
         _insert_delivery_case(connection, index, spec)
+    _seed_m6_cases(connection)
+
+
+def _seed_m6_cases(connection: sqlite3.Connection) -> None:
+    specs = json.loads(M6_CASES.read_text(encoding="utf-8"))
+    for index, spec in enumerate(specs, start=1):
+        case_id = spec["case_id"]
+        business_type = spec["business_type"]
+        scenario = spec["scenario"]
+        order_id = f"m6-ord-{index:03d}"
+        current_time = (
+            "2026-04-02T08:00:00"
+            if business_type == "merchant_not_shipped" and scenario == "within"
+            else "2026-04-05T12:00:00"
+        )
+        order_status = (
+            "failed" if business_type == "payment_order_failure" else "paid"
+        )
+        if business_type == "delivered_not_received" and scenario != "not_marked":
+            order_status = "delivered"
+        connection.execute(
+            "INSERT INTO cases VALUES (?, ?, 'rule_generated', 'CN', ?, '2026-04-01T10:00:00', ?, ?)",
+            (
+                case_id,
+                order_id,
+                business_type,
+                current_time,
+                json.dumps(
+                    [
+                        {"speaker": "user", "text": f"请处理{case_id}对应的争议。"},
+                        {"speaker": "agent", "text": "我正在核验业务记录。"},
+                    ],
+                    ensure_ascii=False,
+                ),
+            ),
+        )
+        connection.execute(
+            "INSERT INTO orders VALUES (?, ?, 'CN', ?, ?, 199.0, 'CNY', '2026-04-01T08:00:00', '2026-04-03T18:00:00', 1)",
+            (order_id, f"m6-user-{index:03d}", business_type, order_status),
+        )
+        if business_type == "refund_amount":
+            _seed_m6_refund_amount(connection, index, order_id, scenario)
+        elif business_type == "duplicate_charge":
+            _seed_m6_duplicate_charge(connection, index, order_id, scenario)
+        elif business_type == "payment_order_failure":
+            _seed_m6_payment_failure(connection, index, order_id, scenario)
+        elif business_type == "merchant_not_shipped":
+            if scenario == "picked_up":
+                _insert_m6_logistics(connection, index, order_id, "picked_up", "09:00:00")
+        elif business_type == "delivered_not_received":
+            _seed_m6_delivery_receipt(connection, index, order_id, scenario)
+        elif business_type == "cancellation_in_transit":
+            _seed_m6_cancellation(connection, index, order_id, scenario)
+
+
+def _seed_m6_refund_amount(
+    connection: sqlite3.Connection, index: int, order_id: str, scenario: str
+) -> None:
+    connection.execute(
+        "INSERT INTO payments VALUES (?, ?, 'debit', 199.0, 'succeeded', '2026-04-01T08:01:00', 1)",
+        (f"m6-pay-{index}-debit", order_id),
+    )
+    if scenario == "missing_refund":
+        return
+    refund_amount = 99.0 if scenario == "incorrect" else 199.0
+    credit_amount = 99.0 if scenario == "credit_mismatch" else refund_amount
+    connection.execute(
+        "INSERT INTO refunds VALUES (?, ?, ?, 'succeeded', '2026-04-02T08:00:00', '2026-04-03T08:00:00', 1)",
+        (f"m6-ref-{index}", order_id, refund_amount),
+    )
+    connection.execute(
+        "INSERT INTO payments VALUES (?, ?, 'credit', ?, 'succeeded', '2026-04-03T08:01:00', 1)",
+        (f"m6-pay-{index}-credit", order_id, credit_amount),
+    )
+
+
+def _seed_m6_duplicate_charge(
+    connection: sqlite3.Connection, index: int, order_id: str, scenario: str
+) -> None:
+    if scenario == "missing_payment":
+        return
+    statuses = {
+        "confirmed": ["succeeded", "succeeded"],
+        "pending": ["succeeded", "pending"],
+        "not_found": ["succeeded"],
+    }[scenario]
+    for event_index, status in enumerate(statuses, start=1):
+        connection.execute(
+            "INSERT INTO payments VALUES (?, ?, 'debit', 199.0, ?, ?, 1)",
+            (
+                f"m6-pay-{index}-{event_index}",
+                order_id,
+                status,
+                f"2026-04-01T08:0{event_index}:00",
+            ),
+        )
+
+
+def _seed_m6_payment_failure(
+    connection: sqlite3.Connection, index: int, order_id: str, scenario: str
+) -> None:
+    debit_status = "failed" if scenario == "not_captured" else "succeeded"
+    connection.execute(
+        "INSERT INTO payments VALUES (?, ?, 'debit', 199.0, ?, '2026-04-01T08:01:00', 1)",
+        (f"m6-pay-{index}-debit", order_id, debit_status),
+    )
+    if scenario == "reversed_credit":
+        connection.execute(
+            "INSERT INTO payments VALUES (?, ?, 'reversal', 199.0, 'succeeded', '2026-04-01T09:01:00', 1)",
+            (f"m6-pay-{index}-reversal", order_id),
+        )
+    if scenario == "reversed_refund":
+        connection.execute(
+            "INSERT INTO refunds VALUES (?, ?, 199.0, 'succeeded', '2026-04-01T09:00:00', '2026-04-01T10:00:00', 1)",
+            (f"m6-ref-{index}", order_id),
+        )
+
+
+def _seed_m6_delivery_receipt(
+    connection: sqlite3.Connection, index: int, order_id: str, scenario: str
+) -> None:
+    if scenario != "not_marked":
+        _insert_m6_logistics(connection, index, order_id, "delivered", "12:00:00")
+    if scenario == "disputed":
+        connection.execute(
+            "INSERT INTO delivery_proofs VALUES (?, ?, '门卫', 'signature', '2026-04-03T12:00:00', 'signed by concierge', 1)",
+            (f"m6-proof-{index}", order_id),
+        )
+    connection.execute(
+        "INSERT INTO delivery_addresses VALUES (?, ?, '南京', '鼓楼区***路', '1234', 1)",
+        (f"m6-address-{index}", order_id),
+    )
+
+
+def _seed_m6_cancellation(
+    connection: sqlite3.Connection, index: int, order_id: str, scenario: str
+) -> None:
+    requested_at = "2026-04-01T09:00:00"
+    connection.execute(
+        "INSERT INTO cancellation_requests VALUES (?, ?, 'accepted', ?, '2026-04-01T09:01:00', 'user_request', 1)",
+        (f"m6-cancel-{index}", order_id, requested_at),
+    )
+    if scenario in {"before_pickup", "after_pickup", "completed"}:
+        pickup_time = "10:00:00" if scenario == "before_pickup" else "08:00:00"
+        _insert_m6_logistics(connection, index, order_id, "picked_up", pickup_time)
+    if scenario == "completed":
+        connection.execute(
+            "INSERT INTO refunds VALUES (?, ?, 199.0, 'succeeded', '2026-04-02T09:00:00', '2026-04-03T09:00:00', 1)",
+            (f"m6-ref-{index}", order_id),
+        )
+
+
+def _insert_m6_logistics(
+    connection: sqlite3.Connection,
+    index: int,
+    order_id: str,
+    event_type: str,
+    time: str,
+) -> None:
+    connection.execute(
+        "INSERT INTO logistics_events VALUES (?, ?, ?, ?, ?, 1)",
+        (
+            f"m6-log-{index}-{event_type}",
+            order_id,
+            event_type,
+            f"2026-04-01T{time}",
+            event_type,
+        ),
+    )
 
 
 def _case(

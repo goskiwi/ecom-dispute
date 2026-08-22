@@ -1,0 +1,20 @@
+tool_id: get_cancellation_request
+name: 查询取消申请
+description: 查询当前订单的取消申请时间、状态、受理时间和原因。
+input_schema:
+  type: object
+  additionalProperties: false
+  properties: {}
+output_schema:
+  type: object
+  additionalProperties: true
+timeout_ms: 3000
+scope_bindings:
+  order_id:
+    source: case.order_id
+    mode: RUNTIME_INJECT
+executor: get_cancellation_request
+result_adapter: cancellation_request
+error_mapping:
+  NOT_FOUND: BUSINESS_NOT_FOUND
+  INVALID_ARGUMENT: TOOL_ARGUMENT_INVALID

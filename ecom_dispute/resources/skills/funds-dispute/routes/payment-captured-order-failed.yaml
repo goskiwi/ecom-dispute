@@ -1,0 +1,21 @@
+route_id: payment-captured-order-failed
+name: 扣款成功但订单失败
+report_type: payment_captured_order_failed
+match:
+  description: 支付已经成功扣款，但订单创建失败、取消或未进入有效履约。
+  business_types: [payment_order_failure]
+  positive_examples: [钱扣了但是订单失败, 订单取消了却已经扣款]
+  negative_examples: [订单正常只是物流慢]
+start_stage: ANALYZE
+core_tools: [get_order, get_payment_records, get_refund_records, read_policy]
+lazy_tools: [get_payment_gateway_events]
+required_evidence: [conversation, order, payment, policy]
+optional_evidence: [refund, payment_gateway]
+allowed_decisions: [captured_order_failed_unreversed, captured_order_failed_reversed, payment_order_state_conflict, manual_review]
+decision_strategy: payment_captured_order_failed
+stages:
+  ANALYZE: {mode: agent, objective: 提取扣款和订单失败陈述, instruction_file: stages/analyze.md, default_next: VERIFY}
+  VERIFY: {mode: deterministic, objective: 查询订单、支付、退款和政策, tools: [get_order, get_payment_records, get_refund_records, read_policy], default_next: DECIDE}
+  DECIDE: {mode: deterministic, objective: 判断失败订单资金是否已撤销或退回, default_next: FUSE_AND_REVIEW}
+  FUSE_AND_REVIEW: {mode: deterministic, objective: 合并订单与资金状态冲突}
+

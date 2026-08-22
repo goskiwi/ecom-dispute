@@ -14,6 +14,10 @@ class EvidenceKind(StrEnum):
     REFUND = "refund"
     AFTER_SALES = "after_sales"
     LOGISTICS = "logistics"
+    PAYMENT_GATEWAY = "payment_gateway"
+    DELIVERY_PROOF = "delivery_proof"
+    DELIVERY_ADDRESS = "delivery_address"
+    CANCELLATION_REQUEST = "cancellation_request"
     POLICY = "policy"
     QUERY = "query"
 

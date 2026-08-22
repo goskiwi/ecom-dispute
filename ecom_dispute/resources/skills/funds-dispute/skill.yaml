@@ -6,13 +6,19 @@ allowed_tools:
   - get_payment_records
   - get_refund_records
   - get_after_sales_case
+  - get_payment_gateway_events
   - read_policy
 routes:
   - route_id: refund-status
     file: routes/refund-status.yaml
+  - route_id: refund-amount-mismatch
+    file: routes/refund-amount-mismatch.yaml
+  - route_id: duplicate-charge
+    file: routes/duplicate-charge.yaml
+  - route_id: payment-captured-order-failed
+    file: routes/payment-captured-order-failed.yaml
 limits:
   max_model_turns: 6
   max_tool_calls: 8
   max_loaded_lazy_tools: 2
   max_total_recovery_actions: 3
-

@@ -12,8 +12,17 @@ def test_demo_application_exposes_case_summary_and_evidence(tmp_path: Path) -> N
     application = DemoApplication(repository, harness, "heuristic-test")
 
     cases = application.cases()
-    assert len(cases) == 60
-    assert {item["business_type"] for item in cases} == {"refund", "delivery"}
+    assert len(cases) == 84
+    assert {item["business_type"] for item in cases} == {
+        "refund",
+        "delivery",
+        "refund_amount",
+        "duplicate_charge",
+        "payment_order_failure",
+        "merchant_not_shipped",
+        "delivered_not_received",
+        "cancellation_in_transit",
+    }
 
     detail = application.case("delivery_conflict_001")
     assert detail["report"]["decision"] == "delivery_event_conflict"

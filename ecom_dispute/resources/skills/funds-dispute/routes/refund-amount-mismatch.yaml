@@ -1,0 +1,21 @@
+route_id: refund-amount-mismatch
+name: 退款金额不符
+report_type: refund_amount_mismatch
+match:
+  description: 用户实际收到的退款金额与订单或退款记录不一致。
+  business_types: [refund_amount]
+  positive_examples: [少退了钱, 退款金额和订单金额不一致]
+  negative_examples: [退款还没发起]
+start_stage: ANALYZE
+core_tools: [get_order, get_payment_records, get_refund_records, read_policy]
+lazy_tools: [get_payment_gateway_events]
+required_evidence: [conversation, order, payment, refund, policy]
+optional_evidence: [payment_gateway]
+allowed_decisions: [refund_amount_correct, refund_amount_incorrect, refund_credit_amount_mismatch, manual_review]
+decision_strategy: refund_amount_mismatch
+stages:
+  ANALYZE: {mode: agent, objective: 提取争议金额和到账陈述, instruction_file: stages/analyze.md, default_next: VERIFY}
+  VERIFY: {mode: deterministic, objective: 查询订单、支付、退款和政策, tools: [get_order, get_payment_records, get_refund_records, read_policy], default_next: DECIDE}
+  DECIDE: {mode: deterministic, objective: 核对订单、退款和入账金额, default_next: FUSE_AND_REVIEW}
+  FUSE_AND_REVIEW: {mode: deterministic, objective: 合并金额冲突并决定复检}
+

@@ -43,6 +43,17 @@ CREATE TABLE IF NOT EXISTS payments (
     version INTEGER NOT NULL DEFAULT 1
 );
 
+CREATE TABLE IF NOT EXISTS payment_gateway_events (
+    gateway_event_id TEXT PRIMARY KEY,
+    order_id TEXT NOT NULL REFERENCES orders(order_id),
+    transaction_id TEXT NOT NULL,
+    event_type TEXT NOT NULL,
+    amount REAL NOT NULL,
+    status TEXT NOT NULL,
+    occurred_at TEXT NOT NULL,
+    version INTEGER NOT NULL DEFAULT 1
+);
+
 CREATE TABLE IF NOT EXISTS refunds (
     refund_id TEXT PRIMARY KEY,
     order_id TEXT NOT NULL REFERENCES orders(order_id),
@@ -58,6 +69,35 @@ CREATE TABLE IF NOT EXISTS after_sales_cases (
     order_id TEXT NOT NULL REFERENCES orders(order_id),
     status TEXT NOT NULL,
     approved_at TEXT,
+    reason TEXT NOT NULL,
+    version INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS delivery_proofs (
+    proof_id TEXT PRIMARY KEY,
+    order_id TEXT NOT NULL REFERENCES orders(order_id),
+    recipient TEXT,
+    proof_type TEXT NOT NULL,
+    delivered_at TEXT NOT NULL,
+    detail TEXT NOT NULL,
+    version INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS delivery_addresses (
+    address_id TEXT PRIMARY KEY,
+    order_id TEXT NOT NULL REFERENCES orders(order_id),
+    city TEXT NOT NULL,
+    masked_address TEXT NOT NULL,
+    contact_suffix TEXT NOT NULL,
+    version INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS cancellation_requests (
+    cancellation_id TEXT PRIMARY KEY,
+    order_id TEXT NOT NULL REFERENCES orders(order_id),
+    status TEXT NOT NULL,
+    requested_at TEXT NOT NULL,
+    accepted_at TEXT,
     reason TEXT NOT NULL,
     version INTEGER NOT NULL DEFAULT 1
 );

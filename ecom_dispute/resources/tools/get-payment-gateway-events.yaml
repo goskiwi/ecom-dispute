@@ -1,0 +1,21 @@
+tool_id: get_payment_gateway_events
+name: 查询支付网关事件
+description: 查询当前订单在支付网关中的授权、扣款、撤销和退款事件。
+input_schema:
+  type: object
+  additionalProperties: false
+  properties: {}
+output_schema:
+  type: object
+  additionalProperties: true
+timeout_ms: 3000
+scope_bindings:
+  order_id:
+    source: case.order_id
+    mode: RUNTIME_INJECT
+executor: get_payment_gateway_events
+result_adapter: payment_gateway_events
+error_mapping:
+  NOT_FOUND: BUSINESS_NOT_FOUND
+  INVALID_ARGUMENT: TOOL_ARGUMENT_INVALID
+

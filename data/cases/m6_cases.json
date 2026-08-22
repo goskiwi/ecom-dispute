@@ -1,0 +1,31 @@
+[
+  {"case_id":"m6_refund_amount_001","business_type":"refund_amount","scenario":"incorrect","expected":{"decision":"refund_amount_incorrect","responsible_party":"platform","review_required":false}},
+  {"case_id":"m6_refund_amount_002","business_type":"refund_amount","scenario":"credit_mismatch","expected":{"decision":"refund_credit_amount_mismatch","responsible_party":"payment_channel","review_required":true}},
+  {"case_id":"m6_refund_amount_003","business_type":"refund_amount","scenario":"correct","expected":{"decision":"refund_amount_correct","responsible_party":"none","review_required":false}},
+  {"case_id":"m6_refund_amount_004","business_type":"refund_amount","scenario":"missing_refund","expected":{"decision":"manual_review","responsible_party":"undetermined","review_required":true}},
+
+  {"case_id":"m6_duplicate_001","business_type":"duplicate_charge","scenario":"confirmed","expected":{"decision":"duplicate_charge_confirmed","responsible_party":"payment_channel","review_required":true}},
+  {"case_id":"m6_duplicate_002","business_type":"duplicate_charge","scenario":"pending","expected":{"decision":"duplicate_charge_pending_authorization","responsible_party":"none","review_required":false}},
+  {"case_id":"m6_duplicate_003","business_type":"duplicate_charge","scenario":"not_found","expected":{"decision":"duplicate_charge_not_found","responsible_party":"none","review_required":false}},
+  {"case_id":"m6_duplicate_004","business_type":"duplicate_charge","scenario":"missing_payment","expected":{"decision":"manual_review","responsible_party":"undetermined","review_required":true}},
+
+  {"case_id":"m6_payment_failed_001","business_type":"payment_order_failure","scenario":"unreversed","expected":{"decision":"captured_order_failed_unreversed","responsible_party":"platform","review_required":true}},
+  {"case_id":"m6_payment_failed_002","business_type":"payment_order_failure","scenario":"reversed_credit","expected":{"decision":"captured_order_failed_reversed","responsible_party":"none","review_required":false}},
+  {"case_id":"m6_payment_failed_003","business_type":"payment_order_failure","scenario":"reversed_refund","expected":{"decision":"captured_order_failed_reversed","responsible_party":"none","review_required":false}},
+  {"case_id":"m6_payment_failed_004","business_type":"payment_order_failure","scenario":"not_captured","expected":{"decision":"payment_order_state_conflict","responsible_party":"undetermined","review_required":true}},
+
+  {"case_id":"m6_not_shipped_001","business_type":"merchant_not_shipped","scenario":"overdue","expected":{"decision":"merchant_ship_overdue","responsible_party":"merchant","review_required":false}},
+  {"case_id":"m6_not_shipped_002","business_type":"merchant_not_shipped","scenario":"within","expected":{"decision":"merchant_ship_within_sla","responsible_party":"none","review_required":false}},
+  {"case_id":"m6_not_shipped_003","business_type":"merchant_not_shipped","scenario":"picked_up","expected":{"decision":"shipment_already_picked_up","responsible_party":"none","review_required":false}},
+  {"case_id":"m6_not_shipped_004","business_type":"merchant_not_shipped","scenario":"overdue","expected":{"decision":"merchant_ship_overdue","responsible_party":"merchant","review_required":false}},
+
+  {"case_id":"m6_not_received_001","business_type":"delivered_not_received","scenario":"disputed","expected":{"decision":"delivery_receipt_disputed","responsible_party":"undetermined","review_required":true}},
+  {"case_id":"m6_not_received_002","business_type":"delivered_not_received","scenario":"proof_missing","expected":{"decision":"delivery_proof_missing","responsible_party":"logistics_provider","review_required":true}},
+  {"case_id":"m6_not_received_003","business_type":"delivered_not_received","scenario":"not_marked","expected":{"decision":"delivery_not_marked_delivered","responsible_party":"undetermined","review_required":true}},
+  {"case_id":"m6_not_received_004","business_type":"delivered_not_received","scenario":"disputed","expected":{"decision":"delivery_receipt_disputed","responsible_party":"undetermined","review_required":true}},
+
+  {"case_id":"m6_cancel_001","business_type":"cancellation_in_transit","scenario":"before_pickup","expected":{"decision":"cancel_before_pickup_but_shipped","responsible_party":"merchant","review_required":true}},
+  {"case_id":"m6_cancel_002","business_type":"cancellation_in_transit","scenario":"after_pickup","expected":{"decision":"cancel_after_pickup","responsible_party":"none","review_required":false}},
+  {"case_id":"m6_cancel_003","business_type":"cancellation_in_transit","scenario":"completed","expected":{"decision":"cancellation_completed","responsible_party":"none","review_required":false}},
+  {"case_id":"m6_cancel_004","business_type":"cancellation_in_transit","scenario":"refund_missing","expected":{"decision":"cancellation_refund_missing","responsible_party":"platform","review_required":true}}
+]

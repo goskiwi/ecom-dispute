@@ -9,13 +9,14 @@ from ecom_dispute.resource_loader import (
     SkillLoader,
     ToolDefinitionLoader,
 )
+from ecom_dispute.skills import default_strategies
 
 
 def test_default_resources_are_typed_and_cross_validated() -> None:
     tools = ToolDefinitionLoader().load_all()
     packs = SkillLoader(
         known_tools=set(tools),
-        known_strategies={"refund_status", "delivery_delay"},
+        known_strategies=set(default_strategies()),
     ).load_all()
 
     assert set(packs) == {"funds-dispute", "fulfillment-dispute"}

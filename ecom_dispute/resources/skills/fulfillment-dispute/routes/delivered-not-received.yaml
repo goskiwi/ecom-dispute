@@ -1,0 +1,20 @@
+route_id: delivered-not-received
+name: 签收未收到
+report_type: delivered_not_received
+match:
+  description: 订单或物流显示已经签收，但用户明确否认实际收到商品。
+  business_types: [delivered_not_received]
+  positive_examples: [物流显示签收但我没收到, 快递说送达了家里没有]
+  negative_examples: [包裹仍在运输]
+start_stage: ANALYZE
+core_tools: [get_order, get_logistics_events, get_delivery_proof, get_delivery_address, read_policy]
+lazy_tools: []
+required_evidence: [conversation, order, policy]
+optional_evidence: [logistics, delivery_proof, delivery_address]
+allowed_decisions: [delivery_proof_missing, delivery_receipt_disputed, delivery_not_marked_delivered, manual_review]
+decision_strategy: delivered_not_received
+stages:
+  ANALYZE: {mode: agent, objective: 提取用户否认收货和签收陈述, instruction_file: stages/analyze.md, default_next: VERIFY}
+  VERIFY: {mode: deterministic, objective: 查询订单、物流、签收证明、地址和政策, tools: [get_order, get_logistics_events, get_delivery_proof, get_delivery_address, read_policy], default_next: DECIDE}
+  DECIDE: {mode: deterministic, objective: 核对送达事件和签收证明, default_next: FUSE_AND_REVIEW}
+  FUSE_AND_REVIEW: {mode: deterministic, objective: 生成签收争议复检任务}

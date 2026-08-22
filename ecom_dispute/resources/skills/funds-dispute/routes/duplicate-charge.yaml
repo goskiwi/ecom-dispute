@@ -1,0 +1,21 @@
+route_id: duplicate-charge
+name: 重复扣款
+report_type: duplicate_charge
+match:
+  description: 用户反馈同一订单发生两次或多次扣款。
+  business_types: [duplicate_charge]
+  positive_examples: [同一笔订单扣了两次, 银行卡重复扣款]
+  negative_examples: [退款金额少了]
+start_stage: ANALYZE
+core_tools: [get_order, get_payment_records, get_refund_records, read_policy]
+lazy_tools: [get_payment_gateway_events]
+required_evidence: [conversation, order, payment, policy]
+optional_evidence: [refund, payment_gateway]
+allowed_decisions: [duplicate_charge_confirmed, duplicate_charge_pending_authorization, duplicate_charge_not_found, manual_review]
+decision_strategy: duplicate_charge
+stages:
+  ANALYZE: {mode: agent, objective: 提取重复扣款次数和金额, instruction_file: stages/analyze.md, default_next: VERIFY}
+  VERIFY: {mode: deterministic, objective: 查询订单、支付、退款和政策, tools: [get_order, get_payment_records, get_refund_records, read_policy], default_next: DECIDE}
+  DECIDE: {mode: deterministic, objective: 关联同订单成功扣款和待处理授权, default_next: FUSE_AND_REVIEW}
+  FUSE_AND_REVIEW: {mode: deterministic, objective: 合并交易冲突并决定复检}
+
