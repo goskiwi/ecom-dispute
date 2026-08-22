@@ -180,6 +180,10 @@ uv run python -m ecom_dispute \
 
 随后破坏性升级Fact ontology，并使用8条全新v4 holdout首轮验证：Route与Has Dispute均为8/8，FactType-only Precision/Recall为90.9%/100%，InteractionAct P/R提升到用户88.9%/100%、客服100%/100%；全项Exact仍为2/8，剩余错误主要是`current/completed`边界。详见[V4 Fact Holdout报告](evals/v4_fact_holdout_report_2026-08-23.md)。
 
+Temporal v5进一步删除`temporal_status`，拆分为`fact_mode + time_relation`。16条全新holdout首轮全项11/16，用户BusinessFact P/R为88.9%/94.1%，用户InteractionAct为100%/100%。详见[V5 Temporal Holdout报告](evals/v5_temporal_holdout_report_2026-08-23.md)。
+
+共享Conversation输出的三层消融显示：GapAgent增加1条网关Evidence但不改变裁决，增量成本约4.7k输入Token；ReviewAgent增加1条复检Finding而不改确定性裁决，增量成本约4.8k输入Token。详见[V5 Agent Layer消融](evals/v5_agent_layer_ablation_report_2026-08-23.md)。
+
 ### 外部数据
 
 ABCD适配器已在官方 `abcd_v1.1.json.gz` 上实测选择50条test对话，覆盖退款、退货、物流和退货后计费场景。外部对话只用于语义和Action评测，不与本项目订单硬拼成“真实案件”。
@@ -200,3 +204,5 @@ ABCD适配器已在官方 `abcd_v1.1.json.gz` 上实测选择50条test对话，�
 ## 计划
 
 完整实施范围、真实性边界和里程碑见[EcomDispute作品集版实施计划V2.md](EcomDispute作品集版实施计划V2.md)。
+
+面试演示顺序见[三分钟Demo脚本](docs/demo_script.md)。

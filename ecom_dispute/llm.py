@@ -9,7 +9,7 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from .contracts import FactType, Polarity, SpeechAct, TemporalStatus
+from .contracts import FactMode, FactType, Polarity, SpeechAct, TimeRelation
 
 
 class BusinessFact(BaseModel):
@@ -20,7 +20,8 @@ class BusinessFact(BaseModel):
     message_index: int = Field(ge=0)
     fact_type: FactType
     polarity: Polarity
-    temporal_status: TemporalStatus
+    fact_mode: FactMode
+    time_relation: TimeRelation
 
 
 class InteractionAct(BaseModel):
@@ -104,7 +105,7 @@ class ResponsesClient:
             "只要用户明确陈述晚到、未收到、未发起、未到账或金额不符等异常，has_dispute 必须为 true，"
             "即使用户同时在询问政策；只有没有异常的状态查询或已正常解决才为 false。"
             "输出 business_facts 与 interaction_acts 两个完全独立的数组。business_facts 只包含可被订单、退款、"
-            "支付或物流系统核验的业务命题，每个事实只有一个 fact_type、polarity 和 temporal_status。"
+            "支付或物流系统核验的业务命题，每个事实包含fact_type、polarity、fact_mode和time_relation。"
             "interaction_acts 只描述说话行为：promise、action、advice、query、explanation、"
             "assertion 或 escalation。escalation 表示明确转交主管、专员或人工复核。"
             "纯查询、建议等待、正在核验、原因解释不能写入 business_facts。"
@@ -122,10 +123,14 @@ class ResponsesClient:
             "return_eligibility=是否满足退货资格；item_condition=未拆封、可二次销售等商品状态；"
             "status=查询或处理状态；other=确实无法归入上述任何类型的业务事实。"
             "不得因为旧退款/物流类型无法表达就使用other。fact_type不编码否定或言语行为。"
+            "fact_mode定义：event=扣款、创建、发起、签收等离散事件；state=金额差异、商品身份、"
+            "数量、破损、未收到等可持续状态。time_relation定义：past=离散事件已发生；"
+            "present=状态当前成立或事件当前尚未发生/正在发生；future=预期未来发生；unknown=原文无法判断。"
+            "已经发生但影响持续的事件仍标event+past；当前仍存在的商品破损、数量不符、金额差异标state+present。"
             "polarity 定义：affirmed=事实成立，negated=事实明确未发生，conflicting=金额或状态不一致，"
             "uncertain=仅询问或无法确认。"
-            "例如未到账 business_fact 是 refund_receipt + negated + current；未来会发起的 business_fact 是"
-            "refund_initiation + affirmed + future，同时 interaction_act 是 promise；查询状态只输出 query act；"
+            "例如未到账是refund_receipt+negated+state+present；未来会发起退款是"
+            "refund_initiation+affirmed+event+future，同时interaction_act是promise；查询状态只输出query act；"
             "正在核验只输出 action act；等待只输出 advice act。不要把交互行为写成业务状态。\n"
             "只要一句陈述产生了business_fact，并且不是纯query/advice/explanation，通常还应独立输出assertion act。"
             f"对话：{json.dumps(messages, ensure_ascii=False)}"

@@ -1,0 +1,16 @@
+{
+  "model": "gpt-5.6-luna",
+  "conversation_output_shared": true,
+  "cases": {
+    "m6_refund_amount_001": {
+      "core": {"decision":"refund_amount_incorrect","evidence_count":7,"finding_count":12,"incremental_input_tokens":0,"incremental_output_tokens":0,"incremental_latency_ms":0},
+      "gap": {"decision":"refund_amount_incorrect","evidence_count":8,"finding_count":13,"incremental_input_tokens":4680,"incremental_output_tokens":169,"incremental_latency_ms":9820},
+      "full": {"decision":"refund_amount_incorrect","evidence_count":8,"finding_count":13,"incremental_input_tokens":4680,"incremental_output_tokens":179,"incremental_latency_ms":20933}
+    },
+    "refund_conflict_001": {
+      "core": {"decision":"refund_record_conflict","evidence_count":7,"finding_count":17,"incremental_input_tokens":0,"incremental_output_tokens":0,"incremental_latency_ms":0},
+      "gap": {"decision":"refund_record_conflict","evidence_count":7,"finding_count":17,"incremental_input_tokens":0,"incremental_output_tokens":0,"incremental_latency_ms":0},
+      "full": {"decision":"refund_record_conflict","evidence_count":7,"finding_count":18,"incremental_input_tokens":4823,"incremental_output_tokens":463,"incremental_latency_ms":17124}
+    }
+  }
+}

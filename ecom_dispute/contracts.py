@@ -52,12 +52,16 @@ class FactType(StrEnum):
     OTHER = "other"
 
 
-class TemporalStatus(StrEnum):
+class FactMode(StrEnum):
+    EVENT = "event"
+    STATE = "state"
+
+
+class TimeRelation(StrEnum):
+    PAST = "past"
+    PRESENT = "present"
     FUTURE = "future"
-    CURRENT = "current"
-    COMPLETED = "completed"
     UNKNOWN = "unknown"
-    NOT_APPLICABLE = "not_applicable"
 
 
 class Polarity(StrEnum):
@@ -115,7 +119,8 @@ class Finding(BaseModel):
     claim: str
     fact_type: FactType | None = None
     polarity: Polarity | None = None
-    temporal_status: TemporalStatus | None = None
+    fact_mode: FactMode | None = None
+    time_relation: TimeRelation | None = None
     speech_act: SpeechAct | None = None
     quote: str | None = None
     message_index: int | None = None

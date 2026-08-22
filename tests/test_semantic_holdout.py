@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from ecom_dispute.contracts import FactType, Polarity, SpeechAct, TemporalStatus
+from ecom_dispute.contracts import FactMode, FactType, Polarity, SpeechAct, TimeRelation
 from ecom_dispute.llm import BusinessFact, ConversationSemantics, InteractionAct, LLMResult
 from ecom_dispute.semantic_holdout import evaluate_holdout
 
@@ -19,7 +19,8 @@ class FakeSemanticClient:
                         message_index=0,
                         fact_type=FactType.REFUND_RECEIPT,
                         polarity=Polarity.NEGATED,
-                        temporal_status=TemporalStatus.CURRENT,
+                        fact_mode=FactMode.STATE,
+                        time_relation=TimeRelation.PRESENT,
                     )
                 ],
                 interaction_acts=[
@@ -67,7 +68,8 @@ def test_semantic_holdout_repeats_without_exposing_oracle(tmp_path: Path) -> Non
                         {
                             "fact_type": "refund_receipt",
                             "polarity": "negated",
-                            "temporal_status": "current",
+                            "fact_mode": "state",
+                            "time_relation": "present",
                         }
                     ],
                     "expected_agent_business_facts": [],

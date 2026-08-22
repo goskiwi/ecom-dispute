@@ -1,0 +1,20 @@
+{
+  "cases": [
+    {"case_id":"v5_001","conversation":[{"speaker":"user","text":"同一订单现在仍显示两笔重复扣款。"}]},
+    {"case_id":"v5_002","conversation":[{"speaker":"user","text":"银行卡昨晚已经成功扣款。"}]},
+    {"case_id":"v5_003","conversation":[{"speaker":"user","text":"支付后订单到现在还没有创建出来。"}]},
+    {"case_id":"v5_004","conversation":[{"speaker":"user","text":"我收到的商品型号与订单不一致。"}]},
+    {"case_id":"v5_005","conversation":[{"speaker":"user","text":"订单应有三件，目前箱子里只有两件。"}]},
+    {"case_id":"v5_006","conversation":[{"speaker":"user","text":"到货的显示器屏幕现在还是裂的。"}]},
+    {"case_id":"v5_007","conversation":[{"speaker":"user","text":"衣服目前保持未拆封状态。"}]},
+    {"case_id":"v5_008","conversation":[{"speaker":"user","text":"应退500元，目前实际到账只有450元。"}]},
+    {"case_id":"v5_009","conversation":[{"speaker":"user","text":"退款到现在仍然没有入账。"}]},
+    {"case_id":"v5_010","conversation":[{"speaker":"user","text":"退款系统昨天已经完成退款。"}]},
+    {"case_id":"v5_011","conversation":[{"speaker":"user","text":"物流记录显示包裹昨天已经签收。"}]},
+    {"case_id":"v5_012","conversation":[{"speaker":"user","text":"物流显示签收，但我现在仍未收到商品。"}]},
+    {"case_id":"v5_013","conversation":[{"speaker":"user","text":"下单三天了，目前仍没有承运商揽收。"}]},
+    {"case_id":"v5_014","conversation":[{"speaker":"user","text":"我昨天已经提交退货申请。"}]},
+    {"case_id":"v5_015","conversation":[{"speaker":"user","text":"系统当前显示这件商品符合退货条件。"}]},
+    {"case_id":"v5_016","conversation":[{"speaker":"agent","text":"这笔重复扣款稍后会自动撤销。"}]}
+  ]
+}

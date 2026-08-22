@@ -5,11 +5,12 @@ from ..contracts import (
     CaseInput,
     Evidence,
     EvidenceKind,
+    FactMode,
     FactType,
     Finding,
     Polarity,
     SpeechAct,
-    TemporalStatus,
+    TimeRelation,
 )
 
 
@@ -47,7 +48,10 @@ class HeuristicConversationStub:
                         claim=text,
                         fact_type=fact_type,
                         polarity=polarity,
-                        temporal_status=self.temporal_status(text, speech_act),
+                        fact_mode=self.fact_mode(fact_type),
+                        time_relation=self.time_relation(
+                            text, speech_act, fact_type, polarity
+                        ),
                         quote=text,
                         message_index=index,
                         evidence_ids=[evidence.evidence_id],
@@ -137,16 +141,39 @@ class HeuristicConversationStub:
         return SpeechAct.ASSERTION
 
     @staticmethod
-    def temporal_status(text: str, speech_act: SpeechAct) -> TemporalStatus:
-        if speech_act in {SpeechAct.QUERY, SpeechAct.ADVICE, SpeechAct.EXPLANATION}:
-            return TemporalStatus.NOT_APPLICABLE
+    def fact_mode(fact_type: FactType) -> FactMode:
+        event_types = {
+            FactType.ORDER_CREATION,
+            FactType.PAYMENT_CHARGE,
+            FactType.PAYMENT_REVERSAL,
+            FactType.REFUND_REQUEST,
+            FactType.REFUND_INITIATION,
+            FactType.REFUND_COMPLETION,
+            FactType.DELIVERY_PICKUP,
+            FactType.DELIVERY_COMPLETION,
+            FactType.RETURN_REQUEST,
+        }
+        return FactMode.EVENT if fact_type in event_types else FactMode.STATE
+
+    @classmethod
+    def time_relation(
+        cls,
+        text: str,
+        speech_act: SpeechAct,
+        fact_type: FactType,
+        polarity: Polarity,
+    ) -> TimeRelation:
         if speech_act == SpeechAct.PROMISE:
-            return TemporalStatus.FUTURE
+            return TimeRelation.FUTURE
+        if cls.fact_mode(fact_type) == FactMode.STATE:
+            return TimeRelation.PRESENT
+        if polarity == Polarity.NEGATED or any(
+            token in text for token in ("正在", "处理中", "仍", "一直", "还没", "未")
+        ):
+            return TimeRelation.PRESENT
         if any(
             token in text
-            for token in ("已经", "已完成", "已送达", "到账了", "扣了", "收到", "到货")
+            for token in ("已经", "成功", "完成", "送达", "签收", "扣了", "收到", "到货")
         ):
-            return TemporalStatus.COMPLETED
-        if any(token in text for token in ("正在", "处理中", "仍", "一直", "还没", "未")):
-            return TemporalStatus.CURRENT
-        return TemporalStatus.UNKNOWN
+            return TimeRelation.PAST
+        return TimeRelation.UNKNOWN

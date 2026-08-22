@@ -133,7 +133,7 @@ def evaluate_holdout(
         evaluated_results, "agent_interaction_acts"
     )
     return {
-        "schema_version": 4,
+        "schema_version": 5,
         "mode": "semantic_holdout",
         "case_count": len(inputs),
         "repeats": repeats,
@@ -163,19 +163,21 @@ def evaluate_holdout(
     }
 
 
-def _business_fact_key(item: BusinessFact) -> tuple[str, str, str]:
+def _business_fact_key(item: BusinessFact) -> tuple[str, str, str, str]:
     return (
         item.fact_type.value,
         item.polarity.value,
-        item.temporal_status.value,
+        item.fact_mode.value,
+        item.time_relation.value,
     )
 
 
-def _oracle_business_fact_key(item: dict) -> tuple[str, str, str]:
+def _oracle_business_fact_key(item: dict) -> tuple[str, str, str, str]:
     return (
         item["fact_type"],
         item["polarity"],
-        item["temporal_status"],
+        item["fact_mode"],
+        item["time_relation"],
     )
 
 

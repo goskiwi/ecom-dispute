@@ -3,7 +3,7 @@ import asyncio
 import pytest
 
 from ecom_dispute.agents import ConversationAgent
-from ecom_dispute.contracts import FactType, Polarity, SpeechAct, TemporalStatus
+from ecom_dispute.contracts import FactMode, FactType, Polarity, SpeechAct, TimeRelation
 from ecom_dispute.llm import BusinessFact, ConversationSemantics, InteractionAct, LLMResult
 from ecom_dispute.repository import Repository, rebuild_database
 
@@ -51,7 +51,8 @@ def _fact(quote: str, message_index: int = 0) -> BusinessFact:
         message_index=message_index,
         fact_type=FactType.REFUND_RECEIPT,
         polarity=Polarity.NEGATED,
-        temporal_status=TemporalStatus.CURRENT,
+        fact_mode=FactMode.STATE,
+        time_relation=TimeRelation.PRESENT,
     )
 
 

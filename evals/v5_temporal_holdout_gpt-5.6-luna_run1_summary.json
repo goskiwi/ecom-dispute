@@ -1,0 +1,20 @@
+{
+  "schema_version": 5,
+  "model": "gpt-5.6-luna",
+  "case_count": 16,
+  "evaluated": 16,
+  "api_errors": 0,
+  "full_exact_match": 11,
+  "full_exact_match_rate": 0.6875,
+  "route_type_accuracy": 0.875,
+  "has_dispute_accuracy": 0.875,
+  "user_business_fact_precision": 0.8888888889,
+  "user_business_fact_recall": 0.9411764706,
+  "user_interaction_act_precision": 1.0,
+  "user_interaction_act_recall": 1.0,
+  "agent_interaction_act_precision": 0.5,
+  "agent_interaction_act_recall": 1.0,
+  "input_tokens": 92410,
+  "output_tokens": 3280,
+  "latency_ms": 212051
+}

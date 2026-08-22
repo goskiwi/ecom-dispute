@@ -1133,13 +1133,7 @@ def _seed_m6_cases(connection: sqlite3.Connection) -> None:
                 order_id,
                 business_type,
                 current_time,
-                json.dumps(
-                    [
-                        {"speaker": "user", "text": f"请处理{case_id}对应的争议。"},
-                        {"speaker": "agent", "text": "我正在核验业务记录。"},
-                    ],
-                    ensure_ascii=False,
-                ),
+                json.dumps(_m6_conversation(business_type, scenario), ensure_ascii=False),
             ),
         )
         connection.execute(
@@ -1159,6 +1153,25 @@ def _seed_m6_cases(connection: sqlite3.Connection) -> None:
             _seed_m6_delivery_receipt(connection, index, order_id, scenario)
         elif business_type == "cancellation_in_transit":
             _seed_m6_cancellation(connection, index, order_id, scenario)
+
+
+def _m6_conversation(business_type: str, scenario: str) -> list[dict[str, str]]:
+    user_text = {
+        "refund_amount": "订单实付199元，但退款和实际到账金额对不上。",
+        "duplicate_charge": "同一个订单在银行卡账单里出现了两笔扣款。",
+        "payment_order_failure": "银行卡已经扣款，但订单页面显示创建失败。",
+        "merchant_not_shipped": "下单后一直没有承运商揽收记录。",
+        "delivered_not_received": "物流显示已经签收，但我和家人都没有收到商品。",
+        "cancellation_in_transit": "我提交取消申请后包裹仍然进入了运输。",
+    }[business_type]
+    if scenario == "pending":
+        user_text = "同一订单有一笔成功扣款和一笔待处理扣款。"
+    if scenario == "not_found":
+        user_text = "我怀疑订单重复扣款，请核验支付流水。"
+    return [
+        {"speaker": "user", "text": user_text},
+        {"speaker": "agent", "text": "我正在核验相关业务记录。"},
+    ]
 
 
 def _seed_m6_refund_amount(

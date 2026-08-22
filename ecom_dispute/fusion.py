@@ -10,7 +10,7 @@ from .contracts import (
     FactType,
     Finding,
     Polarity,
-    TemporalStatus,
+    TimeRelation,
 )
 from .skills import DecisionOutcome, ResolvedRoute
 
@@ -88,7 +88,16 @@ class EvidenceFusion:
     def _validated_findings(state: CaseState) -> list[Finding]:
         available = set(state.evidence)
         seen: set[
-            tuple[str, str, str | None, str | None, str | None, str | None, tuple[str, ...]]
+            tuple[
+                str,
+                str,
+                str | None,
+                str | None,
+                str | None,
+                str | None,
+                str | None,
+                tuple[str, ...],
+            ]
         ] = set()
         validated: list[Finding] = []
         for finding in state.findings:
@@ -99,7 +108,8 @@ class EvidenceFusion:
                 finding.claim,
                 finding.fact_type.value if finding.fact_type else None,
                 finding.polarity.value if finding.polarity else None,
-                finding.temporal_status.value if finding.temporal_status else None,
+                finding.fact_mode.value if finding.fact_mode else None,
+                finding.time_relation.value if finding.time_relation else None,
                 finding.speech_act.value if finding.speech_act else None,
                 tuple(sorted(finding.evidence_ids)),
             )
@@ -144,27 +154,27 @@ class EvidenceFusion:
                     (
                         finding.fact_type == FactType.REFUND_INITIATION
                         and finding.polarity == Polarity.AFFIRMED
-                        and finding.temporal_status
-                        in {TemporalStatus.CURRENT, TemporalStatus.COMPLETED}
+                        and finding.time_relation
+                        in {TimeRelation.PRESENT, TimeRelation.PAST}
                     )
                     or (
                         finding.fact_type == FactType.REFUND_PROCESSING
                         and finding.polarity == Polarity.AFFIRMED
-                        and finding.temporal_status == TemporalStatus.CURRENT
+                        and finding.time_relation == TimeRelation.PRESENT
                     )
                 ):
                     conflict = "客服称退款已进入处理链路，但业务系统不存在退款记录"
                 elif (
                     finding.fact_type == FactType.REFUND_COMPLETION
                     and finding.polarity == Polarity.AFFIRMED
-                    and finding.temporal_status == TemporalStatus.COMPLETED
+                    and finding.time_relation == TimeRelation.PAST
                     and not succeeded_refund
                 ):
                     conflict = "客服称退款已完成，但退款系统不存在成功记录"
                 elif (
                     finding.fact_type == FactType.DELIVERY_COMPLETION
                     and finding.polarity == Polarity.AFFIRMED
-                    and finding.temporal_status == TemporalStatus.COMPLETED
+                    and finding.time_relation == TimeRelation.PAST
                     and not delivered_events
                 ):
                     conflict = "客服称包裹已送达，但物流系统不存在送达事件"
@@ -172,7 +182,7 @@ class EvidenceFusion:
                 finding.category == "user_business_fact"
                 and finding.fact_type == FactType.REFUND_RECEIPT
                 and finding.polarity == Polarity.NEGATED
-                and finding.temporal_status == TemporalStatus.CURRENT
+                and finding.time_relation == TimeRelation.PRESENT
                 and matching_credit
             ):
                 conflict = "用户称退款未到账，但支付系统存在成功入账记录"
@@ -180,7 +190,7 @@ class EvidenceFusion:
                 finding.category == "user_business_fact"
                 and finding.fact_type == FactType.REFUND_INITIATION
                 and finding.polarity == Polarity.NEGATED
-                and finding.temporal_status == TemporalStatus.CURRENT
+                and finding.time_relation == TimeRelation.PRESENT
                 and refunds
             ):
                 conflict = "用户称退款未发起，但退款系统存在处理记录"
@@ -188,7 +198,7 @@ class EvidenceFusion:
                 finding.category == "user_business_fact"
                 and finding.fact_type == FactType.DELIVERY_RECEIPT
                 and finding.polarity == Polarity.NEGATED
-                and finding.temporal_status == TemporalStatus.CURRENT
+                and finding.time_relation == TimeRelation.PRESENT
                 and delivered_events
             ):
                 conflict = "用户称未收到货，但物流系统存在送达事件"
