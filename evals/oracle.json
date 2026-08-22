@@ -198,5 +198,105 @@
     "decision": "refund_pending_within_sla",
     "responsible_party": "none",
     "review_required": false
+  },
+  "delivery_ontime_001": {
+    "decision": "delivery_completed_on_time",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "delivery_ontime_002": {
+    "decision": "delivery_completed_on_time",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "delivery_ontime_003": {
+    "decision": "delivery_completed_on_time",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "delivery_ontime_004": {
+    "decision": "delivery_completed_on_time",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "delivery_within_001": {
+    "decision": "delivery_in_transit_within_sla",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "delivery_within_002": {
+    "decision": "delivery_in_transit_within_sla",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "delivery_within_003": {
+    "decision": "delivery_in_transit_within_sla",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "delivery_logistics_001": {
+    "decision": "delivery_delay_logistics",
+    "responsible_party": "logistics_provider",
+    "review_required": false
+  },
+  "delivery_logistics_002": {
+    "decision": "delivery_delay_logistics",
+    "responsible_party": "logistics_provider",
+    "review_required": false
+  },
+  "delivery_logistics_003": {
+    "decision": "delivery_delay_logistics",
+    "responsible_party": "logistics_provider",
+    "review_required": false
+  },
+  "delivery_logistics_004": {
+    "decision": "delivery_delay_logistics",
+    "responsible_party": "logistics_provider",
+    "review_required": false
+  },
+  "delivery_logistics_005": {
+    "decision": "delivery_delay_logistics",
+    "responsible_party": "logistics_provider",
+    "review_required": false
+  },
+  "delivery_merchant_001": {
+    "decision": "delivery_delay_merchant",
+    "responsible_party": "merchant",
+    "review_required": false
+  },
+  "delivery_merchant_002": {
+    "decision": "delivery_delay_merchant",
+    "responsible_party": "merchant",
+    "review_required": false
+  },
+  "delivery_merchant_003": {
+    "decision": "delivery_delay_merchant",
+    "responsible_party": "merchant",
+    "review_required": false
+  },
+  "delivery_force_majeure_001": {
+    "decision": "delivery_delay_force_majeure",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "delivery_force_majeure_002": {
+    "decision": "delivery_delay_force_majeure",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "delivery_conflict_001": {
+    "decision": "delivery_event_conflict",
+    "responsible_party": "undetermined",
+    "review_required": true
+  },
+  "delivery_conflict_002": {
+    "decision": "delivery_event_conflict",
+    "responsible_party": "undetermined",
+    "review_required": true
+  },
+  "delivery_late_001": {
+    "decision": "delivery_completed_late",
+    "responsible_party": "logistics_provider",
+    "review_required": false
   }
 }

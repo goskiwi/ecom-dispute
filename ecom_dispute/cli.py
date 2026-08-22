@@ -29,9 +29,7 @@ def _parser() -> argparse.ArgumentParser:
     evaluation.add_argument("--case-id", action="append", dest="case_ids")
     rescore = commands.add_parser("rescore")
     rescore.add_argument("--input", type=Path, required=True)
-    rescore.add_argument(
-        "--semantic-oracle", type=Path, default=Path("evals/semantic_oracle.json")
-    )
+    rescore.add_argument("--semantic-oracle", type=Path, default=Path("evals/semantic_oracle.json"))
     return parser
 
 

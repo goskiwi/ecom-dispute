@@ -34,23 +34,21 @@ def evaluate(
             for field in ("decision", "responsible_party", "review_required")
         }
         llm_trace = next(
-            (
-                event["telemetry"]
-                for event in report.trace
-                if event.get("agent") == "conversation"
-            ),
+            (event["telemetry"] for event in report.trace if event.get("agent") == "conversation"),
             {},
         )
-        semantic_ok = (
+        semantic_expected = semantic_oracle.get(case_id, {})
+        expected_business_type = semantic_expected.get("business_type", case.business_type)
+        business_type_ok = (
             any(
-                finding.category == "candidate_dispute_type"
-                and finding.claim == "refund_dispute"
+                finding.category == "candidate_business_type"
+                and finding.claim == expected_business_type
                 for finding in report.findings
             )
             if llm_client
             else True
         )
-        checks["semantic_route"] = semantic_ok
+        checks["business_type"] = business_type_ok
         observed_user_types = {
             finding.statement_type.value
             for finding in report.findings
@@ -64,17 +62,16 @@ def evaluate(
         observed_conversation_conflict = any(
             finding.category == "conversation_fact_conflict" for finding in report.findings
         )
-        semantic_expected = semantic_oracle.get(case_id, {})
         if llm_client and semantic_expected:
-            checks["user_claim_types"] = set(
-                semantic_expected["required_user_types"]
-            ).issubset(observed_user_types)
+            checks["has_dispute"] = llm_trace.get("has_dispute") == semantic_expected["has_dispute"]
+            checks["user_claim_types"] = set(semantic_expected["required_user_types"]).issubset(
+                observed_user_types
+            )
             checks["agent_commitment_types"] = set(
                 semantic_expected["required_agent_types"]
             ).issubset(observed_agent_types)
             checks["conversation_conflict"] = (
-                observed_conversation_conflict
-                == semantic_expected["conversation_conflict"]
+                observed_conversation_conflict == semantic_expected["conversation_conflict"]
             )
         results.append(
             {
@@ -92,9 +89,12 @@ def evaluate(
         )
     llm_calls = sum(item["llm"].get("mode") == "llm" for item in results)
     semantic_cases = [item for item in results if item["case_id"] in semantic_oracle]
+    business_type_correct = sum(
+        item["checks"].get("business_type", True) for item in semantic_cases
+    )
+    has_dispute_correct = sum(item["checks"].get("has_dispute", True) for item in semantic_cases)
     expected_user = sum(
-        len(semantic_oracle[item["case_id"]]["required_user_types"])
-        for item in semantic_cases
+        len(semantic_oracle[item["case_id"]]["required_user_types"]) for item in semantic_cases
     )
     matched_user = sum(
         len(
@@ -104,8 +104,7 @@ def evaluate(
         for item in semantic_cases
     )
     expected_agent = sum(
-        len(semantic_oracle[item["case_id"]]["required_agent_types"])
-        for item in semantic_cases
+        len(semantic_oracle[item["case_id"]]["required_agent_types"]) for item in semantic_cases
     )
     matched_agent = sum(
         len(
@@ -139,17 +138,19 @@ def evaluate(
         "output_tokens": sum(item["llm"].get("output_tokens", 0) for item in results),
         "latency_ms": sum(item["llm"].get("latency_ms", 0) for item in results),
         "semantic_metrics": {
+            "business_type_accuracy": (
+                business_type_correct / len(semantic_cases) if semantic_cases else 1.0
+            ),
+            "has_dispute_accuracy": (
+                has_dispute_correct / len(semantic_cases) if semantic_cases else 1.0
+            ),
             "user_type_recall": matched_user / expected_user if expected_user else 1.0,
             "agent_type_recall": matched_agent / expected_agent if expected_agent else 1.0,
             "conversation_conflict_precision": (
-                conflict_tp / (conflict_tp + conflict_fp)
-                if conflict_tp + conflict_fp
-                else 1.0
+                conflict_tp / (conflict_tp + conflict_fp) if conflict_tp + conflict_fp else 1.0
             ),
             "conversation_conflict_recall": (
-                conflict_tp / (conflict_tp + conflict_fn)
-                if conflict_tp + conflict_fn
-                else 1.0
+                conflict_tp / (conflict_tp + conflict_fn) if conflict_tp + conflict_fn else 1.0
             ),
             "conflict_tp": conflict_tp,
             "conflict_fp": conflict_fp,

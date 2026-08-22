@@ -45,8 +45,8 @@ def test_conflict_is_evidence_grounded(repository: Repository) -> None:
 
 def test_fixed_eval_set(repository: Repository) -> None:
     result = evaluate(repository)
-    assert result["case_count"] == 40
-    assert result["passed"] == 40
+    assert result["case_count"] == 60
+    assert result["passed"] == 60
     assert result["pass_rate"] == 1.0
 
 
@@ -83,3 +83,37 @@ def test_false_commitment_cites_negative_refund_query(repository: Repository) ->
     )
     assert any(item.startswith("query:refunds:") for item in conflict.evidence_ids)
     assert any(item.startswith("query:refunds:") for item in report.evidence_ids)
+
+
+@pytest.mark.parametrize(
+    ("case_id", "decision", "party", "review"),
+    [
+        ("delivery_ontime_001", "delivery_completed_on_time", "none", False),
+        ("delivery_within_002", "delivery_in_transit_within_sla", "none", False),
+        ("delivery_logistics_002", "delivery_delay_logistics", "logistics_provider", False),
+        ("delivery_merchant_001", "delivery_delay_merchant", "merchant", False),
+        ("delivery_force_majeure_001", "delivery_delay_force_majeure", "none", False),
+        ("delivery_conflict_001", "delivery_event_conflict", "undetermined", True),
+        ("delivery_late_001", "delivery_completed_late", "logistics_provider", False),
+    ],
+)
+def test_delivery_skill_vertical_slice(
+    repository: Repository, case_id: str, decision: str, party: str, review: bool
+) -> None:
+    report = DiagnosticHarness(repository).diagnose_sync(repository.case(case_id))
+    assert report.dispute_type == "delivery_delay"
+    assert report.decision == decision
+    assert report.responsible_party == party
+    assert report.review_required is review
+    tool_calls = {tool for event in report.trace for tool in event.get("tool_calls", [])}
+    assert tool_calls == {"get_order", "get_logistics_events", "read_policy"}
+
+
+def test_delivery_false_completion_claim_joins_logistics_evidence(
+    repository: Repository,
+) -> None:
+    report = DiagnosticHarness(repository).diagnose_sync(repository.case("delivery_conflict_001"))
+    conflict = next(
+        item for item in report.findings if item.category == "conversation_fact_conflict"
+    )
+    assert any(item.startswith("logistics_events:") for item in conflict.evidence_ids)

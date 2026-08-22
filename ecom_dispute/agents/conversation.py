@@ -59,32 +59,42 @@ class ConversationAgent:
         result = await asyncio.to_thread(self.llm_client.extract_conversation, case.conversation)
         findings = []
         for index, statement in enumerate(result.semantics.user_claims, start=1):
-            findings.append(
-                Finding(
-                    finding_id=f"llm-user-claim-{index}",
-                    category="user_claim",
-                    claim=statement.text,
-                    statement_type=statement.statement_type,
-                    evidence_ids=[evidence.evidence_id],
+            for type_index, statement_type in enumerate(statement.statement_types, start=1):
+                findings.append(
+                    Finding(
+                        finding_id=f"llm-user-claim-{index}-{type_index}",
+                        category="user_claim",
+                        claim=statement.text,
+                        statement_type=statement_type,
+                        evidence_ids=[evidence.evidence_id],
+                    )
                 )
-            )
         for index, statement in enumerate(result.semantics.agent_commitments, start=1):
-            findings.append(
-                Finding(
-                    finding_id=f"llm-agent-commitment-{index}",
-                    category="agent_commitment",
-                    claim=statement.text,
-                    statement_type=statement.statement_type,
-                    evidence_ids=[evidence.evidence_id],
+            for type_index, statement_type in enumerate(statement.statement_types, start=1):
+                findings.append(
+                    Finding(
+                        finding_id=f"llm-agent-commitment-{index}-{type_index}",
+                        category="agent_commitment",
+                        claim=statement.text,
+                        statement_type=statement_type,
+                        evidence_ids=[evidence.evidence_id],
+                    )
                 )
-            )
         findings.append(
             Finding(
-                finding_id="llm-dispute-type",
-                category="candidate_dispute_type",
-                claim=result.semantics.dispute_type,
+                finding_id="llm-business-type",
+                category="candidate_business_type",
+                claim=result.semantics.business_type,
                 evidence_ids=[evidence.evidence_id],
                 review_recommended=result.semantics.uncertainty is not None,
+            )
+        )
+        findings.append(
+            Finding(
+                finding_id="llm-has-dispute",
+                category="has_dispute",
+                claim=str(result.semantics.has_dispute).lower(),
+                evidence_ids=[evidence.evidence_id],
             )
         )
         return AgentResult(
@@ -99,12 +109,17 @@ class ConversationAgent:
                 "input_tokens": result.input_tokens,
                 "output_tokens": result.output_tokens,
                 "latency_ms": result.latency_ms,
-                "dispute_type": result.semantics.dispute_type,
+                "business_type": result.semantics.business_type,
+                "has_dispute": result.semantics.has_dispute,
                 "user_claim_types": [
-                    item.statement_type.value for item in result.semantics.user_claims
+                    statement_type.value
+                    for item in result.semantics.user_claims
+                    for statement_type in item.statement_types
                 ],
                 "agent_commitment_types": [
-                    item.statement_type.value for item in result.semantics.agent_commitments
+                    statement_type.value
+                    for item in result.semantics.agent_commitments
+                    for statement_type in item.statement_types
                 ],
                 "uncertainty": result.semantics.uncertainty,
             },
@@ -112,13 +127,23 @@ class ConversationAgent:
 
     @staticmethod
     def _offline_statement_type(text: str, is_user: bool) -> StatementType:
+        if any(token in text for token in ("没收到货", "没有收到货", "还没收到", "未收到货")):
+            return StatementType.DELIVERY_NOT_RECEIVED
+        if any(token in text for token in ("物流延迟", "配送延迟", "晚到", "超时", "超过承诺")):
+            return StatementType.DELIVERY_DELAYED
+        if any(token in text for token in ("已经送达", "已送达", "签收了", "收到货了")):
+            return StatementType.DELIVERY_COMPLETED
+        if any(token in text for token in ("承诺送达", "预计送达", "配送时限")):
+            return StatementType.DELIVERY_PROMISED
         if any(token in text for token in ("金额不", "只到账", "少退", "少了")):
             return StatementType.REFUND_AMOUNT_MISMATCH
         if any(token in text for token in ("没发起", "未发起", "没有退款流水", "没有退款记录")):
             return StatementType.REFUND_NOT_INITIATED
         if any(token in text for token in ("没到账", "未到账", "没收到", "未入账")):
             return StatementType.REFUND_NOT_RECEIVED
-        if any(token in text for token in ("已经完成", "已完成", "退款成功", "退回来了", "已经退回")):
+        if any(
+            token in text for token in ("已经完成", "已完成", "退款成功", "退回来了", "已经退回")
+        ):
             return StatementType.REFUND_COMPLETED
         if any(token in text for token in ("已经发起", "已发起", "为您申请", "申请成功")):
             return StatementType.REFUND_INITIATED

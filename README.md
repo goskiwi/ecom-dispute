@@ -9,7 +9,7 @@ EcomDispute 是一个面向电商售后争议的证据化诊断项目。当前 M
 | 能力来源 | 在 EcomDispute 中的落点 |
 |---|---|
 | 虫盯盯的诊断 Harness | CaseState、只读工具、事件时间线、证据引用、可回放 Trace |
-| 虫盯盯的 Skill 机制 | `RefundDisputeSkill` 声明适用场景、允许工具和必需证据 |
+| 虫盯盯的 Skill 机制 | `RefundDisputeSkill` 与 `DeliveryDelaySkill` 分别声明允许工具、必需证据和裁决路径 |
 | SHEIN 的多阶段质检 | 对话分析、事实核验、政策选择、结果校验与复检分流 |
 | SHEIN 的规则与事实裁决 | 对话证据、业务事实和版本化政策联合判断 |
 | SHEIN 的结果融合 | Finding 校验、去重、退款/支付冲突检测和人工复检 |
@@ -24,9 +24,9 @@ EcomDispute 是一个面向电商售后争议的证据化诊断项目。当前 M
 - `FactAgent` 与 `PolicyAgent`：并行查询独立信息源。
 - `CaseStateReducer`：确定性投影 Evidence、Finding、时间线和 Trace。
 - `EvidenceFusion`：过滤无证据 Finding、去重、检查必需证据、检测退款与支付冲突。
-- 40 个退款案例：21 个人工编写、19 个规则生成，覆盖多轮与模糊表达、错误客服承诺、未发起超时、处理中、到账超时、已完成、跨源冲突、证据缺失和历史政策版本。
+- 60 个固定案例：40 个退款、20 个物流延迟，覆盖多轮与模糊表达、错误客服承诺、政策宽限期、商家/物流责任、不可抗力和跨源冲突。
 - 单 LLM Agent Function Calling 基线：完整回传 `function_call` / `function_call_output` 历史，支持并行工具调用、严格最终 Schema、轮数预算和 Evidence ID 校验。
-- 语义 Evidence Fusion：LLM 将用户主张和客服承诺归一为 `statement_type`，代码核验客服所称退款状态与业务记录，并为 `not_found` 查询生成负向 Evidence ID。
+- 语义 Evidence Fusion：LLM 输出 `business_type + has_dispute` 和多标签 `statement_types[]`，代码核验客服所称退款/送达状态与业务记录，并为 `not_found` 查询生成负向 Evidence ID。
 
 当前的 Fact/Policy 模块是确定性专项执行器，不包装成 LLM。真实评测显示当前网关单次短请求仍约含 4.7k 输入 Token，因此先验证一次语义调用的业务收益，再通过对照实验决定是否增加 LLM 调用。
 
@@ -54,10 +54,10 @@ python -m ecom_dispute \
 ## 执行链路
 
 ```text
-Case Intake / Refund Skill
+Case Intake / Skill Router
           |
           +--> ConversationAgent -- real LLM semantic extraction
-          +--> FactAgent --------- order/payment/refund/after-sales tools
+          +--> FactAgent --------- Skill-scoped business tools
           +--> PolicyAgent ------- effective-time policy lookup
                               |
                        CaseState Reducer
@@ -78,3 +78,5 @@ LLM 只读取会话，不接触评测 Oracle。业务查询结果由工具产生
 详见 [M2 对照评测报告](evals/compare_report_2026-08-22.md) 和 [原始逐案结果](evals/compare_gpt-5.4-mini_2026-08-22.json)。
 
 M3 详见 [语义融合报告](evals/semantic_fusion_report_2026-08-22.md)、[原始首轮输出](evals/hybrid_semantic_gpt-5.4-mini_40cases_2026-08-22.json) 和 [审计后计分](evals/hybrid_semantic_rescored_40cases_2026-08-22.json)。
+
+M4 扩展为 60 个跨 Skill 案例：确定性裁决、责任方、复检、业务类型和争议存在性均为 60/60；用户/客服类型召回分别为 95.7% 和 96.7%，冲突 Precision 70%、Recall 100%，全项通过 53/60。详见 [跨 Skill 评测报告](evals/multiskill_report_2026-08-22.md)。

@@ -19,9 +19,13 @@ def rescore_semantic_run(raw_path: Path, semantic_oracle_path: Path) -> dict[str
             name: original["checks"][name]
             for name in ("decision", "responsible_party", "review_required")
         }
+        if "business_type" in original["llm"]:
+            checks["business_type"] = original["llm"]["business_type"] == expected["business_type"]
+            checks["has_dispute"] = original["llm"]["has_dispute"] == expected["has_dispute"]
+        else:
+            checks["semantic_route"] = original["llm"].get("dispute_type") == "refund_dispute"
         checks.update(
             {
-                "semantic_route": original["llm"].get("dispute_type") == "refund_dispute",
                 "user_claim_types": set(expected["required_user_types"]).issubset(user_types),
                 "agent_commitment_types": set(expected["required_agent_types"]).issubset(
                     agent_types
@@ -50,9 +54,7 @@ def rescore_semantic_run(raw_path: Path, semantic_oracle_path: Path) -> dict[str
         )
         for item in results
     )
-    expected_agent = sum(
-        len(oracle[item["case_id"]]["required_agent_types"]) for item in results
-    )
+    expected_agent = sum(len(oracle[item["case_id"]]["required_agent_types"]) for item in results)
     matched_agent = sum(
         len(
             set(oracle[item["case_id"]]["required_agent_types"])
@@ -75,6 +77,12 @@ def rescore_semantic_run(raw_path: Path, semantic_oracle_path: Path) -> dict[str
         and not item["semantics"]["conversation_conflict"]
         for item in results
     )
+    business_type_checks = [
+        item["checks"]["business_type"] for item in results if "business_type" in item["checks"]
+    ]
+    has_dispute_checks = [
+        item["checks"]["has_dispute"] for item in results if "has_dispute" in item["checks"]
+    ]
     return {
         "source_run": raw_path.name,
         "scoring": "audited_semantic_oracle",
@@ -86,17 +94,21 @@ def rescore_semantic_run(raw_path: Path, semantic_oracle_path: Path) -> dict[str
         "output_tokens": raw["output_tokens"],
         "latency_ms": raw["latency_ms"],
         "semantic_metrics": {
+            "business_type_accuracy": (
+                sum(business_type_checks) / len(business_type_checks)
+                if business_type_checks
+                else None
+            ),
+            "has_dispute_accuracy": (
+                sum(has_dispute_checks) / len(has_dispute_checks) if has_dispute_checks else None
+            ),
             "user_type_recall": matched_user / expected_user,
             "agent_type_recall": matched_agent / expected_agent,
             "conversation_conflict_precision": (
-                conflict_tp / (conflict_tp + conflict_fp)
-                if conflict_tp + conflict_fp
-                else 1.0
+                conflict_tp / (conflict_tp + conflict_fp) if conflict_tp + conflict_fp else 1.0
             ),
             "conversation_conflict_recall": (
-                conflict_tp / (conflict_tp + conflict_fn)
-                if conflict_tp + conflict_fn
-                else 1.0
+                conflict_tp / (conflict_tp + conflict_fn) if conflict_tp + conflict_fn else 1.0
             ),
             "conflict_tp": conflict_tp,
             "conflict_fp": conflict_fp,

@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS orders (
     paid_amount REAL NOT NULL,
     currency TEXT NOT NULL,
     created_at TEXT NOT NULL,
+    promised_delivery_at TEXT,
     version INTEGER NOT NULL DEFAULT 1
 );
 

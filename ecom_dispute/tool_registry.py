@@ -186,7 +186,9 @@ class ToolRegistry:
         return ToolResult(
             tool_name=tool,
             status="ok",
-            evidence=[ToolRegistry._evidence(kind, source, key_field, row, time_field) for row in rows],
+            evidence=[
+                ToolRegistry._evidence(kind, source, key_field, row, time_field) for row in rows
+            ],
         )
 
     @staticmethod

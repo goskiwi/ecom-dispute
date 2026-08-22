@@ -33,4 +33,3 @@ class PolicyAgent:
             evidence=result.evidence,
             tool_calls=["read_policy"],
         )
-

@@ -41,19 +41,21 @@ EcomDispute 是一个面向电商售后争议的多 Agent 证据化诊断系统�
 
 ### 1.2 当前可运行基线（2026-08-22）
 
-仓库已完成退款争议 M3 纵向闭环：
+仓库已完成退款与物流延迟 M4 跨 Skill 闭环：
 
-- 订单、支付、退款、售后、物流、政策 SQLite Schema 与 40 个固定案例，其中 21 个人工编写、19 个规则生成。
-- 6 个只读业务工具、CaseState Reducer、Refund Skill 和 Evidence Fusion。
+- 订单、支付、退款、售后、物流、政策 SQLite Schema 与 60 个固定案例，其中 Refund 40 个、Delivery 20 个。
+- 6 个只读业务工具、CaseState Reducer、Refund/Delivery 两个 Skill 和 Evidence Fusion。
 - Conversation/Fact/Policy 三个专项任务并行，其中 Conversation Agent 支持真实 LLM 严格结构化输出；事实与政策模块当前为确定性执行器。
 - 覆盖退款未发起超时、处理中、到账超时、已完成、退款/支付事实冲突、证据缺失和历史政策版本。
 - 单 LLM Agent Function Calling 基线，支持并行工具调用、完整历史续轮、严格 JSON Schema、轮数预算和 Evidence 引用校验。
-- LLM 将用户主张和客服承诺输出为结构化 `statement_type`，Evidence Fusion 核验退款状态承诺与业务事实；空查询生成独立负向 Evidence。
-- 16 个自动化测试通过。
+- LLM 将用户主张和客服承诺输出为 `business_type + has_dispute + statement_types[]`，Evidence Fusion 核验退款或送达承诺与业务事实；空查询生成独立负向 Evidence。
+- 25 个自动化测试通过。
 
 真实 LLM 首轮对照评测使用 `gpt-5.4-mini-2026-03-17`。Hybrid 最终裁决、责任方和复检分流为 20/20，语义路由为 19/20；单 Agent Function Calling 基线最终裁决为 14/20，全项通过 11/20。Baseline 使用 216,619 输入 Token、累计模型延迟 385,275 ms，分别约为 Hybrid 的 2.32 倍和 3.33 倍。全部失败结果及调用轨迹原样保留。
 
 M3 的 40 案例真实 LLM 首轮评测中，最终裁决、责任方和复检分流均为 40/40；用户 statement type 召回 90.7%，客服承诺类型召回 97.6%，对话-事实冲突 Precision/Recall 均为 100%，全项通过 34/40。原始模型输出与 Oracle 审计后计分分开保存，不用重跑覆盖首轮结果。
+
+M4 扩展至 60 个跨 Skill 案例。审计后 `business_type`、`has_dispute`、最终裁决、责任方和复检均为 60/60；用户/客服 statement type 召回分别为 95.7% 和 96.7%，对话-事实冲突 Precision 为 70%、Recall 为 100%，全项通过 53/60。剩余错误集中于未来、当前和完成时态混淆。
 
 实测单次短请求仍约产生 4.7k 输入 Token。M2 前保持“一次 LLM 语义分析 + 确定性事实/政策/融合”，新增 LLM Agent 必须通过相同案例、模型和总预算的对照实验说明证据完整率或语义判断存在收益。
 
