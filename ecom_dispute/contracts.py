@@ -80,7 +80,7 @@ class ToolResult(BaseModel):
 class CaseInput(BaseModel):
     case_id: str
     order_id: str
-    source_type: Literal["manual", "rule_generated"]
+    source_type: Literal["manual", "rule_generated", "e2e_blind"]
     region: str
     business_type: str
     occurred_at: datetime

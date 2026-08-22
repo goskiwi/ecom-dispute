@@ -51,7 +51,7 @@ EcomDispute 是一个面向电商售后争议的多 Agent 证据化诊断系统�
 - LLM 分别输出 `business_facts[]` 与 `interaction_acts[]`；BusinessFact 独立包含 FactType、Polarity、TemporalStatus 和逐字 quote，InteractionAct 只描述查询、动作、建议、承诺、断言与解释，Fusion 只消费业务事实。
 - Evidence Console 默认使用 live-llm；heuristic-test 仅供测试，Recorded 兼容路径已删除。
 - 持久化 Review Task 支持 pending/resolved、冲突证据、人工结论、责任方和备注。
-- 33 个自动化测试通过。
+- 35 个自动化测试通过。
 
 以下 M2-M5 指标均来自重构前的构造开发集，只保留为历史实验，不代表当前 live 主链路或独立准确率。
 
@@ -64,6 +64,8 @@ M4 扩展至 60 个跨 Skill 案例。审计后 `business_type`、`has_dispute`�
 M5 曾针对三个冲突误报增加 `temporal_status` 和原文一致性校验；M6 审计后保留时态合同、删除 live 路径中的关键词一致性校验，历史回归不再代表当前主链路。
 
 M6 新主链路已完成真实端到端冒烟。语义合同破坏性拆分为 BusinessFact 与 InteractionAct 两个数组；使用新建的 20 条未见对话运行 `gpt-5.6-luna`：Business Type 100%，用户/客服 BusinessFact F1 约 86.3%/85.7%，InteractionAct F1 约 94.7%/93.0%，全项 Exact Match 11/20；Oracle 在运行后未调整。
+
+M7 新建 20 个端到端案例并共享同一次 ConversationAgent 输出，对比 Live ToolQuery 与 Fixed Executor。19 个有效案例中两者的裁决、责任方、复检和 Evidence 均为 19/19，平均工具调用同为 4.05；ToolQuery 额外消耗 209,720 输入 Token 和 428,983 ms 模型延迟。因此默认主链路改为 Fixed Executor，ToolQuery 仅保留为显式对照模式。
 
 实测单次短请求仍约产生 4.7k 输入 Token。新主链路增加 Tool Query Agent 后仍需全量测量裁决收益与额外成本；当前 holdout 是后置编写语义集且三次重复未完成，暂不把指标写入正式简历。
 

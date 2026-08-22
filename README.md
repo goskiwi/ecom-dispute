@@ -21,7 +21,7 @@ EcomDispute 是一个面向退款与物流争议的 LLM 增强型证据化裁决
 - SQLite 中的订单、支付、退款、售后、物流和版本化政策数据。
 - 6 个只读业务工具及 Case 级查询缓存。
 - `ConversationAgent`：只负责真实 Responses API 结构化语义提取，不包含关键词降级。
-- `ToolQueryAgent`：在 live 模式中逐轮读取 CaseState，自主选择 Skill 允许的工具，并记录停止原因、Token 和延迟。
+- `ToolQueryAgent`：保留为 `--tool-mode agent` 对照模式；默认使用固定工具执行器，因为端到端盲测未观察到裁决或工具数量收益。
 - `FixedFactExecutor` 与 `PolicyResolver`：仅用于确定性测试，不称为 Agent。
 - `HeuristicConversationStub`：仅供测试，Trace 明确标记 `heuristic_test_stub`。
 - `CaseStateReducer`：确定性投影 Evidence、Finding、时间线和 Trace。
@@ -65,7 +65,7 @@ Case Intake / Skill Router
           |
      CaseState Reducer
           |
-     ToolQueryAgent ---- LLM selects read-only tools over multiple rounds
+     FixedFactExecutor + PolicyResolver -- default scoped read-only tools
           |
      CaseState Reducer after every ToolResult
                               |
@@ -91,5 +91,7 @@ M3 详见 [语义融合报告](evals/semantic_fusion_report_2026-08-22.md)、[�
 本地 Demo 默认使用 `live-llm`，必须配置模型接口；`--agent-mode heuristic-test` 只用于确定性测试。旧 Recorded Agent 和旧语义兼容层已经删除。控制台支持人工复检操作。
 
 旧 Luna 和 AtomicFact 合同结果已移入 legacy/dev。当前 split-contract 使用新建的 20 条未见对话完成 `gpt-5.6-luna` Run 1：Business Type 100%，用户/客服 BusinessFact F1 约 86.3%/85.7%，InteractionAct F1 约 94.7%/93.0%，全项 Exact Match 11/20。Oracle 在运行后未调整。详见 [Split Contract Blind Run 1](evals/semantic_holdout_split-contract_report_2026-08-22.md)。
+
+端到端 20 案例对照获得 19 个有效结果：Live ToolQuery 与 Fixed Executor 的裁决、责任方、复检、必需 Evidence 均为 19/19，平均工具调用同为 4.05；ToolQuery 额外消耗 209,720 输入 Token 和约 429 秒模型延迟。因此默认采用 Fixed Executor。详见 [E2E 对照报告](evals/e2e_blind_live-vs-fixed_report_2026-08-22.md)。
 
 M5 针对 M4 的三个冲突误报增加时态约束并完成真实 LLM 定向回归，详见 [时态回归报告](evals/temporal_regression_report_2026-08-22.md)。该回归不替代 60 案例首轮指标。

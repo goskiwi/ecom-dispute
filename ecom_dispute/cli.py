@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 
+from .e2e_evaluation import evaluate_e2e
 from .evaluation import evaluate, evaluate_baseline
 from .harness import DiagnosticHarness
 from .llm import ResponsesClient
@@ -25,6 +26,7 @@ def _parser() -> argparse.ArgumentParser:
     demo = commands.add_parser("demo")
     demo.add_argument("--case-id", required=True)
     demo.add_argument("--agent-mode", choices=["live-llm", "heuristic-test"], default="live-llm")
+    demo.add_argument("--tool-mode", choices=["fixed", "agent"], default="fixed")
     evaluation = commands.add_parser("eval")
     evaluation.add_argument(
         "--mode",
@@ -36,11 +38,16 @@ def _parser() -> argparse.ArgumentParser:
     web.add_argument("--host", default="127.0.0.1")
     web.add_argument("--port", type=int, default=8765)
     web.add_argument("--agent-mode", choices=["live-llm", "heuristic-test"], default="live-llm")
+    web.add_argument("--tool-mode", choices=["fixed", "agent"], default="fixed")
     holdout = commands.add_parser("holdout")
     holdout.add_argument("--inputs", type=Path, default=Path("data/semantic_holdout_inputs.json"))
     holdout.add_argument("--oracle", type=Path, default=Path("evals/semantic_holdout_oracle.json"))
     holdout.add_argument("--repeats", type=int, default=3)
     holdout.add_argument("--workers", type=int, default=1)
+    e2e = commands.add_parser("e2e-eval")
+    e2e.add_argument("--inputs", type=Path, default=Path("data/e2e_blind_inputs.json"))
+    e2e.add_argument("--oracle", type=Path, default=Path("evals/e2e_blind_oracle.json"))
+    e2e.add_argument("--e2e-db", type=Path, default=Path("data/e2e_blind.db"))
     return parser
 
 
@@ -57,7 +64,7 @@ def _build_harness(args: argparse.Namespace, repository: Repository) -> Diagnost
     if args.agent_mode == "heuristic-test":
         return DiagnosticHarness.heuristic_tests(repository)
     client = _llm_client(args, required=True)
-    return DiagnosticHarness.live(repository, client)
+    return DiagnosticHarness.live(repository, client, args.tool_mode)
 
 
 def main() -> None:
@@ -68,6 +75,11 @@ def main() -> None:
     if args.command == "holdout":
         client = _llm_client(args, required=True)
         result = evaluate_holdout(client, args.inputs, args.oracle, args.repeats, args.workers)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return
+    if args.command == "e2e-eval":
+        client = _llm_client(args, required=True)
+        result = evaluate_e2e(client, args.e2e_db, args.inputs, args.oracle)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return
     repository = Repository(args.db)

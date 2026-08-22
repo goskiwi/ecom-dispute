@@ -8,7 +8,7 @@
 
 ## 当前可安全使用的简历文案
 
-- 实现面向退款与物流争议的两阶段 Agent 链路：Conversation Agent 将对话拆为带 FactType、Polarity、TemporalStatus、SpeechAct 和逐字引用的原子事实；Tool Query Agent 基于逐轮 CaseState 自主选择 Skill 允许的只读工具，每批 ToolResult 经 Reducer 更新后继续查询或停止。
+- 实现面向退款与物流争议的 Conversation Agent，将对话拆为可核验 BusinessFact 与独立 InteractionAct；按 Skill 使用固定只读工具收集业务证据，每批 ToolResult 经 Reducer 更新 CaseState 后进入确定性裁决。
 - 设计 `Skill Protocol + SkillRegistry + Decision Strategy`，Refund 与 Delivery 分别拥有工具边界、必需证据和裁决规则；通用 Evidence Fusion 负责证据引用校验、Finding 去重、对话/业务冲突合并和 Trace 生成。
 - 建设订单、支付、退款、售后、物流和版本化政策六类 SQLite 查询工具，为空查询生成可引用的负向 Evidence；实现持久化人工复检任务，支持冲突证据、人工结论、责任方和备注保存。
 
@@ -21,6 +21,8 @@
 - “生产级参数修复、重试和降级”。
 
 历史 M2-M4 和旧 Luna 指标只属于旧合同实验。当前 split-contract 在 20 条项目内后置盲测对话上，用户/客服 BusinessFact F1 为 86.3%/85.7%，InteractionAct F1 为 94.7%/93.0%；可表述为固定构造集实验，不能称线上准确率。
+
+端到端后置盲测中，Fixed Executor 与 ToolQuery Agent 在 19 个有效案例上均完成 19/19 裁决，但 ToolQuery 额外消耗约 21 万输入 Token且没有减少工具调用，因此默认采用固定执行器；该负向对照可作为架构取舍说明，不写成线上准确率。
 
 ## 一分钟介绍
 

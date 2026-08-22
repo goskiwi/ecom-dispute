@@ -1,0 +1,2205 @@
+{
+  "mode": "e2e_blind_comparison",
+  "case_count": 20,
+  "evaluated": 19,
+  "api_errors": 1,
+  "live": {
+    "passed": 19,
+    "pass_rate": 1.0,
+    "decision_accuracy": 1.0,
+    "responsible_party_accuracy": 1.0,
+    "review_accuracy": 1.0,
+    "required_evidence_rate": 1.0,
+    "required_tools_rate": 1.0,
+    "evidence_grounded_rate": 1.0,
+    "average_tool_calls": 4.052631578947368,
+    "average_tool_rounds": 2.0,
+    "tool_input_tokens": 209720,
+    "tool_output_tokens": 7977,
+    "tool_latency_ms": 428983,
+    "review_true_positives": 6,
+    "predicted_reviews": 6,
+    "expected_reviews": 6,
+    "review_precision": 1.0,
+    "review_recall": 1.0
+  },
+  "fixed": {
+    "passed": 19,
+    "pass_rate": 1.0,
+    "decision_accuracy": 1.0,
+    "responsible_party_accuracy": 1.0,
+    "review_accuracy": 1.0,
+    "required_evidence_rate": 1.0,
+    "required_tools_rate": 1.0,
+    "evidence_grounded_rate": 1.0,
+    "average_tool_calls": 4.052631578947368,
+    "average_tool_rounds": 0.0,
+    "tool_input_tokens": 0,
+    "tool_output_tokens": 0,
+    "tool_latency_ms": 0,
+    "review_true_positives": 6,
+    "predicted_reviews": 6,
+    "expected_reviews": 6,
+    "review_precision": 1.0,
+    "review_recall": 1.0
+  },
+  "results": [
+    {
+      "case_id": "e2e_refund_001",
+      "business_type": "refund",
+      "conversation_telemetry": {
+        "mode": "llm",
+        "response_id": "resp_0267ad6f363b7920016a89a2329a1087d09ce54faf45f85a55",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 5390,
+        "output_tokens": 162,
+        "latency_ms": 6270,
+        "business_type": "refund",
+        "has_dispute": false,
+        "business_facts": [
+          {
+            "speaker": "user",
+            "quote": "这笔退款已经到账了。",
+            "message_index": 0,
+            "fact_type": "refund_receipt",
+            "polarity": "affirmed",
+            "temporal_status": "completed"
+          },
+          {
+            "speaker": "agent",
+            "quote": "系统也显示退款完成。",
+            "message_index": 1,
+            "fact_type": "refund_completion",
+            "polarity": "affirmed",
+            "temporal_status": "completed"
+          }
+        ],
+        "interaction_acts": [
+          {
+            "speaker": "user",
+            "quote": "这笔退款已经到账了。",
+            "message_index": 0,
+            "speech_act": "assertion"
+          },
+          {
+            "speaker": "agent",
+            "quote": "系统也显示退款完成。",
+            "message_index": 1,
+            "speech_act": "assertion"
+          }
+        ],
+        "uncertainty": null
+      },
+      "live": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "refund_completed",
+        "responsible_party": "none",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "after_sales",
+          "conversation",
+          "order",
+          "payment",
+          "policy",
+          "refund"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_after_sales_case",
+          "get_payment_records",
+          "get_refund_records",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 5,
+        "tool_rounds": 2,
+        "tool_input_tokens": 11221,
+        "tool_output_tokens": 415,
+        "tool_latency_ms": 38667
+      },
+      "fixed": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "refund_completed",
+        "responsible_party": "none",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "after_sales",
+          "conversation",
+          "order",
+          "payment",
+          "policy",
+          "refund"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_payment_records",
+          "get_refund_records",
+          "get_after_sales_case",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 5,
+        "tool_rounds": 0,
+        "tool_input_tokens": 0,
+        "tool_output_tokens": 0,
+        "tool_latency_ms": 0
+      }
+    },
+    {
+      "case_id": "e2e_refund_002",
+      "business_type": "refund",
+      "conversation_telemetry": {
+        "mode": "llm",
+        "response_id": "resp_039a3dd6c7d3b5d0016a89a260d8bc87d08ead0495fd07478d",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 5394,
+        "output_tokens": 319,
+        "latency_ms": 10395,
+        "business_type": "refund",
+        "has_dispute": true,
+        "business_facts": [
+          {
+            "speaker": "user",
+            "quote": "页面显示退款成功",
+            "message_index": 0,
+            "fact_type": "refund_completion",
+            "polarity": "affirmed",
+            "temporal_status": "current"
+          },
+          {
+            "speaker": "user",
+            "quote": "银行卡没有入账",
+            "message_index": 0,
+            "fact_type": "refund_receipt",
+            "polarity": "negated",
+            "temporal_status": "current"
+          },
+          {
+            "speaker": "agent",
+            "quote": "后台退款状态是已完成",
+            "message_index": 1,
+            "fact_type": "refund_completion",
+            "polarity": "affirmed",
+            "temporal_status": "current"
+          }
+        ],
+        "interaction_acts": [
+          {
+            "speaker": "user",
+            "quote": "页面显示退款成功，但银行卡没有入账。",
+            "message_index": 0,
+            "speech_act": "assertion"
+          },
+          {
+            "speaker": "agent",
+            "quote": "后台退款状态是已完成。",
+            "message_index": 1,
+            "speech_act": "assertion"
+          }
+        ],
+        "uncertainty": null
+      },
+      "live": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "refund_record_conflict",
+        "responsible_party": "undetermined",
+        "review_required": true,
+        "expected_review_required": true,
+        "evidence_kinds": [
+          "after_sales",
+          "conversation",
+          "order",
+          "payment",
+          "policy",
+          "refund"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_after_sales_case",
+          "get_payment_records",
+          "get_refund_records",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 5,
+        "tool_rounds": 2,
+        "tool_input_tokens": 11058,
+        "tool_output_tokens": 448,
+        "tool_latency_ms": 19032
+      },
+      "fixed": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "refund_record_conflict",
+        "responsible_party": "undetermined",
+        "review_required": true,
+        "expected_review_required": true,
+        "evidence_kinds": [
+          "after_sales",
+          "conversation",
+          "order",
+          "payment",
+          "policy",
+          "refund"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_payment_records",
+          "get_refund_records",
+          "get_after_sales_case",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 5,
+        "tool_rounds": 0,
+        "tool_input_tokens": 0,
+        "tool_output_tokens": 0,
+        "tool_latency_ms": 0
+      }
+    },
+    {
+      "case_id": "e2e_refund_003",
+      "business_type": "refund",
+      "conversation_telemetry": {
+        "mode": "llm",
+        "response_id": "resp_0e26a1ea40b6028d016a89a27df01087d0a8e0c5b91b6d3592",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 5395,
+        "output_tokens": 212,
+        "latency_ms": 8279,
+        "business_type": "refund",
+        "has_dispute": true,
+        "business_facts": [
+          {
+            "speaker": "user",
+            "quote": "退款还没发起。",
+            "message_index": 0,
+            "fact_type": "refund_initiation",
+            "polarity": "negated",
+            "temporal_status": "current"
+          }
+        ],
+        "interaction_acts": [
+          {
+            "speaker": "agent",
+            "quote": "我正在查询退款状态。",
+            "message_index": 1,
+            "speech_act": "action"
+          }
+        ],
+        "uncertainty": null
+      },
+      "live": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "refund_not_initiated_overdue",
+        "responsible_party": "platform",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "after_sales",
+          "conversation",
+          "order",
+          "payment",
+          "policy",
+          "query"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_after_sales_case",
+          "get_payment_records",
+          "get_refund_records",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 5,
+        "tool_rounds": 2,
+        "tool_input_tokens": 10949,
+        "tool_output_tokens": 459,
+        "tool_latency_ms": 22051
+      },
+      "fixed": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "refund_not_initiated_overdue",
+        "responsible_party": "platform",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "after_sales",
+          "conversation",
+          "order",
+          "payment",
+          "policy",
+          "query"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_payment_records",
+          "get_refund_records",
+          "get_after_sales_case",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 5,
+        "tool_rounds": 0,
+        "tool_input_tokens": 0,
+        "tool_output_tokens": 0,
+        "tool_latency_ms": 0
+      }
+    },
+    {
+      "case_id": "e2e_refund_004",
+      "business_type": "refund",
+      "conversation_telemetry": {
+        "mode": "llm",
+        "response_id": "resp_0557311c38807e6d016a89a29eceac87d095012c2bf2d29c92",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 5397,
+        "output_tokens": 285,
+        "latency_ms": 12040,
+        "business_type": "refund",
+        "has_dispute": true,
+        "business_facts": [
+          {
+            "speaker": "user",
+            "quote": "退款记录还没生成。",
+            "message_index": 0,
+            "fact_type": "refund_initiation",
+            "polarity": "negated",
+            "temporal_status": "current"
+          }
+        ],
+        "interaction_acts": [
+          {
+            "speaker": "user",
+            "quote": "审核刚通过一天，退款记录还没生成。",
+            "message_index": 0,
+            "speech_act": "assertion"
+          },
+          {
+            "speaker": "agent",
+            "quote": "仍在规定发起时限内。",
+            "message_index": 1,
+            "speech_act": "assertion"
+          }
+        ],
+        "uncertainty": null
+      },
+      "live": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "refund_pending_within_sla",
+        "responsible_party": "none",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "after_sales",
+          "conversation",
+          "order",
+          "payment",
+          "policy",
+          "query"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_after_sales_case",
+          "get_payment_records",
+          "get_refund_records",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 5,
+        "tool_rounds": 2,
+        "tool_input_tokens": 10949,
+        "tool_output_tokens": 424,
+        "tool_latency_ms": 27950
+      },
+      "fixed": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "refund_pending_within_sla",
+        "responsible_party": "none",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "after_sales",
+          "conversation",
+          "order",
+          "payment",
+          "policy",
+          "query"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_payment_records",
+          "get_refund_records",
+          "get_after_sales_case",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 5,
+        "tool_rounds": 0,
+        "tool_input_tokens": 0,
+        "tool_output_tokens": 0,
+        "tool_latency_ms": 0
+      }
+    },
+    {
+      "case_id": "e2e_refund_005",
+      "business_type": "refund",
+      "conversation_telemetry": {
+        "mode": "llm",
+        "response_id": "resp_0cc544ad9003ab0f016a89a2c65ff887d08d962ab8ec38b92c",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 5389,
+        "output_tokens": 302,
+        "latency_ms": 13134,
+        "business_type": "refund",
+        "has_dispute": true,
+        "business_facts": [
+          {
+            "speaker": "user",
+            "quote": "退款第三天还在处理中。",
+            "message_index": 0,
+            "fact_type": "refund_processing",
+            "polarity": "affirmed",
+            "temporal_status": "current"
+          },
+          {
+            "speaker": "agent",
+            "quote": "支付渠道正在处理。",
+            "message_index": 1,
+            "fact_type": "refund_processing",
+            "polarity": "affirmed",
+            "temporal_status": "current"
+          }
+        ],
+        "interaction_acts": [
+          {
+            "speaker": "user",
+            "quote": "退款第三天还在处理中。",
+            "message_index": 0,
+            "speech_act": "assertion"
+          },
+          {
+            "speaker": "agent",
+            "quote": "支付渠道正在处理。",
+            "message_index": 1,
+            "speech_act": "explanation"
+          }
+        ],
+        "uncertainty": null
+      },
+      "live": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "refund_processing_within_sla",
+        "responsible_party": "none",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "after_sales",
+          "conversation",
+          "order",
+          "payment",
+          "policy",
+          "refund"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_after_sales_case",
+          "get_payment_records",
+          "get_refund_records",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 5,
+        "tool_rounds": 2,
+        "tool_input_tokens": 11023,
+        "tool_output_tokens": 458,
+        "tool_latency_ms": 16451
+      },
+      "fixed": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "refund_processing_within_sla",
+        "responsible_party": "none",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "after_sales",
+          "conversation",
+          "order",
+          "payment",
+          "policy",
+          "refund"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_payment_records",
+          "get_refund_records",
+          "get_after_sales_case",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 5,
+        "tool_rounds": 0,
+        "tool_input_tokens": 0,
+        "tool_output_tokens": 0,
+        "tool_latency_ms": 0
+      }
+    },
+    {
+      "case_id": "e2e_refund_006",
+      "business_type": "refund",
+      "conversation_telemetry": {
+        "mode": "llm",
+        "response_id": "resp_015f652db87661ad016a89a2e2c4bc87d0aa5ba09f72a158c3",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 5392,
+        "output_tokens": 310,
+        "latency_ms": 10870,
+        "business_type": "refund",
+        "has_dispute": true,
+        "business_facts": [
+          {
+            "speaker": "user",
+            "quote": "退款处理九天仍未到账。",
+            "message_index": 0,
+            "fact_type": "refund_processing",
+            "polarity": "affirmed",
+            "temporal_status": "current"
+          },
+          {
+            "speaker": "user",
+            "quote": "退款处理九天仍未到账。",
+            "message_index": 0,
+            "fact_type": "refund_receipt",
+            "polarity": "negated",
+            "temporal_status": "current"
+          }
+        ],
+        "interaction_acts": [
+          {
+            "speaker": "user",
+            "quote": "退款处理九天仍未到账。",
+            "message_index": 0,
+            "speech_act": "assertion"
+          },
+          {
+            "speaker": "agent",
+            "quote": "需要向支付渠道核验。",
+            "message_index": 1,
+            "speech_act": "action"
+          }
+        ],
+        "uncertainty": null
+      },
+      "live": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "refund_arrival_overdue",
+        "responsible_party": "payment_channel",
+        "review_required": true,
+        "expected_review_required": true,
+        "evidence_kinds": [
+          "after_sales",
+          "conversation",
+          "order",
+          "payment",
+          "policy",
+          "refund"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_after_sales_case",
+          "get_payment_records",
+          "get_refund_records",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 5,
+        "tool_rounds": 2,
+        "tool_input_tokens": 11038,
+        "tool_output_tokens": 506,
+        "tool_latency_ms": 19424
+      },
+      "fixed": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "refund_arrival_overdue",
+        "responsible_party": "payment_channel",
+        "review_required": true,
+        "expected_review_required": true,
+        "evidence_kinds": [
+          "after_sales",
+          "conversation",
+          "order",
+          "payment",
+          "policy",
+          "refund"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_payment_records",
+          "get_refund_records",
+          "get_after_sales_case",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 5,
+        "tool_rounds": 0,
+        "tool_input_tokens": 0,
+        "tool_output_tokens": 0,
+        "tool_latency_ms": 0
+      }
+    },
+    {
+      "case_id": "e2e_refund_007",
+      "business_type": "refund",
+      "conversation_telemetry": {
+        "mode": "llm",
+        "response_id": "resp_04dde1a9469fb89e016a89a3018cd087d0bb8fa79d449a0fd0",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 5396,
+        "output_tokens": 422,
+        "latency_ms": 13098,
+        "business_type": "refund",
+        "has_dispute": true,
+        "business_facts": [
+          {
+            "speaker": "user",
+            "quote": "我申请了退款",
+            "message_index": 0,
+            "fact_type": "refund_request",
+            "polarity": "affirmed",
+            "temporal_status": "completed"
+          }
+        ],
+        "interaction_acts": [
+          {
+            "speaker": "user",
+            "quote": "我申请了退款，但查不到售后审核记录。",
+            "message_index": 0,
+            "speech_act": "assertion"
+          },
+          {
+            "speaker": "agent",
+            "quote": "需要补充售后信息。",
+            "message_index": 1,
+            "speech_act": "advice"
+          }
+        ],
+        "uncertainty": "售后审核记录是否存在无法确认"
+      },
+      "live": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "manual_review",
+        "responsible_party": "undetermined",
+        "review_required": true,
+        "expected_review_required": true,
+        "evidence_kinds": [
+          "conversation",
+          "order",
+          "payment",
+          "policy",
+          "query"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_after_sales_case",
+          "get_payment_records",
+          "get_refund_records",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 5,
+        "tool_rounds": 2,
+        "tool_input_tokens": 10896,
+        "tool_output_tokens": 374,
+        "tool_latency_ms": 13565
+      },
+      "fixed": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "manual_review",
+        "responsible_party": "undetermined",
+        "review_required": true,
+        "expected_review_required": true,
+        "evidence_kinds": [
+          "conversation",
+          "order",
+          "payment",
+          "policy",
+          "query"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_payment_records",
+          "get_refund_records",
+          "get_after_sales_case",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 5,
+        "tool_rounds": 0,
+        "tool_input_tokens": 0,
+        "tool_output_tokens": 0,
+        "tool_latency_ms": 0
+      }
+    },
+    {
+      "case_id": "e2e_refund_008",
+      "business_type": "refund",
+      "conversation_telemetry": {
+        "mode": "llm",
+        "response_id": "resp_0379220d5a32f031016a89a319f25887d098628d3e23dda51b",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 5396,
+        "output_tokens": 365,
+        "latency_ms": 11382,
+        "business_type": "refund",
+        "has_dispute": true,
+        "business_facts": [
+          {
+            "speaker": "user",
+            "quote": "应退三百元，实际只到账一百元。",
+            "message_index": 0,
+            "fact_type": "refund_amount",
+            "polarity": "conflicting",
+            "temporal_status": "current"
+          },
+          {
+            "speaker": "user",
+            "quote": "实际只到账一百元。",
+            "message_index": 0,
+            "fact_type": "refund_receipt",
+            "polarity": "affirmed",
+            "temporal_status": "current"
+          },
+          {
+            "speaker": "agent",
+            "quote": "系统退款显示已经完成。",
+            "message_index": 1,
+            "fact_type": "refund_completion",
+            "polarity": "affirmed",
+            "temporal_status": "completed"
+          }
+        ],
+        "interaction_acts": [
+          {
+            "speaker": "user",
+            "quote": "应退三百元，实际只到账一百元。",
+            "message_index": 0,
+            "speech_act": "assertion"
+          },
+          {
+            "speaker": "agent",
+            "quote": "系统退款显示已经完成。",
+            "message_index": 1,
+            "speech_act": "assertion"
+          }
+        ],
+        "uncertainty": null
+      },
+      "live": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "refund_record_conflict",
+        "responsible_party": "undetermined",
+        "review_required": true,
+        "expected_review_required": true,
+        "evidence_kinds": [
+          "after_sales",
+          "conversation",
+          "order",
+          "payment",
+          "policy",
+          "refund"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_payment_records",
+          "get_refund_records",
+          "get_after_sales_case",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 5,
+        "tool_rounds": 2,
+        "tool_input_tokens": 11266,
+        "tool_output_tokens": 475,
+        "tool_latency_ms": 53369
+      },
+      "fixed": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "refund_record_conflict",
+        "responsible_party": "undetermined",
+        "review_required": true,
+        "expected_review_required": true,
+        "evidence_kinds": [
+          "after_sales",
+          "conversation",
+          "order",
+          "payment",
+          "policy",
+          "refund"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_payment_records",
+          "get_refund_records",
+          "get_after_sales_case",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 5,
+        "tool_rounds": 0,
+        "tool_input_tokens": 0,
+        "tool_output_tokens": 0,
+        "tool_latency_ms": 0
+      }
+    },
+    {
+      "case_id": "e2e_refund_009",
+      "business_type": "refund",
+      "conversation_telemetry": {
+        "mode": "llm",
+        "response_id": "resp_037783ea518addd8016a89a363862c87d0aa17469da4baf4e4",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 5400,
+        "output_tokens": 378,
+        "latency_ms": 20236,
+        "business_type": "refund",
+        "has_dispute": true,
+        "business_facts": [
+          {
+            "speaker": "user",
+            "quote": "退款还没发起",
+            "message_index": 0,
+            "fact_type": "refund_initiation",
+            "polarity": "negated",
+            "temporal_status": "current"
+          }
+        ],
+        "interaction_acts": [
+          {
+            "speaker": "user",
+            "quote": "旧政策下审核通过两天，退款还没发起。",
+            "message_index": 0,
+            "speech_act": "assertion"
+          },
+          {
+            "speaker": "agent",
+            "quote": "仍在七十二小时时限内。",
+            "message_index": 1,
+            "speech_act": "explanation"
+          }
+        ],
+        "uncertainty": null
+      },
+      "live": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "refund_pending_within_sla",
+        "responsible_party": "none",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "after_sales",
+          "conversation",
+          "order",
+          "payment",
+          "policy",
+          "query"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_after_sales_case",
+          "get_payment_records",
+          "get_refund_records",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 5,
+        "tool_rounds": 2,
+        "tool_input_tokens": 10957,
+        "tool_output_tokens": 420,
+        "tool_latency_ms": 22004
+      },
+      "fixed": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "refund_pending_within_sla",
+        "responsible_party": "none",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "after_sales",
+          "conversation",
+          "order",
+          "payment",
+          "policy",
+          "query"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_payment_records",
+          "get_refund_records",
+          "get_after_sales_case",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 5,
+        "tool_rounds": 0,
+        "tool_input_tokens": 0,
+        "tool_output_tokens": 0,
+        "tool_latency_ms": 0
+      }
+    },
+    {
+      "case_id": "e2e_refund_010",
+      "business_type": "refund",
+      "conversation_telemetry": {
+        "mode": "llm",
+        "response_id": "resp_0da9a10f587aeabc016a89a385221887d0b99e4f194fae8bc2",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 5393,
+        "output_tokens": 383,
+        "latency_ms": 10220,
+        "business_type": "refund",
+        "has_dispute": true,
+        "business_facts": [
+          {
+            "speaker": "user",
+            "quote": "退款成功了",
+            "message_index": 0,
+            "fact_type": "refund_completion",
+            "polarity": "affirmed",
+            "temporal_status": "completed"
+          },
+          {
+            "speaker": "user",
+            "quote": "入账流水显示失败",
+            "message_index": 0,
+            "fact_type": "refund_receipt",
+            "polarity": "negated",
+            "temporal_status": "current"
+          },
+          {
+            "speaker": "agent",
+            "quote": "后台退款流程已完成",
+            "message_index": 1,
+            "fact_type": "refund_completion",
+            "polarity": "affirmed",
+            "temporal_status": "completed"
+          }
+        ],
+        "interaction_acts": [
+          {
+            "speaker": "user",
+            "quote": "退款成功了，但入账流水显示失败。",
+            "message_index": 0,
+            "speech_act": "assertion"
+          },
+          {
+            "speaker": "agent",
+            "quote": "后台退款流程已完成。",
+            "message_index": 1,
+            "speech_act": "assertion"
+          }
+        ],
+        "uncertainty": null
+      },
+      "live": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "refund_record_conflict",
+        "responsible_party": "undetermined",
+        "review_required": true,
+        "expected_review_required": true,
+        "evidence_kinds": [
+          "after_sales",
+          "conversation",
+          "order",
+          "payment",
+          "policy",
+          "refund"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_payment_records",
+          "get_refund_records",
+          "get_after_sales_case",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 5,
+        "tool_rounds": 2,
+        "tool_input_tokens": 11226,
+        "tool_output_tokens": 454,
+        "tool_latency_ms": 20657
+      },
+      "fixed": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "refund_record_conflict",
+        "responsible_party": "undetermined",
+        "review_required": true,
+        "expected_review_required": true,
+        "evidence_kinds": [
+          "after_sales",
+          "conversation",
+          "order",
+          "payment",
+          "policy",
+          "refund"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_payment_records",
+          "get_refund_records",
+          "get_after_sales_case",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 5,
+        "tool_rounds": 0,
+        "tool_input_tokens": 0,
+        "tool_output_tokens": 0,
+        "tool_latency_ms": 0
+      }
+    },
+    {
+      "case_id": "e2e_delivery_001",
+      "business_type": "delivery",
+      "conversation_telemetry": {
+        "mode": "llm",
+        "response_id": "resp_0127e72a3348b501016a89a3a6d85887d0b6bfc6bf242b9cd3",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 5392,
+        "output_tokens": 219,
+        "latency_ms": 10579,
+        "business_type": "delivery",
+        "has_dispute": false,
+        "business_facts": [
+          {
+            "speaker": "user",
+            "quote": "包裹已经按时收到。",
+            "message_index": 0,
+            "fact_type": "delivery_receipt",
+            "polarity": "affirmed",
+            "temporal_status": "completed"
+          },
+          {
+            "speaker": "agent",
+            "quote": "物流记录显示已签收。",
+            "message_index": 1,
+            "fact_type": "delivery_completion",
+            "polarity": "affirmed",
+            "temporal_status": "completed"
+          }
+        ],
+        "interaction_acts": [
+          {
+            "speaker": "user",
+            "quote": "包裹已经按时收到。",
+            "message_index": 0,
+            "speech_act": "assertion"
+          },
+          {
+            "speaker": "agent",
+            "quote": "物流记录显示已签收。",
+            "message_index": 1,
+            "speech_act": "assertion"
+          }
+        ],
+        "uncertainty": null
+      },
+      "live": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "delivery_completed_on_time",
+        "responsible_party": "none",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "conversation",
+          "logistics",
+          "order",
+          "policy"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_logistics_events",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 3,
+        "tool_rounds": 2,
+        "tool_input_tokens": 11140,
+        "tool_output_tokens": 381,
+        "tool_latency_ms": 21653
+      },
+      "fixed": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "delivery_completed_on_time",
+        "responsible_party": "none",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "conversation",
+          "logistics",
+          "order",
+          "policy"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_logistics_events",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 3,
+        "tool_rounds": 0,
+        "tool_input_tokens": 0,
+        "tool_output_tokens": 0,
+        "tool_latency_ms": 0
+      }
+    },
+    {
+      "case_id": "e2e_delivery_002",
+      "business_type": "delivery",
+      "conversation_telemetry": {
+        "mode": "llm",
+        "response_id": "resp_00c43822b729357d016a89a3c6b21487d0a55160270c24c4c3",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 5394,
+        "output_tokens": 441,
+        "latency_ms": 14780,
+        "business_type": "delivery",
+        "has_dispute": true,
+        "business_facts": [
+          {
+            "speaker": "user",
+            "quote": "超过预计时间十二小时还没收到。",
+            "message_index": 0,
+            "fact_type": "delivery_delay",
+            "polarity": "affirmed",
+            "temporal_status": "current"
+          },
+          {
+            "speaker": "user",
+            "quote": "超过预计时间十二小时还没收到。",
+            "message_index": 0,
+            "fact_type": "delivery_receipt",
+            "polarity": "negated",
+            "temporal_status": "current"
+          },
+          {
+            "speaker": "agent",
+            "quote": "目前仍在宽限期内。",
+            "message_index": 1,
+            "fact_type": "status",
+            "polarity": "affirmed",
+            "temporal_status": "current"
+          }
+        ],
+        "interaction_acts": [
+          {
+            "speaker": "user",
+            "quote": "超过预计时间十二小时还没收到。",
+            "message_index": 0,
+            "speech_act": "assertion"
+          },
+          {
+            "speaker": "agent",
+            "quote": "目前仍在宽限期内。",
+            "message_index": 1,
+            "speech_act": "assertion"
+          }
+        ],
+        "uncertainty": null
+      },
+      "live": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "delivery_in_transit_within_sla",
+        "responsible_party": "none",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "conversation",
+          "logistics",
+          "order",
+          "policy"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_logistics_events",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 3,
+        "tool_rounds": 2,
+        "tool_input_tokens": 11185,
+        "tool_output_tokens": 411,
+        "tool_latency_ms": 16851
+      },
+      "fixed": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "delivery_in_transit_within_sla",
+        "responsible_party": "none",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "conversation",
+          "logistics",
+          "order",
+          "policy"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_logistics_events",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 3,
+        "tool_rounds": 0,
+        "tool_input_tokens": 0,
+        "tool_output_tokens": 0,
+        "tool_latency_ms": 0
+      }
+    },
+    {
+      "case_id": "e2e_delivery_003",
+      "business_type": "delivery",
+      "conversation_telemetry": {
+        "mode": "llm",
+        "response_id": "resp_07d4bc5b36b170bb016a89a3e6902487d0b8063174139eb324",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 5394,
+        "output_tokens": 329,
+        "latency_ms": 12196,
+        "business_type": "delivery",
+        "has_dispute": true,
+        "business_facts": [
+          {
+            "speaker": "user",
+            "quote": "物流已经超过承诺时间三天。",
+            "message_index": 0,
+            "fact_type": "delivery_delay",
+            "polarity": "affirmed",
+            "temporal_status": "current"
+          },
+          {
+            "speaker": "agent",
+            "quote": "包裹仍在运输中。",
+            "message_index": 1,
+            "fact_type": "delivery_completion",
+            "polarity": "negated",
+            "temporal_status": "current"
+          }
+        ],
+        "interaction_acts": [
+          {
+            "speaker": "user",
+            "quote": "物流已经超过承诺时间三天。",
+            "message_index": 0,
+            "speech_act": "assertion"
+          },
+          {
+            "speaker": "agent",
+            "quote": "包裹仍在运输中。",
+            "message_index": 1,
+            "speech_act": "assertion"
+          }
+        ],
+        "uncertainty": null
+      },
+      "live": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "delivery_delay_logistics",
+        "responsible_party": "logistics_provider",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "conversation",
+          "logistics",
+          "order",
+          "policy"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_logistics_events",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 3,
+        "tool_rounds": 2,
+        "tool_input_tokens": 11152,
+        "tool_output_tokens": 446,
+        "tool_latency_ms": 17715
+      },
+      "fixed": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "delivery_delay_logistics",
+        "responsible_party": "logistics_provider",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "conversation",
+          "logistics",
+          "order",
+          "policy"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_logistics_events",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 3,
+        "tool_rounds": 0,
+        "tool_input_tokens": 0,
+        "tool_output_tokens": 0,
+        "tool_latency_ms": 0
+      }
+    },
+    {
+      "case_id": "e2e_delivery_004",
+      "business_type": "delivery",
+      "conversation_telemetry": {
+        "mode": "llm",
+        "response_id": "resp_0b0e04d073775e43016a89a406717c87d0b4f34d42cf693fa4",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 5399,
+        "output_tokens": 145,
+        "latency_ms": 11076,
+        "business_type": "delivery",
+        "has_dispute": true,
+        "business_facts": [
+          {
+            "speaker": "user",
+            "quote": "快递还没有揽收",
+            "message_index": 0,
+            "fact_type": "delivery_pickup",
+            "polarity": "negated",
+            "temporal_status": "current"
+          },
+          {
+            "speaker": "user",
+            "quote": "下单三天了，快递还没有揽收",
+            "message_index": 0,
+            "fact_type": "delivery_delay",
+            "polarity": "affirmed",
+            "temporal_status": "current"
+          }
+        ],
+        "interaction_acts": [
+          {
+            "speaker": "agent",
+            "quote": "正在催促商家交运。",
+            "message_index": 1,
+            "speech_act": "action"
+          }
+        ],
+        "uncertainty": null
+      },
+      "live": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "delivery_delay_merchant",
+        "responsible_party": "merchant",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "conversation",
+          "logistics",
+          "order",
+          "policy"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_logistics_events",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 3,
+        "tool_rounds": 2,
+        "tool_input_tokens": 10577,
+        "tool_output_tokens": 367,
+        "tool_latency_ms": 24238
+      },
+      "fixed": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "delivery_delay_merchant",
+        "responsible_party": "merchant",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "conversation",
+          "logistics",
+          "order",
+          "policy"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_logistics_events",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 3,
+        "tool_rounds": 0,
+        "tool_input_tokens": 0,
+        "tool_output_tokens": 0,
+        "tool_latency_ms": 0
+      }
+    },
+    {
+      "case_id": "e2e_delivery_005",
+      "business_type": "delivery",
+      "conversation_telemetry": {
+        "mode": "llm",
+        "response_id": "resp_081d19d582feed6e016a89a4258e4c87d0b35899a038333b63",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 5389,
+        "output_tokens": 440,
+        "latency_ms": 12521,
+        "business_type": "delivery",
+        "has_dispute": true,
+        "business_facts": [
+          {
+            "speaker": "user",
+            "quote": "暴雨导致物流延期。",
+            "message_index": 0,
+            "fact_type": "delivery_delay",
+            "polarity": "affirmed",
+            "temporal_status": "current"
+          }
+        ],
+        "interaction_acts": [
+          {
+            "speaker": "user",
+            "quote": "暴雨导致物流延期。",
+            "message_index": 0,
+            "speech_act": "assertion"
+          },
+          {
+            "speaker": "agent",
+            "quote": "天气恢复后继续配送。",
+            "message_index": 1,
+            "speech_act": "assertion"
+          }
+        ],
+        "uncertainty": null
+      },
+      "live": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "delivery_delay_force_majeure",
+        "responsible_party": "none",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "conversation",
+          "logistics",
+          "order",
+          "policy"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_logistics_events",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 3,
+        "tool_rounds": 2,
+        "tool_input_tokens": 11107,
+        "tool_output_tokens": 433,
+        "tool_latency_ms": 14462
+      },
+      "fixed": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "delivery_delay_force_majeure",
+        "responsible_party": "none",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "conversation",
+          "logistics",
+          "order",
+          "policy"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_logistics_events",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 3,
+        "tool_rounds": 0,
+        "tool_input_tokens": 0,
+        "tool_output_tokens": 0,
+        "tool_latency_ms": 0
+      }
+    },
+    {
+      "case_id": "e2e_delivery_006",
+      "error": "LLM request failed: [Errno 54] Connection reset by peer"
+    },
+    {
+      "case_id": "e2e_delivery_007",
+      "business_type": "delivery",
+      "conversation_telemetry": {
+        "mode": "llm",
+        "response_id": "resp_0a8d3990a228c476016a89a4576b8c87d09f8a67a33c66dbbb",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 5394,
+        "output_tokens": 368,
+        "latency_ms": 12259,
+        "business_type": "delivery",
+        "has_dispute": true,
+        "business_facts": [
+          {
+            "speaker": "user",
+            "quote": "包裹晚了两天才送到。",
+            "message_index": 0,
+            "fact_type": "delivery_delay",
+            "polarity": "affirmed",
+            "temporal_status": "completed"
+          },
+          {
+            "speaker": "user",
+            "quote": "包裹晚了两天才送到。",
+            "message_index": 0,
+            "fact_type": "delivery_receipt",
+            "polarity": "affirmed",
+            "temporal_status": "completed"
+          },
+          {
+            "speaker": "agent",
+            "quote": "系统确认已经签收。",
+            "message_index": 1,
+            "fact_type": "delivery_completion",
+            "polarity": "affirmed",
+            "temporal_status": "completed"
+          }
+        ],
+        "interaction_acts": [
+          {
+            "speaker": "user",
+            "quote": "包裹晚了两天才送到。",
+            "message_index": 0,
+            "speech_act": "assertion"
+          },
+          {
+            "speaker": "agent",
+            "quote": "系统确认已经签收。",
+            "message_index": 1,
+            "speech_act": "assertion"
+          }
+        ],
+        "uncertainty": null
+      },
+      "live": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "delivery_completed_late",
+        "responsible_party": "logistics_provider",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "conversation",
+          "logistics",
+          "order",
+          "policy"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_logistics_events",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 3,
+        "tool_rounds": 2,
+        "tool_input_tokens": 11185,
+        "tool_output_tokens": 377,
+        "tool_latency_ms": 20404
+      },
+      "fixed": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "delivery_completed_late",
+        "responsible_party": "logistics_provider",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "conversation",
+          "logistics",
+          "order",
+          "policy"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_logistics_events",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 3,
+        "tool_rounds": 0,
+        "tool_input_tokens": 0,
+        "tool_output_tokens": 0,
+        "tool_latency_ms": 0
+      }
+    },
+    {
+      "case_id": "e2e_delivery_008",
+      "business_type": "delivery",
+      "conversation_telemetry": {
+        "mode": "llm",
+        "response_id": "resp_0b1f7e3e35599a6a016a89a48071e887d0904939a5f4dd4c0e",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 5394,
+        "output_tokens": 586,
+        "latency_ms": 24386,
+        "business_type": "delivery",
+        "has_dispute": true,
+        "business_facts": [
+          {
+            "speaker": "user",
+            "quote": "物流显示包裹破损，无法继续配送。",
+            "message_index": 0,
+            "fact_type": "status",
+            "polarity": "affirmed",
+            "temporal_status": "current"
+          }
+        ],
+        "interaction_acts": [
+          {
+            "speaker": "user",
+            "quote": "物流显示包裹破损，无法继续配送。",
+            "message_index": 0,
+            "speech_act": "assertion"
+          },
+          {
+            "speaker": "agent",
+            "quote": "异常件正在处理中。",
+            "message_index": 1,
+            "speech_act": "action"
+          }
+        ],
+        "uncertainty": null
+      },
+      "live": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "delivery_delay_logistics",
+        "responsible_party": "logistics_provider",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "conversation",
+          "logistics",
+          "order",
+          "policy"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_logistics_events",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 3,
+        "tool_rounds": 2,
+        "tool_input_tokens": 11128,
+        "tool_output_tokens": 384,
+        "tool_latency_ms": 24677
+      },
+      "fixed": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "delivery_delay_logistics",
+        "responsible_party": "logistics_provider",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "conversation",
+          "logistics",
+          "order",
+          "policy"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_logistics_events",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 3,
+        "tool_rounds": 0,
+        "tool_input_tokens": 0,
+        "tool_output_tokens": 0,
+        "tool_latency_ms": 0
+      }
+    },
+    {
+      "case_id": "e2e_delivery_009",
+      "business_type": "delivery",
+      "conversation_telemetry": {
+        "mode": "llm",
+        "response_id": "resp_0991685b89b2c9fd016a89a4a7fba487d0ba9d3bd1a35a19e9",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 5396,
+        "output_tokens": 286,
+        "latency_ms": 8698,
+        "business_type": "delivery",
+        "has_dispute": true,
+        "business_facts": [
+          {
+            "speaker": "user",
+            "quote": "下单一天还没有揽收。",
+            "message_index": 0,
+            "fact_type": "delivery_pickup",
+            "polarity": "negated",
+            "temporal_status": "current"
+          }
+        ],
+        "interaction_acts": [
+          {
+            "speaker": "agent",
+            "quote": "商家仍在发货时限内。",
+            "message_index": 1,
+            "speech_act": "assertion"
+          }
+        ],
+        "uncertainty": null
+      },
+      "live": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "delivery_in_transit_within_sla",
+        "responsible_party": "none",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "conversation",
+          "logistics",
+          "order",
+          "policy"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_logistics_events",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 3,
+        "tool_rounds": 2,
+        "tool_input_tokens": 10538,
+        "tool_output_tokens": 377,
+        "tool_latency_ms": 21745
+      },
+      "fixed": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "delivery_in_transit_within_sla",
+        "responsible_party": "none",
+        "review_required": false,
+        "expected_review_required": false,
+        "evidence_kinds": [
+          "conversation",
+          "logistics",
+          "order",
+          "policy"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_logistics_events",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 3,
+        "tool_rounds": 0,
+        "tool_input_tokens": 0,
+        "tool_output_tokens": 0,
+        "tool_latency_ms": 0
+      }
+    },
+    {
+      "case_id": "e2e_delivery_010",
+      "business_type": "delivery",
+      "conversation_telemetry": {
+        "mode": "llm",
+        "response_id": "resp_088827c1fdceb58f016a89a4c8791c87d095dea67685a4cd04",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 5396,
+        "output_tokens": 390,
+        "latency_ms": 12684,
+        "business_type": "delivery",
+        "has_dispute": true,
+        "business_facts": [
+          {
+            "speaker": "user",
+            "quote": "物流已经签收",
+            "message_index": 0,
+            "fact_type": "delivery_completion",
+            "polarity": "affirmed",
+            "temporal_status": "completed"
+          },
+          {
+            "speaker": "user",
+            "quote": "订单还显示运输中",
+            "message_index": 0,
+            "fact_type": "status",
+            "polarity": "conflicting",
+            "temporal_status": "current"
+          }
+        ],
+        "interaction_acts": [
+          {
+            "speaker": "user",
+            "quote": "物流已经签收，但订单还显示运输中。",
+            "message_index": 0,
+            "speech_act": "assertion"
+          },
+          {
+            "speaker": "agent",
+            "quote": "需要核对两个系统的状态。",
+            "message_index": 1,
+            "speech_act": "action"
+          }
+        ],
+        "uncertainty": null
+      },
+      "live": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "delivery_event_conflict",
+        "responsible_party": "undetermined",
+        "review_required": true,
+        "expected_review_required": true,
+        "evidence_kinds": [
+          "conversation",
+          "logistics",
+          "order",
+          "policy"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_logistics_events",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 3,
+        "tool_rounds": 2,
+        "tool_input_tokens": 11125,
+        "tool_output_tokens": 368,
+        "tool_latency_ms": 14068
+      },
+      "fixed": {
+        "checks": {
+          "decision": true,
+          "responsible_party": true,
+          "review_required": true,
+          "required_evidence": true,
+          "required_tools": true,
+          "evidence_grounded": true
+        },
+        "passed": true,
+        "decision": "delivery_event_conflict",
+        "responsible_party": "undetermined",
+        "review_required": true,
+        "expected_review_required": true,
+        "evidence_kinds": [
+          "conversation",
+          "logistics",
+          "order",
+          "policy"
+        ],
+        "called_tools": [
+          "get_order",
+          "get_logistics_events",
+          "read_policy"
+        ],
+        "unsupported_findings": 0,
+        "tool_calls": 3,
+        "tool_rounds": 0,
+        "tool_input_tokens": 0,
+        "tool_output_tokens": 0,
+        "tool_latency_ms": 0
+      }
+    }
+  ]
+}

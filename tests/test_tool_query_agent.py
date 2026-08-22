@@ -5,6 +5,7 @@ from pathlib import Path
 from ecom_dispute.agents.tool_query import ToolQueryAgent
 from ecom_dispute.case_state import CaseStateReducer
 from ecom_dispute.contracts import CaseState
+from ecom_dispute.harness import DiagnosticHarness
 from ecom_dispute.repository import Repository, rebuild_database
 from ecom_dispute.skills import RefundDisputeSkill
 from ecom_dispute.tool_registry import ToolRegistry
@@ -82,3 +83,12 @@ def test_registry_returns_structured_invalid_arguments(tmp_path: Path) -> None:
     result = ToolRegistry(repository).execute("get_order", wrong="value")
     assert result.status == "invalid"
     assert result.error_code == "INVALID_ARGUMENTS"
+
+
+def test_live_harness_defaults_to_fixed_tools(tmp_path: Path) -> None:
+    repository = Repository(rebuild_database(tmp_path / "live-mode.db"))
+    client = FakeQueryClient()
+    fixed = DiagnosticHarness.live(repository, client)  # type: ignore[arg-type]
+    agentic = DiagnosticHarness.live(repository, client, "agent")  # type: ignore[arg-type]
+    assert fixed.tool_query_agent is None
+    assert agentic.tool_query_agent is not None

@@ -36,9 +36,17 @@ class DiagnosticHarness:
         self.tool_query_agent = tool_query_agent
 
     @classmethod
-    def live(cls, repository: Repository, llm_client: ResponsesClient) -> DiagnosticHarness:
+    def live(
+        cls,
+        repository: Repository,
+        llm_client: ResponsesClient,
+        tool_mode: str = "fixed",
+    ) -> DiagnosticHarness:
         harness = cls(repository, ConversationAgent(llm_client))
-        harness.tool_query_agent = ToolQueryAgent(llm_client, harness.registry)
+        if tool_mode == "agent":
+            harness.tool_query_agent = ToolQueryAgent(llm_client, harness.registry)
+        elif tool_mode != "fixed":
+            raise ValueError(f"unknown tool mode: {tool_mode}")
         return harness
 
     @classmethod
