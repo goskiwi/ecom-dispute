@@ -24,6 +24,10 @@ class ToolRegistry:
             "get_delivery_proof": self.get_delivery_proof,
             "get_delivery_address": self.get_delivery_address,
             "get_cancellation_request": self.get_cancellation_request,
+            "get_order_items": self.get_order_items,
+            "get_return_request": self.get_return_request,
+            "get_warehouse_pack_record": self.get_warehouse_pack_record,
+            "get_claim_attachments": self.get_claim_attachments,
             "read_policy": self.read_policy,
         }
         self._adapter_ids = {
@@ -36,6 +40,10 @@ class ToolRegistry:
             "delivery_proof",
             "delivery_address",
             "cancellation_request",
+            "order_items",
+            "return_request",
+            "warehouse_pack_record",
+            "claim_attachments",
             "policy",
         }
         self._definitions = ToolDefinitionLoader(
@@ -170,6 +178,64 @@ class ToolRegistry:
             "requested_at",
             order_id,
         )
+
+    def get_order_items(self, order_id: str) -> ToolResult:
+        return self._many(
+            "get_order_items",
+            EvidenceKind.ORDER_ITEM,
+            "order_items",
+            "order_item_id",
+            self.repository.many("order_items", order_id),
+            "",
+            order_id,
+        )
+
+    def get_return_request(self, order_id: str) -> ToolResult:
+        return self._many(
+            "get_return_request",
+            EvidenceKind.RETURN_REQUEST,
+            "return_requests",
+            "return_request_id",
+            self.repository.many("return_requests", order_id),
+            "requested_at",
+            order_id,
+        )
+
+    def get_warehouse_pack_record(self, order_id: str) -> ToolResult:
+        return self._many(
+            "get_warehouse_pack_record",
+            EvidenceKind.WAREHOUSE_PACK,
+            "warehouse_pack_records",
+            "pack_record_id",
+            self.repository.many("warehouse_pack_records", order_id),
+            "scanned_at",
+            order_id,
+        )
+
+    def get_claim_attachments(self, order_id: str) -> ToolResult:
+        rows = self.repository.many("claim_attachments", order_id)
+        if not rows:
+            return ToolResult(
+                tool_name="get_claim_attachments",
+                status="not_found",
+                evidence=[self._query_evidence("claim_attachments", order_id)],
+                message="business records not found",
+            )
+        evidence = []
+        for row in rows:
+            item = self._evidence(
+                EvidenceKind.CLAIM_ATTACHMENT,
+                "claim_attachments",
+                "attachment_id",
+                row,
+                "created_at",
+            )
+            evidence.append(
+                item.model_copy(
+                    update={"uri": row["uri"], "size_bytes": int(row["size_bytes"])}
+                )
+            )
+        return ToolResult(tool_name="get_claim_attachments", status="ok", evidence=evidence)
 
     def get_payment_records(self, order_id: str) -> ToolResult:
         return self._many(

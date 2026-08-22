@@ -24,6 +24,17 @@ CREATE TABLE IF NOT EXISTS orders (
     version INTEGER NOT NULL DEFAULT 1
 );
 
+CREATE TABLE IF NOT EXISTS order_items (
+    order_item_id TEXT PRIMARY KEY,
+    order_id TEXT NOT NULL REFERENCES orders(order_id),
+    sku_id TEXT NOT NULL,
+    product_name TEXT NOT NULL,
+    quantity INTEGER NOT NULL,
+    unit_price REAL NOT NULL,
+    category TEXT NOT NULL,
+    version INTEGER NOT NULL DEFAULT 1
+);
+
 CREATE TABLE IF NOT EXISTS logistics_events (
     event_id TEXT PRIMARY KEY,
     order_id TEXT NOT NULL REFERENCES orders(order_id),
@@ -99,6 +110,38 @@ CREATE TABLE IF NOT EXISTS cancellation_requests (
     requested_at TEXT NOT NULL,
     accepted_at TEXT,
     reason TEXT NOT NULL,
+    version INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS return_requests (
+    return_request_id TEXT PRIMARY KEY,
+    order_id TEXT NOT NULL REFERENCES orders(order_id),
+    order_item_id TEXT NOT NULL REFERENCES order_items(order_item_id),
+    status TEXT NOT NULL,
+    requested_at TEXT NOT NULL,
+    reason TEXT NOT NULL,
+    item_condition TEXT NOT NULL,
+    version INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS warehouse_pack_records (
+    pack_record_id TEXT PRIMARY KEY,
+    order_id TEXT NOT NULL REFERENCES orders(order_id),
+    sku_id TEXT NOT NULL,
+    packed_quantity INTEGER NOT NULL,
+    scanned_at TEXT NOT NULL,
+    station_id TEXT NOT NULL,
+    version INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS claim_attachments (
+    attachment_id TEXT PRIMARY KEY,
+    order_id TEXT NOT NULL REFERENCES orders(order_id),
+    attachment_type TEXT NOT NULL,
+    uri TEXT NOT NULL,
+    size_bytes INTEGER NOT NULL,
+    summary TEXT NOT NULL,
+    created_at TEXT NOT NULL,
     version INTEGER NOT NULL DEFAULT 1
 );
 

@@ -47,6 +47,10 @@ class Repository:
             "payments",
             "refunds",
             "payment_gateway_events",
+            "order_items",
+            "return_requests",
+            "warehouse_pack_records",
+            "claim_attachments",
         }:
             raise ValueError("unsupported lookup")
         with self.connect() as connection:
@@ -292,6 +296,49 @@ def _seed(connection: sqlite3.Connection) -> None:
             None,
             json.dumps({"refund_within_hours": 48}, ensure_ascii=False),
             "取消申请与揽收时间决定拦截、拒收或退回路径，受理后应在 48 小时内发起退款。",
+        ),
+        (
+            "return-eligibility-cn-standard",
+            1,
+            "CN",
+            "return_eligibility",
+            "2025-01-01T00:00:00",
+            None,
+            json.dumps(
+                {"return_window_days": 7, "excluded_categories": ["personal_care"]},
+                ensure_ascii=False,
+            ),
+            "普通商品支持七日退货，个人护理等特殊品类除外。",
+        ),
+        (
+            "wrong-item-cn-standard",
+            1,
+            "CN",
+            "wrong_item",
+            "2025-01-01T00:00:00",
+            None,
+            json.dumps({"warehouse_record_required": True}, ensure_ascii=False),
+            "错件争议需核对订单商品、仓库扫描和用户附件。",
+        ),
+        (
+            "missing-item-cn-standard",
+            1,
+            "CN",
+            "missing_item",
+            "2025-01-01T00:00:00",
+            None,
+            json.dumps({"warehouse_quantity_required": True}, ensure_ascii=False),
+            "少件争议需核对订单数量和仓库打包数量。",
+        ),
+        (
+            "damaged-item-cn-standard",
+            1,
+            "CN",
+            "damaged_item",
+            "2025-01-01T00:00:00",
+            None,
+            json.dumps({"attachment_required": True}, ensure_ascii=False),
+            "破损争议应收集商品、外包装和物流相关凭证。",
         ),
     ]
     connection.executemany("INSERT INTO policies VALUES (?, ?, ?, ?, ?, ?, ?, ?)", policies)

@@ -1,0 +1,16 @@
+route_id: damaged-item
+name: 破损商品争议
+report_type: damaged_item
+match: {description: 用户反馈商品到货破损并提供或缺少图片凭证。, business_types: [damaged_item], positive_examples: [商品到货已经碎了], negative_examples: [商品型号发错了]}
+start_stage: ANALYZE
+core_tools: [get_order, get_order_items, get_warehouse_pack_record, get_claim_attachments, get_logistics_events, read_policy]
+lazy_tools: []
+required_evidence: [conversation, order, order_item, policy]
+optional_evidence: [warehouse_pack, claim_attachment, logistics]
+allowed_decisions: [damaged_item_evidence_confirmed, damaged_item_attachment_missing, damaged_item_insufficient_evidence, manual_review]
+decision_strategy: damaged_item
+stages:
+  ANALYZE: {mode: agent, objective: 提取破损部位和附件陈述, instruction_file: stages/analyze.md, default_next: VERIFY}
+  VERIFY: {mode: deterministic, objective: 查询订单商品、仓库记录、附件、物流和政策, tools: [get_order, get_order_items, get_warehouse_pack_record, get_claim_attachments, get_logistics_events, read_policy], default_next: DECIDE}
+  DECIDE: {mode: deterministic, objective: 根据附件和链路证据判断处理路径, default_next: FUSE_AND_REVIEW}
+  FUSE_AND_REVIEW: {mode: deterministic, objective: 创建必要的商品凭证复检}

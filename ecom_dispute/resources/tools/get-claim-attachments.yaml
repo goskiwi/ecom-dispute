@@ -1,0 +1,10 @@
+tool_id: get_claim_attachments
+name: 查询争议附件
+description: 查询当前订单的商品照片、开箱图片和其他争议附件引用。
+input_schema: {type: object, additionalProperties: false, properties: {}}
+output_schema: {type: object, additionalProperties: true}
+timeout_ms: 3000
+scope_bindings: {order_id: {source: case.order_id, mode: RUNTIME_INJECT}}
+executor: get_claim_attachments
+result_adapter: claim_attachments
+error_mapping: {NOT_FOUND: BUSINESS_NOT_FOUND, INVALID_ARGUMENT: TOOL_ARGUMENT_INVALID}

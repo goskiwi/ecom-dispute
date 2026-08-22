@@ -16,6 +16,12 @@ from .funds import (
     RefundAmountMismatchStrategy,
     RefundStatusStrategy,
 )
+from .item_after_sales import (
+    DamagedItemStrategy,
+    MissingItemStrategy,
+    ReturnEligibilityStrategy,
+    WrongItemStrategy,
+)
 
 
 def default_strategies() -> dict[str, DecisionStrategy]:
@@ -28,6 +34,10 @@ def default_strategies() -> dict[str, DecisionStrategy]:
         "merchant_not_shipped": MerchantNotShippedStrategy(),
         "delivered_not_received": DeliveredNotReceivedStrategy(),
         "cancellation_in_transit": CancellationInTransitStrategy(),
+        "return_eligibility": ReturnEligibilityStrategy(),
+        "wrong_item": WrongItemStrategy(),
+        "missing_item": MissingItemStrategy(),
+        "damaged_item": DamagedItemStrategy(),
     }
 
 

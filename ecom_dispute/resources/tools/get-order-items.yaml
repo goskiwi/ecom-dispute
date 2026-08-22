@@ -1,0 +1,11 @@
+tool_id: get_order_items
+name: 查询订单商品
+description: 查询当前订单的SKU、商品名、数量、价格和品类。
+input_schema: {type: object, additionalProperties: false, properties: {}}
+output_schema: {type: object, additionalProperties: true}
+timeout_ms: 3000
+scope_bindings: {order_id: {source: case.order_id, mode: RUNTIME_INJECT}}
+executor: get_order_items
+result_adapter: order_items
+error_mapping: {NOT_FOUND: BUSINESS_NOT_FOUND, INVALID_ARGUMENT: TOOL_ARGUMENT_INVALID}
+

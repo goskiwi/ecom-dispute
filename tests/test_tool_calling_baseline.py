@@ -84,6 +84,6 @@ def test_tool_calling_loop_replays_calls_and_validates_evidence(tmp_path: Path) 
 def test_response_tool_schemas_are_strict(tmp_path: Path) -> None:
     repository = Repository(rebuild_database(tmp_path / "tools.db"))
     tools = ToolRegistry(repository).response_tools()
-    assert len(tools) == 10
+    assert len(tools) == 14
     assert all(tool["strict"] for tool in tools)
     assert all(tool["parameters"]["additionalProperties"] is False for tool in tools)

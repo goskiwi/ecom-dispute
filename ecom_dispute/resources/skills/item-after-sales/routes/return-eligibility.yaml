@@ -1,0 +1,17 @@
+route_id: return-eligibility
+name: 退货资格
+report_type: return_eligibility
+match: {description: 判断商品是否满足退货时间、品类和状态条件。, business_types: [return_eligibility], positive_examples: [这个商品还能退吗], negative_examples: [少发了一件商品]}
+start_stage: ANALYZE
+core_tools: [get_order, get_order_items, get_return_request, read_policy]
+lazy_tools: [get_claim_attachments]
+required_evidence: [conversation, order, order_item, return_request, policy]
+optional_evidence: [claim_attachment]
+allowed_decisions: [return_eligible, return_window_expired, return_category_excluded, return_condition_ineligible, manual_review]
+decision_strategy: return_eligibility
+stages:
+  ANALYZE: {mode: agent, objective: 提取退货原因和商品状况, instruction_file: stages/analyze.md, default_next: VERIFY}
+  VERIFY: {mode: deterministic, objective: 查询订单商品、退货申请和政策, tools: [get_order, get_order_items, get_return_request, read_policy], default_next: DECIDE}
+  DECIDE: {mode: deterministic, objective: 判断时间、品类和商品状况条件, default_next: FUSE_AND_REVIEW}
+  FUSE_AND_REVIEW: {mode: deterministic, objective: 校验退货资格证据}
+

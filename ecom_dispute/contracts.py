@@ -18,6 +18,10 @@ class EvidenceKind(StrEnum):
     DELIVERY_PROOF = "delivery_proof"
     DELIVERY_ADDRESS = "delivery_address"
     CANCELLATION_REQUEST = "cancellation_request"
+    ORDER_ITEM = "order_item"
+    RETURN_REQUEST = "return_request"
+    WAREHOUSE_PACK = "warehouse_pack"
+    CLAIM_ATTACHMENT = "claim_attachment"
     POLICY = "policy"
     QUERY = "query"
 
@@ -71,6 +75,8 @@ class Evidence(BaseModel):
     occurred_at: datetime | None = None
     facts: dict[str, Any]
     summary: str
+    uri: str | None = None
+    size_bytes: int | None = None
 
 
 class ToolResult(BaseModel):

@@ -1,0 +1,11 @@
+skill_id: item-after-sales
+name: 商品售后
+entry: SKILL.md
+allowed_tools: [get_order, get_order_items, get_return_request, get_warehouse_pack_record, get_claim_attachments, get_logistics_events, read_policy]
+routes:
+  - {route_id: return-eligibility, file: routes/return-eligibility.yaml}
+  - {route_id: wrong-item, file: routes/wrong-item.yaml}
+  - {route_id: missing-item, file: routes/missing-item.yaml}
+  - {route_id: damaged-item, file: routes/damaged-item.yaml}
+limits: {max_model_turns: 8, max_tool_calls: 10, max_loaded_lazy_tools: 3, max_total_recovery_actions: 4}
+

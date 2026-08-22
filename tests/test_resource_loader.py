@@ -19,7 +19,11 @@ def test_default_resources_are_typed_and_cross_validated() -> None:
         known_strategies=set(default_strategies()),
     ).load_all()
 
-    assert set(packs) == {"funds-dispute", "fulfillment-dispute"}
+    assert set(packs) == {
+        "funds-dispute",
+        "fulfillment-dispute",
+        "item-after-sales",
+    }
     refund = packs["funds-dispute"].routes["refund-status"]
     assert refund.match.business_types == ("refund",)
     assert refund.stages["ANALYZE"].mode == "agent"
