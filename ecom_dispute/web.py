@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import json
+import threading
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import unquote, urlparse
 
+from .contracts import DecisionReport
 from .harness import DiagnosticHarness
 from .repository import Repository
 
@@ -15,44 +17,51 @@ ASSETS = Path(__file__).resolve().parent.parent / "web"
 class DemoApplication:
     def __init__(self, repository: Repository, harness: DiagnosticHarness, mode: str):
         self.repository = repository
+        self.harness = harness
         self.mode = mode
-        self._reports = {
-            case_id: harness.diagnose_sync(repository.case(case_id))
-            for case_id in repository.case_ids()
-        }
+        self._reports: dict[str, DecisionReport] = {}
+        self._run_lock = threading.Lock()
 
     def cases(self) -> list[dict]:
         cases = []
         for case_id in self.repository.case_ids():
             case = self.repository.case(case_id)
-            report = self._reports[case_id]
+            report = self._reports.get(case_id)
             review = self.repository.review_task(case_id)
             cases.append(
                 {
                     "case_id": case_id,
                     "business_type": case.business_type,
                     "source_type": case.source_type,
-                    "decision": report.decision,
-                    "responsible_party": report.responsible_party,
-                    "review_required": report.review_required,
-                    "conflict_count": len(report.conflicts),
+                    "decision": report.decision if report else None,
+                    "responsible_party": report.responsible_party if report else None,
+                    "review_required": report.review_required if report else None,
+                    "conflict_count": len(report.conflicts) if report else None,
                     "review_status": review.status if review else None,
+                    "run_status": "completed" if report else "not_run",
                 }
             )
         return cases
 
     def case(self, case_id: str) -> dict:
         case = self.repository.case(case_id)
-        report = self._reports[case_id]
+        report = self._reports.get(case_id)
         return {
             "input": case.model_dump(mode="json"),
-            "report": report.model_dump(mode="json"),
+            "report": report.model_dump(mode="json") if report else None,
             "review": (
                 self.repository.review_task(case_id).model_dump(mode="json")
                 if self.repository.review_task(case_id)
                 else None
             ),
         }
+
+    def run_case(self, case_id: str) -> dict:
+        case = self.repository.case(case_id)
+        with self._run_lock:
+            if case_id not in self._reports:
+                self._reports[case_id] = self.harness.diagnose_sync(case)
+        return self.case(case_id)
 
 
 def make_handler(application: DemoApplication) -> type[BaseHTTPRequestHandler]:
@@ -90,6 +99,15 @@ def make_handler(application: DemoApplication) -> type[BaseHTTPRequestHandler]:
 
         def do_POST(self) -> None:
             path = urlparse(self.path).path
+            if path.startswith("/api/cases/") and path.endswith("/run"):
+                case_id = unquote(path.removeprefix("/api/cases/").removesuffix("/run"))
+                try:
+                    self._json(application.run_case(case_id))
+                except KeyError:
+                    self._json({"error": "case not found"}, HTTPStatus.NOT_FOUND)
+                except (RuntimeError, ValueError) as exc:
+                    self._json({"error": str(exc)}, HTTPStatus.BAD_GATEWAY)
+                return
             if not (path.startswith("/api/reviews/") and path.endswith("/resolve")):
                 self.send_error(HTTPStatus.NOT_FOUND)
                 return

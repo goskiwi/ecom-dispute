@@ -13,7 +13,10 @@ function filterCases() {
   const query = els.search.value.trim().toLowerCase();
   state.filtered = state.cases.filter((item) => {
     const skillMatch = els.skill.value === "all" || item.business_type === els.skill.value;
-    const reviewMatch = els.review.value === "all" || (els.review.value === "review" ? item.review_required : !item.review_required);
+    const reviewMatch = els.review.value === "all"
+      || (els.review.value === "unrun" ? item.run_status === "not_run"
+        : els.review.value === "review" ? item.review_required === true
+          : item.review_required === false);
     return skillMatch && reviewMatch && (!query || `${item.case_id} ${item.decision}`.toLowerCase().includes(query));
   });
   renderCases();
@@ -28,7 +31,7 @@ function renderCases() {
   els.list.innerHTML = state.filtered.map((item) => `
     <button class="case-item ${item.case_id === state.selected ? "active" : ""}" data-case="${escapeHtml(item.case_id)}">
       <strong>${escapeHtml(item.case_id)}</strong>
-      <span class="case-meta">${escapeHtml(item.business_type)} <i class="dot"></i> ${escapeHtml(label(item.decision))}${item.review_required ? '<b class="review-flag">REVIEW</b>' : ""}</span>
+      <span class="case-meta">${escapeHtml(item.business_type)} <i class="dot"></i> ${escapeHtml(label(item.decision || "not run"))}${item.review_required ? '<b class="review-flag">REVIEW</b>' : ""}</span>
     </button>`).join("");
   els.list.querySelectorAll("[data-case]").forEach((button) => button.addEventListener("click", () => loadCase(button.dataset.case)));
 }
@@ -51,6 +54,11 @@ function renderDetail(data) {
   const input = data.input;
   const report = data.report;
   const review = data.review;
+  if (!report) {
+    els.detail.innerHTML = `<div class="detail-inner"><header class="detail-header"><div><p class="case-id">${escapeHtml(input.case_id)} · ${escapeHtml(input.source_type)}</p><h1>尚未运行</h1></div><div class="decision-state"><span>Agent模式</span><strong>${escapeHtml(label(els.runState.textContent.trim()))}</strong></div></header><div class="empty-state"><strong>按需执行单个Case</strong><p>案例列表不会触发模型调用。点击后只运行当前Case并缓存本次报告。</p><button id="run-case">运行当前Case</button></div></div>`;
+    document.querySelector("#run-case").addEventListener("click", () => runCase(input.case_id));
+    return;
+  }
   const evidenceMap = Object.fromEntries(report.evidence.map((item) => [item.evidence_id, item]));
   const conflicts = report.conflicts.length
     ? report.conflicts.map((item) => `<div class="conflict">${escapeHtml(item)}</div>`).join("")
@@ -74,6 +82,26 @@ function renderDetail(data) {
   document.querySelectorAll("[data-review-action]").forEach((button) => {
     button.addEventListener("click", () => resolveReview(input.case_id, button.dataset.reviewAction));
   });
+}
+
+async function runCase(caseId) {
+  const button = document.querySelector("#run-case");
+  if (button) { button.disabled = true; button.textContent = "运行中…"; }
+  try {
+    const response = await fetch(`/api/cases/${encodeURIComponent(caseId)}/run`, { method: "POST" });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || `HTTP ${response.status}`);
+    const summary = state.cases.find((item) => item.case_id === caseId);
+    summary.decision = payload.report.decision;
+    summary.responsible_party = payload.report.responsible_party;
+    summary.review_required = payload.report.review_required;
+    summary.conflict_count = payload.report.conflicts.length;
+    summary.run_status = "completed";
+    renderCases();
+    renderDetail(payload);
+  } catch (error) {
+    els.detail.innerHTML = `<div class="error-state"><strong>Agent运行失败</strong><p>${escapeHtml(error.message)}</p></div>`;
+  }
 }
 
 function metric(name, value) { return `<div class="metric"><span>${escapeHtml(name)}</span><strong>${escapeHtml(label(value))}</strong></div>`; }
@@ -109,6 +137,9 @@ async function boot() {
     const meta = await metaResponse.json();
     els.runState.innerHTML = `<span></span> ${escapeHtml(label(meta.agent_mode))}`;
     state.cases = await response.json();
+    [...new Set(state.cases.map((item) => item.business_type))].sort().forEach((value) => {
+      els.skill.insertAdjacentHTML("beforeend", `<option value="${escapeHtml(value)}">${escapeHtml(label(value))}</option>`);
+    });
     filterCases();
     const requested = new URLSearchParams(location.search).get("case");
     await loadCase(state.cases.some((item) => item.case_id === requested) ? requested : state.cases[0].case_id);
