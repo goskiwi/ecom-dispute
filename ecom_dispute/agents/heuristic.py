@@ -5,14 +5,16 @@ from ..contracts import (
     CaseInput,
     Evidence,
     EvidenceKind,
+    FactType,
     Finding,
-    StatementType,
+    Polarity,
+    SpeechAct,
     TemporalStatus,
 )
 
 
 class HeuristicConversationStub:
-    """Deterministic test stub. Never used by the live or recorded Agent path."""
+    """Deterministic test stub. Never used by the live Agent path."""
 
     name = "conversation"
 
@@ -28,17 +30,22 @@ class HeuristicConversationStub:
         )
         findings = []
         for index, message in enumerate(case.conversation):
-            speaker = message.get("speaker")
             text = message.get("text", "").strip()
             if not text:
                 continue
+            fact_type, polarity = self.classify(text)
+            speech_act = self.speech_act(text, message["speaker"])
             findings.append(
                 Finding(
                     finding_id=f"heuristic-{index + 1}",
-                    category="user_claim" if speaker == "user" else "agent_commitment",
+                    category="user_fact" if message["speaker"] == "user" else "agent_statement",
                     claim=text,
-                    statement_type=self.statement_type(text, speaker == "user"),
-                    temporal_status=self.temporal_status(text),
+                    fact_type=fact_type,
+                    polarity=polarity,
+                    temporal_status=self.temporal_status(text, speech_act),
+                    speech_act=speech_act,
+                    quote=text,
+                    message_index=index,
                     evidence_ids=[evidence.evidence_id],
                 )
             )
@@ -50,45 +57,56 @@ class HeuristicConversationStub:
         )
 
     @staticmethod
-    def statement_type(text: str, is_user: bool) -> StatementType:
-        rules = (
-            (
-                ("没收到货", "没有收到货", "还没收到", "未收到货"),
-                StatementType.DELIVERY_NOT_RECEIVED,
-            ),
-            (("物流延迟", "配送延迟", "晚到", "超时", "超过承诺"), StatementType.DELIVERY_DELAYED),
-            (("已经送达", "已送达", "签收了", "收到货了"), StatementType.DELIVERY_COMPLETED),
-            (("承诺送达", "预计送达", "配送时限"), StatementType.DELIVERY_PROMISED),
-            (("金额不", "只到账", "少退", "少了"), StatementType.REFUND_AMOUNT_MISMATCH),
-            (
-                ("没发起", "未发起", "没有退款流水", "没有退款记录"),
-                StatementType.REFUND_NOT_INITIATED,
-            ),
-            (("没到账", "未到账", "没收到", "未入账"), StatementType.REFUND_NOT_RECEIVED),
-            (
-                ("已经完成", "已完成", "退款成功", "退回来了", "已经退回"),
-                StatementType.REFUND_COMPLETED,
-            ),
-            (("已经发起", "已发起", "为您申请", "申请成功"), StatementType.REFUND_INITIATED),
-            (("处理中", "正在处理", "支付渠道正在"), StatementType.REFUND_PROCESSING),
-        )
-        for tokens, statement_type in rules:
-            if any(token in text for token in tokens):
-                return statement_type
-        if is_user and any(token in text for token in ("申请退款", "申请过退款", "点了退款")):
-            return StatementType.REFUND_REQUESTED
-        if any(token in text for token in ("等待", "耐心", "规定时间", "预计", "排队")):
-            return StatementType.WAIT_ADVICE
+    def classify(text: str) -> tuple[FactType, Polarity]:
+        if any(token in text for token in ("没收到货", "没有收到货", "还没收到", "未收到货")):
+            return FactType.DELIVERY_RECEIPT, Polarity.NEGATED
+        if any(token in text for token in ("物流延迟", "配送延迟", "晚到", "超时", "超过承诺")):
+            return FactType.DELIVERY_DELAY, Polarity.AFFIRMED
+        if any(token in text for token in ("已经送达", "已送达", "签收了", "收到货了")):
+            return FactType.DELIVERY_COMPLETION, Polarity.AFFIRMED
+        if any(token in text for token in ("承诺送达", "预计送达", "配送时限")):
+            return FactType.DELIVERY_PROMISE, Polarity.AFFIRMED
+        if any(token in text for token in ("金额不", "只到账", "少退", "少了")):
+            return FactType.REFUND_AMOUNT, Polarity.CONFLICTING
+        if any(token in text for token in ("没发起", "未发起", "没有退款流水", "没有退款记录")):
+            return FactType.REFUND_INITIATION, Polarity.NEGATED
+        if any(token in text for token in ("没到账", "未到账", "没收到", "未入账")):
+            return FactType.REFUND_RECEIPT, Polarity.NEGATED
+        if any(token in text for token in ("已经完成", "已完成", "退款成功", "已经退回")):
+            return FactType.REFUND_COMPLETION, Polarity.AFFIRMED
+        if any(token in text for token in ("已经发起", "已发起", "为您申请", "申请成功")):
+            return FactType.REFUND_INITIATION, Polarity.AFFIRMED
+        if any(token in text for token in ("处理中", "正在处理", "支付渠道正在")):
+            return FactType.REFUND_PROCESSING, Polarity.AFFIRMED
+        if any(token in text for token in ("申请退款", "申请过退款", "点了退款")):
+            return FactType.REFUND_REQUEST, Polarity.AFFIRMED
         if any(token in text for token in ("查询", "确认", "核验", "看下", "核对")):
-            return StatementType.VERIFY_STATUS
-        return StatementType.OTHER
+            return FactType.STATUS, Polarity.UNCERTAIN
+        return FactType.OTHER, Polarity.UNCERTAIN
 
     @staticmethod
-    def temporal_status(text: str) -> TemporalStatus:
-        if any(token in text for token in ("已经", "已完成", "已送达", "收到货了", "到账了")):
-            return TemporalStatus.COMPLETED
-        if any(token in text for token in ("预计", "将", "会尽快", "会在", "请等待")):
+    def speech_act(text: str, speaker: str) -> SpeechAct:
+        if any(token in text for token in ("查询", "确认", "核验", "看下", "核对", "吗", "为什么")):
+            return SpeechAct.QUERY if speaker == "user" else SpeechAct.ACTION
+        if any(
+            token in text
+            for token in ("已经", "已发起", "已完成", "已送达", "正在", "处理中", "显示")
+        ):
+            return SpeechAct.ASSERTION
+        if any(token in text for token in ("预计", "将", "会尽快", "会在")):
+            return SpeechAct.PROMISE
+        if any(token in text for token in ("等待", "耐心")):
+            return SpeechAct.ADVICE
+        return SpeechAct.ASSERTION
+
+    @staticmethod
+    def temporal_status(text: str, speech_act: SpeechAct) -> TemporalStatus:
+        if speech_act in {SpeechAct.QUERY, SpeechAct.ADVICE, SpeechAct.EXPLANATION}:
+            return TemporalStatus.NOT_APPLICABLE
+        if speech_act == SpeechAct.PROMISE:
             return TemporalStatus.FUTURE
+        if any(token in text for token in ("已经", "已完成", "已送达", "到账了")):
+            return TemporalStatus.COMPLETED
         if any(token in text for token in ("正在", "处理中", "仍", "一直", "还没", "未")):
             return TemporalStatus.CURRENT
         return TemporalStatus.UNKNOWN

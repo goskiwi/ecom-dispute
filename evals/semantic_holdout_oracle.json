@@ -1,32 +1,698 @@
 {
-  "holdout_refund_001": {"business_type": "refund", "has_dispute": true, "expected_user_facts": [{"statement_type": "refund_not_received", "temporal_status": "current"}], "expected_agent_facts": [{"statement_type": "wait_advice", "temporal_status": "future"}]},
-  "holdout_refund_002": {"business_type": "refund", "has_dispute": false, "expected_user_facts": [{"statement_type": "refund_completed", "temporal_status": "completed"}, {"statement_type": "verify_status", "temporal_status": "current"}], "expected_agent_facts": [{"statement_type": "verify_status", "temporal_status": "current"}]},
-  "holdout_refund_003": {"business_type": "refund", "has_dispute": true, "expected_user_facts": [{"statement_type": "refund_not_initiated", "temporal_status": "current"}], "expected_agent_facts": [{"statement_type": "refund_initiated", "temporal_status": "future"}]},
-  "holdout_refund_004": {"business_type": "refund", "has_dispute": true, "expected_user_facts": [{"statement_type": "refund_completed", "temporal_status": "completed"}, {"statement_type": "refund_not_received", "temporal_status": "current"}], "expected_agent_facts": [{"statement_type": "refund_completed", "temporal_status": "completed"}]},
-  "holdout_refund_005": {"business_type": "refund", "has_dispute": true, "expected_user_facts": [{"statement_type": "refund_amount_mismatch", "temporal_status": "completed"}], "expected_agent_facts": [{"statement_type": "verify_status", "temporal_status": "future"}]},
-  "holdout_refund_006": {"business_type": "refund", "has_dispute": true, "expected_user_facts": [{"statement_type": "refund_processing", "temporal_status": "current"}], "expected_agent_facts": [{"statement_type": "refund_processing", "temporal_status": "current"}]},
-  "holdout_refund_007": {"business_type": "refund", "has_dispute": false, "expected_user_facts": [{"statement_type": "refund_requested", "temporal_status": "completed"}], "expected_agent_facts": [{"statement_type": "refund_requested", "temporal_status": "completed"}]},
-  "holdout_refund_008": {"business_type": "refund", "has_dispute": true, "expected_user_facts": [{"statement_type": "refund_initiated", "temporal_status": "future"}], "expected_agent_facts": [{"statement_type": "refund_processing", "temporal_status": "future"}]},
-  "holdout_refund_009": {"business_type": "refund", "has_dispute": false, "expected_user_facts": [{"statement_type": "verify_status", "temporal_status": "current"}], "expected_agent_facts": [{"statement_type": "verify_status", "temporal_status": "current"}]},
-  "holdout_refund_010": {"business_type": "refund", "has_dispute": true, "expected_user_facts": [{"statement_type": "refund_processing", "temporal_status": "current"}, {"statement_type": "refund_not_received", "temporal_status": "current"}], "expected_agent_facts": [{"statement_type": "verify_status", "temporal_status": "future"}]},
-  "holdout_refund_011": {"business_type": "refund", "has_dispute": true, "expected_user_facts": [{"statement_type": "refund_not_initiated", "temporal_status": "current"}], "expected_agent_facts": [{"statement_type": "refund_completed", "temporal_status": "completed"}]},
-  "holdout_refund_012": {"business_type": "refund", "has_dispute": false, "expected_user_facts": [{"statement_type": "refund_completed", "temporal_status": "completed"}, {"statement_type": "verify_status", "temporal_status": "current"}], "expected_agent_facts": [{"statement_type": "verify_status", "temporal_status": "current"}]},
-  "holdout_refund_013": {"business_type": "refund", "has_dispute": true, "expected_user_facts": [{"statement_type": "refund_not_received", "temporal_status": "current"}], "expected_agent_facts": [{"statement_type": "refund_processing", "temporal_status": "current"}]},
-  "holdout_refund_014": {"business_type": "refund", "has_dispute": false, "expected_user_facts": [{"statement_type": "other", "temporal_status": "unknown"}], "expected_agent_facts": [{"statement_type": "verify_status", "temporal_status": "current"}]},
-  "holdout_refund_015": {"business_type": "refund", "has_dispute": true, "expected_user_facts": [{"statement_type": "refund_requested", "temporal_status": "completed"}, {"statement_type": "refund_processing", "temporal_status": "current"}, {"statement_type": "refund_not_received", "temporal_status": "current"}], "expected_agent_facts": [{"statement_type": "wait_advice", "temporal_status": "future"}]},
-  "holdout_delivery_001": {"business_type": "delivery", "has_dispute": false, "expected_user_facts": [{"statement_type": "delivery_not_received", "temporal_status": "current"}, {"statement_type": "delivery_promised", "temporal_status": "future"}], "expected_agent_facts": [{"statement_type": "wait_advice", "temporal_status": "future"}]},
-  "holdout_delivery_002": {"business_type": "delivery", "has_dispute": true, "expected_user_facts": [{"statement_type": "delivery_delayed", "temporal_status": "current"}, {"statement_type": "delivery_not_received", "temporal_status": "current"}], "expected_agent_facts": [{"statement_type": "verify_status", "temporal_status": "current"}]},
-  "holdout_delivery_003": {"business_type": "delivery", "has_dispute": false, "expected_user_facts": [{"statement_type": "delivery_completed", "temporal_status": "completed"}], "expected_agent_facts": [{"statement_type": "delivery_completed", "temporal_status": "completed"}]},
-  "holdout_delivery_004": {"business_type": "delivery", "has_dispute": true, "expected_user_facts": [{"statement_type": "delivery_completed", "temporal_status": "completed"}, {"statement_type": "delivery_delayed", "temporal_status": "completed"}], "expected_agent_facts": [{"statement_type": "delivery_completed", "temporal_status": "completed"}]},
-  "holdout_delivery_005": {"business_type": "delivery", "has_dispute": true, "expected_user_facts": [{"statement_type": "delivery_delayed", "temporal_status": "current"}], "expected_agent_facts": [{"statement_type": "verify_status", "temporal_status": "current"}]},
-  "holdout_delivery_006": {"business_type": "delivery", "has_dispute": true, "expected_user_facts": [{"statement_type": "delivery_not_received", "temporal_status": "current"}], "expected_agent_facts": [{"statement_type": "delivery_completed", "temporal_status": "completed"}]},
-  "holdout_delivery_007": {"business_type": "delivery", "has_dispute": true, "expected_user_facts": [{"statement_type": "delivery_delayed", "temporal_status": "current"}], "expected_agent_facts": [{"statement_type": "delivery_promised", "temporal_status": "future"}]},
-  "holdout_delivery_008": {"business_type": "delivery", "has_dispute": true, "expected_user_facts": [{"statement_type": "delivery_not_received", "temporal_status": "current"}], "expected_agent_facts": [{"statement_type": "other", "temporal_status": "current"}]},
-  "holdout_delivery_009": {"business_type": "delivery", "has_dispute": true, "expected_user_facts": [{"statement_type": "delivery_delayed", "temporal_status": "current"}], "expected_agent_facts": [{"statement_type": "other", "temporal_status": "current"}]},
-  "holdout_delivery_010": {"business_type": "delivery", "has_dispute": true, "expected_user_facts": [{"statement_type": "delivery_completed", "temporal_status": "completed"}, {"statement_type": "delivery_not_received", "temporal_status": "current"}], "expected_agent_facts": [{"statement_type": "delivery_completed", "temporal_status": "completed"}]},
-  "holdout_delivery_011": {"business_type": "delivery", "has_dispute": false, "expected_user_facts": [{"statement_type": "verify_status", "temporal_status": "current"}], "expected_agent_facts": [{"statement_type": "verify_status", "temporal_status": "current"}]},
-  "holdout_delivery_012": {"business_type": "delivery", "has_dispute": false, "expected_user_facts": [{"statement_type": "delivery_promised", "temporal_status": "future"}], "expected_agent_facts": [{"statement_type": "delivery_promised", "temporal_status": "future"}]},
-  "holdout_delivery_013": {"business_type": "delivery", "has_dispute": true, "expected_user_facts": [{"statement_type": "delivery_promised", "temporal_status": "completed"}, {"statement_type": "delivery_delayed", "temporal_status": "current"}, {"statement_type": "delivery_not_received", "temporal_status": "current"}], "expected_agent_facts": [{"statement_type": "other", "temporal_status": "current"}]},
-  "holdout_delivery_014": {"business_type": "delivery", "has_dispute": true, "expected_user_facts": [{"statement_type": "delivery_completed", "temporal_status": "completed"}, {"statement_type": "delivery_delayed", "temporal_status": "completed"}], "expected_agent_facts": [{"statement_type": "delivery_completed", "temporal_status": "completed"}]},
-  "holdout_delivery_015": {"business_type": "delivery", "has_dispute": true, "expected_user_facts": [{"statement_type": "delivery_not_received", "temporal_status": "current"}, {"statement_type": "delivery_completed", "temporal_status": "completed"}], "expected_agent_facts": [{"statement_type": "delivery_completed", "temporal_status": "completed"}]}
+  "holdout_refund_001": {
+    "business_type": "refund",
+    "has_dispute": true,
+    "expected_user_facts": [
+      {
+        "fact_type": "refund_receipt",
+        "polarity": "negated",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "refund_receipt",
+        "polarity": "affirmed",
+        "temporal_status": "future",
+        "speech_act": "promise"
+      },
+      {
+        "fact_type": "other",
+        "polarity": "uncertain",
+        "temporal_status": "not_applicable",
+        "speech_act": "advice"
+      }
+    ]
+  },
+  "holdout_refund_002": {
+    "business_type": "refund",
+    "has_dispute": false,
+    "expected_user_facts": [
+      {
+        "fact_type": "refund_receipt",
+        "polarity": "affirmed",
+        "temporal_status": "completed",
+        "speech_act": "assertion"
+      },
+      {
+        "fact_type": "status",
+        "polarity": "uncertain",
+        "temporal_status": "not_applicable",
+        "speech_act": "query"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "status",
+        "polarity": "uncertain",
+        "temporal_status": "not_applicable",
+        "speech_act": "action"
+      }
+    ]
+  },
+  "holdout_refund_003": {
+    "business_type": "refund",
+    "has_dispute": true,
+    "expected_user_facts": [
+      {
+        "fact_type": "refund_initiation",
+        "polarity": "negated",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "refund_initiation",
+        "polarity": "affirmed",
+        "temporal_status": "future",
+        "speech_act": "promise"
+      }
+    ]
+  },
+  "holdout_refund_004": {
+    "business_type": "refund",
+    "has_dispute": true,
+    "expected_user_facts": [
+      {
+        "fact_type": "refund_completion",
+        "polarity": "affirmed",
+        "temporal_status": "completed",
+        "speech_act": "assertion"
+      },
+      {
+        "fact_type": "refund_receipt",
+        "polarity": "negated",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "refund_completion",
+        "polarity": "affirmed",
+        "temporal_status": "completed",
+        "speech_act": "assertion"
+      }
+    ]
+  },
+  "holdout_refund_005": {
+    "business_type": "refund",
+    "has_dispute": true,
+    "expected_user_facts": [
+      {
+        "fact_type": "refund_amount",
+        "polarity": "conflicting",
+        "temporal_status": "completed",
+        "speech_act": "assertion"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "status",
+        "polarity": "uncertain",
+        "temporal_status": "not_applicable",
+        "speech_act": "action"
+      }
+    ]
+  },
+  "holdout_refund_006": {
+    "business_type": "refund",
+    "has_dispute": true,
+    "expected_user_facts": [
+      {
+        "fact_type": "refund_processing",
+        "polarity": "affirmed",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "refund_processing",
+        "polarity": "affirmed",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      }
+    ]
+  },
+  "holdout_refund_007": {
+    "business_type": "refund",
+    "has_dispute": false,
+    "expected_user_facts": [
+      {
+        "fact_type": "refund_request",
+        "polarity": "affirmed",
+        "temporal_status": "completed",
+        "speech_act": "assertion"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "refund_request",
+        "polarity": "affirmed",
+        "temporal_status": "completed",
+        "speech_act": "assertion"
+      }
+    ]
+  },
+  "holdout_refund_008": {
+    "business_type": "refund",
+    "has_dispute": true,
+    "expected_user_facts": [
+      {
+        "fact_type": "refund_initiation",
+        "polarity": "uncertain",
+        "temporal_status": "future",
+        "speech_act": "query"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "refund_processing",
+        "polarity": "affirmed",
+        "temporal_status": "future",
+        "speech_act": "promise"
+      }
+    ]
+  },
+  "holdout_refund_009": {
+    "business_type": "refund",
+    "has_dispute": false,
+    "expected_user_facts": [
+      {
+        "fact_type": "status",
+        "polarity": "uncertain",
+        "temporal_status": "not_applicable",
+        "speech_act": "query"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "status",
+        "polarity": "uncertain",
+        "temporal_status": "not_applicable",
+        "speech_act": "action"
+      }
+    ]
+  },
+  "holdout_refund_010": {
+    "business_type": "refund",
+    "has_dispute": true,
+    "expected_user_facts": [
+      {
+        "fact_type": "refund_processing",
+        "polarity": "affirmed",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      },
+      {
+        "fact_type": "refund_receipt",
+        "polarity": "negated",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "status",
+        "polarity": "uncertain",
+        "temporal_status": "not_applicable",
+        "speech_act": "action"
+      }
+    ]
+  },
+  "holdout_refund_011": {
+    "business_type": "refund",
+    "has_dispute": true,
+    "expected_user_facts": [
+      {
+        "fact_type": "refund_initiation",
+        "polarity": "negated",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "refund_completion",
+        "polarity": "affirmed",
+        "temporal_status": "completed",
+        "speech_act": "assertion"
+      }
+    ]
+  },
+  "holdout_refund_012": {
+    "business_type": "refund",
+    "has_dispute": false,
+    "expected_user_facts": [
+      {
+        "fact_type": "refund_receipt",
+        "polarity": "affirmed",
+        "temporal_status": "completed",
+        "speech_act": "assertion"
+      },
+      {
+        "fact_type": "status",
+        "polarity": "uncertain",
+        "temporal_status": "not_applicable",
+        "speech_act": "query"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "status",
+        "polarity": "uncertain",
+        "temporal_status": "not_applicable",
+        "speech_act": "action"
+      }
+    ]
+  },
+  "holdout_refund_013": {
+    "business_type": "refund",
+    "has_dispute": true,
+    "expected_user_facts": [
+      {
+        "fact_type": "refund_receipt",
+        "polarity": "negated",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "refund_processing",
+        "polarity": "affirmed",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      }
+    ]
+  },
+  "holdout_refund_014": {
+    "business_type": "refund",
+    "has_dispute": false,
+    "expected_user_facts": [
+      {
+        "fact_type": "other",
+        "polarity": "uncertain",
+        "temporal_status": "not_applicable",
+        "speech_act": "query"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "status",
+        "polarity": "uncertain",
+        "temporal_status": "not_applicable",
+        "speech_act": "action"
+      }
+    ]
+  },
+  "holdout_refund_015": {
+    "business_type": "refund",
+    "has_dispute": true,
+    "expected_user_facts": [
+      {
+        "fact_type": "refund_request",
+        "polarity": "affirmed",
+        "temporal_status": "completed",
+        "speech_act": "assertion"
+      },
+      {
+        "fact_type": "refund_processing",
+        "polarity": "affirmed",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      },
+      {
+        "fact_type": "refund_receipt",
+        "polarity": "negated",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "refund_receipt",
+        "polarity": "affirmed",
+        "temporal_status": "future",
+        "speech_act": "promise"
+      }
+    ]
+  },
+  "holdout_delivery_001": {
+    "business_type": "delivery",
+    "has_dispute": false,
+    "expected_user_facts": [
+      {
+        "fact_type": "delivery_receipt",
+        "polarity": "negated",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      },
+      {
+        "fact_type": "delivery_promise",
+        "polarity": "affirmed",
+        "temporal_status": "future",
+        "speech_act": "assertion"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "status",
+        "polarity": "affirmed",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      },
+      {
+        "fact_type": "other",
+        "polarity": "uncertain",
+        "temporal_status": "not_applicable",
+        "speech_act": "advice"
+      }
+    ]
+  },
+  "holdout_delivery_002": {
+    "business_type": "delivery",
+    "has_dispute": true,
+    "expected_user_facts": [
+      {
+        "fact_type": "delivery_delay",
+        "polarity": "affirmed",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      },
+      {
+        "fact_type": "delivery_receipt",
+        "polarity": "negated",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "status",
+        "polarity": "uncertain",
+        "temporal_status": "not_applicable",
+        "speech_act": "action"
+      }
+    ]
+  },
+  "holdout_delivery_003": {
+    "business_type": "delivery",
+    "has_dispute": false,
+    "expected_user_facts": [
+      {
+        "fact_type": "delivery_receipt",
+        "polarity": "affirmed",
+        "temporal_status": "completed",
+        "speech_act": "assertion"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "delivery_completion",
+        "polarity": "affirmed",
+        "temporal_status": "completed",
+        "speech_act": "assertion"
+      }
+    ]
+  },
+  "holdout_delivery_004": {
+    "business_type": "delivery",
+    "has_dispute": true,
+    "expected_user_facts": [
+      {
+        "fact_type": "delivery_receipt",
+        "polarity": "affirmed",
+        "temporal_status": "completed",
+        "speech_act": "assertion"
+      },
+      {
+        "fact_type": "delivery_delay",
+        "polarity": "affirmed",
+        "temporal_status": "completed",
+        "speech_act": "assertion"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "delivery_completion",
+        "polarity": "affirmed",
+        "temporal_status": "completed",
+        "speech_act": "assertion"
+      }
+    ]
+  },
+  "holdout_delivery_005": {
+    "business_type": "delivery",
+    "has_dispute": true,
+    "expected_user_facts": [
+      {
+        "fact_type": "delivery_pickup",
+        "polarity": "negated",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "status",
+        "polarity": "uncertain",
+        "temporal_status": "not_applicable",
+        "speech_act": "action"
+      }
+    ]
+  },
+  "holdout_delivery_006": {
+    "business_type": "delivery",
+    "has_dispute": true,
+    "expected_user_facts": [
+      {
+        "fact_type": "delivery_receipt",
+        "polarity": "negated",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "delivery_completion",
+        "polarity": "affirmed",
+        "temporal_status": "completed",
+        "speech_act": "assertion"
+      }
+    ]
+  },
+  "holdout_delivery_007": {
+    "business_type": "delivery",
+    "has_dispute": true,
+    "expected_user_facts": [
+      {
+        "fact_type": "delivery_delay",
+        "polarity": "affirmed",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "delivery_promise",
+        "polarity": "affirmed",
+        "temporal_status": "future",
+        "speech_act": "promise"
+      }
+    ]
+  },
+  "holdout_delivery_008": {
+    "business_type": "delivery",
+    "has_dispute": true,
+    "expected_user_facts": [
+      {
+        "fact_type": "delivery_receipt",
+        "polarity": "negated",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "status",
+        "polarity": "affirmed",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      }
+    ]
+  },
+  "holdout_delivery_009": {
+    "business_type": "delivery",
+    "has_dispute": true,
+    "expected_user_facts": [
+      {
+        "fact_type": "delivery_delay",
+        "polarity": "affirmed",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "status",
+        "polarity": "affirmed",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      }
+    ]
+  },
+  "holdout_delivery_010": {
+    "business_type": "delivery",
+    "has_dispute": true,
+    "expected_user_facts": [
+      {
+        "fact_type": "delivery_completion",
+        "polarity": "affirmed",
+        "temporal_status": "completed",
+        "speech_act": "assertion"
+      },
+      {
+        "fact_type": "delivery_receipt",
+        "polarity": "negated",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "delivery_completion",
+        "polarity": "affirmed",
+        "temporal_status": "completed",
+        "speech_act": "assertion"
+      }
+    ]
+  },
+  "holdout_delivery_011": {
+    "business_type": "delivery",
+    "has_dispute": false,
+    "expected_user_facts": [
+      {
+        "fact_type": "status",
+        "polarity": "uncertain",
+        "temporal_status": "not_applicable",
+        "speech_act": "query"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "status",
+        "polarity": "uncertain",
+        "temporal_status": "not_applicable",
+        "speech_act": "action"
+      }
+    ]
+  },
+  "holdout_delivery_012": {
+    "business_type": "delivery",
+    "has_dispute": false,
+    "expected_user_facts": [
+      {
+        "fact_type": "delivery_pickup",
+        "polarity": "affirmed",
+        "temporal_status": "future",
+        "speech_act": "assertion"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "delivery_pickup",
+        "polarity": "affirmed",
+        "temporal_status": "future",
+        "speech_act": "promise"
+      }
+    ]
+  },
+  "holdout_delivery_013": {
+    "business_type": "delivery",
+    "has_dispute": true,
+    "expected_user_facts": [
+      {
+        "fact_type": "delivery_promise",
+        "polarity": "affirmed",
+        "temporal_status": "completed",
+        "speech_act": "assertion"
+      },
+      {
+        "fact_type": "delivery_delay",
+        "polarity": "affirmed",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      },
+      {
+        "fact_type": "delivery_receipt",
+        "polarity": "negated",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "status",
+        "polarity": "affirmed",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      }
+    ]
+  },
+  "holdout_delivery_014": {
+    "business_type": "delivery",
+    "has_dispute": true,
+    "expected_user_facts": [
+      {
+        "fact_type": "delivery_receipt",
+        "polarity": "affirmed",
+        "temporal_status": "completed",
+        "speech_act": "assertion"
+      },
+      {
+        "fact_type": "delivery_delay",
+        "polarity": "affirmed",
+        "temporal_status": "completed",
+        "speech_act": "assertion"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "delivery_completion",
+        "polarity": "affirmed",
+        "temporal_status": "completed",
+        "speech_act": "assertion"
+      }
+    ]
+  },
+  "holdout_delivery_015": {
+    "business_type": "delivery",
+    "has_dispute": true,
+    "expected_user_facts": [
+      {
+        "fact_type": "delivery_receipt",
+        "polarity": "negated",
+        "temporal_status": "current",
+        "speech_act": "assertion"
+      },
+      {
+        "fact_type": "delivery_completion",
+        "polarity": "affirmed",
+        "temporal_status": "completed",
+        "speech_act": "assertion"
+      }
+    ],
+    "expected_agent_facts": [
+      {
+        "fact_type": "delivery_completion",
+        "polarity": "affirmed",
+        "temporal_status": "completed",
+        "speech_act": "assertion"
+      }
+    ]
+  }
 }

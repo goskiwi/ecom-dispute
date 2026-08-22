@@ -7,8 +7,10 @@ from .contracts import (
     DecisionReport,
     Evidence,
     EvidenceKind,
+    FactType,
     Finding,
-    StatementType,
+    Polarity,
+    SpeechAct,
     TemporalStatus,
 )
 from .skills import Skill
@@ -66,7 +68,9 @@ class EvidenceFusion:
     @staticmethod
     def _validated_findings(state: CaseState) -> list[Finding]:
         available = set(state.evidence)
-        seen: set[tuple[str, str, str | None, str | None, tuple[str, ...]]] = set()
+        seen: set[
+            tuple[str, str, str | None, str | None, str | None, str | None, tuple[str, ...]]
+        ] = set()
         validated: list[Finding] = []
         for finding in state.findings:
             if not finding.evidence_ids or not set(finding.evidence_ids).issubset(available):
@@ -74,8 +78,10 @@ class EvidenceFusion:
             key = (
                 finding.category,
                 finding.claim,
-                finding.statement_type.value if finding.statement_type else None,
+                finding.fact_type.value if finding.fact_type else None,
+                finding.polarity.value if finding.polarity else None,
                 finding.temporal_status.value if finding.temporal_status else None,
+                finding.speech_act.value if finding.speech_act else None,
                 tuple(sorted(finding.evidence_ids)),
             )
             if key not in seen:
@@ -114,48 +120,55 @@ class EvidenceFusion:
 
         for finding in list(state.findings):
             conflict: str | None = None
-            if finding.category == "agent_commitment":
+            if finding.category == "agent_statement" and finding.speech_act == SpeechAct.ASSERTION:
                 if not refunds and (
                     (
-                        finding.statement_type == StatementType.REFUND_INITIATED
+                        finding.fact_type == FactType.REFUND_INITIATION
+                        and finding.polarity == Polarity.AFFIRMED
                         and finding.temporal_status
                         in {TemporalStatus.CURRENT, TemporalStatus.COMPLETED}
                     )
                     or (
-                        finding.statement_type == StatementType.REFUND_PROCESSING
+                        finding.fact_type == FactType.REFUND_PROCESSING
+                        and finding.polarity == Polarity.AFFIRMED
                         and finding.temporal_status == TemporalStatus.CURRENT
                     )
                 ):
                     conflict = "客服称退款已进入处理链路，但业务系统不存在退款记录"
                 elif (
-                    finding.statement_type == StatementType.REFUND_COMPLETED
+                    finding.fact_type == FactType.REFUND_COMPLETION
+                    and finding.polarity == Polarity.AFFIRMED
                     and finding.temporal_status == TemporalStatus.COMPLETED
                     and not succeeded_refund
                 ):
                     conflict = "客服称退款已完成，但退款系统不存在成功记录"
                 elif (
-                    finding.statement_type == StatementType.DELIVERY_COMPLETED
+                    finding.fact_type == FactType.DELIVERY_COMPLETION
+                    and finding.polarity == Polarity.AFFIRMED
                     and finding.temporal_status == TemporalStatus.COMPLETED
                     and not delivered_events
                 ):
                     conflict = "客服称包裹已送达，但物流系统不存在送达事件"
             elif (
-                finding.category == "user_claim"
-                and finding.statement_type == StatementType.REFUND_NOT_RECEIVED
+                finding.category == "user_fact"
+                and finding.fact_type == FactType.REFUND_RECEIPT
+                and finding.polarity == Polarity.NEGATED
                 and finding.temporal_status == TemporalStatus.CURRENT
                 and matching_credit
             ):
                 conflict = "用户称退款未到账，但支付系统存在成功入账记录"
             elif (
-                finding.category == "user_claim"
-                and finding.statement_type == StatementType.REFUND_NOT_INITIATED
+                finding.category == "user_fact"
+                and finding.fact_type == FactType.REFUND_INITIATION
+                and finding.polarity == Polarity.NEGATED
                 and finding.temporal_status == TemporalStatus.CURRENT
                 and refunds
             ):
                 conflict = "用户称退款未发起，但退款系统存在处理记录"
             elif (
-                finding.category == "user_claim"
-                and finding.statement_type == StatementType.DELIVERY_NOT_RECEIVED
+                finding.category == "user_fact"
+                and finding.fact_type == FactType.DELIVERY_RECEIPT
+                and finding.polarity == Polarity.NEGATED
                 and finding.temporal_status == TemporalStatus.CURRENT
                 and delivered_events
             ):

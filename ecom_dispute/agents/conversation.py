@@ -33,30 +33,29 @@ class ConversationAgent:
 
         result = await asyncio.to_thread(self.llm_client.extract_conversation, case.conversation)
         findings = []
-        for index, statement in enumerate(result.semantics.user_claims, start=1):
-            for type_index, statement_type in enumerate(statement.statement_types, start=1):
-                findings.append(
-                    Finding(
-                        finding_id=f"llm-user-claim-{index}-{type_index}",
-                        category="user_claim",
-                        claim=statement.text,
-                        statement_type=statement_type,
-                        temporal_status=statement.temporal_status,
-                        evidence_ids=[evidence.evidence_id],
-                    )
+        for index, fact in enumerate(result.semantics.facts, start=1):
+            if fact.message_index >= len(case.conversation):
+                raise ValueError(f"fact message_index out of range: {fact.message_index}")
+            source_message = case.conversation[fact.message_index]
+            if (
+                source_message["speaker"] != fact.speaker
+                or fact.quote not in source_message["text"]
+            ):
+                raise ValueError(f"fact quote is not grounded in message {fact.message_index}")
+            findings.append(
+                Finding(
+                    finding_id=f"llm-fact-{index}",
+                    category="user_fact" if fact.speaker == "user" else "agent_statement",
+                    claim=fact.quote,
+                    fact_type=fact.fact_type,
+                    polarity=fact.polarity,
+                    temporal_status=fact.temporal_status,
+                    speech_act=fact.speech_act,
+                    quote=fact.quote,
+                    message_index=fact.message_index,
+                    evidence_ids=[evidence.evidence_id],
                 )
-        for index, statement in enumerate(result.semantics.agent_commitments, start=1):
-            for type_index, statement_type in enumerate(statement.statement_types, start=1):
-                findings.append(
-                    Finding(
-                        finding_id=f"llm-agent-commitment-{index}-{type_index}",
-                        category="agent_commitment",
-                        claim=statement.text,
-                        statement_type=statement_type,
-                        temporal_status=statement.temporal_status,
-                        evidence_ids=[evidence.evidence_id],
-                    )
-                )
+            )
         findings.append(
             Finding(
                 finding_id="llm-business-type",
@@ -88,29 +87,7 @@ class ConversationAgent:
                 "latency_ms": result.latency_ms,
                 "business_type": result.semantics.business_type,
                 "has_dispute": result.semantics.has_dispute,
-                "user_claim_types": [
-                    statement_type.value
-                    for item in result.semantics.user_claims
-                    for statement_type in item.statement_types
-                ],
-                "agent_commitment_types": [
-                    statement_type.value
-                    for item in result.semantics.agent_commitments
-                    for statement_type in item.statement_types
-                ],
-                "statements": [
-                    {
-                        "speaker": speaker,
-                        "text": item.text,
-                        "types": [value.value for value in item.statement_types],
-                        "temporal_status": item.temporal_status.value,
-                    }
-                    for speaker, items in (
-                        ("user", result.semantics.user_claims),
-                        ("agent", result.semantics.agent_commitments),
-                    )
-                    for item in items
-                ],
+                "facts": [fact.model_dump(mode="json") for fact in result.semantics.facts],
                 "uncertainty": result.semantics.uncertainty,
             },
         )

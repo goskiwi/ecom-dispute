@@ -18,20 +18,19 @@ class EvidenceKind(StrEnum):
     QUERY = "query"
 
 
-class StatementType(StrEnum):
-    REFUND_REQUESTED = "refund_requested"
-    REFUND_NOT_INITIATED = "refund_not_initiated"
-    REFUND_NOT_RECEIVED = "refund_not_received"
-    REFUND_AMOUNT_MISMATCH = "refund_amount_mismatch"
-    REFUND_INITIATED = "refund_initiated"
+class FactType(StrEnum):
+    REFUND_REQUEST = "refund_request"
+    REFUND_INITIATION = "refund_initiation"
     REFUND_PROCESSING = "refund_processing"
-    REFUND_COMPLETED = "refund_completed"
-    DELIVERY_NOT_RECEIVED = "delivery_not_received"
-    DELIVERY_DELAYED = "delivery_delayed"
-    DELIVERY_COMPLETED = "delivery_completed"
-    DELIVERY_PROMISED = "delivery_promised"
-    WAIT_ADVICE = "wait_advice"
-    VERIFY_STATUS = "verify_status"
+    REFUND_COMPLETION = "refund_completion"
+    REFUND_RECEIPT = "refund_receipt"
+    REFUND_AMOUNT = "refund_amount"
+    DELIVERY_RECEIPT = "delivery_receipt"
+    DELIVERY_DELAY = "delivery_delay"
+    DELIVERY_COMPLETION = "delivery_completion"
+    DELIVERY_PROMISE = "delivery_promise"
+    DELIVERY_PICKUP = "delivery_pickup"
+    STATUS = "status"
     OTHER = "other"
 
 
@@ -40,6 +39,23 @@ class TemporalStatus(StrEnum):
     CURRENT = "current"
     COMPLETED = "completed"
     UNKNOWN = "unknown"
+    NOT_APPLICABLE = "not_applicable"
+
+
+class Polarity(StrEnum):
+    AFFIRMED = "affirmed"
+    NEGATED = "negated"
+    UNCERTAIN = "uncertain"
+    CONFLICTING = "conflicting"
+
+
+class SpeechAct(StrEnum):
+    ASSERTION = "assertion"
+    PROMISE = "promise"
+    ACTION = "action"
+    ADVICE = "advice"
+    QUERY = "query"
+    EXPLANATION = "explanation"
 
 
 class Evidence(BaseModel):
@@ -76,8 +92,12 @@ class Finding(BaseModel):
     finding_id: str
     category: str
     claim: str
-    statement_type: StatementType | None = None
+    fact_type: FactType | None = None
+    polarity: Polarity | None = None
     temporal_status: TemporalStatus | None = None
+    speech_act: SpeechAct | None = None
+    quote: str | None = None
+    message_index: int | None = None
     evidence_ids: list[str] = Field(default_factory=list)
     policy_rule_ids: list[str] = Field(default_factory=list)
     severity: Literal["info", "warning", "critical"] = "info"
@@ -94,8 +114,8 @@ class AgentResult(BaseModel):
 
 class CaseState(BaseModel):
     case_id: str
-    user_claims: list[str] = Field(default_factory=list)
-    agent_commitments: list[str] = Field(default_factory=list)
+    user_facts: list[str] = Field(default_factory=list)
+    agent_statements: list[str] = Field(default_factory=list)
     timeline: list[dict[str, Any]] = Field(default_factory=list)
     findings: list[Finding] = Field(default_factory=list)
     evidence: dict[str, Evidence] = Field(default_factory=dict)

@@ -48,8 +48,8 @@ EcomDispute 是一个面向电商售后争议的多 Agent 证据化诊断系统�
 - live 模式由真实 Conversation Agent 与 Tool Query Agent 串联；工具 Agent 每轮读取最新状态并自主选择 Skill 允许的只读工具。录制回放中的固定查询模块明确命名为 Executor/Resolver，不称为 Agent。
 - 覆盖退款未发起超时、处理中、到账超时、已完成、退款/支付事实冲突、证据缺失和历史政策版本。
 - 单 LLM Agent Function Calling 基线，支持并行工具调用、完整历史续轮、严格 JSON Schema、轮数预算和 Evidence 引用校验。
-- LLM 将用户主张和客服承诺输出为 `business_type + has_dispute + statement_types[] + temporal_status`，Evidence Fusion 仅对当前或已完成的状态承诺生成硬冲突；空查询生成独立负向 Evidence。
-- Evidence Console 默认展示保存的真实 LLM Trace，支持 live-llm/recorded/heuristic-test 三种显式模式。
+- LLM 输出原子 `facts[]`，每个事实独立包含 FactType、Polarity、TemporalStatus、SpeechAct、speaker、message_index 和逐字 quote；Evidence Fusion 仅对明确的事实断言生成硬冲突。
+- Evidence Console 默认使用 live-llm；heuristic-test 仅供测试，Recorded 兼容路径已删除。
 - 持久化 Review Task 支持 pending/resolved、冲突证据、人工结论、责任方和备注。
 - 33 个自动化测试通过。
 
@@ -63,7 +63,7 @@ M4 扩展至 60 个跨 Skill 案例。审计后 `business_type`、`has_dispute`�
 
 M5 曾针对三个冲突误报增加 `temporal_status` 和原文一致性校验；M6 审计后保留时态合同、删除 live 路径中的关键词一致性校验，历史回归不再代表当前主链路。
 
-M6 新主链路已完成一个真实端到端冒烟案例：工具 Agent 分三轮查询并停止，Trace 保存每轮 Response ID、Token、延迟和工具结果。30 条后置语义 holdout 使用 `gpt-5.6-luna` 完成一个完整 Run 1：业务类型/争议判断均为 96.7%，用户事实 Precision/Recall 为 81.4%/79.5%，客服事实为 76.0%/63.3%，全项精确匹配 11/30。Run 2 仅完成 23 条，Run 3 因 502 无有效响应。
+M6 新主链路已完成一个真实端到端冒烟案例：工具 Agent 分三轮查询并停止。随后破坏性升级 semantic schema v2，删除旧 statement/commitment 字段，改为原子 Fact + Polarity + TemporalStatus + SpeechAct + 原文 quote。旧 Luna 指标已归档，不代表当前合同；v2 已通过真实 Schema 探针，但尚无新的独立准确率。
 
 实测单次短请求仍约产生 4.7k 输入 Token。新主链路增加 Tool Query Agent 后仍需全量测量裁决收益与额外成本；当前 holdout 是后置编写语义集且三次重复未完成，暂不把指标写入正式简历。
 
@@ -269,8 +269,8 @@ source_summary
 
 ```text
 case_id
-user_claims
-agent_commitments
+user_facts
+agent_statements
 timeline
 confirmed_facts
 policy_rules
@@ -291,6 +291,12 @@ LLM 负责提取语义、选择下一步查询和提出候选结论；Reducer �
 finding_id
 category
 claim
+fact_type
+polarity
+temporal_status
+speech_act
+quote
+message_index
 evidence_ids
 policy_rule_ids
 supports_decision

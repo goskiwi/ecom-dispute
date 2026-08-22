@@ -5,13 +5,11 @@ import json
 import os
 from pathlib import Path
 
-from .agents import RecordedConversationAgent
 from .evaluation import evaluate, evaluate_baseline
 from .harness import DiagnosticHarness
 from .llm import ResponsesClient
 from .repository import DEFAULT_DB, Repository, rebuild_database
-from .semantic_holdout import evaluate_holdout, generate_holdout
-from .semantic_scoring import rescore_semantic_run
+from .semantic_holdout import evaluate_holdout
 from .web import serve
 
 
@@ -26,14 +24,7 @@ def _parser() -> argparse.ArgumentParser:
     data.add_argument("action", choices=["rebuild"])
     demo = commands.add_parser("demo")
     demo.add_argument("--case-id", required=True)
-    demo.add_argument(
-        "--agent-mode", choices=["recorded", "live-llm", "heuristic-test"], default="recorded"
-    )
-    demo.add_argument(
-        "--recording",
-        type=Path,
-        default=Path("evals/hybrid_multiskill_gpt-5.4-mini_60cases_2026-08-22.json"),
-    )
+    demo.add_argument("--agent-mode", choices=["live-llm", "heuristic-test"], default="live-llm")
     evaluation = commands.add_parser("eval")
     evaluation.add_argument(
         "--mode",
@@ -41,26 +32,15 @@ def _parser() -> argparse.ArgumentParser:
         default="deterministic",
     )
     evaluation.add_argument("--case-id", action="append", dest="case_ids")
-    rescore = commands.add_parser("rescore")
-    rescore.add_argument("--input", type=Path, required=True)
-    rescore.add_argument("--semantic-oracle", type=Path, default=Path("evals/semantic_oracle.json"))
     web = commands.add_parser("web")
     web.add_argument("--host", default="127.0.0.1")
     web.add_argument("--port", type=int, default=8765)
-    web.add_argument(
-        "--agent-mode", choices=["recorded", "live-llm", "heuristic-test"], default="recorded"
-    )
-    web.add_argument(
-        "--recording",
-        type=Path,
-        default=Path("evals/hybrid_multiskill_gpt-5.4-mini_60cases_2026-08-22.json"),
-    )
+    web.add_argument("--agent-mode", choices=["live-llm", "heuristic-test"], default="live-llm")
     holdout = commands.add_parser("holdout")
-    holdout.add_argument("action", choices=["generate", "eval"])
     holdout.add_argument("--inputs", type=Path, default=Path("data/semantic_holdout_inputs.json"))
     holdout.add_argument("--oracle", type=Path, default=Path("evals/semantic_holdout_oracle.json"))
     holdout.add_argument("--repeats", type=int, default=3)
-    holdout.add_argument("--workers", type=int, default=4)
+    holdout.add_argument("--workers", type=int, default=1)
     return parser
 
 
@@ -74,8 +54,6 @@ def _llm_client(args: argparse.Namespace, required: bool = False) -> ResponsesCl
 
 
 def _build_harness(args: argparse.Namespace, repository: Repository) -> DiagnosticHarness:
-    if args.agent_mode == "recorded":
-        return DiagnosticHarness(repository, RecordedConversationAgent(args.recording))
     if args.agent_mode == "heuristic-test":
         return DiagnosticHarness.heuristic_tests(repository)
     client = _llm_client(args, required=True)
@@ -87,16 +65,9 @@ def main() -> None:
     if args.command == "data":
         print(rebuild_database(args.db))
         return
-    if args.command == "rescore":
-        result = rescore_semantic_run(args.input, args.semantic_oracle)
-        print(json.dumps(result, ensure_ascii=False, indent=2))
-        return
     if args.command == "holdout":
         client = _llm_client(args, required=True)
-        if args.action == "generate":
-            result = generate_holdout(client, args.inputs, args.oracle)
-        else:
-            result = evaluate_holdout(client, args.inputs, args.oracle, args.repeats, args.workers)
+        result = evaluate_holdout(client, args.inputs, args.oracle, args.repeats, args.workers)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return
     repository = Repository(args.db)

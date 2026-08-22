@@ -22,13 +22,13 @@ EcomDispute 是一个面向退款与物流争议的 LLM 增强型证据化裁决
 - 6 个只读业务工具及 Case 级查询缓存。
 - `ConversationAgent`：只负责真实 Responses API 结构化语义提取，不包含关键词降级。
 - `ToolQueryAgent`：在 live 模式中逐轮读取 CaseState，自主选择 Skill 允许的工具，并记录停止原因、Token 和延迟。
-- `FixedFactExecutor` 与 `PolicyResolver`：仅用于确定性测试和录制回放，不称为 Agent。
+- `FixedFactExecutor` 与 `PolicyResolver`：仅用于确定性测试，不称为 Agent。
 - `HeuristicConversationStub`：仅供测试，Trace 明确标记 `heuristic_test_stub`。
 - `CaseStateReducer`：确定性投影 Evidence、Finding、时间线和 Trace。
 - `EvidenceFusion`：过滤无证据 Finding、去重、检查必需证据、检测退款与支付冲突。
 - 60 个固定案例：40 个退款、20 个物流延迟，覆盖多轮与模糊表达、错误客服承诺、政策宽限期、商家/物流责任、不可抗力和跨源冲突。
 - 单 LLM Agent Function Calling 基线：完整回传 `function_call` / `function_call_output` 历史，支持并行工具调用、严格最终 Schema、轮数预算和 Evidence ID 校验。
-- 语义 Evidence Fusion：LLM 输出 `business_type + has_dispute`、多标签 `statement_types[]` 和 `temporal_status`，代码核验客服所称退款/送达状态与业务记录，并为 `not_found` 查询生成负向 Evidence ID。
+- 语义 Evidence Fusion：LLM 输出原子 `facts[]`；每个事实独立包含 `fact_type + polarity + temporal_status + speech_act + quote`，代码核验客服断言与业务记录，并为 `not_found` 查询生成负向 Evidence ID。
 - `SkillRegistry`：Refund/Delivery 各自拥有工具边界、必需证据和 Decision Strategy，Fusion 不按 Skill 名称分支。
 - 持久化 Review Task：支持 pending/resolved、人工结论、责任方、备注和冲突证据引用。
 
@@ -40,9 +40,9 @@ EcomDispute 是一个面向退款与物流争议的 LLM 增强型证据化裁决
 
 ```bash
 python -m ecom_dispute data rebuild
-python -m ecom_dispute demo --case-id refund_conflict_001
+python -m ecom_dispute demo --agent-mode heuristic-test --case-id refund_conflict_001
 python -m ecom_dispute eval --mode deterministic
-python -m ecom_dispute web --port 8765
+python -m ecom_dispute web --agent-mode heuristic-test --port 8765
 python -m pytest -q
 ```
 
@@ -88,8 +88,8 @@ M3 详见 [语义融合报告](evals/semantic_fusion_report_2026-08-22.md)、[�
 
 当前重构后的 live 主链路已完成 `refund_conflict_001` 真实端到端冒烟：工具 Agent 用三轮查询订单/退款/支付/售后/政策，并保留逐轮 Response ID 和 CaseState Trace。全量重新评测尚未完成。
 
-本地 Demo 默认使用保存的真实 LLM 记录，顶栏显示 `recorded`；`--agent-mode live-llm` 才调用实时模型，`--agent-mode heuristic-test` 仅用于测试。控制台支持人工复检操作。
+本地 Demo 默认使用 `live-llm`，必须配置模型接口；`--agent-mode heuristic-test` 只用于确定性测试。旧 Recorded Agent 和旧语义兼容层已经删除。控制台支持人工复检操作。
 
-30 条后置 holdout 已使用 `gpt-5.6-luna` 完成一次完整评测：业务类型/争议判断均为 96.7%，用户事实 Precision/Recall 为 81.4%/79.5%，客服事实 Precision/Recall 为 76.0%/63.3%，全项精确匹配 11/30。第二轮仅完成 23 条，第三轮因网关 502 无有效响应，因此不报告三轮均值。详见 [GPT-5.6-Luna Holdout 报告](evals/semantic_holdout_gpt-5.6-luna_report_2026-08-22.md)。
+旧 Luna 指标使用已删除的 schema v1，已移入 `evals/legacy/`，不代表当前系统。新 schema v2 已通过真实严格输出探针；首次 30 条运行暴露 Oracle 的 receipt/completion 机械迁移错误，因此只作为验证记录，不发布准确率。详见 [Schema v2 状态](evals/semantic_schema_v2_status.md)。
 
 M5 针对 M4 的三个冲突误报增加时态约束并完成真实 LLM 定向回归，详见 [时态回归报告](evals/temporal_regression_report_2026-08-22.md)。该回归不替代 60 案例首轮指标。

@@ -1,0 +1,1675 @@
+{
+  "schema_version": 2,
+  "mode": "semantic_holdout",
+  "case_count": 30,
+  "repeats": 1,
+  "per_repeat": [
+    {
+      "repeat": 1,
+      "passed": 4,
+      "case_count": 30,
+      "evaluated": 30,
+      "api_errors": 0,
+      "pass_rate": 0.13333333333333333
+    }
+  ],
+  "evaluated": 30,
+  "api_errors": 0,
+  "business_type_accuracy": 1.0,
+  "has_dispute_accuracy": 0.9333333333333333,
+  "user_fact_exact_match": 0.43333333333333335,
+  "agent_fact_exact_match": 0.4,
+  "user_fact_precision": 0.5777777777777777,
+  "user_fact_recall": 0.5909090909090909,
+  "agent_fact_precision": 0.42424242424242425,
+  "agent_fact_recall": 0.4375,
+  "input_tokens": 152462,
+  "output_tokens": 7255,
+  "latency_ms": 282212,
+  "results": [
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_001",
+      "checks": {
+        "business_type": true,
+        "has_dispute": false,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_promise",
+          "affirmed",
+          "future",
+          "promise"
+        ],
+        [
+          "delivery_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_promise",
+          "affirmed",
+          "future",
+          "assertion"
+        ],
+        [
+          "delivery_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "other",
+          "uncertain",
+          "not_applicable",
+          "advice"
+        ],
+        [
+          "status",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "other",
+          "affirmed",
+          "not_applicable",
+          "advice"
+        ],
+        [
+          "status",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_06353dbc5802bbbf016a898beb729c87d09f17536efa86e214",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5083,
+      "output_tokens": 437,
+      "latency_ms": 13436
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_002",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_delay",
+          "affirmed",
+          "current",
+          "assertion"
+        ],
+        [
+          "delivery_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_delay",
+          "affirmed",
+          "current",
+          "assertion"
+        ],
+        [
+          "delivery_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "action"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "status",
+          "affirmed",
+          "current",
+          "action"
+        ]
+      ],
+      "response_id": "resp_03dda97b56297243016a898bf8181c87d0a41901e3d9c0538c",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5082,
+      "output_tokens": 154,
+      "latency_ms": 9219
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_003",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_receipt",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "delivery_receipt",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_03bdb5d345788283016a898c00c8cc87d094ea9e68da6c3218",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5076,
+      "output_tokens": 118,
+      "latency_ms": 5200
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_004",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "delivery_delay",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "delivery_delay",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_01d492fa421c546c016a898c06490887d0823e6caf5b89a659",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5085,
+      "output_tokens": 319,
+      "latency_ms": 9091
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_005",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_pickup",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_pickup",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "action"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "delivery_pickup",
+          "affirmed",
+          "current",
+          "action"
+        ]
+      ],
+      "response_id": "resp_0c5d6870109da3f1016a898c0fb56087d0a5a32e091a71c5dc",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5088,
+      "output_tokens": 435,
+      "latency_ms": 11716
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_006",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_receipt",
+          "negated",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "delivery_receipt",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_0fab4302d2c4b499016a898c1cc4d487d0865a273fc30bb9dc",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5079,
+      "output_tokens": 142,
+      "latency_ms": 9220
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_007",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "delivery_delay",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_delay",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "delivery_promise",
+          "affirmed",
+          "future",
+          "promise"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "delivery_promise",
+          "affirmed",
+          "future",
+          "promise"
+        ]
+      ],
+      "response_id": "resp_0e81f7426c8ae06f016a898c2b0d8c87d0be37fae4559920dd",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5082,
+      "output_tokens": 262,
+      "latency_ms": 14930
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_008",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": true
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_delay",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "status",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "status",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_0bbf12ecb5ddbff1016a898c36409087d0b120f476ad7afa51",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5081,
+      "output_tokens": 314,
+      "latency_ms": 12003
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_009",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_delay",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_delay",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "status",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "delivery_completion",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_0976cc61420c2811016a898c4259a887d08df6f595704e4c26",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5077,
+      "output_tokens": 117,
+      "latency_ms": 8683
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_010",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "delivery_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_receipt",
+          "negated",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "delivery_receipt",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_0644701b5b5df71f016a898c4b06a087d0bdf59d9b03ea009f",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5084,
+      "output_tokens": 173,
+      "latency_ms": 11175
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_011",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "query"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "query"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "action"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "status",
+          "affirmed",
+          "current",
+          "action"
+        ]
+      ],
+      "response_id": "resp_0da0d443d0b90d54016a898c53c8bc87d0ab750959c825de34",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5081,
+      "output_tokens": 119,
+      "latency_ms": 6587
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_012",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_pickup",
+          "affirmed",
+          "future",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_pickup",
+          "affirmed",
+          "future",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "delivery_pickup",
+          "affirmed",
+          "future",
+          "promise"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "future",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_0c083709f7f1c4f5016a898c5b1b5c87d0beba9a1498eb2793",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5082,
+      "output_tokens": 325,
+      "latency_ms": 10985
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_013",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": true
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_delay",
+          "affirmed",
+          "current",
+          "assertion"
+        ],
+        [
+          "delivery_promise",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "delivery_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_delay",
+          "affirmed",
+          "current",
+          "assertion"
+        ],
+        [
+          "delivery_promise",
+          "affirmed",
+          "future",
+          "assertion"
+        ],
+        [
+          "delivery_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "status",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "status",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_04f79aedec5f9c2a016a898c65405487d0beac9fd84ddb40f5",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5087,
+      "output_tokens": 207,
+      "latency_ms": 14178
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_014",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "delivery_delay",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_delay",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "delivery_receipt",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "delivery_receipt",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_0f1e3889c29da271016a898c750a1c87d09500b36507b4dbef",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5081,
+      "output_tokens": 285,
+      "latency_ms": 10857
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_delivery_015",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": true
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "delivery_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "delivery_receipt",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "delivery_receipt",
+          "negated",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "delivery_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_0f4094d37f30dbfc016a898c7d77d087d0a0bb2a27cce493af",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5086,
+      "output_tokens": 184,
+      "latency_ms": 7502
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_001",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "other",
+          "uncertain",
+          "not_applicable",
+          "advice"
+        ],
+        [
+          "refund_receipt",
+          "affirmed",
+          "future",
+          "promise"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "other",
+          "affirmed",
+          "not_applicable",
+          "advice"
+        ],
+        [
+          "refund_receipt",
+          "affirmed",
+          "future",
+          "promise"
+        ]
+      ],
+      "response_id": "resp_079a2999fe4ec982016a898b6d772887d082d3af6d80269b05",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5087,
+      "output_tokens": 199,
+      "latency_ms": 10934
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_002",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "query"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_receipt",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "query"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "action"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "current",
+          "action"
+        ]
+      ],
+      "response_id": "resp_0f9c070607aab0dc016a898b756c3c87d0b8235cb4d6963e9f",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5087,
+      "output_tokens": 373,
+      "latency_ms": 9879
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_003",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": true
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_initiation",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "refund_initiation",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_initiation",
+          "affirmed",
+          "future",
+          "promise"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_initiation",
+          "affirmed",
+          "future",
+          "promise"
+        ]
+      ],
+      "response_id": "resp_0b07f1240c68cf92016a898b7f3e1887d0b5c2e0a55ff77811",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5086,
+      "output_tokens": 326,
+      "latency_ms": 8847
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_004",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "refund_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "refund_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "refund_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_0f8e0291098106ac016a898b88721487d0b702a957734944f5",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5087,
+      "output_tokens": 427,
+      "latency_ms": 12670
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_005",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_amount",
+          "conflicting",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_amount",
+          "conflicting",
+          "current",
+          "query"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "action"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_processing",
+          "affirmed",
+          "future",
+          "promise"
+        ]
+      ],
+      "response_id": "resp_04bf050c0a3e3ae7016a898b94f57887d0b920c96dd800fef5",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5080,
+      "output_tokens": 118,
+      "latency_ms": 5177
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_006",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": true,
+      "expected_user_facts": [
+        [
+          "refund_processing",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_processing",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_processing",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_processing",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_08cdb7e6b49b6603016a898b9a059087d0bf040c6ca4820d0d",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5078,
+      "output_tokens": 118,
+      "latency_ms": 5059
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_007",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_request",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_initiation",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_request",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_initiation",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "refund_processing",
+          "affirmed",
+          "future",
+          "promise"
+        ]
+      ],
+      "response_id": "resp_070e2a05a3a7697e016a898ba00aa487d0aad3f0a6a7b79784",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5079,
+      "output_tokens": 286,
+      "latency_ms": 9494
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_008",
+      "checks": {
+        "business_type": true,
+        "has_dispute": false,
+        "user_facts": true,
+        "agent_facts": true
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_initiation",
+          "uncertain",
+          "future",
+          "query"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_initiation",
+          "uncertain",
+          "future",
+          "query"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_processing",
+          "affirmed",
+          "future",
+          "promise"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_processing",
+          "affirmed",
+          "future",
+          "promise"
+        ]
+      ],
+      "response_id": "resp_0a86b4b02d0abe01016a898ba85c1c87d0822a7575fe046ece",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5081,
+      "output_tokens": 352,
+      "latency_ms": 9272
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_009",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "query"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "query"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "action"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "status",
+          "affirmed",
+          "current",
+          "action"
+        ]
+      ],
+      "response_id": "resp_0f79dc4ff4626135016a898bb215e487d0847cc252fb57652a",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5078,
+      "output_tokens": 201,
+      "latency_ms": 9293
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_010",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": true,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_processing",
+          "affirmed",
+          "current",
+          "assertion"
+        ],
+        [
+          "refund_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_processing",
+          "affirmed",
+          "current",
+          "assertion"
+        ],
+        [
+          "refund_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "action"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "other",
+          "affirmed",
+          "future",
+          "advice"
+        ]
+      ],
+      "response_id": "resp_0a2071a382e56b01016a898bbd514887d0a8c28a693709c5a3",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5084,
+      "output_tokens": 157,
+      "latency_ms": 8090
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_011",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": true
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_initiation",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_07b1db776266527b016a898bc4aba887d08e9de2a125695040",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5077,
+      "output_tokens": 138,
+      "latency_ms": 7106
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_012",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_completion",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "query"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_receipt",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "action"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "status",
+          "affirmed",
+          "current",
+          "action"
+        ]
+      ],
+      "response_id": "resp_0aca67ae74b35483016a898bca5a0c87d095ecdf0e6b04573d",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5082,
+      "output_tokens": 380,
+      "latency_ms": 11137
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_013",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": true
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_initiation",
+          "affirmed",
+          "current",
+          "assertion"
+        ],
+        [
+          "refund_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_processing",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_processing",
+          "affirmed",
+          "current",
+          "assertion"
+        ]
+      ],
+      "response_id": "resp_02d997d4158ade11016a898bd572a887d08dc01ca433eafbe5",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5078,
+      "output_tokens": 154,
+      "latency_ms": 5815
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_014",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": false
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "other",
+          "uncertain",
+          "not_applicable",
+          "query"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "query"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "not_applicable",
+          "action"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "status",
+          "uncertain",
+          "current",
+          "action"
+        ]
+      ],
+      "response_id": "resp_08b914c1bbbabe46016a898bdb87e487d0919ac256782cc180",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5080,
+      "output_tokens": 118,
+      "latency_ms": 5892
+    },
+    {
+      "repeat": 1,
+      "case_id": "holdout_refund_015",
+      "checks": {
+        "business_type": true,
+        "has_dispute": true,
+        "user_facts": false,
+        "agent_facts": true
+      },
+      "passed": false,
+      "expected_user_facts": [
+        [
+          "refund_processing",
+          "affirmed",
+          "current",
+          "assertion"
+        ],
+        [
+          "refund_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ],
+        [
+          "refund_request",
+          "affirmed",
+          "completed",
+          "assertion"
+        ]
+      ],
+      "observed_user_facts": [
+        [
+          "refund_initiation",
+          "affirmed",
+          "completed",
+          "assertion"
+        ],
+        [
+          "refund_processing",
+          "affirmed",
+          "current",
+          "assertion"
+        ],
+        [
+          "refund_receipt",
+          "negated",
+          "current",
+          "assertion"
+        ]
+      ],
+      "expected_agent_facts": [
+        [
+          "refund_receipt",
+          "affirmed",
+          "future",
+          "promise"
+        ]
+      ],
+      "observed_agent_facts": [
+        [
+          "refund_receipt",
+          "affirmed",
+          "future",
+          "promise"
+        ]
+      ],
+      "response_id": "resp_082ed257624790d5016a898be11e6c87d0b3387f4a5326d5b6",
+      "model": "gpt-5.6-luna",
+      "input_tokens": 5084,
+      "output_tokens": 317,
+      "latency_ms": 8765
+    }
+  ]
+}

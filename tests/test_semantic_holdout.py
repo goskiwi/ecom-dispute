@@ -1,8 +1,8 @@
 import json
 from pathlib import Path
 
-from ecom_dispute.contracts import StatementType, TemporalStatus
-from ecom_dispute.llm import ConversationSemantics, ExtractedStatement, LLMResult
+from ecom_dispute.contracts import FactType, Polarity, SpeechAct, TemporalStatus
+from ecom_dispute.llm import AtomicFact, ConversationSemantics, LLMResult
 from ecom_dispute.semantic_holdout import evaluate_holdout
 
 
@@ -12,15 +12,17 @@ class FakeSemanticClient:
             semantics=ConversationSemantics(
                 business_type="refund",
                 has_dispute=True,
-                user_claims=[
-                    ExtractedStatement(
-                        text=messages[0]["text"],
-                        statement_types=[StatementType.REFUND_NOT_RECEIVED],
+                facts=[
+                    AtomicFact(
+                        speaker="user",
+                        quote=messages[0]["text"],
+                        message_index=0,
+                        fact_type=FactType.REFUND_RECEIPT,
+                        polarity=Polarity.NEGATED,
                         temporal_status=TemporalStatus.CURRENT,
-                        message_indexes=[0],
+                        speech_act=SpeechAct.ASSERTION,
                     )
                 ],
-                agent_commitments=[],
                 uncertainty=None,
             ),
             response_id="fake-response",
@@ -56,8 +58,10 @@ def test_semantic_holdout_repeats_without_exposing_oracle(tmp_path: Path) -> Non
                     "has_dispute": True,
                     "expected_user_facts": [
                         {
-                            "statement_type": "refund_not_received",
+                            "fact_type": "refund_receipt",
+                            "polarity": "negated",
                             "temporal_status": "current",
+                            "speech_act": "assertion",
                         }
                     ],
                     "expected_agent_facts": [],

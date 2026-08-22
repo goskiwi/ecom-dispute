@@ -9,16 +9,19 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from .contracts import StatementType, TemporalStatus
+from .contracts import FactType, Polarity, SpeechAct, TemporalStatus
 
 
-class ExtractedStatement(BaseModel):
+class AtomicFact(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    text: str
-    statement_types: list[StatementType] = Field(min_length=1)
+    speaker: Literal["user", "agent"]
+    quote: str
+    message_index: int = Field(ge=0)
+    fact_type: FactType
+    polarity: Polarity
     temporal_status: TemporalStatus
-    message_indexes: list[int] = Field(min_length=1)
+    speech_act: SpeechAct
 
 
 class ConversationSemantics(BaseModel):
@@ -26,8 +29,7 @@ class ConversationSemantics(BaseModel):
 
     business_type: Literal["refund", "delivery", "other"]
     has_dispute: bool
-    user_claims: list[ExtractedStatement]
-    agent_commitments: list[ExtractedStatement]
+    facts: list[AtomicFact]
     uncertainty: str | None
 
 
@@ -63,24 +65,19 @@ class ResponsesClient:
             "has_dispute 表示用户是否表达业务异常或对处理结果不满，正常查询或问题已解决为 false。"
             "只要用户明确陈述晚到、未收到、未发起、未到账或金额不符等异常，has_dispute 必须为 true，"
             "即使用户同时在询问政策；只有没有异常的状态查询或已正常解决才为 false。"
-            "逐条提取用户主张和客服承诺，不把询问或核验动作写成已发生事实。"
-            "一个语义片段包含多个事实时，statement_types 必须列出所有适用类型；也可以拆成多个原子条目，"
-            "这些条目可以使用相同 message_indexes。statement_types 中的值只能从以下类型选择："
-            "refund_requested（申请退款）、"
-            "refund_not_initiated（用户称退款未发起）、refund_not_received（用户否认到账）、"
-            "refund_amount_mismatch（退款金额不符）、refund_initiated（退款已发起）、"
-            "refund_processing（退款处理中）、refund_completed（退款或入账已完成）、"
-            "delivery_not_received（未收到货）、delivery_delayed（物流延迟）、"
-            "delivery_completed（已送达）、delivery_promised（承诺送达或配送时限）、"
-            "wait_advice（建议等待）、verify_status（查询或核验）、other。"
-            "temporal_status 必须区分 future（将会/预计/会处理）、current（正在/仍处于）、"
-            "completed（已经发生或完成）和 unknown（无法判断）。"
-            "边界示例：‘晚了两天才送到’同时输出 delivery_delayed 和 delivery_completed，has_dispute=true；"
-            "‘还没收到，但预计明天送达’输出 delivery_not_received 和 delivery_promised，has_dispute=false；"
-            "‘退款已经正常到账’输出 refund_completed、temporal_status=completed，business_type=refund，has_dispute=false；"
-            "‘退款会尽快处理’输出 refund_processing、temporal_status=future；"
-            "‘预计五天内到账’不是已完成，使用 wait_advice、temporal_status=future。"
-            "user_claims 与 agent_commitments 中的 text 使用原意简述，message_indexes 使用从 0 开始的消息序号。\n"
+            "输出原子事实 facts。每个事实只能有一个 fact_type，并独立标注 polarity、temporal_status 和 speech_act。"
+            "同一句含多个事实时输出多个 facts。quote 必须逐字取自对应消息，message_index 从 0 开始。"
+            "fact_type 定义：refund_request=用户提交退款申请；refund_initiation=资金退款流程是否发起；"
+            "refund_processing=资金退款处理中；refund_completion=退款系统已完成；refund_receipt=用户账户实际入账；"
+            "refund_amount=退款金额；delivery_pickup=承运商揽收；delivery_promise=承诺送达时间；"
+            "delivery_delay=配送超时；delivery_completion=物流系统送达/签收状态；delivery_receipt=用户实际收到货；"
+            "status=查询或处理状态；other=无法归入上述业务事实。fact_type 不编码否定或言语行为。"
+            "polarity 定义：affirmed=事实成立，negated=事实明确未发生，conflicting=金额或状态不一致，"
+            "uncertain=仅询问或无法确认。"
+            "例如未到账是 refund_receipt + negated，"
+            "未来会发起是 refund_initiation + affirmed + future + promise，查询状态是 status + uncertain + "
+            "not_applicable + query。客服的事实陈述使用 assertion，未来承诺使用 promise，正在执行的人工动作"
+            "使用 action，等待建议使用 advice，原因说明使用 explanation。不要把建议或查询写成业务完成事实。\n"
             f"对话：{json.dumps(messages, ensure_ascii=False)}"
         )
         schema = ConversationSemantics.model_json_schema()

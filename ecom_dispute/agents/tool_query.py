@@ -191,8 +191,8 @@ class ToolQueryAgent:
         return json.dumps(
             {
                 "case_id": state.case_id,
-                "user_claims": state.user_claims,
-                "agent_commitments": state.agent_commitments,
+                "user_facts": state.user_facts,
+                "agent_statements": state.agent_statements,
                 "evidence": [
                     {
                         "evidence_id": item.evidence_id,

@@ -2,8 +2,10 @@ from ecom_dispute.contracts import (
     CaseState,
     Evidence,
     EvidenceKind,
+    FactType,
     Finding,
-    StatementType,
+    Polarity,
+    SpeechAct,
     TemporalStatus,
 )
 from ecom_dispute.fusion import EvidenceFusion
@@ -24,10 +26,12 @@ def _state(temporal_status: TemporalStatus) -> CaseState:
         findings=[
             Finding(
                 finding_id="statement-1",
-                category="agent_commitment",
+                category="agent_statement",
                 claim="退款会在稍后完成",
-                statement_type=StatementType.REFUND_COMPLETED,
+                fact_type=FactType.REFUND_COMPLETION,
+                polarity=Polarity.AFFIRMED,
                 temporal_status=temporal_status,
+                speech_act=SpeechAct.ASSERTION,
                 evidence_ids=[evidence.evidence_id],
             )
         ],
