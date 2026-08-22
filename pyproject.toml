@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ecom-dispute"
+version = "0.1.0"
+description = "Evidence-grounded multi-agent adjudication for e-commerce after-sales disputes"
+requires-python = ">=3.11"
+dependencies = ["pydantic>=2.8,<3"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[project.scripts]
+ecom-dispute = "ecom_dispute.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["ecom_dispute*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+

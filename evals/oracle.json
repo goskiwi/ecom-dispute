@@ -1,0 +1,23 @@
+{
+  "refund_complete_001": {
+    "decision": "refund_completed",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "refund_conflict_001": {
+    "decision": "refund_record_conflict",
+    "responsible_party": "undetermined",
+    "review_required": true
+  },
+  "refund_missing_001": {
+    "decision": "refund_not_initiated_overdue",
+    "responsible_party": "platform",
+    "review_required": false
+  },
+  "refund_pending_001": {
+    "decision": "refund_processing_within_sla",
+    "responsible_party": "none",
+    "review_required": false
+  }
+}
+
