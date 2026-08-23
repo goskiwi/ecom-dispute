@@ -42,4 +42,14 @@ class CoreEvidenceExecutor:
             findings=findings,
             evidence=evidence,
             tool_calls=list(tools),
+            telemetry={
+                "tool_results": [
+                    {
+                        "tool": result.tool_name,
+                        "status": result.status,
+                        "error_code": result.error_code,
+                    }
+                    for result in results
+                ]
+            },
         )

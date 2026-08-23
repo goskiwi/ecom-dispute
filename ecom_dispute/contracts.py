@@ -126,7 +126,7 @@ class Evidence(BaseModel):
 
 class ToolResult(BaseModel):
     tool_name: str
-    status: Literal["ok", "not_found", "invalid"]
+    status: Literal["ok", "not_found", "invalid", "transient_error"]
     evidence: list[Evidence] = Field(default_factory=list)
     error_code: str | None = None
     message: str | None = None

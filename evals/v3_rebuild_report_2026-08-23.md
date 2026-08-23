@@ -28,13 +28,15 @@
 | 项目 | 结果 |
 |---|---:|
 | Ruff | 通过 |
-| Pytest | 71/71 |
+| Pytest | 80/80 |
 | Skill资源 | 7/7加载 |
 | Route资源/Strategy | 29/29加载 |
 | Tool定义/Executor/Adapter | 29/29加载 |
 | V3 Decision E2E | 90条主案例，97/97 Decision |
 
 90条主案例覆盖26个业务Route的90个业务Decision；每条主案例还执行3个合规子任务，合计覆盖7个合规Decision，实际Decision覆盖为97/97。测试同时校验Route、Party、Review、Evidence、Tool和13类ActionPlan。它不是生产准确率。
+
+负向阶段另建26条缺失必需Evidence案例，全部安全关闭为`manual_review + undetermined`并禁止ActionPlan；Timeout与ConnectionError通过`transient_error`进入Trace。详见`v3_failure_matrix_report_2026-08-23.md`。
 
 ## 真实LLM边界评测
 

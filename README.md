@@ -22,7 +22,8 @@ EcomDispute V3 是一个覆盖电商资金、履约、售后、订单操作、�
 | 真实LLM Agent角色 | 3 |
 | V3 Decision E2E | 90条主案例 / 97个Decision |
 | Route边界集 | 44 |
-| 自动化测试 | 71 |
+| 失败矩阵 | 26条缺失必需Evidence案例 |
+| 自动化测试 | 80 |
 
 完整本体与边界见[EcomDispute Route本体与能力边界V3](EcomDispute-Route本体与能力边界V3.md)。
 
@@ -150,6 +151,8 @@ uv run python -m ecom_dispute \
 
 29个Route合同共有97个非`manual_review` Decision。V3使用90条主案例覆盖全部90个业务Decision，并通过嵌套合规子任务覆盖7个合规Decision；实际执行达到97/97，同时校验Party、Review、必需Evidence、必需Tool和13类ActionPlan。它证明合同分支可执行，不代表生产准确率。详见[V3 Decision覆盖报告](evals/v3_decision_coverage_report_2026-08-23.md)。
 
+另建26条缺失必需Evidence矩阵：26/26均安全关闭为`manual_review + undetermined`，准确列出缺失Evidence且不生成ActionPlan；工具Timeout和ConnectionError进入结构化Trace。详见[V3失败矩阵报告](evals/v3_failure_matrix_report_2026-08-23.md)。
+
 ### 真实LLM Route边界集
 
 V3.1边界集在模型调用前提交44条输入和Oracle，覆盖26个业务Route、14组相邻Route最小对照和4条明确拒识。
@@ -193,5 +196,6 @@ V3 Manifest从完整ABCD v1.1的96个subflow轮转抽样200条，只负责固定
 - [V3 Route本体](EcomDispute-Route本体与能力边界V3.md)
 - [V3重构与评测报告](evals/v3_rebuild_report_2026-08-23.md)
 - [V3 Decision覆盖报告](evals/v3_decision_coverage_report_2026-08-23.md)
+- [V3失败矩阵报告](evals/v3_failure_matrix_report_2026-08-23.md)
 - [ABCD标注指南](docs/abcd_route_annotation_guide.md)
 - [简历与面试口径](docs/resume_and_interview.md)

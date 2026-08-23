@@ -1,0 +1,407 @@
+{
+  "v3f-missing-cart_issue": {
+    "route_type": "cart_issue",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "cart_event"
+    ],
+    "required_tools": [
+      "get_cart_events",
+      "get_site_health"
+    ],
+    "action_type": null
+  },
+  "v3f-missing-checkout_issue": {
+    "route_type": "checkout_issue",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "checkout_event"
+    ],
+    "required_tools": [
+      "get_checkout_events",
+      "get_site_health"
+    ],
+    "action_type": null
+  },
+  "v3f-missing-delivered_not_received": {
+    "route_type": "delivered_not_received",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_delivery_proof",
+      "get_delivery_address",
+      "read_policy"
+    ],
+    "action_type": null
+  },
+  "v3f-missing-duplicate_charge": {
+    "route_type": "duplicate_charge",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "payment"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "action_type": null
+  },
+  "v3f-missing-exchange_request": {
+    "route_type": "exchange_request",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "inventory"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_return_request",
+      "get_exchange_options",
+      "get_inventory",
+      "read_policy"
+    ],
+    "action_type": null
+  },
+  "v3f-missing-fulfillment_progress": {
+    "route_type": "fulfillment_progress",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "action_type": null
+  },
+  "v3f-missing-inventory_availability": {
+    "route_type": "inventory_availability",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "inventory"
+    ],
+    "required_tools": [
+      "get_inventory"
+    ],
+    "action_type": null
+  },
+  "v3f-missing-item_condition_issue": {
+    "route_type": "item_condition_issue",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "order_item"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "action_type": null
+  },
+  "v3f-missing-membership_support": {
+    "route_type": "membership_support",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "membership"
+    ],
+    "required_tools": [
+      "get_membership_records",
+      "read_policy"
+    ],
+    "action_type": null
+  },
+  "v3f-missing-missing_item": {
+    "route_type": "missing_item",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "warehouse_pack"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "action_type": null
+  },
+  "v3f-missing-order_cancellation": {
+    "route_type": "order_cancellation",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "cancellation_request"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_cancellation_request",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "action_type": null
+  },
+  "v3f-missing-order_fee_dispute": {
+    "route_type": "order_fee_dispute",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "order_fee"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_order_fee_records",
+      "read_policy"
+    ],
+    "action_type": null
+  },
+  "v3f-missing-order_management": {
+    "route_type": "order_management",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "order_change_option"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_order_change_options",
+      "read_policy"
+    ],
+    "action_type": null
+  },
+  "v3f-missing-payment_captured_order_failed": {
+    "route_type": "payment_captured_order_failed",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "payment"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "action_type": null
+  },
+  "v3f-missing-price_adjustment": {
+    "route_type": "price_adjustment",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "price"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_price_records",
+      "read_policy"
+    ],
+    "action_type": null
+  },
+  "v3f-missing-product_information": {
+    "route_type": "product_information",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "product_catalog"
+    ],
+    "required_tools": [
+      "get_product_catalog"
+    ],
+    "action_type": null
+  },
+  "v3f-missing-promotion_support": {
+    "route_type": "promotion_support",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "promotion"
+    ],
+    "required_tools": [
+      "get_promotion_records",
+      "get_membership_records",
+      "read_policy"
+    ],
+    "action_type": null
+  },
+  "v3f-missing-received_item_mismatch": {
+    "route_type": "received_item_mismatch",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "warehouse_pack"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "action_type": null
+  },
+  "v3f-missing-refund_amount_mismatch": {
+    "route_type": "refund_amount_mismatch",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "refund"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "action_type": null
+  },
+  "v3f-missing-refund_progress": {
+    "route_type": "refund_progress",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "after_sales"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "get_after_sales_case",
+      "read_policy"
+    ],
+    "action_type": null
+  },
+  "v3f-missing-return_progress": {
+    "route_type": "return_progress",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "return_tracking"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_return_request",
+      "get_return_tracking",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "action_type": null
+  },
+  "v3f-missing-return_request": {
+    "route_type": "return_request",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "order_item"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_return_request",
+      "read_policy"
+    ],
+    "action_type": null
+  },
+  "v3f-missing-search_issue": {
+    "route_type": "search_issue",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "search_event"
+    ],
+    "required_tools": [
+      "get_search_events",
+      "get_site_health"
+    ],
+    "action_type": null
+  },
+  "v3f-missing-shipping_options": {
+    "route_type": "shipping_options",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "shipping_option"
+    ],
+    "required_tools": [
+      "get_shipping_options",
+      "get_membership_records"
+    ],
+    "action_type": null
+  },
+  "v3f-missing-site_performance": {
+    "route_type": "site_performance",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "site_health"
+    ],
+    "required_tools": [
+      "get_site_health"
+    ],
+    "action_type": null
+  },
+  "v3f-missing-unrecognized_charge": {
+    "route_type": "unrecognized_charge",
+    "decision": "manual_review",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "missing_evidence": [
+      "charge_claim"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_payment_gateway_events",
+      "get_charge_dispute",
+      "read_policy"
+    ],
+    "action_type": null
+  }
+}

@@ -188,6 +188,20 @@ class ToolRegistry:
         if cache_key not in self._cache:
             try:
                 self._cache[cache_key] = executor(**arguments)
+            except TimeoutError as exc:
+                return ToolResult(
+                    tool_name=tool_id,
+                    status="transient_error",
+                    error_code="TOOL_TIMEOUT",
+                    message=str(exc) or "tool timed out",
+                )
+            except ConnectionError as exc:
+                return ToolResult(
+                    tool_name=tool_id,
+                    status="transient_error",
+                    error_code="TOOL_CONNECTION_ERROR",
+                    message=str(exc) or "tool connection failed",
+                )
             except (TypeError, ValueError) as exc:
                 return ToolResult(
                     tool_name=tool_id,
