@@ -2,13 +2,12 @@
   "schema_version": 3,
   "method": "Codex semantic triage of 46 initial careful candidates and 12 high-confidence route disagreements; not a human label",
   "case_count": 200,
-  "quick_audit": 191,
-  "careful_review_count": 9,
-  "ai_override_count": 11,
+  "quick_audit": 192,
+  "careful_review_count": 8,
+  "ai_override_count": 12,
   "careful_review": {
     "abcd:10034": "承诺日期变化与主动修改配送日期同时出现",
     "abcd:10050": "错误添加订阅与40美元扣款同时出现",
-    "abcd:10068": "用户怀疑新增订阅但系统确认是诈骗邮件",
     "abcd:10088": "退货处理状态与退款支付方式边界不清",
     "abcd:10152": "普通退货商品追加到既有退款",
     "abcd:10360": "修改配送安排时系统同时显示已送达",
@@ -134,6 +133,20 @@
         13,
         14,
         20
+      ]
+    },
+    "abcd:10068": {
+      "supported": false,
+      "has_business_exception": false,
+      "primary_route": "other",
+      "acceptable_routes": [
+        "other"
+      ],
+      "reason": "系统确认账户没有新增任何订阅，邮件也并非商家发送；这是项目范围外的诈骗邮件，不属于会员支持或商家业务异常。",
+      "confidence": "high",
+      "evidence_turns": [
+        1,
+        8
       ]
     }
   },

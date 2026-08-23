@@ -95,7 +95,7 @@ V3.1在运行前完成两项变更：
 
 旧71.9%是Legacy Ontology V2粗映射一致率，不是V3指标。
 
-V3真实Conversation已完成200/200，但人工Consensus尚未完成，因此Route Accuracy保持`null`。中文辅助与英文AI预标注均完成200/200，经语义分流得到9条重点复核和191条快速抽检。详见`v3_abcd_200_unscored_report_2026-08-23.md`。
+V3真实Conversation已完成200/200，但人工Consensus尚未完成，因此Route Accuracy保持`null`。中文辅助与英文AI预标注均完成200/200，经语义分流得到8条重点复核和192条快速抽检。详见`v3_abcd_200_unscored_report_2026-08-23.md`。
 
 ## 限制与下一步
 
