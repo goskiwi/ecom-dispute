@@ -53,12 +53,18 @@ def _report_metrics(report: DecisionReport) -> dict:
         for event in report.trace
         if event.get("agent") in {"evidence_gap", "review"} and event.get("telemetry")
     ]
+    gap_usage = next((item for item in usages if item["agent"] == "evidence_gap"), {})
     return {
         "decision": report.decision,
         "responsible_party": report.responsible_party,
         "review_required": report.review_required,
         "evidence_count": len(report.evidence_ids),
         "finding_count": len(report.findings),
+        "evidence_kinds": sorted({item.kind.value for item in report.evidence}),
+        "selected_lazy_tool": gap_usage.get("selected_tool"),
+        "lazy_tool_status": gap_usage.get("tool_status"),
+        "lazy_tool_error_code": gap_usage.get("tool_error_code"),
+        "action_type": report.action_plan.action_type if report.action_plan else None,
         "incremental_agents": [item["agent"] for item in usages],
         "incremental_input_tokens": sum(item.get("input_tokens", 0) for item in usages),
         "incremental_output_tokens": sum(item.get("output_tokens", 0) for item in usages),

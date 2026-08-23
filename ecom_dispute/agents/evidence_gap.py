@@ -49,7 +49,10 @@ class EvidenceGapAgent:
         prompt = (
             "你是电商争议证据缺口 Agent。核心工具已经由框架执行。"
             "你只能判断是否需要一个长尾工具，不负责裁决责任。"
+            "只有原始对话明确提出的问题或现有核心证据冲突需要该长尾证据时才选择；"
+            "核心证据已经足够时必须needs_more_evidence=false。最多选择一个工具。"
             f"\nRoute={resolved.route_id}"
+            f"\n原始对话={json.dumps(case.conversation, ensure_ascii=False)}"
             f"\n现有证据={json.dumps([{'kind': x.kind.value, 'summary': x.summary} for x in state.evidence.values()], ensure_ascii=False)}"
             f"\n候选工具={json.dumps([{'tool_id': x.tool_id, 'description': x.description} for x in candidates], ensure_ascii=False)}"
         )
@@ -120,6 +123,9 @@ class EvidenceGapAgent:
                     "output_tokens": int(usage.get("output_tokens", 0)),
                     "latency_ms": latency_ms,
                     "reason": plan.reason,
+                    "selected_tool": plan.tool_id,
+                    "tool_status": result.status,
+                    "tool_error_code": result.error_code,
                 },
             ),
         )

@@ -1,0 +1,110 @@
+{
+  "v3gap-unrecognized-needed": {
+    "route_type": "unrecognized_charge",
+    "decision": "unrecognized_charge_confirmed",
+    "responsible_party": "payment_channel",
+    "review_required": true,
+    "expected_gap_tool": "get_payment_gateway_events",
+    "expected_tool_status": "ok",
+    "expected_added_evidence_kind": "payment_gateway"
+  },
+  "v3gap-unrecognized-not-needed": {
+    "route_type": "unrecognized_charge",
+    "decision": "charge_recognized",
+    "responsible_party": "none",
+    "review_required": false,
+    "expected_gap_tool": null,
+    "expected_tool_status": null,
+    "expected_added_evidence_kind": null
+  },
+  "v3gap-refund-amount-needed": {
+    "route_type": "refund_amount_mismatch",
+    "decision": "refund_credit_amount_mismatch",
+    "responsible_party": "payment_channel",
+    "review_required": true,
+    "expected_gap_tool": "get_payment_gateway_events",
+    "expected_tool_status": "ok",
+    "expected_added_evidence_kind": "payment_gateway"
+  },
+  "v3gap-refund-amount-not-needed": {
+    "route_type": "refund_amount_mismatch",
+    "decision": "refund_amount_incorrect",
+    "responsible_party": "platform",
+    "review_required": false,
+    "expected_gap_tool": null,
+    "expected_tool_status": null,
+    "expected_added_evidence_kind": null
+  },
+  "v3gap-item-mismatch-needed": {
+    "route_type": "received_item_mismatch",
+    "decision": "received_item_mismatch_unverified",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "expected_gap_tool": "get_claim_attachments",
+    "expected_tool_status": "ok",
+    "expected_added_evidence_kind": "claim_attachment"
+  },
+  "v3gap-item-mismatch-not-needed": {
+    "route_type": "received_item_mismatch",
+    "decision": "received_item_mismatch_confirmed",
+    "responsible_party": "warehouse",
+    "review_required": true,
+    "expected_gap_tool": null,
+    "expected_tool_status": null,
+    "expected_added_evidence_kind": null
+  },
+  "v3gap-delivery-address-needed": {
+    "route_type": "delivered_not_received",
+    "decision": "delivery_receipt_disputed",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "expected_gap_tool": "get_delivery_address",
+    "expected_tool_status": "ok",
+    "expected_added_evidence_kind": "delivery_address"
+  },
+  "v3gap-delivery-address-not-needed": {
+    "route_type": "delivered_not_received",
+    "decision": "delivery_proof_missing",
+    "responsible_party": "logistics_provider",
+    "review_required": true,
+    "expected_gap_tool": null,
+    "expected_tool_status": null,
+    "expected_added_evidence_kind": null
+  },
+  "v3gap-delivery-address-negative": {
+    "route_type": "delivered_not_received",
+    "decision": "delivery_not_marked_delivered",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "expected_gap_tool": "get_delivery_address",
+    "expected_tool_status": "not_found",
+    "expected_added_evidence_kind": "query"
+  },
+  "v3gap-condition-logistics-needed": {
+    "route_type": "item_condition_issue",
+    "decision": "item_condition_evidence_collected",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "expected_gap_tool": "get_logistics_events",
+    "expected_tool_status": "ok",
+    "expected_added_evidence_kind": "logistics"
+  },
+  "v3gap-condition-logistics-not-needed": {
+    "route_type": "item_condition_issue",
+    "decision": "item_condition_attachment_missing",
+    "responsible_party": "user",
+    "review_required": true,
+    "expected_gap_tool": null,
+    "expected_tool_status": null,
+    "expected_added_evidence_kind": null
+  },
+  "v3gap-condition-logistics-negative": {
+    "route_type": "item_condition_issue",
+    "decision": "item_condition_evidence_insufficient",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "expected_gap_tool": "get_logistics_events",
+    "expected_tool_status": "not_found",
+    "expected_added_evidence_kind": "query"
+  }
+}

@@ -14,14 +14,17 @@ core_tools: &id001
 - get_order
 - get_logistics_events
 - get_delivery_proof
-- get_delivery_address
 - read_policy
-lazy_tools: []
+lazy_tools:
+- get_delivery_address
 required_evidence:
 - conversation
 - order
 - policy
-optional_evidence: []
+optional_evidence:
+- logistics
+- delivery_proof
+- delivery_address
 allowed_decisions:
 - delivery_proof_missing
 - delivery_receipt_disputed

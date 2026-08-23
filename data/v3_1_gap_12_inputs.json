@@ -1,0 +1,944 @@
+{
+  "source": "v3_gap_12_pre_llm",
+  "cases": [
+    {
+      "case_id": "v3gap-unrecognized-needed",
+      "order_id": "v3-order-05",
+      "region": "CN",
+      "business_type": "unrecognized_charge",
+      "occurred_at": "2026-07-01T10:00:00",
+      "current_time": "2026-07-10T12:00:00",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "这笔扣款不是我授权的，银行还提供了渠道交易号，请一起核验支付网关事件。"
+        },
+        {
+          "speaker": "agent",
+          "text": "我会先核验核心证据，再判断是否需要长尾证据。"
+        }
+      ],
+      "order": {
+        "order_id": "v3-order-05",
+        "user_id": "v3-user-05",
+        "region": "CN",
+        "business_type": "unrecognized_charge",
+        "status": "paid",
+        "paid_amount": 199.0,
+        "currency": "CNY",
+        "created_at": "2026-07-01T08:00:00",
+        "promised_delivery_at": "2026-07-05T18:00:00",
+        "version": 1
+      },
+      "after_sales": null,
+      "payments": [
+        {
+          "payment_id": "v3-pay-5",
+          "order_id": "v3-order-05",
+          "event_type": "debit",
+          "amount": 199.0,
+          "status": "succeeded",
+          "occurred_at": "2026-07-01T08:01:00",
+          "version": 1
+        }
+      ],
+      "refunds": [],
+      "logistics_events": [],
+      "order_items": [],
+      "payment_gateway_events": [
+        {
+          "order_id": "v3-order-05",
+          "gateway_event_id": "v3gap-gateway-unrecognized",
+          "transaction_id": "txn-unrecognized",
+          "event_type": "capture",
+          "amount": 199,
+          "status": "succeeded",
+          "occurred_at": "2026-07-02T08:00:00",
+          "version": 1
+        }
+      ],
+      "delivery_proofs": [],
+      "delivery_addresses": [],
+      "cancellation_requests": [],
+      "return_requests": [],
+      "warehouse_pack_records": [],
+      "claim_attachments": [],
+      "order_fee_records": [],
+      "charge_dispute_records": [
+        {
+          "charge_claim_id": "v3-claim-5",
+          "order_id": "v3-order-05",
+          "status": "unrecognized",
+          "payment_id": "v3-pay-5",
+          "detail": "用户否认购买",
+          "occurred_at": "2026-07-02T08:00:00",
+          "version": 1
+        }
+      ],
+      "return_tracking_events": [],
+      "exchange_options": [],
+      "order_change_options": [],
+      "product_catalog_records": [],
+      "inventory_records": [],
+      "price_records": [],
+      "promotion_records": [],
+      "shipping_option_records": [],
+      "membership_records": [],
+      "checkout_events": [],
+      "cart_events": [],
+      "search_events": [],
+      "site_health_events": []
+    },
+    {
+      "case_id": "v3gap-unrecognized-not-needed",
+      "order_id": "v3d-order-113",
+      "region": "CN",
+      "business_type": "unrecognized_charge",
+      "occurred_at": "2026-07-01T10:00:00",
+      "current_time": "2026-07-10T12:00:00",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "我起初不认识这笔扣款，请核验陌生扣款记录；订单和支付关联已经足够，不需要渠道明细。"
+        },
+        {
+          "speaker": "agent",
+          "text": "我会先核验核心证据，再判断是否需要长尾证据。"
+        }
+      ],
+      "order": {
+        "order_id": "v3d-order-113",
+        "user_id": "v3d-user-113",
+        "region": "CN",
+        "business_type": "unrecognized_charge",
+        "status": "paid",
+        "paid_amount": 199.0,
+        "currency": "CNY",
+        "created_at": "2026-07-01T08:00:00",
+        "promised_delivery_at": "2026-07-05T18:00:00",
+        "version": 1
+      },
+      "after_sales": null,
+      "payments": [
+        {
+          "payment_id": "v3d-pay-113-debit",
+          "order_id": "v3d-order-113",
+          "event_type": "debit",
+          "amount": 199.0,
+          "status": "succeeded",
+          "occurred_at": "2026-07-02T08:00:00",
+          "version": 1
+        }
+      ],
+      "refunds": [],
+      "logistics_events": [],
+      "order_items": [],
+      "payment_gateway_events": [],
+      "delivery_proofs": [],
+      "delivery_addresses": [],
+      "cancellation_requests": [],
+      "return_requests": [],
+      "warehouse_pack_records": [],
+      "claim_attachments": [],
+      "order_fee_records": [],
+      "charge_dispute_records": [
+        {
+          "charge_claim_id": "v3d-claim-113",
+          "order_id": "v3d-order-113",
+          "status": "recognized",
+          "payment_id": "v3d-pay-113-debit",
+          "detail": "charge claim",
+          "occurred_at": "2026-07-02T08:00:00",
+          "version": 1
+        }
+      ],
+      "return_tracking_events": [],
+      "exchange_options": [],
+      "order_change_options": [],
+      "product_catalog_records": [],
+      "inventory_records": [],
+      "price_records": [],
+      "promotion_records": [],
+      "shipping_option_records": [],
+      "membership_records": [],
+      "checkout_events": [],
+      "cart_events": [],
+      "search_events": [],
+      "site_health_events": []
+    },
+    {
+      "case_id": "v3gap-refund-amount-needed",
+      "order_id": "v3d-order-107",
+      "region": "CN",
+      "business_type": "refund_amount_mismatch",
+      "occurred_at": "2026-07-01T10:00:00",
+      "current_time": "2026-07-10T12:00:00",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "退款记录是199元，银行卡只入账99元，请进一步核验支付网关事件。"
+        },
+        {
+          "speaker": "agent",
+          "text": "我会先核验核心证据，再判断是否需要长尾证据。"
+        }
+      ],
+      "order": {
+        "order_id": "v3d-order-107",
+        "user_id": "v3d-user-107",
+        "region": "CN",
+        "business_type": "refund_amount_mismatch",
+        "status": "paid",
+        "paid_amount": 199.0,
+        "currency": "CNY",
+        "created_at": "2026-07-01T08:00:00",
+        "promised_delivery_at": "2026-07-05T18:00:00",
+        "version": 1
+      },
+      "after_sales": null,
+      "payments": [
+        {
+          "payment_id": "v3d-pay-107-credit",
+          "order_id": "v3d-order-107",
+          "event_type": "credit",
+          "amount": 99.0,
+          "status": "succeeded",
+          "occurred_at": "2026-07-02T08:00:00",
+          "version": 1
+        }
+      ],
+      "refunds": [
+        {
+          "refund_id": "v3d-ref-107",
+          "order_id": "v3d-order-107",
+          "amount": 199.0,
+          "status": "succeeded",
+          "initiated_at": "2026-07-02T08:00:00",
+          "completed_at": "2026-07-03T08:00:00",
+          "version": 1
+        }
+      ],
+      "logistics_events": [],
+      "order_items": [],
+      "payment_gateway_events": [
+        {
+          "order_id": "v3d-order-107",
+          "gateway_event_id": "v3gap-gateway-refund",
+          "transaction_id": "txn-refund-credit",
+          "event_type": "credit",
+          "amount": 99,
+          "status": "succeeded",
+          "occurred_at": "2026-07-03T08:00:00",
+          "version": 1
+        }
+      ],
+      "delivery_proofs": [],
+      "delivery_addresses": [],
+      "cancellation_requests": [],
+      "return_requests": [],
+      "warehouse_pack_records": [],
+      "claim_attachments": [],
+      "order_fee_records": [],
+      "charge_dispute_records": [],
+      "return_tracking_events": [],
+      "exchange_options": [],
+      "order_change_options": [],
+      "product_catalog_records": [],
+      "inventory_records": [],
+      "price_records": [],
+      "promotion_records": [],
+      "shipping_option_records": [],
+      "membership_records": [],
+      "checkout_events": [],
+      "cart_events": [],
+      "search_events": [],
+      "site_health_events": []
+    },
+    {
+      "case_id": "v3gap-refund-amount-not-needed",
+      "order_id": "v3-order-02",
+      "region": "CN",
+      "business_type": "refund_amount_mismatch",
+      "occurred_at": "2026-07-01T10:00:00",
+      "current_time": "2026-07-10T12:00:00",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "订单实付199元，退款记录只有99元，核心订单和退款记录已经能说明问题。"
+        },
+        {
+          "speaker": "agent",
+          "text": "我会先核验核心证据，再判断是否需要长尾证据。"
+        }
+      ],
+      "order": {
+        "order_id": "v3-order-02",
+        "user_id": "v3-user-02",
+        "region": "CN",
+        "business_type": "refund_amount_mismatch",
+        "status": "paid",
+        "paid_amount": 199.0,
+        "currency": "CNY",
+        "created_at": "2026-07-01T08:00:00",
+        "promised_delivery_at": "2026-07-05T18:00:00",
+        "version": 1
+      },
+      "after_sales": null,
+      "payments": [
+        {
+          "payment_id": "v3-pay-2",
+          "order_id": "v3-order-02",
+          "event_type": "credit",
+          "amount": 99.0,
+          "status": "succeeded",
+          "occurred_at": "2026-07-09T08:00:00",
+          "version": 1
+        }
+      ],
+      "refunds": [
+        {
+          "refund_id": "v3-ref-2",
+          "order_id": "v3-order-02",
+          "amount": 99.0,
+          "status": "succeeded",
+          "initiated_at": "2026-07-08T08:00:00",
+          "completed_at": "2026-07-09T08:00:00",
+          "version": 1
+        }
+      ],
+      "logistics_events": [],
+      "order_items": [],
+      "payment_gateway_events": [],
+      "delivery_proofs": [],
+      "delivery_addresses": [],
+      "cancellation_requests": [],
+      "return_requests": [],
+      "warehouse_pack_records": [],
+      "claim_attachments": [],
+      "order_fee_records": [],
+      "charge_dispute_records": [],
+      "return_tracking_events": [],
+      "exchange_options": [],
+      "order_change_options": [],
+      "product_catalog_records": [],
+      "inventory_records": [],
+      "price_records": [],
+      "promotion_records": [],
+      "shipping_option_records": [],
+      "membership_records": [],
+      "checkout_events": [],
+      "cart_events": [],
+      "search_events": [],
+      "site_health_events": []
+    },
+    {
+      "case_id": "v3gap-item-mismatch-needed",
+      "order_id": "v3d-order-138",
+      "region": "CN",
+      "business_type": "received_item_mismatch",
+      "occurred_at": "2026-07-01T10:00:00",
+      "current_time": "2026-07-10T12:00:00",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "我下单白色9码却收到黑色8码，并且已经上传了实收商品照片，请核验附件。"
+        },
+        {
+          "speaker": "agent",
+          "text": "我会先核验核心证据，再判断是否需要长尾证据。"
+        }
+      ],
+      "order": {
+        "order_id": "v3d-order-138",
+        "user_id": "v3d-user-138",
+        "region": "CN",
+        "business_type": "received_item_mismatch",
+        "status": "paid",
+        "paid_amount": 199.0,
+        "currency": "CNY",
+        "created_at": "2026-07-01T08:00:00",
+        "promised_delivery_at": "2026-07-05T18:00:00",
+        "version": 1
+      },
+      "after_sales": null,
+      "payments": [],
+      "refunds": [],
+      "logistics_events": [],
+      "order_items": [
+        {
+          "order_item_id": "v3d-item-138",
+          "order_id": "v3d-order-138",
+          "sku_id": "sku-white-9",
+          "product_name": "V3决策矩阵商品",
+          "quantity": 1,
+          "unit_price": 199.0,
+          "category": "general",
+          "version": 1
+        }
+      ],
+      "payment_gateway_events": [],
+      "delivery_proofs": [],
+      "delivery_addresses": [],
+      "cancellation_requests": [],
+      "return_requests": [],
+      "warehouse_pack_records": [
+        {
+          "pack_record_id": "v3d-pack-138",
+          "order_id": "v3d-order-138",
+          "sku_id": "sku-white-9",
+          "packed_quantity": 1,
+          "scanned_at": "2026-07-02T08:00:00",
+          "station_id": "matrix-station",
+          "version": 1
+        }
+      ],
+      "claim_attachments": [
+        {
+          "order_id": "v3d-order-138",
+          "attachment_id": "v3gap-mismatch-photo",
+          "attachment_type": "received_item_photo",
+          "uri": "evidence://v3gap/mismatch-photo",
+          "size_bytes": 2048,
+          "summary": "实收黑色8码商品照片",
+          "created_at": "2026-07-05T08:00:00",
+          "version": 1
+        }
+      ],
+      "order_fee_records": [],
+      "charge_dispute_records": [],
+      "return_tracking_events": [],
+      "exchange_options": [],
+      "order_change_options": [],
+      "product_catalog_records": [],
+      "inventory_records": [],
+      "price_records": [],
+      "promotion_records": [],
+      "shipping_option_records": [],
+      "membership_records": [],
+      "checkout_events": [],
+      "cart_events": [],
+      "search_events": [],
+      "site_health_events": []
+    },
+    {
+      "case_id": "v3gap-item-mismatch-not-needed",
+      "order_id": "v3-order-13",
+      "region": "CN",
+      "business_type": "received_item_mismatch",
+      "occurred_at": "2026-07-01T10:00:00",
+      "current_time": "2026-07-10T12:00:00",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "订单是白色9码，仓库扫描已经显示打包成黑色8码，不需要额外照片即可确认仓库错配。"
+        },
+        {
+          "speaker": "agent",
+          "text": "我会先核验核心证据，再判断是否需要长尾证据。"
+        }
+      ],
+      "order": {
+        "order_id": "v3-order-13",
+        "user_id": "v3-user-13",
+        "region": "CN",
+        "business_type": "received_item_mismatch",
+        "status": "paid",
+        "paid_amount": 199.0,
+        "currency": "CNY",
+        "created_at": "2026-07-01T08:00:00",
+        "promised_delivery_at": "2026-07-05T18:00:00",
+        "version": 1
+      },
+      "after_sales": null,
+      "payments": [],
+      "refunds": [],
+      "logistics_events": [],
+      "order_items": [
+        {
+          "order_item_id": "v3-item-13",
+          "order_id": "v3-order-13",
+          "sku_id": "sku-white-9",
+          "product_name": "V3测试商品",
+          "quantity": 1,
+          "unit_price": 199.0,
+          "category": "general",
+          "version": 1
+        }
+      ],
+      "payment_gateway_events": [],
+      "delivery_proofs": [],
+      "delivery_addresses": [],
+      "cancellation_requests": [],
+      "return_requests": [],
+      "warehouse_pack_records": [
+        {
+          "pack_record_id": "v3-pack-13",
+          "order_id": "v3-order-13",
+          "sku_id": "sku-black-9",
+          "packed_quantity": 1,
+          "scanned_at": "2026-07-02T08:00:00",
+          "station_id": "v3-station",
+          "version": 1
+        }
+      ],
+      "claim_attachments": [],
+      "order_fee_records": [],
+      "charge_dispute_records": [],
+      "return_tracking_events": [],
+      "exchange_options": [],
+      "order_change_options": [],
+      "product_catalog_records": [],
+      "inventory_records": [],
+      "price_records": [],
+      "promotion_records": [],
+      "shipping_option_records": [],
+      "membership_records": [],
+      "checkout_events": [],
+      "cart_events": [],
+      "search_events": [],
+      "site_health_events": []
+    },
+    {
+      "case_id": "v3gap-delivery-address-needed",
+      "order_id": "v3d-order-121",
+      "region": "CN",
+      "business_type": "delivered_not_received",
+      "occurred_at": "2026-07-01T10:00:00",
+      "current_time": "2026-07-10T12:00:00",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "物流显示签收但我没收到，而且怀疑送到了旧地址，请核验订单配送地址。"
+        },
+        {
+          "speaker": "agent",
+          "text": "我会先核验核心证据，再判断是否需要长尾证据。"
+        }
+      ],
+      "order": {
+        "order_id": "v3d-order-121",
+        "user_id": "v3d-user-121",
+        "region": "CN",
+        "business_type": "delivered_not_received",
+        "status": "delivered",
+        "paid_amount": 199.0,
+        "currency": "CNY",
+        "created_at": "2026-07-01T08:00:00",
+        "promised_delivery_at": "2026-07-05T18:00:00",
+        "version": 1
+      },
+      "after_sales": null,
+      "payments": [],
+      "refunds": [],
+      "logistics_events": [
+        {
+          "event_id": "v3d-log-121-delivered",
+          "order_id": "v3d-order-121",
+          "event_type": "delivered",
+          "occurred_at": "2026-07-05T12:00:00",
+          "detail": "signed",
+          "version": 1
+        }
+      ],
+      "order_items": [],
+      "payment_gateway_events": [],
+      "delivery_proofs": [
+        {
+          "proof_id": "v3d-proof-121",
+          "order_id": "v3d-order-121",
+          "recipient": "front-desk",
+          "proof_type": "photo",
+          "delivered_at": "2026-07-05T12:00:00",
+          "detail": "proof",
+          "version": 1
+        }
+      ],
+      "delivery_addresses": [
+        {
+          "order_id": "v3d-order-121",
+          "address_id": "v3gap-delivery-address",
+          "city": "旧城市",
+          "masked_address": "旧城区***路",
+          "contact_suffix": "4321",
+          "version": 1
+        }
+      ],
+      "cancellation_requests": [],
+      "return_requests": [],
+      "warehouse_pack_records": [],
+      "claim_attachments": [],
+      "order_fee_records": [],
+      "charge_dispute_records": [],
+      "return_tracking_events": [],
+      "exchange_options": [],
+      "order_change_options": [],
+      "product_catalog_records": [],
+      "inventory_records": [],
+      "price_records": [],
+      "promotion_records": [],
+      "shipping_option_records": [],
+      "membership_records": [],
+      "checkout_events": [],
+      "cart_events": [],
+      "search_events": [],
+      "site_health_events": []
+    },
+    {
+      "case_id": "v3gap-delivery-address-not-needed",
+      "order_id": "v3-order-08",
+      "region": "CN",
+      "business_type": "delivered_not_received",
+      "occurred_at": "2026-07-01T10:00:00",
+      "current_time": "2026-07-10T12:00:00",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "物流显示送达但我没有收到，而且承运商没有签收证明；应先补充签收证明，不需要核对地址。"
+        },
+        {
+          "speaker": "agent",
+          "text": "我会先核验核心证据，再判断是否需要长尾证据。"
+        }
+      ],
+      "order": {
+        "order_id": "v3-order-08",
+        "user_id": "v3-user-08",
+        "region": "CN",
+        "business_type": "delivered_not_received",
+        "status": "delivered",
+        "paid_amount": 199.0,
+        "currency": "CNY",
+        "created_at": "2026-07-01T08:00:00",
+        "promised_delivery_at": "2026-07-05T18:00:00",
+        "version": 1
+      },
+      "after_sales": null,
+      "payments": [],
+      "refunds": [],
+      "logistics_events": [
+        {
+          "event_id": "v3-log-8",
+          "order_id": "v3-order-08",
+          "event_type": "delivered",
+          "occurred_at": "2026-07-05T17:00:00",
+          "detail": "carrier delivered",
+          "version": 1
+        }
+      ],
+      "order_items": [],
+      "payment_gateway_events": [],
+      "delivery_proofs": [],
+      "delivery_addresses": [],
+      "cancellation_requests": [],
+      "return_requests": [],
+      "warehouse_pack_records": [],
+      "claim_attachments": [],
+      "order_fee_records": [],
+      "charge_dispute_records": [],
+      "return_tracking_events": [],
+      "exchange_options": [],
+      "order_change_options": [],
+      "product_catalog_records": [],
+      "inventory_records": [],
+      "price_records": [],
+      "promotion_records": [],
+      "shipping_option_records": [],
+      "membership_records": [],
+      "checkout_events": [],
+      "cart_events": [],
+      "search_events": [],
+      "site_health_events": []
+    },
+    {
+      "case_id": "v3gap-delivery-address-negative",
+      "order_id": "v3d-order-122",
+      "region": "CN",
+      "business_type": "delivered_not_received",
+      "occurred_at": "2026-07-01T10:00:00",
+      "current_time": "2026-07-10T12:00:00",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "客服声称包裹已送达但我没有收到，物流系统却没有送达记录；请查询是否寄往旧地址。"
+        },
+        {
+          "speaker": "agent",
+          "text": "我会先核验核心证据，再判断是否需要长尾证据。"
+        }
+      ],
+      "order": {
+        "order_id": "v3d-order-122",
+        "user_id": "v3d-user-122",
+        "region": "CN",
+        "business_type": "delivered_not_received",
+        "status": "paid",
+        "paid_amount": 199.0,
+        "currency": "CNY",
+        "created_at": "2026-07-01T08:00:00",
+        "promised_delivery_at": "2026-07-05T18:00:00",
+        "version": 1
+      },
+      "after_sales": null,
+      "payments": [],
+      "refunds": [],
+      "logistics_events": [],
+      "order_items": [],
+      "payment_gateway_events": [],
+      "delivery_proofs": [],
+      "delivery_addresses": [],
+      "cancellation_requests": [],
+      "return_requests": [],
+      "warehouse_pack_records": [],
+      "claim_attachments": [],
+      "order_fee_records": [],
+      "charge_dispute_records": [],
+      "return_tracking_events": [],
+      "exchange_options": [],
+      "order_change_options": [],
+      "product_catalog_records": [],
+      "inventory_records": [],
+      "price_records": [],
+      "promotion_records": [],
+      "shipping_option_records": [],
+      "membership_records": [],
+      "checkout_events": [],
+      "cart_events": [],
+      "search_events": [],
+      "site_health_events": []
+    },
+    {
+      "case_id": "v3gap-condition-logistics-needed",
+      "order_id": "v3-order-15",
+      "region": "CN",
+      "business_type": "item_condition_issue",
+      "occurred_at": "2026-07-01T10:00:00",
+      "current_time": "2026-07-10T12:00:00",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "商品和外包装都有挤压破损，我已经上传照片，还需要核验运输途中是否发生异常。"
+        },
+        {
+          "speaker": "agent",
+          "text": "我会先核验核心证据，再判断是否需要长尾证据。"
+        }
+      ],
+      "order": {
+        "order_id": "v3-order-15",
+        "user_id": "v3-user-15",
+        "region": "CN",
+        "business_type": "item_condition_issue",
+        "status": "paid",
+        "paid_amount": 199.0,
+        "currency": "CNY",
+        "created_at": "2026-07-01T08:00:00",
+        "promised_delivery_at": "2026-07-05T18:00:00",
+        "version": 1
+      },
+      "after_sales": null,
+      "payments": [],
+      "refunds": [],
+      "logistics_events": [
+        {
+          "order_id": "v3-order-15",
+          "event_id": "v3gap-condition-logistics",
+          "event_type": "exception",
+          "occurred_at": "2026-07-04T08:00:00",
+          "detail": "package crushed in transit",
+          "version": 1
+        }
+      ],
+      "order_items": [
+        {
+          "order_item_id": "v3-item-15",
+          "order_id": "v3-order-15",
+          "sku_id": "sku-white-9",
+          "product_name": "V3测试商品",
+          "quantity": 1,
+          "unit_price": 199.0,
+          "category": "general",
+          "version": 1
+        }
+      ],
+      "payment_gateway_events": [],
+      "delivery_proofs": [],
+      "delivery_addresses": [],
+      "cancellation_requests": [],
+      "return_requests": [],
+      "warehouse_pack_records": [],
+      "claim_attachments": [
+        {
+          "attachment_id": "v3-attach-15",
+          "order_id": "v3-order-15",
+          "attachment_type": "condition_photo",
+          "uri": "evidence://v3/15/condition",
+          "size_bytes": 1024,
+          "summary": "商品污渍照片",
+          "created_at": "2026-07-05T08:00:00",
+          "version": 1
+        }
+      ],
+      "order_fee_records": [],
+      "charge_dispute_records": [],
+      "return_tracking_events": [],
+      "exchange_options": [],
+      "order_change_options": [],
+      "product_catalog_records": [],
+      "inventory_records": [],
+      "price_records": [],
+      "promotion_records": [],
+      "shipping_option_records": [],
+      "membership_records": [],
+      "checkout_events": [],
+      "cart_events": [],
+      "search_events": [],
+      "site_health_events": []
+    },
+    {
+      "case_id": "v3gap-condition-logistics-not-needed",
+      "order_id": "v3d-order-140",
+      "region": "CN",
+      "business_type": "item_condition_issue",
+      "occurred_at": "2026-07-01T10:00:00",
+      "current_time": "2026-07-10T12:00:00",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "商品破损但我还没有上传任何照片，应先补充商品和包装凭证。"
+        },
+        {
+          "speaker": "agent",
+          "text": "我会先核验核心证据，再判断是否需要长尾证据。"
+        }
+      ],
+      "order": {
+        "order_id": "v3d-order-140",
+        "user_id": "v3d-user-140",
+        "region": "CN",
+        "business_type": "item_condition_issue",
+        "status": "paid",
+        "paid_amount": 199.0,
+        "currency": "CNY",
+        "created_at": "2026-07-01T08:00:00",
+        "promised_delivery_at": "2026-07-05T18:00:00",
+        "version": 1
+      },
+      "after_sales": null,
+      "payments": [],
+      "refunds": [],
+      "logistics_events": [],
+      "order_items": [
+        {
+          "order_item_id": "v3d-item-140",
+          "order_id": "v3d-order-140",
+          "sku_id": "sku-white-9",
+          "product_name": "V3决策矩阵商品",
+          "quantity": 1,
+          "unit_price": 199.0,
+          "category": "general",
+          "version": 1
+        }
+      ],
+      "payment_gateway_events": [],
+      "delivery_proofs": [],
+      "delivery_addresses": [],
+      "cancellation_requests": [],
+      "return_requests": [],
+      "warehouse_pack_records": [
+        {
+          "pack_record_id": "v3d-pack-140",
+          "order_id": "v3d-order-140",
+          "sku_id": "sku-white-9",
+          "packed_quantity": 1,
+          "scanned_at": "2026-07-02T08:00:00",
+          "station_id": "matrix-station",
+          "version": 1
+        }
+      ],
+      "claim_attachments": [],
+      "order_fee_records": [],
+      "charge_dispute_records": [],
+      "return_tracking_events": [],
+      "exchange_options": [],
+      "order_change_options": [],
+      "product_catalog_records": [],
+      "inventory_records": [],
+      "price_records": [],
+      "promotion_records": [],
+      "shipping_option_records": [],
+      "membership_records": [],
+      "checkout_events": [],
+      "cart_events": [],
+      "search_events": [],
+      "site_health_events": []
+    },
+    {
+      "case_id": "v3gap-condition-logistics-negative",
+      "order_id": "v3d-order-141",
+      "region": "CN",
+      "business_type": "item_condition_issue",
+      "occurred_at": "2026-07-01T10:00:00",
+      "current_time": "2026-07-10T12:00:00",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "商品破损并怀疑运输异常，但目前系统可能没有物流事件，请查询确认。"
+        },
+        {
+          "speaker": "agent",
+          "text": "我会先核验核心证据，再判断是否需要长尾证据。"
+        }
+      ],
+      "order": {
+        "order_id": "v3d-order-141",
+        "user_id": "v3d-user-141",
+        "region": "CN",
+        "business_type": "item_condition_issue",
+        "status": "paid",
+        "paid_amount": 199.0,
+        "currency": "CNY",
+        "created_at": "2026-07-01T08:00:00",
+        "promised_delivery_at": "2026-07-05T18:00:00",
+        "version": 1
+      },
+      "after_sales": null,
+      "payments": [],
+      "refunds": [],
+      "logistics_events": [],
+      "order_items": [
+        {
+          "order_item_id": "v3d-item-141",
+          "order_id": "v3d-order-141",
+          "sku_id": "sku-white-9",
+          "product_name": "V3决策矩阵商品",
+          "quantity": 1,
+          "unit_price": 199.0,
+          "category": "general",
+          "version": 1
+        }
+      ],
+      "payment_gateway_events": [],
+      "delivery_proofs": [],
+      "delivery_addresses": [],
+      "cancellation_requests": [],
+      "return_requests": [],
+      "warehouse_pack_records": [],
+      "claim_attachments": [],
+      "order_fee_records": [],
+      "charge_dispute_records": [],
+      "return_tracking_events": [],
+      "exchange_options": [],
+      "order_change_options": [],
+      "product_catalog_records": [],
+      "inventory_records": [],
+      "price_records": [],
+      "promotion_records": [],
+      "shipping_option_records": [],
+      "membership_records": [],
+      "checkout_events": [],
+      "cart_events": [],
+      "search_events": [],
+      "site_health_events": []
+    }
+  ]
+}

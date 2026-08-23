@@ -41,7 +41,7 @@ Tool Registry新增结构化`transient_error`：
 ## 自动化结果
 
 - Ruff：通过；
-- Pytest：81/81；
+- Pytest：85/85；
 - 默认90条Decision E2E：90/90；
 - 97个非manual Decision：97/97；
 - 26条缺失证据矩阵：26/26安全关闭。

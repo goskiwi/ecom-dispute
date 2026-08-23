@@ -13,17 +13,18 @@ start_stage: ANALYZE
 core_tools: &id001
 - get_order
 - get_payment_records
-- get_payment_gateway_events
 - get_charge_dispute
 - read_policy
-lazy_tools: []
+lazy_tools:
+- get_payment_gateway_events
 required_evidence:
 - conversation
 - order
 - payment
 - charge_claim
 - policy
-optional_evidence: []
+optional_evidence:
+- payment_gateway
 allowed_decisions:
 - unrecognized_charge_not_found
 - charge_recognized

@@ -28,7 +28,7 @@
 | 项目 | 结果 |
 |---|---:|
 | Ruff | 通过 |
-| Pytest | 81/81 |
+| Pytest | 85/85 |
 | Skill资源 | 7/7加载 |
 | Route资源/Strategy | 29/29加载 |
 | Tool定义/Executor/Adapter | 29/29加载 |
@@ -37,6 +37,8 @@
 90条主案例覆盖26个业务Route的90个业务Decision；每条主案例还执行3个合规子任务，合计覆盖7个合规Decision，实际Decision覆盖为97/97。测试同时校验Route、Party、Review、Evidence、Tool和13类ActionPlan。它不是生产准确率。
 
 负向阶段另建26条缺失必需Evidence案例，全部安全关闭为`manual_review + undetermined`并禁止ActionPlan；Timeout与ConnectionError通过`transient_error`进入Trace。详见`v3_failure_matrix_report_2026-08-23.md`。
+
+EvidenceGap阶段为5个Route引入Route限定Lazy Tool，12条真实消融的Core/Gap/Full Decision均12/12；Gap选择P/R为87.5%/100%，Full独立选择为100%/100%，Decision增量为0。详见`v3_gap_ablation_report_2026-08-23.md`。
 
 ## 真实LLM边界评测
 

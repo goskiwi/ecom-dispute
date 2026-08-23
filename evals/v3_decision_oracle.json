@@ -61,7 +61,6 @@
       "get_order",
       "get_logistics_events",
       "get_delivery_proof",
-      "get_delivery_address",
       "read_policy"
     ],
     "required_agents": [
@@ -197,7 +196,6 @@
       "get_order_items",
       "get_warehouse_pack_record",
       "get_claim_attachments",
-      "get_logistics_events",
       "read_policy"
     ],
     "required_agents": [
@@ -465,7 +463,6 @@
       "get_order",
       "get_order_items",
       "get_warehouse_pack_record",
-      "get_claim_attachments",
       "read_policy"
     ],
     "required_agents": [
@@ -675,7 +672,6 @@
     "required_tools": [
       "get_order",
       "get_payment_records",
-      "get_payment_gateway_events",
       "get_charge_dispute",
       "read_policy"
     ],
@@ -863,7 +859,6 @@
     "required_tools": [
       "get_order",
       "get_payment_records",
-      "get_payment_gateway_events",
       "get_charge_dispute",
       "read_policy"
     ],
@@ -937,7 +932,6 @@
       "get_order",
       "get_logistics_events",
       "get_delivery_proof",
-      "get_delivery_address",
       "read_policy"
     ],
     "required_agents": [
@@ -965,7 +959,6 @@
       "get_order",
       "get_logistics_events",
       "get_delivery_proof",
-      "get_delivery_address",
       "read_policy"
     ],
     "required_agents": [
@@ -1338,7 +1331,6 @@
       "get_order_items",
       "get_warehouse_pack_record",
       "get_claim_attachments",
-      "get_logistics_events",
       "read_policy"
     ],
     "required_agents": [
@@ -1368,7 +1360,6 @@
       "get_order_items",
       "get_warehouse_pack_record",
       "get_claim_attachments",
-      "get_logistics_events",
       "read_policy"
     ],
     "required_agents": [
@@ -1784,7 +1775,6 @@
       "get_order",
       "get_order_items",
       "get_warehouse_pack_record",
-      "get_claim_attachments",
       "read_policy"
     ],
     "required_agents": [
@@ -2375,7 +2365,6 @@
     "required_tools": [
       "get_order",
       "get_payment_records",
-      "get_payment_gateway_events",
       "get_charge_dispute",
       "read_policy"
     ],

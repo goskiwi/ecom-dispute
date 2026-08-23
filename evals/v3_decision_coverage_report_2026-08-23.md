@@ -58,7 +58,7 @@
 
 - 默认数据库空库重建后包含90条V3主案例；
 - `eval --mode deterministic`：90/90；
-- Pytest：81/81；
+- Pytest：85/85；
 - Ruff：通过。
 
 ## 限制

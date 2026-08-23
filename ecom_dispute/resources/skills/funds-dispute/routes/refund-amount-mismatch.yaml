@@ -15,14 +15,16 @@ core_tools: &id001
 - get_payment_records
 - get_refund_records
 - read_policy
-lazy_tools: []
+lazy_tools:
+- get_payment_gateway_events
 required_evidence:
 - conversation
 - order
 - payment
 - refund
 - policy
-optional_evidence: []
+optional_evidence:
+- payment_gateway
 allowed_decisions:
 - refund_amount_correct
 - refund_amount_incorrect

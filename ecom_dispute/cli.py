@@ -16,6 +16,7 @@ from .abcd_translation import translate_annotation_forms
 from .annotation_web import serve_annotation
 from .e2e_evaluation import evaluate_e2e
 from .evaluation import evaluate, evaluate_baseline
+from .gap_evaluation import evaluate_gap_ablation
 from .harness import DiagnosticHarness
 from .llm import ResponsesClient
 from .repository import DEFAULT_DB, Repository, rebuild_database
@@ -62,6 +63,11 @@ def _parser() -> argparse.ArgumentParser:
     e2e.add_argument("--oracle", type=Path, default=Path("evals/v3_e2e_90_oracle.json"))
     e2e.add_argument("--e2e-db", type=Path, default=Path("data/v3_e2e_90.db"))
     e2e.add_argument("--workers", type=int, default=1)
+    gap_eval = commands.add_parser("gap-eval")
+    gap_eval.add_argument("--inputs", type=Path, default=Path("data/v3_1_gap_12_inputs.json"))
+    gap_eval.add_argument("--oracle", type=Path, default=Path("evals/v3_1_gap_12_oracle.json"))
+    gap_eval.add_argument("--gap-db", type=Path, default=Path("data/v3_gap_12.db"))
+    gap_eval.add_argument("--workers", type=int, default=1)
     abcd_manifest = commands.add_parser("abcd-manifest")
     abcd_manifest.add_argument("--dataset", type=Path, required=True)
     abcd_manifest.add_argument(
@@ -176,6 +182,11 @@ def main() -> None:
     if args.command == "e2e-eval":
         client = _llm_client(args, required=True)
         result = evaluate_e2e(client, args.e2e_db, args.inputs, args.oracle, args.workers)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return
+    if args.command == "gap-eval":
+        client = _llm_client(args, required=True)
+        result = evaluate_gap_ablation(client, args.gap_db, args.inputs, args.oracle, args.workers)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return
     if args.command == "abcd-manifest":

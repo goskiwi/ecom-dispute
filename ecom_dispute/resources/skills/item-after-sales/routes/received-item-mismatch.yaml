@@ -14,9 +14,9 @@ core_tools: &id001
 - get_order
 - get_order_items
 - get_warehouse_pack_record
-- get_claim_attachments
 - read_policy
-lazy_tools: []
+lazy_tools:
+- get_claim_attachments
 required_evidence:
 - conversation
 - order
