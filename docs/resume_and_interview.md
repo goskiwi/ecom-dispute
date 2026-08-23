@@ -24,7 +24,7 @@ EcomDispute处理“对话说法、系统事实、政策规则和站点事件不
 - 44条真实LLM边界集：Route 44/44，`has_business_exception` 43/44，`return_reason` 3/3，API错误0，模型修复0。
 - 40条高风险真实全链路E2E覆盖26/26业务Route，Live/Core均为39/40；Review P/R 100%/100%、Evidence Grounding 100%、ActionPlan 97.5%，唯一失败来自取消关联退款与退款进度的Route边界。
 - 12条真实EvidenceGap消融中，Core/Gap/Full Decision均12/12；Gap工具选择P/R为87.5%/100%，Full中的独立选择为100%/100%，新增证据但准确率增量为0。
-- ABCD V3从96个subflow轮转抽样200条，真实Conversation、中文辅助和英文预标注均完成200/200；AI分流得到20条重点复核，但人工Consensus未完成，因此不报告外部Route准确率。
+- ABCD V3从96个subflow轮转抽样200条，真实Conversation、中文辅助和英文预标注均完成200/200；AI分流得到19条重点复核，但人工Consensus未完成，因此不报告外部Route准确率。
 - 边界集累计Input/Output Token为314,780/8,050，模型累计延迟614,884ms。
 - V3 ABCD从完整96个subflow轮转抽样200条，不再使用subflow粗映射；人工Consensus未完成前不报告外部Route Accuracy。
 

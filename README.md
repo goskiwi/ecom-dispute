@@ -183,7 +183,7 @@ V3.1边界集在模型调用前提交44条输入和Oracle，覆盖26个业务Rou
 
 ### ABCD外部数据
 
-V3 Manifest从完整ABCD v1.1的96个subflow轮转抽样200条，只负责固定样本，不包含Route Oracle，也不再声称“160条受支持”。真实`gpt-5.6-luna` Conversation完成200/200，Route指标保持`null`；中文辅助和英文预标注均完成200/200，经语义分流得到20条重点复核和180条快速抽检。人工逐对话Consensus完成前，V3外部集不报告Route Accuracy。详见[V3 ABCD未评分报告](evals/v3_abcd_200_unscored_report_2026-08-23.md)。
+V3 Manifest从完整ABCD v1.1的96个subflow轮转抽样200条，只负责固定样本，不包含Route Oracle，也不再声称“160条受支持”。真实`gpt-5.6-luna` Conversation完成200/200，Route指标保持`null`；中文辅助和英文预标注均完成200/200，经语义分流得到19条重点复核和181条快速抽检。人工逐对话Consensus完成前，V3外部集不报告Route Accuracy。详见[V3 ABCD未评分报告](evals/v3_abcd_200_unscored_report_2026-08-23.md)。
 
 机器预标注只允许读取英文原文；中文翻译仅供人工辅助，同模型预标注不能作为独立Oracle。
 

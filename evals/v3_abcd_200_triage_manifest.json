@@ -2,11 +2,10 @@
   "schema_version": 3,
   "method": "Codex semantic triage of 46 initial careful candidates and 12 high-confidence route disagreements; not a human label",
   "case_count": 200,
-  "quick_audit": 180,
-  "careful_review_count": 20,
-  "ai_override_count": 9,
+  "quick_audit": 181,
+  "careful_review_count": 19,
+  "ai_override_count": 10,
   "careful_review": {
-    "abcd:10003": "买错尺码后同时取消、退款和退货，需确认当前主要诉求",
     "abcd:10004": "会员状态与免费国际配送权益同时出现",
     "abcd:10015": "运输中取消、即时退款和后续退货同时出现",
     "abcd:10021": "显示送达、搬家、旧地址和订单修改边界",
@@ -28,6 +27,24 @@
     "abcd:1561": "只笼统要求了解商品，没有明确属性问题"
   },
   "ai_overrides": {
+    "abcd:10003": {
+      "supported": true,
+      "has_business_exception": false,
+      "primary_route": "order_cancellation",
+      "acceptable_routes": [
+        "order_cancellation"
+      ],
+      "reason": "用户明确说明商品已经购买，随后确认取消订单商品并退款；这是买家误购后的正常订单取消，不是业务异常。",
+      "confidence": "high",
+      "evidence_turns": [
+        3,
+        4,
+        5,
+        16,
+        17,
+        21
+      ]
+    },
     "abcd:10029": {
       "supported": true,
       "has_business_exception": true,
