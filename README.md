@@ -22,8 +22,9 @@ EcomDispute V3 是一个覆盖电商资金、履约、售后、订单操作、�
 | 真实LLM Agent角色 | 3 |
 | V3 Decision E2E | 90条主案例 / 97个Decision |
 | Route边界集 | 44 |
+| 真实LLM全链路E2E | 40 |
 | 失败矩阵 | 26条缺失必需Evidence案例 |
-| 自动化测试 | 80 |
+| 自动化测试 | 81 |
 
 完整本体与边界见[EcomDispute Route本体与能力边界V3](EcomDispute-Route本体与能力边界V3.md)。
 
@@ -171,6 +172,10 @@ V3.1边界集在模型调用前提交44条输入和Oracle，覆盖26个业务Rou
 
 唯一错误：退货物流已签收但仓库未入库，被模型判断为普通进度而不是业务异常；Route仍为`return_progress`。详见[V3重构与评测报告](evals/v3_rebuild_report_2026-08-23.md)。
 
+### 真实LLM全链路E2E
+
+从90条Decision矩阵按风险分层预提交40条，覆盖26/26业务Route，其中31条预期Review、12条预期ActionPlan。共享Conversation的Live/Core均为39/40（97.5%）；Review P/R为100%/100%，Evidence Grounding 100%，ActionPlan 97.5%。唯一失败是“取消已受理但退款未开始”被模型路由到`refund_progress`，V3边界要求`order_cancellation`。ReviewAgent增加150,762输入Token和440,587ms累计延迟，准确率增量为0。详见[V3.1真实E2E报告](evals/v3_live_e2e_40_report_2026-08-23.md)。
+
 ### ABCD外部数据
 
 V3 Manifest从完整ABCD v1.1的96个subflow轮转抽样200条，只负责固定样本，不包含Route Oracle，也不再声称“160条受支持”。人工逐对话Consensus完成前，V3外部集不报告Route Accuracy。
@@ -197,5 +202,6 @@ V3 Manifest从完整ABCD v1.1的96个subflow轮转抽样200条，只负责固定
 - [V3重构与评测报告](evals/v3_rebuild_report_2026-08-23.md)
 - [V3 Decision覆盖报告](evals/v3_decision_coverage_report_2026-08-23.md)
 - [V3失败矩阵报告](evals/v3_failure_matrix_report_2026-08-23.md)
+- [V3.1真实E2E报告](evals/v3_live_e2e_40_report_2026-08-23.md)
 - [ABCD标注指南](docs/abcd_route_annotation_guide.md)
 - [简历与面试口径](docs/resume_and_interview.md)

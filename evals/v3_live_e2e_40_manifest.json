@@ -1,0 +1,396 @@
+{
+  "schema_version": 3,
+  "selection": "highest risk per route, then global risk fill",
+  "case_count": 40,
+  "route_count": 26,
+  "items": [
+    {
+      "case_id": "v3-cart_issue",
+      "route_type": "cart_issue",
+      "decision": "cart_state_conflict",
+      "risk_score": 7,
+      "reasons": [
+        "review_required",
+        "conflict"
+      ]
+    },
+    {
+      "case_id": "v3-checkout_issue",
+      "route_type": "checkout_issue",
+      "decision": "checkout_service_error",
+      "risk_score": 7,
+      "reasons": [
+        "review_required",
+        "error"
+      ]
+    },
+    {
+      "case_id": "v3-delivered_not_received",
+      "route_type": "delivered_not_received",
+      "decision": "delivery_proof_missing",
+      "risk_score": 7,
+      "reasons": [
+        "review_required",
+        "missing"
+      ]
+    },
+    {
+      "case_id": "v3-duplicate_charge",
+      "route_type": "duplicate_charge",
+      "decision": "duplicate_charge_confirmed",
+      "risk_score": 5,
+      "reasons": [
+        "review_required"
+      ]
+    },
+    {
+      "case_id": "v3-exchange_request",
+      "route_type": "exchange_request",
+      "decision": "exchange_available",
+      "risk_score": 3,
+      "reasons": [
+        "action_plan"
+      ]
+    },
+    {
+      "case_id": "v3-item_condition_issue",
+      "route_type": "item_condition_issue",
+      "decision": "item_condition_evidence_collected",
+      "risk_score": 5,
+      "reasons": [
+        "review_required"
+      ]
+    },
+    {
+      "case_id": "v3-membership_support",
+      "route_type": "membership_support",
+      "decision": "membership_credit_missing",
+      "risk_score": 10,
+      "reasons": [
+        "review_required",
+        "action_plan",
+        "missing"
+      ]
+    },
+    {
+      "case_id": "v3-missing_item",
+      "route_type": "missing_item",
+      "decision": "missing_item_warehouse_shortage",
+      "risk_score": 10,
+      "reasons": [
+        "review_required",
+        "action_plan",
+        "missing"
+      ]
+    },
+    {
+      "case_id": "v3-order_cancellation",
+      "route_type": "order_cancellation",
+      "decision": "cancel_before_pickup_but_shipped",
+      "risk_score": 5,
+      "reasons": [
+        "review_required"
+      ]
+    },
+    {
+      "case_id": "v3-order_fee_dispute",
+      "route_type": "order_fee_dispute",
+      "decision": "order_fee_incorrect",
+      "risk_score": 5,
+      "reasons": [
+        "action_plan",
+        "incorrect"
+      ]
+    },
+    {
+      "case_id": "v3-order_management",
+      "route_type": "order_management",
+      "decision": "order_change_allowed",
+      "risk_score": 3,
+      "reasons": [
+        "action_plan"
+      ]
+    },
+    {
+      "case_id": "v3-payment_captured_order_failed",
+      "route_type": "payment_captured_order_failed",
+      "decision": "captured_order_failed_unreversed",
+      "risk_score": 5,
+      "reasons": [
+        "review_required"
+      ]
+    },
+    {
+      "case_id": "v3-price_adjustment",
+      "route_type": "price_adjustment",
+      "decision": "price_adjustment_eligible",
+      "risk_score": 3,
+      "reasons": [
+        "action_plan"
+      ]
+    },
+    {
+      "case_id": "v3-promotion_support",
+      "route_type": "promotion_support",
+      "decision": "promotion_invalid",
+      "risk_score": 8,
+      "reasons": [
+        "review_required",
+        "action_plan"
+      ]
+    },
+    {
+      "case_id": "v3-received_item_mismatch",
+      "route_type": "received_item_mismatch",
+      "decision": "received_item_mismatch_confirmed",
+      "risk_score": 10,
+      "reasons": [
+        "review_required",
+        "action_plan",
+        "mismatch"
+      ]
+    },
+    {
+      "case_id": "v3-return_progress",
+      "route_type": "return_progress",
+      "decision": "return_in_transit",
+      "risk_score": 0,
+      "reasons": [
+        "route_coverage"
+      ]
+    },
+    {
+      "case_id": "v3-search_issue",
+      "route_type": "search_issue",
+      "decision": "search_index_stale",
+      "risk_score": 5,
+      "reasons": [
+        "review_required"
+      ]
+    },
+    {
+      "case_id": "v3-site_performance",
+      "route_type": "site_performance",
+      "decision": "site_degraded",
+      "risk_score": 5,
+      "reasons": [
+        "review_required"
+      ]
+    },
+    {
+      "case_id": "v3-unrecognized_charge",
+      "route_type": "unrecognized_charge",
+      "decision": "unrecognized_charge_confirmed",
+      "risk_score": 10,
+      "reasons": [
+        "review_required",
+        "action_plan",
+        "unrecognized"
+      ]
+    },
+    {
+      "case_id": "v3d-cancellation_refund_missing",
+      "route_type": "order_cancellation",
+      "decision": "cancellation_refund_missing",
+      "risk_score": 10,
+      "reasons": [
+        "review_required",
+        "action_plan",
+        "missing"
+      ]
+    },
+    {
+      "case_id": "v3d-delivery_not_marked_delivered",
+      "route_type": "delivered_not_received",
+      "decision": "delivery_not_marked_delivered",
+      "risk_score": 5,
+      "reasons": [
+        "review_required"
+      ]
+    },
+    {
+      "case_id": "v3d-delivery_receipt_disputed",
+      "route_type": "delivered_not_received",
+      "decision": "delivery_receipt_disputed",
+      "risk_score": 5,
+      "reasons": [
+        "review_required"
+      ]
+    },
+    {
+      "case_id": "v3d-exchange_price_difference",
+      "route_type": "exchange_request",
+      "decision": "exchange_price_difference",
+      "risk_score": 5,
+      "reasons": [
+        "review_required"
+      ]
+    },
+    {
+      "case_id": "v3d-fulfillment_event_conflict",
+      "route_type": "fulfillment_progress",
+      "decision": "fulfillment_event_conflict",
+      "risk_score": 7,
+      "reasons": [
+        "review_required",
+        "conflict"
+      ]
+    },
+    {
+      "case_id": "v3d-inventory_backorder_available",
+      "route_type": "inventory_availability",
+      "decision": "inventory_backorder_available",
+      "risk_score": 3,
+      "reasons": [
+        "action_plan"
+      ]
+    },
+    {
+      "case_id": "v3d-item_condition_attachment_missing",
+      "route_type": "item_condition_issue",
+      "decision": "item_condition_attachment_missing",
+      "risk_score": 7,
+      "reasons": [
+        "review_required",
+        "missing"
+      ]
+    },
+    {
+      "case_id": "v3d-item_condition_evidence_insufficient",
+      "route_type": "item_condition_issue",
+      "decision": "item_condition_evidence_insufficient",
+      "risk_score": 5,
+      "reasons": [
+        "review_required"
+      ]
+    },
+    {
+      "case_id": "v3d-missing_item_not_verified",
+      "route_type": "missing_item",
+      "decision": "missing_item_not_verified",
+      "risk_score": 7,
+      "reasons": [
+        "review_required",
+        "missing"
+      ]
+    },
+    {
+      "case_id": "v3d-order_details_conflict",
+      "route_type": "order_management",
+      "decision": "order_details_conflict",
+      "risk_score": 7,
+      "reasons": [
+        "review_required",
+        "conflict"
+      ]
+    },
+    {
+      "case_id": "v3d-payment_order_state_conflict",
+      "route_type": "payment_captured_order_failed",
+      "decision": "payment_order_state_conflict",
+      "risk_score": 9,
+      "reasons": [
+        "review_required",
+        "conflict",
+        "compliance_conflict"
+      ]
+    },
+    {
+      "case_id": "v3d-price_record_conflict",
+      "route_type": "price_adjustment",
+      "decision": "price_record_conflict",
+      "risk_score": 7,
+      "reasons": [
+        "review_required",
+        "conflict"
+      ]
+    },
+    {
+      "case_id": "v3d-product_information_missing",
+      "route_type": "product_information",
+      "decision": "product_information_missing",
+      "risk_score": 2,
+      "reasons": [
+        "missing"
+      ]
+    },
+    {
+      "case_id": "v3d-received_item_mismatch_unverified",
+      "route_type": "received_item_mismatch",
+      "decision": "received_item_mismatch_unverified",
+      "risk_score": 7,
+      "reasons": [
+        "review_required",
+        "mismatch"
+      ]
+    },
+    {
+      "case_id": "v3d-refund_arrival_overdue",
+      "route_type": "refund_progress",
+      "decision": "refund_arrival_overdue",
+      "risk_score": 7,
+      "reasons": [
+        "review_required",
+        "overdue"
+      ]
+    },
+    {
+      "case_id": "v3d-refund_credit_amount_mismatch",
+      "route_type": "refund_amount_mismatch",
+      "decision": "refund_credit_amount_mismatch",
+      "risk_score": 7,
+      "reasons": [
+        "review_required",
+        "mismatch"
+      ]
+    },
+    {
+      "case_id": "v3d-refund_not_initiated_overdue",
+      "route_type": "refund_progress",
+      "decision": "refund_not_initiated_overdue",
+      "risk_score": 5,
+      "reasons": [
+        "action_plan",
+        "overdue"
+      ]
+    },
+    {
+      "case_id": "v3d-refund_record_conflict",
+      "route_type": "refund_progress",
+      "decision": "refund_record_conflict",
+      "risk_score": 7,
+      "reasons": [
+        "review_required",
+        "conflict"
+      ]
+    },
+    {
+      "case_id": "v3d-return_condition_unknown",
+      "route_type": "return_request",
+      "decision": "return_condition_unknown",
+      "risk_score": 5,
+      "reasons": [
+        "review_required"
+      ]
+    },
+    {
+      "case_id": "v3d-shipping_option_unavailable",
+      "route_type": "shipping_options",
+      "decision": "shipping_option_unavailable",
+      "risk_score": 2,
+      "reasons": [
+        "unavailable"
+      ]
+    },
+    {
+      "case_id": "v3d-site_outage",
+      "route_type": "site_performance",
+      "decision": "site_outage",
+      "risk_score": 7,
+      "reasons": [
+        "review_required",
+        "outage"
+      ]
+    }
+  ]
+}

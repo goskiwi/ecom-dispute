@@ -399,6 +399,15 @@ def _score_report(report: object, expected: dict, *, include_agent_check: bool =
         not finding.evidence_ids or not set(finding.evidence_ids).issubset(evidence_ids)
         for finding in report.findings
     )
+    action_plan = report.action_plan
+    observed_action_type = action_plan.action_type if action_plan else None
+    action_plan_valid = observed_action_type == expected.get("action_type")
+    if action_plan:
+        action_plan_valid = action_plan_valid and (
+            action_plan.requires_confirmation
+            and bool(action_plan.idempotency_key)
+            and action_plan.parameters.get("case_id") == report.case_id
+        )
     checks = {
         "route_type": route_type == expected["route_type"],
         "decision": report.decision == expected["decision"],
@@ -407,6 +416,7 @@ def _score_report(report: object, expected: dict, *, include_agent_check: bool =
         "required_evidence": set(expected["required_evidence_kinds"]).issubset(evidence_kinds),
         "required_tools": set(expected["required_tools"]).issubset(called_tools),
         "evidence_grounded": unsupported == 0,
+        "action_plan": action_plan_valid,
     }
     if include_agent_check:
         checks["required_agents"] = set(expected["required_agents"]).issubset(called_agents)
@@ -422,6 +432,7 @@ def _score_report(report: object, expected: dict, *, include_agent_check: bool =
         "called_tools": called_tools,
         "called_agents": sorted(called_agents),
         "unsupported_findings": unsupported,
+        "action_type": observed_action_type,
         "tool_calls": len(called_tools),
         "tool_rounds": len(tool_events),
         "tool_input_tokens": sum(
@@ -461,6 +472,7 @@ def _aggregate(results: list[dict], mode: str) -> dict:
         "required_evidence_rate": _rate(scored, "required_evidence"),
         "required_tools_rate": _rate(scored, "required_tools"),
         "evidence_grounded_rate": _rate(scored, "evidence_grounded"),
+        "action_plan_accuracy": _rate(scored, "action_plan"),
         "average_tool_calls": sum(item["tool_calls"] for item in scored) / total if total else 0,
         "average_tool_rounds": sum(item["tool_rounds"] for item in scored) / total if total else 0,
         "tool_input_tokens": sum(item["tool_input_tokens"] for item in scored),

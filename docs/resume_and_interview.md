@@ -18,10 +18,11 @@ EcomDispute处理“对话说法、系统事实、政策规则和站点事件不
 ## 可使用的V3指标
 
 - 7个Skill Pack、29个Route、29个Tool、31张SQLite表。
-- 80项自动化测试通过。
+- 81项自动化测试通过。
 - 90条主案例覆盖97/97确定性Decision，其中13条生成带确认与幂等键的ActionPlan。
 - 26条缺失必需Evidence矩阵全部安全关闭为人工复检；工具超时和连接错误结构化进入Trace，不产生错误ActionPlan。
 - 44条真实LLM边界集：Route 44/44，`has_business_exception` 43/44，`return_reason` 3/3，API错误0，模型修复0。
+- 40条高风险真实全链路E2E覆盖26/26业务Route，Live/Core均为39/40；Review P/R 100%/100%、Evidence Grounding 100%、ActionPlan 97.5%，唯一失败来自取消关联退款与退款进度的Route边界。
 - 边界集累计Input/Output Token为314,780/8,050，模型累计延迟614,884ms。
 - V3 ABCD从完整96个subflow轮转抽样200条，不再使用subflow粗映射；人工Consensus未完成前不报告外部Route Accuracy。
 
@@ -32,6 +33,7 @@ EcomDispute处理“对话说法、系统事实、政策规则和站点事件不
 - 90条或44条代表真实生产分布。
 - ABCD V3外部准确率已经得到。
 - ReviewAgent已经提高人工效率。
+- ReviewAgent提高了确定性裁决准确率（本轮增量为0）。
 - ActionPlan已经连接真实退款、扣款或订单修改接口。
 
 ## 常见追问

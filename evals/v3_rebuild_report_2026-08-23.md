@@ -28,7 +28,7 @@
 | 项目 | 结果 |
 |---|---:|
 | Ruff | 通过 |
-| Pytest | 80/80 |
+| Pytest | 81/81 |
 | Skill资源 | 7/7加载 |
 | Route资源/Strategy | 29/29加载 |
 | Tool定义/Executor/Adapter | 29/29加载 |
@@ -77,6 +77,10 @@ V3.1在运行前完成两项变更：
 唯一失败为`v3-boundary-pair-return-warehouse`：对话明确退货物流签收但仓库未入库，模型Route正确选择`return_progress`，但将`has_business_exception`判断为`false`。该错误保留为模型能力限制，不继续针对本集调Prompt。
 
 原始结果保存于`v3_1_route_boundary_gpt-5.6-luna_run1_raw.json.gz`。
+
+## 40条真实全链路E2E
+
+从90条Decision矩阵分层选择40条高风险案例并覆盖全部26个业务Route。`gpt-5.6-luna`的Live/Core均为39/40（97.5%），Evidence Grounding 100%，Review P/R 100%/100%，ActionPlan 97.5%。唯一失败为取消关联退款被路由到`refund_progress`；V3冻结边界要求`order_cancellation`。详见`v3_live_e2e_40_report_2026-08-23.md`。
 
 ## ABCD V3外部评测口径
 
