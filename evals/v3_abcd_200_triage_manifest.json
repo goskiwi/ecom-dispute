@@ -2,27 +2,17 @@
   "schema_version": 3,
   "method": "Codex semantic triage of 46 initial careful candidates and 12 high-confidence route disagreements; not a human label",
   "case_count": 200,
-  "quick_audit": 181,
-  "careful_review_count": 19,
-  "ai_override_count": 10,
+  "quick_audit": 191,
+  "careful_review_count": 9,
+  "ai_override_count": 11,
   "careful_review": {
-    "abcd:10004": "会员状态与免费国际配送权益同时出现",
-    "abcd:10015": "运输中取消、即时退款和后续退货同时出现",
-    "abcd:10021": "显示送达、搬家、旧地址和订单修改边界",
-    "abcd:10029": "到货污渍与退货退款同时出现，需确认按根因还是处理动作标主Route",
     "abcd:10034": "承诺日期变化与主动修改配送日期同时出现",
-    "abcd:10041": "会员免费国际配送资格与配送方案边界",
     "abcd:10050": "错误添加订阅与40美元扣款同时出现",
-    "abcd:10061": "已有订单配送升级被在途状态阻止",
     "abcd:10068": "用户怀疑新增订阅但系统确认是诈骗邮件",
-    "abcd:10070": "到货污渍与明确退货同时出现",
     "abcd:10088": "退货处理状态与退款支付方式边界不清",
-    "abcd:10103": "订阅账单支付是否属于会员支持范围",
-    "abcd:10126": "发货前取消与关联退款边界",
     "abcd:10152": "普通退货商品追加到既有退款",
     "abcd:10360": "修改配送安排时系统同时显示已送达",
     "abcd:10425": "尺码库存咨询与搜索故障双重诉求",
-    "abcd:1133": "裁剪费用、商品服务和会员免费权益同时出现",
     "abcd:1342": "改裤长服务与会员权益边界",
     "abcd:1561": "只笼统要求了解商品，没有明确属性问题"
   },
@@ -127,6 +117,24 @@
         "other"
       ],
       "reason": "修改账户默认地址属于身份资料操作；信息错误可以是异常，但不在项目支持Route内。"
+    },
+    "abcd:10015": {
+      "supported": true,
+      "has_business_exception": false,
+      "primary_route": "order_cancellation",
+      "acceptable_routes": [
+        "order_cancellation"
+      ],
+      "reason": "用户自己订错商品后申请取消；订单已在运输中，客服按正常规则改为退款并要求到货后退回，不构成业务异常。",
+      "confidence": "high",
+      "evidence_turns": [
+        1,
+        6,
+        10,
+        13,
+        14,
+        20
+      ]
     }
   },
   "human_verified": 0
