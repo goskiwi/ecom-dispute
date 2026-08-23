@@ -3,14 +3,15 @@ body { margin: 0; font: 14px/1.5 Inter, system-ui, sans-serif; color: #172033; b
 header { height: 58px; padding: 0 22px; display: flex; align-items: center; justify-content: space-between; color: white; background: #172033; }
 main { display: grid; grid-template-columns: 280px 1fr; height: calc(100vh - 58px); }
 aside { overflow: auto; border-right: 1px solid #dce1eb; background: white; padding: 14px; }
-#review-filter-wrap { display: flex; grid-template-columns: auto 1fr; align-items: center; gap: 7px; margin-top: 10px; font-weight: 500; }
-#review-filter-wrap input { width: auto; }
+.list-filter { display: flex; grid-template-columns: auto 1fr; align-items: center; gap: 7px; margin-top: 10px; font-weight: 500; }
+.list-filter input { width: auto; }
 input, select, textarea, button { width: 100%; font: inherit; }
 input, select, textarea { padding: 9px; border: 1px solid #cbd2df; border-radius: 7px; background: white; }
 #items { margin-top: 12px; display: grid; gap: 5px; }
 .item { padding: 8px 10px; border: 0; border-radius: 6px; text-align: left; background: #f1f4f9; cursor: pointer; }
 .item.done { border-left: 4px solid #16a36a; }
 .item.careful { border-right: 4px solid #d97706; }
+.item.sample { border-right: 4px solid #2563eb; }
 .item.active { color: white; background: #3156d3; }
 #workspace { overflow: auto; padding: 28px; }
 .card { max-width: 980px; margin: 0 auto 18px; padding: 20px; border: 1px solid #dce1eb; border-radius: 12px; background: white; }

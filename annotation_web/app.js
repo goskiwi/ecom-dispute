@@ -29,8 +29,11 @@ function complete(item) {
 function visibleIndexes() {
   const query = $("#search").value.trim().toLowerCase();
   const carefulOnly = $("#review-filter").checked;
+  const sampleOnly = $("#sample-filter").checked;
   return state.form.items.map((item, index) => ({ item, index }))
-    .filter(({ item }) => (!query || item.external_id.toLowerCase().includes(query)) && (!carefulOnly || item.assistant_review?.review_tier === "careful_review"))
+    .filter(({ item }) => (!query || item.external_id.toLowerCase().includes(query))
+      && (!carefulOnly || item.assistant_review?.review_tier === "careful_review")
+      && (!sampleOnly || item.assistant_review?.quick_audit_sample === true))
     .map(({ index }) => index);
 }
 
@@ -38,7 +41,7 @@ function renderList() {
   const visible = new Set(visibleIndexes());
   $("#items").innerHTML = state.form.items.map((item, index) => ({ item, index }))
     .filter(({ index }) => visible.has(index))
-    .map(({ item, index }) => `<button class="item ${complete(item) ? "done" : ""} ${item.assistant_review?.review_tier === "careful_review" ? "careful" : ""} ${index === state.selected ? "active" : ""}" data-index="${index}">${escapeHtml(item.external_id)}</button>`).join("");
+    .map(({ item, index }) => `<button class="item ${complete(item) ? "done" : ""} ${item.assistant_review?.review_tier === "careful_review" ? "careful" : ""} ${item.assistant_review?.quick_audit_sample ? "sample" : ""} ${index === state.selected ? "active" : ""}" data-index="${index}">${escapeHtml(item.external_id)}</button>`).join("");
   $("#items").querySelectorAll("[data-index]").forEach((button) => button.addEventListener("click", () => { state.selected = Number(button.dataset.index); render(); }));
   const done = state.form.items.filter(complete).length;
   $("#progress").textContent = `${state.form.rater_id} · ${done} / ${state.form.items.length}`;
@@ -52,7 +55,7 @@ function render() {
   const checks = Object.entries(state.form.route_guide).map(([route, guide]) => `<label title="${escapeHtml(guide)}"><input type="checkbox" value="${route}" ${a.acceptable_routes.includes(route) ? "checked" : ""}/> ${escapeHtml(routeLabel(route))}</label>`).join("");
   const auditReasons = item.assistant_review?.audit_reasons || [];
   const semanticTriage = item.assistant_review?.semantic_triage;
-  const bannerTitle = semanticTriage?.status === "ai_corrected" ? "AI语义复核已修正" : item.assistant_review?.review_tier === "careful_review" ? "重点人工复核" : semanticTriage ? "AI语义复核已收敛" : "高置信快速抽检";
+  const bannerTitle = semanticTriage?.status === "ai_corrected" ? "AI语义复核已修正" : item.assistant_review?.review_tier === "careful_review" ? "重点人工复核" : item.assistant_review?.quick_audit_sample ? "快速抽检样本" : semanticTriage ? "AI语义复核已收敛" : "高置信快速抽检";
   const bannerDetails = semanticTriage ? [semanticTriage.reason] : [item.assistant_review?.ambiguity, ...auditReasons].filter(Boolean);
   const assistantBanner = item.assistant_review ? `<div class="assistant-banner ${item.assistant_review.review_tier}"><b>AI预标注：${bannerTitle}</b>${bannerDetails.map((reason) => `<span>${escapeHtml(reason)}</span>`).join("")}<small>该建议不是人工真值。</small></div>` : "";
   $("#workspace").innerHTML = `<div class="card"><h2>${escapeHtml(item.external_id)}</h2>${item.conversation.map((turn, index) => `<div class="turn"><b>${index} · ${escapeHtml(speakerLabel[turn.speaker] || turn.speaker)}</b><span><i>英文原文</i>${escapeHtml(turn.text)}${item.translation?.[index] ? `<em>中文辅助</em>${escapeHtml(item.translation[index].text)}` : ""}</span></div>`).join("")}</div>
@@ -87,6 +90,13 @@ async function save() {
 async function boot() { state.form = await (await fetch("/api/form")).json(); render(); }
 $("#search").addEventListener("input", renderList);
 $("#review-filter").addEventListener("change", () => {
+  if ($("#review-filter").checked) $("#sample-filter").checked = false;
+  const visible = visibleIndexes();
+  if (!visible.includes(state.selected) && visible.length) state.selected = visible[0];
+  render();
+});
+$("#sample-filter").addEventListener("change", () => {
+  if ($("#sample-filter").checked) $("#review-filter").checked = false;
   const visible = visibleIndexes();
   if (!visible.includes(state.selected) && visible.length) state.selected = visible[0];
   render();

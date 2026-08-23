@@ -1,0 +1,253 @@
+{
+  "schema_version": 1,
+  "method": "Route-stratified random audit: every represented quick-audit primary route receives at least one case; remaining slots are allocated toward proportional coverage.",
+  "population_count": 192,
+  "sample_rate": 0.2,
+  "sample_count": 39,
+  "seed": 20260823,
+  "route_distribution": {
+    "cart_issue": {
+      "population": 2,
+      "sample": 1
+    },
+    "checkout_issue": {
+      "population": 2,
+      "sample": 1
+    },
+    "delivered_not_received": {
+      "population": 1,
+      "sample": 1
+    },
+    "duplicate_charge": {
+      "population": 3,
+      "sample": 1
+    },
+    "fulfillment_progress": {
+      "population": 7,
+      "sample": 1
+    },
+    "inventory_availability": {
+      "population": 13,
+      "sample": 2
+    },
+    "item_condition_issue": {
+      "population": 2,
+      "sample": 1
+    },
+    "membership_support": {
+      "population": 26,
+      "sample": 5
+    },
+    "order_cancellation": {
+      "population": 3,
+      "sample": 1
+    },
+    "order_fee_dispute": {
+      "population": 4,
+      "sample": 1
+    },
+    "order_management": {
+      "population": 13,
+      "sample": 2
+    },
+    "other": {
+      "population": 17,
+      "sample": 3
+    },
+    "price_adjustment": {
+      "population": 5,
+      "sample": 1
+    },
+    "product_information": {
+      "population": 60,
+      "sample": 11
+    },
+    "promotion_support": {
+      "population": 9,
+      "sample": 1
+    },
+    "refund_progress": {
+      "population": 5,
+      "sample": 1
+    },
+    "return_request": {
+      "population": 10,
+      "sample": 1
+    },
+    "search_issue": {
+      "population": 2,
+      "sample": 1
+    },
+    "shipping_options": {
+      "population": 4,
+      "sample": 1
+    },
+    "site_performance": {
+      "population": 2,
+      "sample": 1
+    },
+    "unrecognized_charge": {
+      "population": 2,
+      "sample": 1
+    }
+  },
+  "items": [
+    {
+      "external_id": "abcd:10004",
+      "primary_route": "membership_support"
+    },
+    {
+      "external_id": "abcd:10013",
+      "primary_route": "cart_issue"
+    },
+    {
+      "external_id": "abcd:10017",
+      "primary_route": "return_request"
+    },
+    {
+      "external_id": "abcd:10021",
+      "primary_route": "delivered_not_received"
+    },
+    {
+      "external_id": "abcd:10023",
+      "primary_route": "inventory_availability"
+    },
+    {
+      "external_id": "abcd:10024",
+      "primary_route": "site_performance"
+    },
+    {
+      "external_id": "abcd:10025",
+      "primary_route": "refund_progress"
+    },
+    {
+      "external_id": "abcd:10026",
+      "primary_route": "unrecognized_charge"
+    },
+    {
+      "external_id": "abcd:10029",
+      "primary_route": "item_condition_issue"
+    },
+    {
+      "external_id": "abcd:10031",
+      "primary_route": "fulfillment_progress"
+    },
+    {
+      "external_id": "abcd:10038",
+      "primary_route": "product_information"
+    },
+    {
+      "external_id": "abcd:10047",
+      "primary_route": "checkout_issue"
+    },
+    {
+      "external_id": "abcd:10048",
+      "primary_route": "order_fee_dispute"
+    },
+    {
+      "external_id": "abcd:1005",
+      "primary_route": "membership_support"
+    },
+    {
+      "external_id": "abcd:10054",
+      "primary_route": "membership_support"
+    },
+    {
+      "external_id": "abcd:10068",
+      "primary_route": "other"
+    },
+    {
+      "external_id": "abcd:10071",
+      "primary_route": "price_adjustment"
+    },
+    {
+      "external_id": "abcd:10082",
+      "primary_route": "search_issue"
+    },
+    {
+      "external_id": "abcd:1011",
+      "primary_route": "product_information"
+    },
+    {
+      "external_id": "abcd:10115",
+      "primary_route": "order_management"
+    },
+    {
+      "external_id": "abcd:10119",
+      "primary_route": "product_information"
+    },
+    {
+      "external_id": "abcd:10126",
+      "primary_route": "order_cancellation"
+    },
+    {
+      "external_id": "abcd:10187",
+      "primary_route": "product_information"
+    },
+    {
+      "external_id": "abcd:10205",
+      "primary_route": "shipping_options"
+    },
+    {
+      "external_id": "abcd:10217",
+      "primary_route": "duplicate_charge"
+    },
+    {
+      "external_id": "abcd:10252",
+      "primary_route": "product_information"
+    },
+    {
+      "external_id": "abcd:10268",
+      "primary_route": "promotion_support"
+    },
+    {
+      "external_id": "abcd:10284",
+      "primary_route": "other"
+    },
+    {
+      "external_id": "abcd:10299",
+      "primary_route": "product_information"
+    },
+    {
+      "external_id": "abcd:10333",
+      "primary_route": "product_information"
+    },
+    {
+      "external_id": "abcd:10359",
+      "primary_route": "product_information"
+    },
+    {
+      "external_id": "abcd:10387",
+      "primary_route": "membership_support"
+    },
+    {
+      "external_id": "abcd:10443",
+      "primary_route": "product_information"
+    },
+    {
+      "external_id": "abcd:1045",
+      "primary_route": "order_management"
+    },
+    {
+      "external_id": "abcd:10587",
+      "primary_route": "product_information"
+    },
+    {
+      "external_id": "abcd:109",
+      "primary_route": "product_information"
+    },
+    {
+      "external_id": "abcd:116",
+      "primary_route": "membership_support"
+    },
+    {
+      "external_id": "abcd:1185",
+      "primary_route": "inventory_availability"
+    },
+    {
+      "external_id": "abcd:1289",
+      "primary_route": "other"
+    }
+  ],
+  "human_verified": 0
+}

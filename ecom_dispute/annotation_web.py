@@ -11,13 +11,22 @@ ASSETS = Path(__file__).resolve().parent.parent / "annotation_web"
 
 
 class AnnotationApplication:
-    def __init__(self, form_path: Path) -> None:
+    def __init__(self, form_path: Path, audit_sample_path: Path | None = None) -> None:
         self.form_path = form_path
+        self.audit_sample_path = audit_sample_path
         self._lock = threading.Lock()
 
     def form(self) -> dict:
         with self._lock:
-            return json.loads(self.form_path.read_text(encoding="utf-8"))
+            form = json.loads(self.form_path.read_text(encoding="utf-8"))
+            if self.audit_sample_path is not None:
+                sample = json.loads(self.audit_sample_path.read_text(encoding="utf-8"))
+                selected = {item["external_id"] for item in sample["items"]}
+                for item in form["items"]:
+                    review = item.get("assistant_review")
+                    if review is not None:
+                        review["quick_audit_sample"] = item["external_id"] in selected
+            return form
 
     def update(self, external_id: str, annotation: dict) -> dict:
         with self._lock:
@@ -88,8 +97,13 @@ def make_handler(application: AnnotationApplication) -> type[BaseHTTPRequestHand
     return Handler
 
 
-def serve_annotation(form_path: Path, host: str, port: int) -> None:
-    application = AnnotationApplication(form_path)
+def serve_annotation(
+    form_path: Path,
+    host: str,
+    port: int,
+    audit_sample_path: Path | None = None,
+) -> None:
+    application = AnnotationApplication(form_path, audit_sample_path)
     server = ThreadingHTTPServer((host, port), make_handler(application))
     print(f"ABCD annotation: http://{host}:{port} -> {form_path}")
     try:

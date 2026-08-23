@@ -39,6 +39,8 @@ uv run python -m ecom_dispute --base-url "$ECOM_DISPUTE_BASE_URL" \
 
 再运行`scripts/start_assistant_annotation.command`并打开`http://127.0.0.1:8879/`。页面将高置信单一Route标为“快速抽检”，将多意图、边界冲突和保守审计命中的样本标为“重点人工复核”。人工确认时必须勾选“我已对照原文确认或修正”。该流程必须披露为“AI预标注+人工复核”，不能表述为双人独立人工标注，也不能用该草稿直接计算最终准确率。
 
+重点样本复核完成后，页面可用“只看快速抽检样本”筛选读取`evals/v3_abcd_200_quick_audit_sample.json`对应的39条分层样本。抽样覆盖快速队列中全部21个实际出现的主Route，并对较大Route增加样本；这些样本仍需逐条勾选人工确认。
+
 ## 标注字段
 
 - `supported`：当前26个业务Route是否能表达该问题；

@@ -103,6 +103,7 @@ def _parser() -> argparse.ArgumentParser:
     )
     annotation_web = commands.add_parser("abcd-annotation-web")
     annotation_web.add_argument("--form", type=Path, required=True)
+    annotation_web.add_argument("--audit-sample", type=Path)
     annotation_web.add_argument("--host", default="127.0.0.1")
     annotation_web.add_argument("--port", type=int, default=8877)
     annotation_agreement = commands.add_parser("abcd-annotation-agreement")
@@ -220,7 +221,7 @@ def main() -> None:
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return
     if args.command == "abcd-annotation-web":
-        serve_annotation(args.form, args.host, args.port)
+        serve_annotation(args.form, args.host, args.port, args.audit_sample)
         return
     if args.command == "abcd-annotation-agreement":
         result = agreement_and_consensus(args.rater1, args.rater2, args.consensus)

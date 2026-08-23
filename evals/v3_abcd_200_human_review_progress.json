@@ -1,0 +1,189 @@
+{
+  "schema_version": 1,
+  "method": "AI-assisted single-human review; not independent dual-rater consensus",
+  "completed_count": 8,
+  "careful_review_completed": 8,
+  "quick_audit_completed": 0,
+  "items": [
+    {
+      "external_id": "abcd:10034",
+      "review_scope": "careful_review",
+      "annotation": {
+        "supported": true,
+        "has_business_exception": true,
+        "primary_route": "fulfillment_progress",
+        "acceptable_routes": [
+          "fulfillment_progress",
+          "order_management"
+        ],
+        "evidence_turns": [
+          1,
+          9,
+          14,
+          16
+        ],
+        "reason": "用户表示订单原定本周末送达，但系统已将日期改到下周，并希望查询和更改配送日期。",
+        "confidence": "medium",
+        "translation_uncertain": false,
+        "human_verified": true
+      }
+    },
+    {
+      "external_id": "abcd:10050",
+      "review_scope": "careful_review",
+      "annotation": {
+        "supported": true,
+        "has_business_exception": true,
+        "primary_route": "unrecognized_charge",
+        "acceptable_routes": [
+          "unrecognized_charge"
+        ],
+        "evidence_turns": [
+          1,
+          3,
+          9,
+          10,
+          15
+        ],
+        "reason": "用户表示自己不想要订阅，却收到订阅已添加的邮件，客服确认是公司错误并移除订阅；用户随后确认曾被收取40美元。",
+        "confidence": "high",
+        "translation_uncertain": false,
+        "human_verified": true
+      }
+    },
+    {
+      "external_id": "abcd:10088",
+      "review_scope": "careful_review",
+      "annotation": {
+        "supported": true,
+        "has_business_exception": false,
+        "primary_route": "return_progress",
+        "acceptable_routes": [
+          "refund_progress",
+          "return_progress"
+        ],
+        "evidence_turns": [
+          1,
+          5,
+          13
+        ],
+        "reason": "用户询问退货是否正在处理，并进一步确认退款所使用的支付方式；客服回复称其正在处理中且退款方式为线上。",
+        "confidence": "high",
+        "translation_uncertain": false,
+        "human_verified": true
+      }
+    },
+    {
+      "external_id": "abcd:10152",
+      "review_scope": "careful_review",
+      "annotation": {
+        "supported": true,
+        "has_business_exception": false,
+        "primary_route": "return_request",
+        "acceptable_routes": [
+          "refund_progress",
+          "return_request"
+        ],
+        "evidence_turns": [
+          1,
+          4,
+          15,
+          22
+        ],
+        "reason": "用户表示因不再需要夹克，想将其金额加入已有退款，客服随后确认总退款金额为199美元并已加入账户。",
+        "confidence": "high",
+        "translation_uncertain": false,
+        "human_verified": true
+      }
+    },
+    {
+      "external_id": "abcd:10360",
+      "review_scope": "careful_review",
+      "annotation": {
+        "supported": true,
+        "has_business_exception": false,
+        "primary_route": "order_management",
+        "acceptable_routes": [
+          "fulfillment_progress",
+          "order_management"
+        ],
+        "evidence_turns": [
+          1,
+          10,
+          11
+        ],
+        "reason": "用户在下单后要求将配送改到下周以获得免运费，但客服表示订单已显示送达，无法再修改配送安排。",
+        "confidence": "high",
+        "translation_uncertain": false,
+        "human_verified": true
+      }
+    },
+    {
+      "external_id": "abcd:10425",
+      "review_scope": "careful_review",
+      "annotation": {
+        "supported": true,
+        "has_business_exception": true,
+        "primary_route": "inventory_availability",
+        "acceptable_routes": [
+          "inventory_availability",
+          "search_issue"
+        ],
+        "evidence_turns": [
+          1,
+          6,
+          7
+        ],
+        "reason": "用户询问售价69美元的Calvin Klein衬衫是否有小号，并说明搜索网站时返回了无关结果；客服随后确认该衬衫有small尺码。",
+        "confidence": "high",
+        "translation_uncertain": false,
+        "human_verified": true
+      }
+    },
+    {
+      "external_id": "abcd:1342",
+      "review_scope": "careful_review",
+      "annotation": {
+        "supported": true,
+        "has_business_exception": false,
+        "primary_route": "product_information",
+        "acceptable_routes": [
+          "product_information",
+          "membership_support"
+        ],
+        "evidence_turns": [
+          1,
+          2,
+          4,
+          5,
+          8
+        ],
+        "reason": "用户询问想买的牛仔裤是否可以裁剪，客服确认可以，并说明会员可免费改衣的条件。",
+        "confidence": "medium",
+        "translation_uncertain": false,
+        "human_verified": true
+      }
+    },
+    {
+      "external_id": "abcd:1561",
+      "review_scope": "careful_review",
+      "annotation": {
+        "supported": false,
+        "has_business_exception": false,
+        "primary_route": "other",
+        "acceptable_routes": [
+          "other"
+        ],
+        "evidence_turns": [
+          5,
+          14,
+          29
+        ],
+        "reason": "用户仅笼统表示想了解一款靴子，未明确提出可分类的具体诉求。",
+        "confidence": "high",
+        "translation_uncertain": false,
+        "human_verified": true
+      }
+    }
+  ]
+}

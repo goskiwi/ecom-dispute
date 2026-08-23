@@ -150,5 +150,16 @@
       ]
     }
   },
-  "human_verified": 0
+  "human_verified": 8,
+  "human_verified_scope": "all careful_review cases confirmed by the human reviewer",
+  "human_verified_ids": [
+    "abcd:10034",
+    "abcd:10050",
+    "abcd:10088",
+    "abcd:10152",
+    "abcd:10360",
+    "abcd:10425",
+    "abcd:1342",
+    "abcd:1561"
+  ]
 }

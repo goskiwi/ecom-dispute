@@ -19,5 +19,6 @@ echo ""
 
 uv run python -m ecom_dispute abcd-annotation-web \
   --form "$DRAFT" \
+  --audit-sample evals/v3_abcd_200_quick_audit_sample.json \
   --host 127.0.0.1 \
   --port 8879
