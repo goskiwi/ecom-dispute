@@ -20,9 +20,9 @@ EcomDispute V3 是一个覆盖电商资金、履约、售后、订单操作、�
 | Tool | 29 |
 | SQLite表 | 31 |
 | 真实LLM Agent角色 | 3 |
-| V3最小E2E | 26 |
+| V3 Decision E2E | 90条主案例 / 97个Decision |
 | Route边界集 | 44 |
-| 自动化测试 | 70 |
+| 自动化测试 | 71 |
 
 完整本体与边界见[EcomDispute Route本体与能力边界V3](EcomDispute-Route本体与能力边界V3.md)。
 
@@ -146,9 +146,9 @@ uv run python -m ecom_dispute \
 
 ## V3评测
 
-### 确定性最小E2E
+### 确定性Decision全分支E2E
 
-26个业务Route各1条独立最小案例，Route、Decision、Party、Evidence和Tool链路为26/26。它证明V3资源、数据库、工具适配和确定性Strategy能闭环，不代表生产准确率。
+29个Route合同共有97个非`manual_review` Decision。V3使用90条主案例覆盖全部90个业务Decision，并通过嵌套合规子任务覆盖7个合规Decision；实际执行达到97/97，同时校验Party、Review、必需Evidence、必需Tool和13类ActionPlan。它证明合同分支可执行，不代表生产准确率。详见[V3 Decision覆盖报告](evals/v3_decision_coverage_report_2026-08-23.md)。
 
 ### 真实LLM Route边界集
 
@@ -180,7 +180,7 @@ V3 Manifest从完整ABCD v1.1的96个subflow轮转抽样200条，只负责固定
 
 ## 当前限制
 
-- 26条确定性E2E目前每Route仅1条，下一阶段仍需扩展状态分支和表达变体。
+- 97个Decision目前各自只有一条主证据组合，仍需增加缺失证据、跨源冲突和表达变体。
 - 数据为人工/规则构造和公开模拟对话，不是企业生产流量。
 - 工具后端是本地SQLite模拟连接器，不代表远程微服务可靠性。
 - ActionPlan尚未连接真实生产写接口。
@@ -192,5 +192,6 @@ V3 Manifest从完整ABCD v1.1的96个subflow轮转抽样200条，只负责固定
 
 - [V3 Route本体](EcomDispute-Route本体与能力边界V3.md)
 - [V3重构与评测报告](evals/v3_rebuild_report_2026-08-23.md)
+- [V3 Decision覆盖报告](evals/v3_decision_coverage_report_2026-08-23.md)
 - [ABCD标注指南](docs/abcd_route_annotation_guide.md)
 - [简历与面试口径](docs/resume_and_interview.md)

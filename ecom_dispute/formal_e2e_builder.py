@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from collections import Counter
 from pathlib import Path
 
 from .repository import Repository, rebuild_database
@@ -44,7 +45,7 @@ def build_formal_e2e(
 ) -> dict:
     repository = Repository(rebuild_database(db_path))
     cases = [_export_case(repository, case_id) for case_id in repository.case_ids()]
-    oracle = json.loads((ROOT / "evals" / "v3_oracle.json").read_text(encoding="utf-8"))
+    oracle = json.loads((ROOT / "evals" / "v3_decision_oracle.json").read_text(encoding="utf-8"))
     input_path.parent.mkdir(parents=True, exist_ok=True)
     oracle_path.parent.mkdir(parents=True, exist_ok=True)
     input_path.write_text(
@@ -61,7 +62,7 @@ def build_formal_e2e(
         "case_count": len(cases),
         "independent_templates": len(cases),
         "expression_variants": 0,
-        "routes": {case["business_type"]: 1 for case in cases},
+        "routes": dict(Counter(case["business_type"] for case in cases)),
     }
 
 

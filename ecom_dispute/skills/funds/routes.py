@@ -145,6 +145,13 @@ class UnrecognizedChargeStrategy:
                 "未查询到对应成功扣款，向用户说明查询范围",
                 False,
             )
+        if all(item.facts.get("status") == "not_found" for item in claims):
+            return DecisionOutcome(
+                "none",
+                "unrecognized_charge_not_found",
+                "未查询到对应成功扣款，向用户说明查询范围",
+                False,
+            )
         if all(item.facts.get("status") == "recognized" for item in claims):
             return DecisionOutcome(
                 "none",

@@ -28,13 +28,13 @@
 | 项目 | 结果 |
 |---|---:|
 | Ruff | 通过 |
-| Pytest | 70/70 |
+| Pytest | 71/71 |
 | Skill资源 | 7/7加载 |
 | Route资源/Strategy | 29/29加载 |
 | Tool定义/Executor/Adapter | 29/29加载 |
-| V3确定性最小E2E | 26/26 |
+| V3 Decision E2E | 90条主案例，97/97 Decision |
 
-26条最小E2E每个业务Route一条，验证Route解析、动态工具面、Evidence Adapter、Strategy、合规子任务、ReviewTask和ActionPlan合同。它不是生产准确率。
+90条主案例覆盖26个业务Route的90个业务Decision；每条主案例还执行3个合规子任务，合计覆盖7个合规Decision，实际Decision覆盖为97/97。测试同时校验Route、Party、Review、Evidence、Tool和13类ActionPlan。它不是生产准确率。
 
 ## 真实LLM边界评测
 
@@ -89,7 +89,7 @@ V3.1在运行前完成两项变更：
 
 ## 限制与下一步
 
-- 26条确定性E2E只覆盖每Route一个主分支，需要扩展各Strategy的状态矩阵。
+- 97个Decision当前各自只有一条主证据组合，需要继续增加缺失证据、跨源冲突和表达变体。
 - V3.1边界集规模仍小，100% Route不能外推到生产准确率。
 - ABCD逐对话人工Consensus尚未完成。
 - ActionPlan没有连接真实生产写接口。

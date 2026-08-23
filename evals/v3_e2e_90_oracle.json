@@ -1,0 +1,2392 @@
+{
+  "v3-cart_issue": {
+    "route_type": "cart_issue",
+    "decision": "cart_state_conflict",
+    "responsible_party": "platform",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "cart_event"
+    ],
+    "required_tools": [
+      "get_cart_events",
+      "get_site_health"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3-checkout_issue": {
+    "route_type": "checkout_issue",
+    "decision": "checkout_service_error",
+    "responsible_party": "platform",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "checkout_event"
+    ],
+    "required_tools": [
+      "get_checkout_events",
+      "get_site_health"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3-delivered_not_received": {
+    "route_type": "delivered_not_received",
+    "decision": "delivery_proof_missing",
+    "responsible_party": "logistics_provider",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_delivery_proof",
+      "get_delivery_address",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3-duplicate_charge": {
+    "route_type": "duplicate_charge",
+    "decision": "duplicate_charge_confirmed",
+    "responsible_party": "payment_channel",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3-exchange_request": {
+    "route_type": "exchange_request",
+    "decision": "exchange_available",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "exchange_request",
+      "inventory",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_return_request",
+      "get_exchange_options",
+      "get_inventory",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": "create_exchange_request",
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3-fulfillment_progress": {
+    "route_type": "fulfillment_progress",
+    "decision": "fulfillment_delayed_merchant",
+    "responsible_party": "merchant",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3-inventory_availability": {
+    "route_type": "inventory_availability",
+    "decision": "inventory_unavailable",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "inventory"
+    ],
+    "required_tools": [
+      "get_inventory"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3-item_condition_issue": {
+    "route_type": "item_condition_issue",
+    "decision": "item_condition_evidence_collected",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3-membership_support": {
+    "route_type": "membership_support",
+    "decision": "membership_credit_missing",
+    "responsible_party": "platform",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "membership"
+    ],
+    "required_tools": [
+      "get_membership_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": "request_membership_credit_repair",
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3-missing_item": {
+    "route_type": "missing_item",
+    "decision": "missing_item_warehouse_shortage",
+    "responsible_party": "warehouse",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "warehouse_pack",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": "create_missing_item_reshipment",
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3-order_cancellation": {
+    "route_type": "order_cancellation",
+    "decision": "cancel_before_pickup_but_shipped",
+    "responsible_party": "merchant",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "cancellation_request",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_cancellation_request",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3-order_fee_dispute": {
+    "route_type": "order_fee_dispute",
+    "decision": "order_fee_incorrect",
+    "responsible_party": "platform",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_fee",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_order_fee_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": "create_fee_adjustment",
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3-order_management": {
+    "route_type": "order_management",
+    "decision": "order_change_allowed",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_change_option",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_order_change_options",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": "submit_order_change",
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3-payment_captured_order_failed": {
+    "route_type": "payment_captured_order_failed",
+    "decision": "captured_order_failed_unreversed",
+    "responsible_party": "platform",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3-price_adjustment": {
+    "route_type": "price_adjustment",
+    "decision": "price_adjustment_eligible",
+    "responsible_party": "platform",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "price",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_price_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": "create_price_adjustment",
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3-product_information": {
+    "route_type": "product_information",
+    "decision": "product_information_found",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "product_catalog"
+    ],
+    "required_tools": [
+      "get_product_catalog"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3-promotion_support": {
+    "route_type": "promotion_support",
+    "decision": "promotion_invalid",
+    "responsible_party": "platform",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "promotion",
+      "policy"
+    ],
+    "required_tools": [
+      "get_promotion_records",
+      "get_membership_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": "request_promotion_reissue",
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3-received_item_mismatch": {
+    "route_type": "received_item_mismatch",
+    "decision": "received_item_mismatch_confirmed",
+    "responsible_party": "warehouse",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "warehouse_pack",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": "create_replacement_order",
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3-refund_amount_mismatch": {
+    "route_type": "refund_amount_mismatch",
+    "decision": "refund_amount_incorrect",
+    "responsible_party": "platform",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "refund",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3-refund_progress": {
+    "route_type": "refund_progress",
+    "decision": "refund_processing_within_sla",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "after_sales",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "get_after_sales_case",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3-return_progress": {
+    "route_type": "return_progress",
+    "decision": "return_in_transit",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "return_request",
+      "return_tracking"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_return_request",
+      "get_return_tracking",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3-return_request": {
+    "route_type": "return_request",
+    "decision": "return_eligible",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_return_request",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": "create_return_request",
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3-search_issue": {
+    "route_type": "search_issue",
+    "decision": "search_index_stale",
+    "responsible_party": "platform",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "search_event"
+    ],
+    "required_tools": [
+      "get_search_events",
+      "get_site_health"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3-shipping_options": {
+    "route_type": "shipping_options",
+    "decision": "shipping_option_available",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "shipping_option"
+    ],
+    "required_tools": [
+      "get_shipping_options",
+      "get_membership_records"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3-site_performance": {
+    "route_type": "site_performance",
+    "decision": "site_degraded",
+    "responsible_party": "platform",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "site_health"
+    ],
+    "required_tools": [
+      "get_site_health"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3-unrecognized_charge": {
+    "route_type": "unrecognized_charge",
+    "decision": "unrecognized_charge_confirmed",
+    "responsible_party": "payment_channel",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "charge_claim",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_payment_gateway_events",
+      "get_charge_dispute",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": "open_payment_dispute",
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3d-cancel_after_pickup": {
+    "route_type": "order_cancellation",
+    "decision": "cancel_after_pickup",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "cancellation_request",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_cancellation_request",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-cancellation_completed": {
+    "route_type": "order_cancellation",
+    "decision": "cancellation_completed",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "cancellation_request",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_cancellation_request",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-cancellation_refund_missing": {
+    "route_type": "order_cancellation",
+    "decision": "cancellation_refund_missing",
+    "responsible_party": "platform",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "cancellation_request",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_cancellation_request",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": "initiate_cancellation_refund",
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3d-captured_order_failed_reversed": {
+    "route_type": "payment_captured_order_failed",
+    "decision": "captured_order_failed_reversed",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-cart_item_unavailable": {
+    "route_type": "cart_issue",
+    "decision": "cart_item_unavailable",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "cart_event"
+    ],
+    "required_tools": [
+      "get_cart_events",
+      "get_site_health"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-cart_recovered": {
+    "route_type": "cart_issue",
+    "decision": "cart_recovered",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "cart_event"
+    ],
+    "required_tools": [
+      "get_cart_events",
+      "get_site_health"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-charge_recognized": {
+    "route_type": "unrecognized_charge",
+    "decision": "charge_recognized",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "charge_claim",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_payment_gateway_events",
+      "get_charge_dispute",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-checkout_payment_declined": {
+    "route_type": "checkout_issue",
+    "decision": "checkout_payment_declined",
+    "responsible_party": "payment_channel",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "checkout_event"
+    ],
+    "required_tools": [
+      "get_checkout_events",
+      "get_site_health"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-checkout_recovered": {
+    "route_type": "checkout_issue",
+    "decision": "checkout_recovered",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "checkout_event"
+    ],
+    "required_tools": [
+      "get_checkout_events",
+      "get_site_health"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-delivery_not_marked_delivered": {
+    "route_type": "delivered_not_received",
+    "decision": "delivery_not_marked_delivered",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_delivery_proof",
+      "get_delivery_address",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3d-delivery_receipt_disputed": {
+    "route_type": "delivered_not_received",
+    "decision": "delivery_receipt_disputed",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "get_delivery_proof",
+      "get_delivery_address",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3d-duplicate_charge_not_found": {
+    "route_type": "duplicate_charge",
+    "decision": "duplicate_charge_not_found",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-duplicate_charge_pending_authorization": {
+    "route_type": "duplicate_charge",
+    "decision": "duplicate_charge_pending_authorization",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-exchange_created": {
+    "route_type": "exchange_request",
+    "decision": "exchange_created",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "exchange_request",
+      "inventory",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_return_request",
+      "get_exchange_options",
+      "get_inventory",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-exchange_inventory_unavailable": {
+    "route_type": "exchange_request",
+    "decision": "exchange_inventory_unavailable",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "exchange_request",
+      "inventory",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_return_request",
+      "get_exchange_options",
+      "get_inventory",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-exchange_price_difference": {
+    "route_type": "exchange_request",
+    "decision": "exchange_price_difference",
+    "responsible_party": "user",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "exchange_request",
+      "inventory",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_return_request",
+      "get_exchange_options",
+      "get_inventory",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3d-fulfillment_completed_late": {
+    "route_type": "fulfillment_progress",
+    "decision": "fulfillment_completed_late",
+    "responsible_party": "logistics_provider",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-fulfillment_completed_on_time": {
+    "route_type": "fulfillment_progress",
+    "decision": "fulfillment_completed_on_time",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-fulfillment_delayed_carrier": {
+    "route_type": "fulfillment_progress",
+    "decision": "fulfillment_delayed_carrier",
+    "responsible_party": "logistics_provider",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-fulfillment_event_conflict": {
+    "route_type": "fulfillment_progress",
+    "decision": "fulfillment_event_conflict",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3d-fulfillment_force_majeure": {
+    "route_type": "fulfillment_progress",
+    "decision": "fulfillment_force_majeure",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-fulfillment_within_sla": {
+    "route_type": "fulfillment_progress",
+    "decision": "fulfillment_within_sla",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-inventory_available": {
+    "route_type": "inventory_availability",
+    "decision": "inventory_available",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "inventory"
+    ],
+    "required_tools": [
+      "get_inventory"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-inventory_backorder_available": {
+    "route_type": "inventory_availability",
+    "decision": "inventory_backorder_available",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "inventory"
+    ],
+    "required_tools": [
+      "get_inventory"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": "create_backorder",
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-item_condition_attachment_missing": {
+    "route_type": "item_condition_issue",
+    "decision": "item_condition_attachment_missing",
+    "responsible_party": "user",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3d-item_condition_evidence_insufficient": {
+    "route_type": "item_condition_issue",
+    "decision": "item_condition_evidence_insufficient",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "get_logistics_events",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3d-membership_active": {
+    "route_type": "membership_support",
+    "decision": "membership_active",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "membership"
+    ],
+    "required_tools": [
+      "get_membership_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-membership_inactive": {
+    "route_type": "membership_support",
+    "decision": "membership_inactive",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "membership"
+    ],
+    "required_tools": [
+      "get_membership_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-missing_item_not_verified": {
+    "route_type": "missing_item",
+    "decision": "missing_item_not_verified",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "warehouse_pack",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3d-order_change_blocked": {
+    "route_type": "order_management",
+    "decision": "order_change_blocked",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_change_option",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_order_change_options",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-order_change_completed": {
+    "route_type": "order_management",
+    "decision": "order_change_completed",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_change_option",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_order_change_options",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-order_details_conflict": {
+    "route_type": "order_management",
+    "decision": "order_details_conflict",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_change_option",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_order_change_options",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3d-order_fee_correct": {
+    "route_type": "order_fee_dispute",
+    "decision": "order_fee_correct",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_fee",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_order_fee_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-payment_order_state_conflict": {
+    "route_type": "payment_captured_order_failed",
+    "decision": "payment_order_state_conflict",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_conflict",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3d-price_adjustment_completed": {
+    "route_type": "price_adjustment",
+    "decision": "price_adjustment_completed",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "price",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_price_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-price_adjustment_ineligible": {
+    "route_type": "price_adjustment",
+    "decision": "price_adjustment_ineligible",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "price",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_price_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-price_record_conflict": {
+    "route_type": "price_adjustment",
+    "decision": "price_record_conflict",
+    "responsible_party": "platform",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "price",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_price_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3d-product_information_missing": {
+    "route_type": "product_information",
+    "decision": "product_information_missing",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "product_catalog"
+    ],
+    "required_tools": [
+      "get_product_catalog"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-promotion_expired": {
+    "route_type": "promotion_support",
+    "decision": "promotion_expired",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "promotion",
+      "policy"
+    ],
+    "required_tools": [
+      "get_promotion_records",
+      "get_membership_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-promotion_reissued": {
+    "route_type": "promotion_support",
+    "decision": "promotion_reissued",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "promotion",
+      "policy"
+    ],
+    "required_tools": [
+      "get_promotion_records",
+      "get_membership_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-promotion_valid": {
+    "route_type": "promotion_support",
+    "decision": "promotion_valid",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "promotion",
+      "policy"
+    ],
+    "required_tools": [
+      "get_promotion_records",
+      "get_membership_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-received_item_mismatch_unverified": {
+    "route_type": "received_item_mismatch",
+    "decision": "received_item_mismatch_unverified",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "warehouse_pack",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_warehouse_pack_record",
+      "get_claim_attachments",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_unsupported",
+      "required_escalation_missing"
+    ]
+  },
+  "v3d-refund_amount_correct": {
+    "route_type": "refund_amount_mismatch",
+    "decision": "refund_amount_correct",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "refund",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-refund_arrival_overdue": {
+    "route_type": "refund_progress",
+    "decision": "refund_arrival_overdue",
+    "responsible_party": "payment_channel",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "after_sales",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "get_after_sales_case",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3d-refund_completed": {
+    "route_type": "refund_progress",
+    "decision": "refund_completed",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "after_sales",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "get_after_sales_case",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-refund_credit_amount_mismatch": {
+    "route_type": "refund_amount_mismatch",
+    "decision": "refund_credit_amount_mismatch",
+    "responsible_party": "payment_channel",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "refund",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3d-refund_not_initiated_overdue": {
+    "route_type": "refund_progress",
+    "decision": "refund_not_initiated_overdue",
+    "responsible_party": "platform",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "after_sales",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "get_after_sales_case",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": "initiate_refund",
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-refund_pending_within_sla": {
+    "route_type": "refund_progress",
+    "decision": "refund_pending_within_sla",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "after_sales",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "get_after_sales_case",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-refund_record_conflict": {
+    "route_type": "refund_progress",
+    "decision": "refund_record_conflict",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "after_sales",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_refund_records",
+      "get_after_sales_case",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_present"
+    ]
+  },
+  "v3d-return_category_excluded": {
+    "route_type": "return_request",
+    "decision": "return_category_excluded",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_return_request",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-return_closed": {
+    "route_type": "return_progress",
+    "decision": "return_closed",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "return_request",
+      "return_tracking"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_return_request",
+      "get_return_tracking",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-return_condition_ineligible": {
+    "route_type": "return_request",
+    "decision": "return_condition_ineligible",
+    "responsible_party": "user",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_return_request",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-return_condition_unknown": {
+    "route_type": "return_request",
+    "decision": "return_condition_unknown",
+    "responsible_party": "undetermined",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_return_request",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3d-return_inspected": {
+    "route_type": "return_progress",
+    "decision": "return_inspected",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "return_request",
+      "return_tracking"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_return_request",
+      "get_return_tracking",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-return_label_created": {
+    "route_type": "return_progress",
+    "decision": "return_label_created",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "return_request",
+      "return_tracking"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_return_request",
+      "get_return_tracking",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-return_received": {
+    "route_type": "return_progress",
+    "decision": "return_received",
+    "responsible_party": "warehouse",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "return_request",
+      "return_tracking"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_return_request",
+      "get_return_tracking",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-return_requested": {
+    "route_type": "return_progress",
+    "decision": "return_requested",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "return_request",
+      "return_tracking"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_return_request",
+      "get_return_tracking",
+      "get_refund_records",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-return_window_expired": {
+    "route_type": "return_request",
+    "decision": "return_window_expired",
+    "responsible_party": "user",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "order_item",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_order_items",
+      "get_return_request",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-search_healthy": {
+    "route_type": "search_issue",
+    "decision": "search_healthy",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "search_event"
+    ],
+    "required_tools": [
+      "get_search_events",
+      "get_site_health"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-search_no_results": {
+    "route_type": "search_issue",
+    "decision": "search_no_results",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "search_event"
+    ],
+    "required_tools": [
+      "get_search_events",
+      "get_site_health"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-shipping_option_unavailable": {
+    "route_type": "shipping_options",
+    "decision": "shipping_option_unavailable",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "shipping_option"
+    ],
+    "required_tools": [
+      "get_shipping_options",
+      "get_membership_records"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-site_healthy": {
+    "route_type": "site_performance",
+    "decision": "site_healthy",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "site_health"
+    ],
+    "required_tools": [
+      "get_site_health"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  },
+  "v3d-site_outage": {
+    "route_type": "site_performance",
+    "decision": "site_outage",
+    "responsible_party": "platform",
+    "review_required": true,
+    "required_evidence_kinds": [
+      "conversation",
+      "site_health"
+    ],
+    "required_tools": [
+      "get_site_health"
+    ],
+    "required_agents": [
+      "conversation",
+      "review"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "required_escalation_missing"
+    ]
+  },
+  "v3d-unrecognized_charge_not_found": {
+    "route_type": "unrecognized_charge",
+    "decision": "unrecognized_charge_not_found",
+    "responsible_party": "none",
+    "review_required": false,
+    "required_evidence_kinds": [
+      "conversation",
+      "order",
+      "payment",
+      "charge_claim",
+      "policy"
+    ],
+    "required_tools": [
+      "get_order",
+      "get_payment_records",
+      "get_payment_gateway_events",
+      "get_charge_dispute",
+      "read_policy"
+    ],
+    "required_agents": [
+      "conversation"
+    ],
+    "action_type": null,
+    "compliance_decisions": [
+      "business_statement_verified",
+      "promise_grounded",
+      "escalation_not_required"
+    ]
+  }
+}

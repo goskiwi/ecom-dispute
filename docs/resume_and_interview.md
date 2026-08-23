@@ -8,7 +8,7 @@
 
 - 设计`Skill Pack → Route → Stage`分层Harness，以7个Skill、29个Route覆盖资金、履约、退换货、订单操作、商品/促销咨询、站点故障和客服合规；YAML声明动态工具面与证据合同，Python实现Strategy、Adapter、Reducer和Fusion。
 - 实现Conversation、EvidenceGap、Review三个真实LLM Agent及29个Case-scoped Tool；Conversation输出业务异常、退货原因和商品不符双侧原文证据，Route只开放当前Stage工具，长尾Agent不能越过Lazy Tool边界。
-- 建设31表可重建业务数据与26条Route最小E2E，确定性链路26/26；构建44条相邻Route边界集，真实`gpt-5.6-luna`首轮Route 44/44、业务异常43/44、退货原因3/3，保留31.5万输入Token和唯一失败分析。
+- 建设31表可重建业务数据与90条Decision E2E，实际执行覆盖29个Route的97/97非人工Decision，并校验Party、Review、Evidence、Tool和ActionPlan；构建44条相邻Route边界集，真实`gpt-5.6-luna`首轮Route 44/44、业务异常43/44、退货原因3/3。
 - 将订单修改、退换货、价保和促销修复输出为带确认要求和幂等键的ActionPlan；VERIFY阶段只读，跨系统写边界不由LLM直接执行。
 
 ## 一分钟介绍
@@ -18,8 +18,8 @@ EcomDispute处理“对话说法、系统事实、政策规则和站点事件不
 ## 可使用的V3指标
 
 - 7个Skill Pack、29个Route、29个Tool、31张SQLite表。
-- 70项自动化测试通过。
-- 26条业务Route最小E2E，确定性Route/Decision/Evidence/Tool闭环26/26。
+- 71项自动化测试通过。
+- 90条主案例覆盖97/97确定性Decision，其中13条生成带确认与幂等键的ActionPlan。
 - 44条真实LLM边界集：Route 44/44，`has_business_exception` 43/44，`return_reason` 3/3，API错误0，模型修复0。
 - 边界集累计Input/Output Token为314,780/8,050，模型累计延迟614,884ms。
 - V3 ABCD从完整96个subflow轮转抽样200条，不再使用subflow粗映射；人工Consensus未完成前不报告外部Route Accuracy。
@@ -28,7 +28,7 @@ EcomDispute处理“对话说法、系统事实、政策规则和站点事件不
 
 - 生产级电商自动执行平台。
 - 线上业务准确率100%。
-- 26条或44条代表真实生产分布。
+- 90条或44条代表真实生产分布。
 - ABCD V3外部准确率已经得到。
 - ReviewAgent已经提高人工效率。
 - ActionPlan已经连接真实退款、扣款或订单修改接口。
@@ -57,4 +57,4 @@ EcomDispute处理“对话说法、系统事实、政策规则和站点事件不
 
 ### 当前最大问题是什么？
 
-每次Conversation调用注入完整Route与Fact合同，平均输入约7千Token；26条确定性E2E也只覆盖每Route一个主分支。下一步应扩展策略状态矩阵，并用全新评测集验证分层Skill Router能否降Token且不降准确率。
+每次Conversation调用注入完整Route与Fact合同，平均输入约7千Token；97个Decision也仍各只有一条主证据组合。下一步应增加缺失证据和跨源冲突变体，并用全新评测集验证分层Skill Router能否降Token且不降准确率。

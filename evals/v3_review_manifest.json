@@ -1,5 +1,5 @@
 {
-  "source": "v3_e2e_26_pre_review_agent",
+  "source": "v3_e2e_90_pre_review_agent",
   "rubric": {
     "evidence_correctness": "1-5",
     "conflict_coverage": "1-5",
@@ -8,6 +8,18 @@
     "overall_preference": "A | B | tie"
   },
   "items": [
+    {
+      "case_id": "v3d-fulfillment_event_conflict",
+      "category": "conflict"
+    },
+    {
+      "case_id": "v3d-payment_order_state_conflict",
+      "category": "conflict"
+    },
+    {
+      "case_id": "v3d-refund_record_conflict",
+      "category": "conflict"
+    },
     {
       "case_id": "v3-cart_issue",
       "category": "compliance"
@@ -62,6 +74,62 @@
     },
     {
       "case_id": "v3-unrecognized_charge",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3d-cancellation_refund_missing",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3d-delivery_not_marked_delivered",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3d-delivery_receipt_disputed",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3d-exchange_price_difference",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3d-item_condition_attachment_missing",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3d-item_condition_evidence_insufficient",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3d-missing_item_not_verified",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3d-order_details_conflict",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3d-price_record_conflict",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3d-received_item_mismatch_unverified",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3d-refund_arrival_overdue",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3d-refund_credit_amount_mismatch",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3d-return_condition_unknown",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3d-site_outage",
       "category": "compliance"
     }
   ]

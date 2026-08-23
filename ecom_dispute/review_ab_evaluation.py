@@ -36,7 +36,7 @@ def build_review_manifest(
                 if len(selected) == len(candidates):
                     break
     payload = {
-        "source": "v3_e2e_26_pre_review_agent",
+        "source": "v3_e2e_90_pre_review_agent",
         "rubric": {
             "evidence_correctness": "1-5",
             "conflict_coverage": "1-5",

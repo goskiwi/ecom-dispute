@@ -13,7 +13,7 @@ from .tool_registry import ToolRegistry
 
 def evaluate(
     repository: Repository,
-    oracle_path: Path = ROOT / "evals" / "v3_oracle.json",
+    oracle_path: Path = ROOT / "evals" / "v3_decision_oracle.json",
     llm_client: ResponsesClient | None = None,
     case_ids: list[str] | None = None,
 ) -> dict:
@@ -78,7 +78,7 @@ def evaluate(
 def evaluate_baseline(
     repository: Repository,
     llm_client: ResponsesClient,
-    oracle_path: Path = ROOT / "evals" / "v3_oracle.json",
+    oracle_path: Path = ROOT / "evals" / "v3_decision_oracle.json",
     case_ids: list[str] | None = None,
 ) -> dict:
     oracle = json.loads(oracle_path.read_text(encoding="utf-8"))

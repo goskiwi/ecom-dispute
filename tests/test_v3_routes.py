@@ -71,9 +71,43 @@ def test_legacy_route_ids_are_not_accepted(v3_repository: Repository, legacy_rou
 
 
 def test_v3_oracle_covers_exactly_the_seeded_cases(v3_repository: Repository) -> None:
-    oracle = json.loads(Path("evals/v3_oracle.json").read_text(encoding="utf-8"))
+    oracle = json.loads(Path("evals/v3_decision_oracle.json").read_text(encoding="utf-8"))
     assert set(oracle) == set(v3_repository.case_ids())
     assert {item["route_type"] for item in oracle.values()} == set(BUSINESS_ROUTE_IDS)
+    assert len(oracle) == 90
+
+
+def test_decision_matrix_executes_all_ninety_seven_contract_decisions(
+    v3_repository: Repository,
+) -> None:
+    oracle = json.loads(Path("evals/v3_decision_oracle.json").read_text(encoding="utf-8"))
+    harness = DiagnosticHarness.heuristic_tests(v3_repository)
+    registry = SkillRegistry(default_strategies(), known_tools=ToolRegistry(v3_repository).names)
+    expected_decisions = {
+        decision
+        for pack in registry._packs.values()
+        for route in pack.routes.values()
+        for decision in route.allowed_decisions
+        if decision != "manual_review"
+    }
+    observed_decisions = set()
+    for case_id in v3_repository.case_ids():
+        report = harness.diagnose_sync(v3_repository.case(case_id))
+        expected = oracle[case_id]
+        assert report.decision == expected["decision"]
+        assert report.responsible_party == expected["responsible_party"]
+        assert report.review_required == expected["review_required"]
+        assert (report.action_plan.action_type if report.action_plan else None) == expected[
+            "action_type"
+        ]
+        observed_decisions.add(report.decision)
+        observed_decisions.update(
+            event["decision"]
+            for event in report.trace
+            if event.get("event") == "COMPLIANCE_SUBCASE_COMPLETED"
+        )
+    assert observed_decisions == expected_decisions
+    assert len(observed_decisions) == 97
 
 
 def test_return_request_does_not_require_an_existing_return_record(

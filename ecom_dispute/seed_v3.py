@@ -77,6 +77,9 @@ def seed_v3(connection: sqlite3.Connection) -> None:
             (order_id, f"v3-user-{index:02d}", business_type, status),
         )
         _seed_route_evidence(connection, index, order_id, business_type)
+    from .decision_matrix_v3 import seed_decision_matrix_v3
+
+    seed_decision_matrix_v3(connection)
 
 
 def seed_v3_policies(connection: sqlite3.Connection) -> None:

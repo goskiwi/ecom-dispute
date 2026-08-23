@@ -10,8 +10,8 @@ from ecom_dispute.tool_runtime import ToolSurfaceResolver
 def test_v3_deterministic_evaluation_is_complete(tmp_path: Path) -> None:
     repository = Repository(rebuild_database(tmp_path / "eval.db"))
     result = evaluate(repository)
-    assert result["case_count"] == 26
-    assert result["passed"] == 26
+    assert result["case_count"] == 90
+    assert result["passed"] == 90
     assert result["pass_rate"] == 1.0
 
 

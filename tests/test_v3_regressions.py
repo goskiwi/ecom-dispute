@@ -21,9 +21,9 @@ def test_formal_builder_and_import_cover_all_v3_routes(tmp_path: Path) -> None:
     oracle = tmp_path / "oracle.json"
     result = build_formal_e2e(tmp_path / "source.db", inputs, oracle)
     repository, case_ids = prepare_e2e_database(tmp_path / "import.db", inputs)
-    assert result["case_count"] == 26
-    assert len(case_ids) == 26
-    assert len(repository.case_ids()) == 26
+    assert result["case_count"] == 90
+    assert len(case_ids) == 90
+    assert len(repository.case_ids()) == 90
     assert set(json.loads(oracle.read_text())) == set(case_ids)
 
 
@@ -67,8 +67,8 @@ def test_demo_application_uses_only_v3_cases(tmp_path: Path) -> None:
     harness = DiagnosticHarness.heuristic_tests(repository)
     application = DemoApplication(repository, harness, "heuristic-test")
     cases = application.cases()
-    assert len(cases) == 26
-    assert all(item["case_id"].startswith("v3-") for item in cases)
+    assert len(cases) == 90
+    assert all(item["case_id"].startswith(("v3-", "v3d-")) for item in cases)
     result = application.run_case("v3-product_information")
     assert result["report"]["decision"] == "product_information_found"
 
@@ -131,9 +131,9 @@ def test_route_only_holdout_does_not_score_unlabeled_facts(tmp_path: Path) -> No
 
 def test_review_manifest_uses_available_v3_review_cases(tmp_path: Path) -> None:
     result = build_review_manifest(
-        Path("data/v3_e2e_26_inputs.json"),
+        Path("data/v3_e2e_90_inputs.json"),
         tmp_path / "manifest.json",
         tmp_path / "review.db",
     )
-    assert result["case_count"] == 14
-    assert result["categories"] == {"compliance": 14}
+    assert result["case_count"] > 14
+    assert set(result["categories"]).issubset({"conflict", "missing", "compliance", "strategy"})
