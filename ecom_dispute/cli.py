@@ -11,6 +11,7 @@ from .abcd_annotation import (
     rescore_first_run,
 )
 from .abcd_evaluation import build_abcd_manifest, evaluate_abcd
+from .abcd_translation import translate_annotation_forms
 from .annotation_web import serve_annotation
 from .e2e_evaluation import evaluate_e2e
 from .evaluation import evaluate, evaluate_baseline
@@ -76,18 +77,14 @@ def _parser() -> argparse.ArgumentParser:
     )
     review_manifest.add_argument("--review-db", type=Path, default=Path("/tmp/review-manifest.db"))
     review_ab = commands.add_parser("review-ab")
-    review_ab.add_argument(
-        "--inputs", type=Path, default=Path("data/formal_e2e_120_inputs.json")
-    )
+    review_ab.add_argument("--inputs", type=Path, default=Path("data/formal_e2e_120_inputs.json"))
     review_ab.add_argument(
         "--manifest", type=Path, default=Path("evals/formal_review_40_manifest.json")
     )
     review_ab.add_argument(
         "--output", type=Path, default=Path("evals/formal_review_40_blind_form.json")
     )
-    review_ab.add_argument(
-        "--key", type=Path, default=Path("evals/formal_review_40_ab_key.json")
-    )
+    review_ab.add_argument("--key", type=Path, default=Path("evals/formal_review_40_ab_key.json"))
     review_ab.add_argument("--review-db", type=Path, default=Path("/tmp/review-ab.db"))
     review_ab.add_argument("--workers", type=int, default=4)
     annotation_build = commands.add_parser("abcd-annotation-build")
@@ -128,6 +125,17 @@ def _parser() -> argparse.ArgumentParser:
     review_web.add_argument("--form", type=Path, required=True)
     review_web.add_argument("--host", default="127.0.0.1")
     review_web.add_argument("--port", type=int, default=8887)
+    annotation_translate = commands.add_parser("abcd-annotation-translate")
+    annotation_translate.add_argument(
+        "--rater1", type=Path, default=Path("evals/formal_abcd_200_rater1.json")
+    )
+    annotation_translate.add_argument(
+        "--rater2", type=Path, default=Path("evals/formal_abcd_200_rater2.json")
+    )
+    annotation_translate.add_argument(
+        "--cache", type=Path, default=Path("evals/formal_abcd_200_translation_cache.json")
+    )
+    annotation_translate.add_argument("--workers", type=int, default=4)
     return parser
 
 
@@ -205,6 +213,17 @@ def main() -> None:
         return
     if args.command == "review-ab-web":
         serve_review_form(args.form, args.host, args.port)
+        return
+    if args.command == "abcd-annotation-translate":
+        client = _llm_client(args, required=True)
+        result = translate_annotation_forms(
+            client,
+            args.rater1,
+            args.rater2,
+            args.cache,
+            args.workers,
+        )
+        print(json.dumps(result, ensure_ascii=False, indent=2))
         return
     repository = Repository(args.db)
     harness = _build_harness(args, repository) if args.command in {"web", "demo"} else None

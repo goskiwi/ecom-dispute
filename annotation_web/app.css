@@ -13,11 +13,16 @@ input, select, textarea { padding: 9px; border: 1px solid #cbd2df; border-radius
 .card { max-width: 980px; margin: 0 auto 18px; padding: 20px; border: 1px solid #dce1eb; border-radius: 12px; background: white; }
 .turn { display: grid; grid-template-columns: 80px 1fr; gap: 12px; padding: 9px 0; border-bottom: 1px solid #edf0f5; }
 .turn b { color: #526078; text-transform: uppercase; }
+.turn span { display: grid; gap: 4px; }
+.turn i, .turn em { width: fit-content; padding: 1px 5px; border-radius: 4px; font-size: 11px; font-style: normal; color: #526078; background: #edf0f5; }
+.turn em { margin-top: 5px; color: #1d684d; background: #e4f7ef; }
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 label { display: grid; gap: 5px; font-weight: 600; }
 .routes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 14px; max-height: 220px; overflow: auto; padding: 10px; border: 1px solid #dce1eb; border-radius: 7px; }
 .routes label { display: flex; align-items: center; gap: 7px; font-weight: 400; }
 .routes input { width: auto; }
+.translation-check { display: flex; grid-template-columns: auto 1fr; align-items: center; margin: 14px 0; }
+.translation-check input { width: auto; }
 button.save { margin-top: 16px; padding: 11px; border: 0; border-radius: 8px; color: white; background: #3156d3; cursor: pointer; }
 .guide { font-size: 13px; color: #526078; }
 @media (max-width: 800px) { main { grid-template-columns: 1fr; } aside { display: none; } .grid { grid-template-columns: 1fr; } }

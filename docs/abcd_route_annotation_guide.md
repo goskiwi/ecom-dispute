@@ -28,6 +28,8 @@ uv run python -m ecom_dispute abcd-annotation-web \
 
 浏览器打开对应地址。每次保存立即写回本地JSON，可中断后继续。
 
+页面同时展示英文原文和由`gpt-5.6-luna`生成的中文辅助译文。译文不接触ABCD subflow、粗粒度Route、模型预测或人工标签，不能替代英文原文。评审若发现歧义，应勾选“中文辅助翻译存在疑义”；两位评审完成后，至少抽查40条（20%）英文原文，并复核所有被勾选或低置信度的对话。
+
 ## 标注字段
 
 - `supported`：当前12个主Route是否能表达该问题；
@@ -36,7 +38,8 @@ uv run python -m ecom_dispute abcd-annotation-web \
 - `acceptable_routes`：存在合理第二选择时勾选，可包含primary；
 - `evidence_turns`：支持判断的对话Turn编号；
 - `reason`：一句话解释；
-- `confidence`：low / medium / high。
+- `confidence`：低 / 中 / 高（保存值仍为`low` / `medium` / `high`）。
+- `translation_uncertain`：中文辅助译文是否需要回看英文复核，不参与Route评分。
 
 ## 关键边界
 

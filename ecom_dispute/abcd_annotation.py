@@ -168,6 +168,7 @@ def _blank_annotation() -> dict[str, Any]:
         "evidence_turns": [],
         "reason": None,
         "confidence": None,
+        "translation_uncertain": False,
     }
 
 
