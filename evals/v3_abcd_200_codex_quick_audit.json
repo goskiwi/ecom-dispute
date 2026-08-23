@@ -1,0 +1,530 @@
+{
+  "schema_version": 1,
+  "method": "Codex full-conversation semantic audit of the committed route-stratified quick sample; not human consensus",
+  "sample_count": 39,
+  "accepted_count": 38,
+  "corrected_count": 1,
+  "candidate_correction_rate": 0.02564102564102564,
+  "human_verified": false,
+  "items": [
+    {
+      "external_id": "abcd:10004",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": false,
+        "primary_route": "membership_support",
+        "acceptable_routes": [
+          "shipping_options",
+          "membership_support"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10013",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": true,
+        "primary_route": "cart_issue",
+        "acceptable_routes": [
+          "cart_issue"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10017",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": false,
+        "primary_route": "return_request",
+        "acceptable_routes": [
+          "return_request"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10021",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": true,
+        "primary_route": "delivered_not_received",
+        "acceptable_routes": [
+          "delivered_not_received",
+          "order_management"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10023",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": true,
+        "primary_route": "inventory_availability",
+        "acceptable_routes": [
+          "inventory_availability"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10024",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": true,
+        "primary_route": "site_performance",
+        "acceptable_routes": [
+          "site_performance"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10025",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": true,
+        "primary_route": "refund_progress",
+        "acceptable_routes": [
+          "refund_progress"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10026",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": true,
+        "primary_route": "unrecognized_charge",
+        "acceptable_routes": [
+          "unrecognized_charge"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10029",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": true,
+        "primary_route": "item_condition_issue",
+        "acceptable_routes": [
+          "item_condition_issue",
+          "return_request"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10031",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": true,
+        "primary_route": "fulfillment_progress",
+        "acceptable_routes": [
+          "fulfillment_progress"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10038",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": false,
+        "primary_route": "product_information",
+        "acceptable_routes": [
+          "product_information"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10047",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": true,
+        "primary_route": "checkout_issue",
+        "acceptable_routes": [
+          "checkout_issue"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10048",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": true,
+        "primary_route": "order_fee_dispute",
+        "acceptable_routes": [
+          "order_fee_dispute"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:1005",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": false,
+        "primary_route": "membership_support",
+        "acceptable_routes": [
+          "membership_support"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10054",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": false,
+        "primary_route": "membership_support",
+        "acceptable_routes": [
+          "membership_support"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10068",
+      "status": "accepted",
+      "final_label": {
+        "supported": false,
+        "has_business_exception": false,
+        "primary_route": "other",
+        "acceptable_routes": [
+          "other"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10071",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": true,
+        "primary_route": "price_adjustment",
+        "acceptable_routes": [
+          "price_adjustment"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10082",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": true,
+        "primary_route": "search_issue",
+        "acceptable_routes": [
+          "search_issue"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:1011",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": false,
+        "primary_route": "product_information",
+        "acceptable_routes": [
+          "product_information"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10115",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": false,
+        "primary_route": "order_management",
+        "acceptable_routes": [
+          "order_management"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10119",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": false,
+        "primary_route": "product_information",
+        "acceptable_routes": [
+          "product_information"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10126",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": false,
+        "primary_route": "order_cancellation",
+        "acceptable_routes": [
+          "order_cancellation"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10187",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": false,
+        "primary_route": "product_information",
+        "acceptable_routes": [
+          "product_information"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10205",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": false,
+        "primary_route": "shipping_options",
+        "acceptable_routes": [
+          "shipping_options"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10217",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": true,
+        "primary_route": "duplicate_charge",
+        "acceptable_routes": [
+          "duplicate_charge"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10252",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": false,
+        "primary_route": "product_information",
+        "acceptable_routes": [
+          "product_information"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10268",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": true,
+        "primary_route": "promotion_support",
+        "acceptable_routes": [
+          "promotion_support"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10284",
+      "status": "accepted",
+      "final_label": {
+        "supported": false,
+        "has_business_exception": false,
+        "primary_route": "other",
+        "acceptable_routes": [
+          "other"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10299",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": false,
+        "primary_route": "product_information",
+        "acceptable_routes": [
+          "product_information"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10333",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": false,
+        "primary_route": "product_information",
+        "acceptable_routes": [
+          "product_information"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10359",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": false,
+        "primary_route": "product_information",
+        "acceptable_routes": [
+          "product_information"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10387",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": false,
+        "primary_route": "membership_support",
+        "acceptable_routes": [
+          "membership_support"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:10443",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": false,
+        "primary_route": "product_information",
+        "acceptable_routes": [
+          "product_information"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:1045",
+      "status": "corrected",
+      "final_label": {
+        "supported": false,
+        "has_business_exception": true,
+        "primary_route": "other",
+        "acceptable_routes": [
+          "other"
+        ]
+      },
+      "reason": "账户级默认付款方式属于账户资料操作，不是订单修改；按冻结边界从order_management修正为不支持的other。",
+      "candidate_label": {
+        "supported": true,
+        "has_business_exception": true,
+        "primary_route": "order_management",
+        "acceptable_routes": [
+          "order_management"
+        ]
+      }
+    },
+    {
+      "external_id": "abcd:10587",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": false,
+        "primary_route": "product_information",
+        "acceptable_routes": [
+          "product_information",
+          "search_issue"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:109",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": false,
+        "primary_route": "product_information",
+        "acceptable_routes": [
+          "product_information"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:116",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": false,
+        "primary_route": "membership_support",
+        "acceptable_routes": [
+          "membership_support"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:1185",
+      "status": "accepted",
+      "final_label": {
+        "supported": true,
+        "has_business_exception": false,
+        "primary_route": "inventory_availability",
+        "acceptable_routes": [
+          "inventory_availability"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    },
+    {
+      "external_id": "abcd:1289",
+      "status": "accepted",
+      "final_label": {
+        "supported": false,
+        "has_business_exception": true,
+        "primary_route": "other",
+        "acceptable_routes": [
+          "other"
+        ]
+      },
+      "reason": "对照完整英文对话后，支持范围、异常标签和主Route均与最终事实一致。"
+    }
+  ]
+}

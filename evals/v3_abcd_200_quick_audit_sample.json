@@ -249,5 +249,8 @@
       "primary_route": "other"
     }
   ],
-  "human_verified": 0
+  "human_verified": 0,
+  "codex_audit_completed": 39,
+  "codex_audit_accepted": 38,
+  "codex_audit_corrected": 1
 }
