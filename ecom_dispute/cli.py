@@ -11,6 +11,7 @@ from .abcd_annotation import (
     rescore_first_run,
 )
 from .abcd_evaluation import build_abcd_manifest, evaluate_abcd
+from .abcd_preannotation import preannotate_abcd
 from .abcd_translation import translate_annotation_forms
 from .annotation_web import serve_annotation
 from .e2e_evaluation import evaluate_e2e
@@ -136,6 +137,17 @@ def _parser() -> argparse.ArgumentParser:
         "--cache", type=Path, default=Path("evals/formal_abcd_200_translation_cache.json")
     )
     annotation_translate.add_argument("--workers", type=int, default=4)
+    annotation_preannotate = commands.add_parser("abcd-preannotate")
+    annotation_preannotate.add_argument(
+        "--source", type=Path, default=Path("evals/formal_abcd_200_rater1.json")
+    )
+    annotation_preannotate.add_argument(
+        "--output", type=Path, default=Path("evals/formal_abcd_200_assistant_draft.json")
+    )
+    annotation_preannotate.add_argument(
+        "--cache", type=Path, default=Path("evals/formal_abcd_200_preannotation_cache.json")
+    )
+    annotation_preannotate.add_argument("--workers", type=int, default=4)
     return parser
 
 
@@ -220,6 +232,17 @@ def main() -> None:
             client,
             args.rater1,
             args.rater2,
+            args.cache,
+            args.workers,
+        )
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return
+    if args.command == "abcd-preannotate":
+        client = _llm_client(args, required=True)
+        result = preannotate_abcd(
+            client,
+            args.source,
+            args.output,
             args.cache,
             args.workers,
         )

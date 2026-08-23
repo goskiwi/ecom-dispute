@@ -194,6 +194,8 @@ ABCD正式外部集包含160条受支持对话和40条拒识对话。首轮199�
 
 由于ABCD按客服流程分类、EcomDispute按争议事实分类，66.7%只是粗粒度映射一致率。仓库已提供隐藏subflow和模型预测的双人逐对话标注UI，以及一致率、Cohen's Kappa、Consensus和对原首轮输出重评分工具。人工标注尚未完成，不能提前给出Consensus准确率。见[ABCD标注指南](docs/abcd_route_annotation_guide.md)。
 
+为降低人工从零标注成本，另提供不覆盖双盲表单的AI预标注、边界分层和人工确认页面。200条已全部生成候选标签，其中115条进入快速抽检、85条进入重点复核；该结果只能表述为“AI预标注+人工复核工作流”，不能当作独立人工真值。见[AI辅助预标注报告](evals/formal_abcd_200_preannotation_report_2026-08-23.md)。
+
 ### Review人工评测
 
 40条固定模板/ReviewAgent匿名A/B已生成，分布为5条冲突、4条证据缺失、31条合规。当前人工评分为0/40，尚不能声称ReviewAgent优于模板。评审方法见[Review A/B说明](docs/review_rubric_instructions.md)。

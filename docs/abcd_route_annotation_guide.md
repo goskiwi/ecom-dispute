@@ -30,6 +30,15 @@ uv run python -m ecom_dispute abcd-annotation-web \
 
 页面同时展示英文原文和由`gpt-5.6-luna`生成的中文辅助译文。译文不接触ABCD subflow、粗粒度Route、模型预测或人工标签，不能替代英文原文。评审若发现歧义，应勾选“中文辅助翻译存在疑义”；两位评审完成后，至少抽查40条（20%）英文原文，并复核所有被勾选或低置信度的对话。
 
+若采用面试项目所需的AI辅助复核流程，可先生成独立草稿：
+
+```bash
+uv run python -m ecom_dispute --base-url "$ECOM_DISPUTE_BASE_URL" \
+  --model gpt-5.6-luna abcd-preannotate
+```
+
+再运行`scripts/start_assistant_annotation.command`并打开`http://127.0.0.1:8879/`。页面将高置信单一Route标为“快速抽检”，将多意图、边界冲突和保守审计命中的样本标为“重点人工复核”。人工确认时必须勾选“我已对照原文确认或修正”。该流程必须披露为“AI预标注+人工复核”，不能表述为双人独立人工标注，也不能用该草稿直接计算最终准确率。
+
 ## 标注字段
 
 - `supported`：当前12个主Route是否能表达该问题；
