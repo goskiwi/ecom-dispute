@@ -28,7 +28,7 @@
 | 项目 | 结果 |
 |---|---:|
 | Ruff | 通过 |
-| Pytest | 85/85 |
+| Pytest | 86/86 |
 | Skill资源 | 7/7加载 |
 | Route资源/Strategy | 29/29加载 |
 | Tool定义/Executor/Adapter | 29/29加载 |
@@ -94,6 +94,8 @@ V3.1在运行前完成两项变更：
 - 人工Consensus完成前，Route Accuracy为`null`。
 
 旧71.9%是Legacy Ontology V2粗映射一致率，不是V3指标。
+
+V3真实Conversation已完成200/200，但人工Consensus尚未完成，因此Route Accuracy保持`null`。中文辅助与英文AI预标注均完成200/200，经语义分流得到20条重点复核和180条快速抽检。详见`v3_abcd_200_unscored_report_2026-08-23.md`。
 
 ## 限制与下一步
 

@@ -82,8 +82,13 @@ def evaluate_abcd(
     def run_one(external_id: str) -> dict:
         record = records[external_id]
         manifest_item = wanted[external_id]
+        model_repairs = 0
         try:
-            result = client.extract_conversation(record.conversation)
+            try:
+                result = client.extract_conversation(record.conversation)
+            except ValueError as exc:
+                model_repairs = 1
+                result = client.extract_conversation(record.conversation, str(exc))
         except (RuntimeError, ValueError) as exc:
             return {"external_id": external_id, "error": str(exc)}
         predicted_action = any(
@@ -101,6 +106,7 @@ def evaluate_abcd(
             "input_tokens": result.input_tokens,
             "output_tokens": result.output_tokens,
             "latency_ms": result.latency_ms,
+            "model_repairs": model_repairs,
         }
 
     results = []
@@ -130,5 +136,6 @@ def evaluate_abcd(
         "input_tokens": sum(item["input_tokens"] for item in valid),
         "output_tokens": sum(item["output_tokens"] for item in valid),
         "latency_ms": sum(item["latency_ms"] for item in valid),
+        "model_repairs": sum(item.get("model_repairs", 0) for item in valid),
         "results": results,
     }

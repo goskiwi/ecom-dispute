@@ -25,7 +25,7 @@ EcomDispute V3 是一个覆盖电商资金、履约、售后、订单操作、�
 | 真实LLM全链路E2E | 40 |
 | EvidenceGap真实消融 | 12 |
 | 失败矩阵 | 26条缺失必需Evidence案例 |
-| 自动化测试 | 85 |
+| 自动化测试 | 86 |
 
 完整本体与边界见[EcomDispute Route本体与能力边界V3](EcomDispute-Route本体与能力边界V3.md)。
 
@@ -183,7 +183,7 @@ V3.1边界集在模型调用前提交44条输入和Oracle，覆盖26个业务Rou
 
 ### ABCD外部数据
 
-V3 Manifest从完整ABCD v1.1的96个subflow轮转抽样200条，只负责固定样本，不包含Route Oracle，也不再声称“160条受支持”。人工逐对话Consensus完成前，V3外部集不报告Route Accuracy。
+V3 Manifest从完整ABCD v1.1的96个subflow轮转抽样200条，只负责固定样本，不包含Route Oracle，也不再声称“160条受支持”。真实`gpt-5.6-luna` Conversation完成200/200，Route指标保持`null`；中文辅助和英文预标注均完成200/200，经语义分流得到20条重点复核和180条快速抽检。人工逐对话Consensus完成前，V3外部集不报告Route Accuracy。详见[V3 ABCD未评分报告](evals/v3_abcd_200_unscored_report_2026-08-23.md)。
 
 机器预标注只允许读取英文原文；中文翻译仅供人工辅助，同模型预标注不能作为独立Oracle。
 
@@ -209,5 +209,6 @@ V3 Manifest从完整ABCD v1.1的96个subflow轮转抽样200条，只负责固定
 - [V3失败矩阵报告](evals/v3_failure_matrix_report_2026-08-23.md)
 - [V3.1真实E2E报告](evals/v3_live_e2e_40_report_2026-08-23.md)
 - [V3.1 Gap消融报告](evals/v3_gap_ablation_report_2026-08-23.md)
+- [V3 ABCD未评分报告](evals/v3_abcd_200_unscored_report_2026-08-23.md)
 - [ABCD标注指南](docs/abcd_route_annotation_guide.md)
 - [简历与面试口径](docs/resume_and_interview.md)
