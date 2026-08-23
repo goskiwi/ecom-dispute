@@ -1,0 +1,50 @@
+route_id: unrecognized-charge
+name: 陌生扣款
+report_type: unrecognized_charge
+match:
+  description: 用户否认与扣款对应的购买或授权关系。
+  business_types:
+  - unrecognized_charge
+  positive_examples:
+  - 我从未买过这件商品却被扣款
+  negative_examples:
+  - 同一订单扣了两次
+start_stage: ANALYZE
+core_tools: &id001
+- get_order
+- get_payment_records
+- get_payment_gateway_events
+- get_charge_dispute
+- read_policy
+lazy_tools: []
+required_evidence:
+- conversation
+- order
+- payment
+- charge_claim
+- policy
+optional_evidence: []
+allowed_decisions:
+- unrecognized_charge_not_found
+- charge_recognized
+- unrecognized_charge_confirmed
+- manual_review
+decision_strategy: unrecognized_charge
+stages:
+  ANALYZE:
+    mode: agent
+    objective: 提取陌生扣款的用户主张、客服行为和关键边界
+    instruction_file: stages/analyze.md
+    default_next: VERIFY
+  VERIFY:
+    mode: deterministic
+    objective: 查询陌生扣款所需业务证据
+    tools: *id001
+    default_next: DECIDE
+  DECIDE:
+    mode: deterministic
+    objective: 依据证据和政策执行陌生扣款确定性策略
+    default_next: FUSE_AND_REVIEW
+  FUSE_AND_REVIEW:
+    mode: deterministic
+    objective: 合并证据冲突并创建必要的人工复检任务

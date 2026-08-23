@@ -9,9 +9,9 @@ from ..base import SkillRegistry
 
 class ServiceComplianceRunner:
     route_ids = (
-        "false-business-statement",
-        "unsupported-promise",
-        "missing-required-escalation",
+        "business-statement-check",
+        "promise-grounding-check",
+        "escalation-requirement-check",
     )
 
     def __init__(

@@ -22,9 +22,7 @@ class ReviewFormApplication:
     def update(self, review_id: str, ratings: dict) -> dict:
         with self._lock:
             form = json.loads(self.form_path.read_text(encoding="utf-8"))
-            item = next(
-                (entry for entry in form["items"] if entry["review_id"] == review_id), None
-            )
+            item = next((entry for entry in form["items"] if entry["review_id"] == review_id), None)
             if item is None:
                 raise KeyError(review_id)
             item["ratings"] = ratings

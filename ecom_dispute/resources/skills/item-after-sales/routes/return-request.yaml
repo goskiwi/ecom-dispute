@@ -1,0 +1,51 @@
+route_id: return-request
+name: 退货申请与资格
+report_type: return_request
+match:
+  description: 普通退货、买错、不合身、不喜欢及退货资格。
+  business_types:
+  - return_request
+  positive_examples:
+  - 自己选错尺码想退货
+  negative_examples:
+  - 退货已寄回但仓库没入库
+start_stage: ANALYZE
+core_tools: &id001
+- get_order
+- get_order_items
+- get_return_request
+- read_policy
+lazy_tools: []
+required_evidence:
+- conversation
+- order
+- order_item
+- policy
+optional_evidence:
+- return_request
+allowed_decisions:
+- return_eligible
+- return_window_expired
+- return_category_excluded
+- return_condition_ineligible
+- return_condition_unknown
+- manual_review
+decision_strategy: return_request
+stages:
+  ANALYZE:
+    mode: agent
+    objective: 提取退货申请与资格的用户主张、客服行为和关键边界
+    instruction_file: stages/analyze.md
+    default_next: VERIFY
+  VERIFY:
+    mode: deterministic
+    objective: 查询退货申请与资格所需业务证据
+    tools: *id001
+    default_next: DECIDE
+  DECIDE:
+    mode: deterministic
+    objective: 依据证据和政策执行退货申请与资格确定性策略
+    default_next: FUSE_AND_REVIEW
+  FUSE_AND_REVIEW:
+    mode: deterministic
+    objective: 合并证据冲突并创建必要的人工复检任务

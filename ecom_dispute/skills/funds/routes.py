@@ -22,8 +22,7 @@ class RefundAmountMismatchStrategy:
         credits = [
             item
             for item in _evidence(state, EvidenceKind.PAYMENT)
-            if item.facts.get("event_type") == "credit"
-            and item.facts.get("status") == "succeeded"
+            if item.facts.get("event_type") == "credit" and item.facts.get("status") == "succeeded"
         ]
         if not orders or not refunds:
             return DecisionOutcome()
@@ -101,8 +100,7 @@ class PaymentCapturedOrderFailedStrategy:
             return DecisionOutcome()
         order_failed = orders[0].facts.get("status") in {"failed", "cancelled"}
         captured = any(
-            item.facts.get("event_type") == "debit"
-            and item.facts.get("status") == "succeeded"
+            item.facts.get("event_type") == "debit" and item.facts.get("status") == "succeeded"
             for item in payments
         )
         reversed_funds = bool(refunds) or any(
@@ -129,4 +127,61 @@ class PaymentCapturedOrderFailedStrategy:
             decision="payment_order_state_conflict",
             recommended_action="补充订单创建和支付网关证据后复检",
             review_required=True,
+        )
+
+
+@dataclass(frozen=True)
+class UnrecognizedChargeStrategy:
+    def decide(
+        self, case: CaseInput, state: CaseState, missing_evidence: tuple[str, ...]
+    ) -> DecisionOutcome:
+        if missing_evidence:
+            return DecisionOutcome()
+        claims = _evidence(state, EvidenceKind.CHARGE_CLAIM)
+        if not claims:
+            return DecisionOutcome(
+                "none",
+                "unrecognized_charge_not_found",
+                "未查询到对应成功扣款，向用户说明查询范围",
+                False,
+            )
+        if all(item.facts.get("status") == "recognized" for item in claims):
+            return DecisionOutcome(
+                "none",
+                "charge_recognized",
+                "向用户提供订单与支付流水关联信息",
+                False,
+            )
+        return DecisionOutcome(
+            "payment_channel",
+            "unrecognized_charge_confirmed",
+            "冻结争议交易并转入支付安全人工复检",
+            True,
+        )
+
+
+@dataclass(frozen=True)
+class OrderFeeDisputeStrategy:
+    def decide(
+        self, case: CaseInput, state: CaseState, missing_evidence: tuple[str, ...]
+    ) -> DecisionOutcome:
+        if missing_evidence:
+            return DecisionOutcome()
+        fees = _evidence(state, EvidenceKind.ORDER_FEE)
+        if not fees:
+            return DecisionOutcome()
+        expected = sum(float(item.facts.get("expected_amount", 0)) for item in fees)
+        charged = sum(float(item.facts.get("charged_amount", 0)) for item in fees)
+        if expected != charged:
+            return DecisionOutcome(
+                "platform",
+                "order_fee_incorrect",
+                "按适用政策修正订单费用并说明费用明细",
+                False,
+            )
+        return DecisionOutcome(
+            "none",
+            "order_fee_correct",
+            "向用户展示费用项目和适用政策",
+            False,
         )

@@ -1,0 +1,401 @@
+{
+  "schema_version": 3,
+  "cases": [
+    {
+      "case_id": "v3-boundary-clear-refund_progress",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "退款正在处理中，请确认什么时候到账。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-clear-refund_amount_mismatch",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "订单实付199元，但退款记录只有99元。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-clear-duplicate_charge",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "同一订单被成功扣款两次。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-clear-payment_captured_order_failed",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "银行卡已扣款，但订单创建失败。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-clear-unrecognized_charge",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "我从未买过这件商品，却出现一笔扣款。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-clear-order_fee_dispute",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "订单应收10元运费，实际收了20元。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-clear-fulfillment_progress",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "下单多日仍没有发货或揽收记录。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-clear-delivered_not_received",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "物流显示送达，但我没有收到。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-clear-order_cancellation",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "取消已受理，但包裹随后仍被揽收。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-clear-return_request",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "商品不合身，我想申请退货。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-clear-return_progress",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "退货已经寄出，我想查询入库进度。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-clear-exchange_request",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "我想把9码换成10码，请确认库存。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-clear-received_item_mismatch",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "我下单白色SKU，实际收到黑色SKU。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-clear-missing_item",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "订单两件商品实际只收到一件。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-clear-item_condition_issue",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "收到的衬衫有明显污渍，我已经上传照片。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-clear-order_management",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "我想把当前订单的配送时间改到晚上。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-clear-product_information",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "请问这双靴子是否防水？"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-clear-inventory_availability",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "这条牛仔裤现在有库存吗？"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-clear-price_adjustment",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "昨天购买后今天降价，能补差价吗？"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-clear-promotion_support",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "五天前领取的优惠码结账时显示无效。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-clear-shipping_options",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "下单前想了解国际配送方式和费用。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-clear-membership_support",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "会员权益应有40元额度，但账户中没有。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-clear-checkout_issue",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "结账页面持续报错，但没有成功扣款。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-clear-cart_issue",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "商品无法加入购物车，页面状态反复变化。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-clear-search_issue",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "搜索鞋子却一直出现不相关商品。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-clear-site_performance",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "网站今天非常慢并频繁报错。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-pair-buyer-color",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "我自己下单时选错了黑色，现在只想退货退款，不需要换货。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-pair-seller-color",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "订单写的是白色，但包裹里实际是黑色。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-pair-fit-size",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "我订的9码没有发错，但穿起来太紧，想退货。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-pair-seller-size",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "订单是9码，收到的标签却是8码。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-pair-refund-after-return",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "退货仓库已验收，但五天后退款仍未发起。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-pair-return-warehouse",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "退货包裹已经寄出，物流显示签收但仓库还没入库。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-pair-inventory-cart",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "页面明确显示这个SKU缺货，所以无法加入购物车。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-pair-cart-state",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "商品有库存，但点击加入购物车后数量始终还是零。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-pair-checkout-no-charge",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "结账时银行卡被拒绝，银行确认没有发生扣款。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-pair-captured-no-order",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "银行卡已经成功扣款，但系统没有生成订单。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-pair-shipping-before-order",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "下单前想知道国际标准配送需要多少钱。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-pair-shipping-fee-charged",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "订单确认应收10元运费，但账单实际收了25元。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-pair-not-arrived",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "包裹仍显示运输中，已经超过承诺日期三天。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-pair-delivered-missing",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "物流显示昨天已送达，但我和家人都没收到。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-unsupported-password",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "我忘记账户密码，请帮我重置。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-unsupported-two-factor",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "我无法通过两步验证，需要关闭2FA。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-unsupported-credit-extension",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "我需要把订阅账单的还款日期延后一个月。"
+        }
+      ]
+    },
+    {
+      "case_id": "v3-boundary-unsupported-identity-name",
+      "conversation": [
+        {
+          "speaker": "user",
+          "text": "请把账户实名信息修改成另一个人的名字。"
+        }
+      ]
+    }
+  ]
+}

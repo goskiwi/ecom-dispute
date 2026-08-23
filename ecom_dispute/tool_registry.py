@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from collections.abc import Callable
 from datetime import datetime
+from functools import partial
 from typing import Any
 
 from .contracts import Evidence, EvidenceKind, ToolResult
@@ -14,6 +15,98 @@ class ToolRegistry:
     def __init__(self, repository: Repository):
         self.repository = repository
         self._cache: dict[tuple[str, tuple[tuple[str, str], ...]], ToolResult] = {}
+        record_specs = {
+            "get_order_fee_records": (
+                EvidenceKind.ORDER_FEE,
+                "order_fee_records",
+                "fee_id",
+                "occurred_at",
+            ),
+            "get_charge_dispute": (
+                EvidenceKind.CHARGE_CLAIM,
+                "charge_dispute_records",
+                "charge_claim_id",
+                "occurred_at",
+            ),
+            "get_return_tracking": (
+                EvidenceKind.RETURN_TRACKING,
+                "return_tracking_events",
+                "tracking_event_id",
+                "occurred_at",
+            ),
+            "get_exchange_options": (
+                EvidenceKind.EXCHANGE_REQUEST,
+                "exchange_options",
+                "exchange_option_id",
+                "occurred_at",
+            ),
+            "get_order_change_options": (
+                EvidenceKind.ORDER_CHANGE_OPTION,
+                "order_change_options",
+                "change_option_id",
+                "occurred_at",
+            ),
+            "get_product_catalog": (
+                EvidenceKind.PRODUCT_CATALOG,
+                "product_catalog_records",
+                "product_record_id",
+                "occurred_at",
+            ),
+            "get_inventory": (
+                EvidenceKind.INVENTORY,
+                "inventory_records",
+                "inventory_id",
+                "occurred_at",
+            ),
+            "get_price_records": (
+                EvidenceKind.PRICE,
+                "price_records",
+                "price_record_id",
+                "occurred_at",
+            ),
+            "get_promotion_records": (
+                EvidenceKind.PROMOTION,
+                "promotion_records",
+                "promotion_id",
+                "occurred_at",
+            ),
+            "get_shipping_options": (
+                EvidenceKind.SHIPPING_OPTION,
+                "shipping_option_records",
+                "shipping_option_id",
+                "occurred_at",
+            ),
+            "get_membership_records": (
+                EvidenceKind.MEMBERSHIP,
+                "membership_records",
+                "membership_id",
+                "occurred_at",
+            ),
+            "get_checkout_events": (
+                EvidenceKind.CHECKOUT_EVENT,
+                "checkout_events",
+                "checkout_event_id",
+                "occurred_at",
+            ),
+            "get_cart_events": (
+                EvidenceKind.CART_EVENT,
+                "cart_events",
+                "cart_event_id",
+                "occurred_at",
+            ),
+            "get_search_events": (
+                EvidenceKind.SEARCH_EVENT,
+                "search_events",
+                "search_event_id",
+                "occurred_at",
+            ),
+            "get_site_health": (
+                EvidenceKind.SITE_HEALTH,
+                "site_health_events",
+                "health_event_id",
+                "occurred_at",
+            ),
+        }
         self._executors: dict[str, Callable[..., ToolResult]] = {
             "get_order": self.get_order,
             "get_logistics_events": self.get_logistics_events,
@@ -30,6 +123,12 @@ class ToolRegistry:
             "get_claim_attachments": self.get_claim_attachments,
             "read_policy": self.read_policy,
         }
+        self._executors.update(
+            {
+                tool_id: partial(self._record_query, tool_id, *spec)
+                for tool_id, spec in record_specs.items()
+            }
+        )
         self._adapter_ids = {
             "order",
             "logistics_events",
@@ -46,6 +145,7 @@ class ToolRegistry:
             "claim_attachments",
             "policy",
         }
+        self._adapter_ids.update(record_specs)
         self._definitions = ToolDefinitionLoader(
             known_executors=set(self._executors),
             known_adapters=self._adapter_ids,
@@ -231,9 +331,7 @@ class ToolRegistry:
                 "created_at",
             )
             evidence.append(
-                item.model_copy(
-                    update={"uri": row["uri"], "size_bytes": int(row["size_bytes"])}
-                )
+                item.model_copy(update={"uri": row["uri"], "size_bytes": int(row["size_bytes"])})
             )
         return ToolResult(tool_name="get_claim_attachments", status="ok", evidence=evidence)
 
@@ -256,6 +354,25 @@ class ToolRegistry:
             "refund_id",
             self.repository.many("refunds", order_id),
             "completed_at",
+            order_id,
+        )
+
+    def _record_query(
+        self,
+        tool_id: str,
+        kind: EvidenceKind,
+        table: str,
+        key_field: str,
+        time_field: str,
+        order_id: str,
+    ) -> ToolResult:
+        return self._many(
+            tool_id,
+            kind,
+            table,
+            key_field,
+            self.repository.many(table, order_id),
+            time_field,
             order_id,
         )
 

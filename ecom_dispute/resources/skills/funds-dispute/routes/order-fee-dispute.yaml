@@ -1,0 +1,47 @@
+route_id: order-fee-dispute
+name: 订单费用争议
+report_type: order_fee_dispute
+match:
+  description: 已收取运费、处理费或服务费与订单或政策不一致。
+  business_types:
+  - order_fee_dispute
+  positive_examples:
+  - 订单多收了处理费
+  negative_examples:
+  - 下单前咨询有哪些配送报价
+start_stage: ANALYZE
+core_tools: &id001
+- get_order
+- get_payment_records
+- get_order_fee_records
+- read_policy
+lazy_tools: []
+required_evidence:
+- conversation
+- order
+- order_fee
+- policy
+optional_evidence: []
+allowed_decisions:
+- order_fee_correct
+- order_fee_incorrect
+- manual_review
+decision_strategy: order_fee_dispute
+stages:
+  ANALYZE:
+    mode: agent
+    objective: 提取订单费用争议的用户主张、客服行为和关键边界
+    instruction_file: stages/analyze.md
+    default_next: VERIFY
+  VERIFY:
+    mode: deterministic
+    objective: 查询订单费用争议所需业务证据
+    tools: *id001
+    default_next: DECIDE
+  DECIDE:
+    mode: deterministic
+    objective: 依据证据和政策执行订单费用争议确定性策略
+    default_next: FUSE_AND_REVIEW
+  FUSE_AND_REVIEW:
+    mode: deterministic
+    objective: 合并证据冲突并创建必要的人工复检任务

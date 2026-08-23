@@ -1,0 +1,51 @@
+route_id: fulfillment-progress
+name: 发货与配送进度
+report_type: fulfillment_progress
+match:
+  description: 核验未发货、运输、延迟、丢失和送达进度；商家未发货是裁决结果。
+  business_types:
+  - fulfillment_progress
+  positive_examples:
+  - 下单三周仍未收到包裹
+  negative_examples:
+  - 物流显示送达但我没收到
+start_stage: ANALYZE
+core_tools: &id001
+- get_order
+- get_logistics_events
+- read_policy
+lazy_tools: []
+required_evidence:
+- conversation
+- order
+- policy
+optional_evidence:
+- logistics
+allowed_decisions:
+- fulfillment_event_conflict
+- fulfillment_completed_late
+- fulfillment_completed_on_time
+- fulfillment_force_majeure
+- fulfillment_delayed_carrier
+- fulfillment_delayed_merchant
+- fulfillment_within_sla
+- manual_review
+decision_strategy: fulfillment_progress
+stages:
+  ANALYZE:
+    mode: agent
+    objective: 提取发货与配送进度的用户主张、客服行为和关键边界
+    instruction_file: stages/analyze.md
+    default_next: VERIFY
+  VERIFY:
+    mode: deterministic
+    objective: 查询发货与配送进度所需业务证据
+    tools: *id001
+    default_next: DECIDE
+  DECIDE:
+    mode: deterministic
+    objective: 依据证据和政策执行发货与配送进度确定性策略
+    default_next: FUSE_AND_REVIEW
+  FUSE_AND_REVIEW:
+    mode: deterministic
+    objective: 合并证据冲突并创建必要的人工复检任务

@@ -1,0 +1,18 @@
+tool_id: get_price_records
+name: 查询购买价、当前价、竞品价和价保计算状态
+description: 查询购买价、当前价、竞品价和价保计算状态。
+input_schema:
+  type: object
+  additionalProperties: false
+  properties: {}
+output_schema:
+  type: object
+  additionalProperties: true
+timeout_ms: 3000
+scope_bindings:
+  order_id:
+    source: case.order_id
+    mode: RUNTIME_INJECT
+executor: get_price_records
+result_adapter: get_price_records
+error_mapping: {}

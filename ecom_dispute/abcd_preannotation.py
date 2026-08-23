@@ -11,31 +11,17 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from .abcd_annotation import ROUTE_GUIDE
 from .llm import ResponsesClient
-
-RouteId = Literal[
-    "refund",
-    "refund_amount",
-    "duplicate_charge",
-    "payment_order_failure",
-    "delivery",
-    "merchant_not_shipped",
-    "delivered_not_received",
-    "cancellation_in_transit",
-    "return_eligibility",
-    "wrong_item",
-    "missing_item",
-    "damaged_item",
-    "other",
-]
+from .ontology import BusinessRoute, ReturnReason
 
 
 class CandidateAnnotation(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     supported: bool
-    has_dispute: bool
-    primary_route: RouteId
-    acceptable_routes: list[RouteId]
+    has_business_exception: bool
+    primary_route: BusinessRoute
+    acceptable_routes: list[BusinessRoute]
+    return_reason: ReturnReason | None
     evidence_turns: list[int] = Field(min_length=1)
     reason: str = Field(min_length=1)
     confidence: Literal["low", "medium", "high"]
@@ -47,6 +33,10 @@ class CandidateAnnotation(BaseModel):
             raise ValueError("unsupported conversations must use other")
         if self.supported and self.primary_route == "other":
             raise ValueError("supported conversations cannot use other")
+        if not self.supported and set(self.acceptable_routes) - {BusinessRoute.OTHER}:
+            raise ValueError("unsupported conversations cannot accept supported routes")
+        if self.primary_route != BusinessRoute.RETURN_REQUEST and self.return_reason:
+            raise ValueError("return_reason is only valid for return_request")
         if self.primary_route not in self.acceptable_routes:
             self.acceptable_routes.append(self.primary_route)
         self.acceptable_routes = list(dict.fromkeys(self.acceptable_routes))
@@ -70,8 +60,7 @@ def preannotate_abcd(
         if external_id in cache and "annotation" in cache[external_id]:
             return cache[external_id]
         conversation = item["conversation"]
-        translation = item.get("translation")
-        prompt = _prompt(conversation, translation)
+        prompt = _prompt(conversation)
         started = time.perf_counter()
         input_tokens = 0
         output_tokens = 0
@@ -114,7 +103,7 @@ def preannotate_abcd(
                 continue
             break
         return {
-            "annotation": annotation.model_dump(),
+            "annotation": annotation.model_dump(mode="json"),
             "telemetry": {
                 "model": response.get("model", client.model),
                 "response_id": response.get("id"),
@@ -186,28 +175,26 @@ def preannotate_abcd(
     }
 
 
-def _prompt(conversation: list[dict], translation: list[dict] | None) -> str:
-    visible = {"original": conversation}
-    if translation:
-        visible["chinese_aid"] = translation
+def _prompt(conversation: list[dict]) -> str:
     return (
         "你是电商争议数据的预标注员。只根据所给对话和下列Route定义逐对话判断，"
         "不能推测对话外事实。输出是供人工复核的候选标签，不是最终真值。\n"
         f"Route定义：{json.dumps(ROUTE_GUIDE, ensure_ascii=False)}\n"
         "边界规则：\n"
         "1. primary_route按用户当前主要诉求，不按客服后台操作或数据集流程名。\n"
-        "2. supported表示12个业务Route之一能准确表达主要诉求；不支持时必须other。\n"
-        "3. has_dispute仅表示已经出现业务异常、结果冲突或用户对处理结果不满；"
-        "普通信息咨询、仅询问资格、正常状态查询或已正常解决通常为false。\n"
-        "4. return_eligibility只用于是否满足退货期限/品类/商品状态；已经收到错误SKU/颜色/型号用wrong_item。\n"
-        "5. delivery用于已揽收后的延迟或运输异常；merchant_not_shipped要求超过发货时限且无揽收；"
-        "delivered_not_received要求系统显示送达但用户说未收到。\n"
-        "6. refund是退款发起/处理/完成/到账状态；refund_amount只用于金额不一致。\n"
-        "7. acceptable_routes只放确有合理边界重叠的Route并包含primary，不能为了保险罗列。\n"
-        "8. evidence_turns使用从0开始的原对话轮次，至少引用用户主要诉求，必要时补充客服回应。\n"
-        "9. reason用中文写一句可由原文验证的理由。只有单一明确Route、无关键省略且证据直接时才用high；"
-        "存在多意图、Route边界、关键信息不足或译文疑义时用medium/low并在ambiguity说明。\n"
-        f"对话：{json.dumps(visible, ensure_ascii=False)}"
+        "2. supported表示26个业务Route之一能准确表达主要诉求；不支持时必须other。\n"
+        "3. has_business_exception表示是否曾发生业务异常或结果争议；客服后来解决不能把它改成false。\n"
+        "4. return_request覆盖普通退货、买错、不合身和资格；return_progress只用于已提交后的寄回/入库进度。\n"
+        "5. received_item_mismatch必须有下单与实收值的明确比较；只说wrong color/size时使用return_request，"
+        "return_reason无法确认则为unknown。\n"
+        "6. fulfillment_progress覆盖未发货、运输、延迟和丢失；delivered_not_received要求显示送达且用户否认收到。\n"
+        "7. refund_progress只用于已经存在或应存在退款后的进度与到账；refund_amount_mismatch只用于金额不一致。\n"
+        "8. acceptable_routes只放确有合理边界重叠的Route并包含primary；unsupported时只能包含other。\n"
+        "9. evidence_turns使用从0开始的原对话轮次，至少引用用户主要诉求，必要时补充客服回应。\n"
+        "10. reason用中文写一句可由原文验证的理由。只有单一明确Route、无关键省略且证据直接时才用high；"
+        "存在多意图、Route边界或关键信息不足时用medium/low并在ambiguity说明。\n"
+        "英文原文是唯一语义依据，不得使用任何翻译、subflow或模型旧预测。"
+        f"对话：{json.dumps(conversation, ensure_ascii=False)}"
     )
 
 
@@ -215,7 +202,7 @@ def _conservative_audit_reasons(candidate: dict, conversation: list[dict]) -> li
     """Escalate boundary indicators for review; never use them to assign a label."""
     user_text = " ".join(turn["text"].lower() for turn in conversation if turn["speaker"] == "user")
     reasons = []
-    if candidate["primary_route"] == "delivery":
+    if candidate["primary_route"] == "fulfillment_progress":
         status_says_delivered = any(
             phrase in user_text
             for phrase in ("shows delivered", "says delivered", "shows received")
@@ -231,8 +218,8 @@ def _conservative_audit_reasons(candidate: dict, conversation: list[dict]) -> li
             )
         )
         if status_says_delivered and user_denies_receipt:
-            reasons.append("同时出现系统送达与用户未收到，复核delivery边界")
-    if candidate["primary_route"] == "wrong_item":
+            reasons.append("同时出现系统送达与用户未收到，复核delivered_not_received边界")
+    if candidate["primary_route"] == "received_item_mismatch":
         explicit_mismatch = any(
             phrase in user_text
             for phrase in (
@@ -245,5 +232,5 @@ def _conservative_audit_reasons(candidate: dict, conversation: list[dict]) -> li
             )
         ) or ("ordered" in user_text and " but " in user_text)
         if not explicit_mismatch:
-            reasons.append("未明确实收商品与下单规格不一致，复核wrong_item边界")
+            reasons.append("未明确实收商品与下单规格不一致，复核received_item_mismatch边界")
     return reasons

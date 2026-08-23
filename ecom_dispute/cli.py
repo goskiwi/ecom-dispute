@@ -49,55 +49,51 @@ def _parser() -> argparse.ArgumentParser:
     web.add_argument("--port", type=int, default=8765)
     web.add_argument("--agent-mode", choices=["live-llm", "heuristic-test"], default="live-llm")
     holdout = commands.add_parser("holdout")
-    holdout.add_argument("--inputs", type=Path, default=Path("data/semantic_holdout_inputs.json"))
-    holdout.add_argument("--oracle", type=Path, default=Path("evals/semantic_holdout_oracle.json"))
+    holdout.add_argument(
+        "--inputs", type=Path, default=Path("data/v3_1_route_boundary_inputs.json")
+    )
+    holdout.add_argument(
+        "--oracle", type=Path, default=Path("evals/v3_1_route_boundary_oracle.json")
+    )
     holdout.add_argument("--repeats", type=int, default=3)
     holdout.add_argument("--workers", type=int, default=1)
     e2e = commands.add_parser("e2e-eval")
-    e2e.add_argument("--inputs", type=Path, default=Path("data/v1_e2e_12route_inputs.json"))
-    e2e.add_argument("--oracle", type=Path, default=Path("evals/v1_e2e_12route_oracle.json"))
-    e2e.add_argument("--e2e-db", type=Path, default=Path("data/v1_e2e_12route.db"))
+    e2e.add_argument("--inputs", type=Path, default=Path("data/v3_e2e_26_inputs.json"))
+    e2e.add_argument("--oracle", type=Path, default=Path("evals/v3_e2e_26_oracle.json"))
+    e2e.add_argument("--e2e-db", type=Path, default=Path("data/v3_e2e_26.db"))
     e2e.add_argument("--workers", type=int, default=1)
     abcd_manifest = commands.add_parser("abcd-manifest")
     abcd_manifest.add_argument("--dataset", type=Path, required=True)
     abcd_manifest.add_argument(
-        "--manifest", type=Path, default=Path("evals/formal_abcd_200_manifest.json")
+        "--manifest", type=Path, default=Path("evals/v3_abcd_200_manifest.json")
     )
     abcd_eval = commands.add_parser("abcd-eval")
     abcd_eval.add_argument("--dataset", type=Path, required=True)
-    abcd_eval.add_argument(
-        "--manifest", type=Path, default=Path("evals/formal_abcd_200_manifest.json")
-    )
+    abcd_eval.add_argument("--manifest", type=Path, default=Path("evals/v3_abcd_200_manifest.json"))
     abcd_eval.add_argument("--workers", type=int, default=4)
     review_manifest = commands.add_parser("review-manifest")
+    review_manifest.add_argument("--inputs", type=Path, default=Path("data/v3_e2e_26_inputs.json"))
     review_manifest.add_argument(
-        "--inputs", type=Path, default=Path("data/formal_e2e_120_inputs.json")
-    )
-    review_manifest.add_argument(
-        "--manifest", type=Path, default=Path("evals/formal_review_40_manifest.json")
+        "--manifest", type=Path, default=Path("evals/v3_review_manifest.json")
     )
     review_manifest.add_argument("--review-db", type=Path, default=Path("/tmp/review-manifest.db"))
     review_ab = commands.add_parser("review-ab")
-    review_ab.add_argument("--inputs", type=Path, default=Path("data/formal_e2e_120_inputs.json"))
-    review_ab.add_argument(
-        "--manifest", type=Path, default=Path("evals/formal_review_40_manifest.json")
-    )
-    review_ab.add_argument(
-        "--output", type=Path, default=Path("evals/formal_review_40_blind_form.json")
-    )
-    review_ab.add_argument("--key", type=Path, default=Path("evals/formal_review_40_ab_key.json"))
+    review_ab.add_argument("--inputs", type=Path, default=Path("data/v3_e2e_26_inputs.json"))
+    review_ab.add_argument("--manifest", type=Path, default=Path("evals/v3_review_manifest.json"))
+    review_ab.add_argument("--output", type=Path, default=Path("evals/v3_review_blind_form.json"))
+    review_ab.add_argument("--key", type=Path, default=Path("evals/v3_review_ab_key.json"))
     review_ab.add_argument("--review-db", type=Path, default=Path("/tmp/review-ab.db"))
     review_ab.add_argument("--workers", type=int, default=4)
     annotation_build = commands.add_parser("abcd-annotation-build")
     annotation_build.add_argument("--dataset", type=Path, required=True)
     annotation_build.add_argument(
-        "--manifest", type=Path, default=Path("evals/formal_abcd_200_manifest.json")
+        "--manifest", type=Path, default=Path("evals/v3_abcd_200_manifest.json")
     )
     annotation_build.add_argument(
-        "--rater1", type=Path, default=Path("evals/formal_abcd_200_rater1.json")
+        "--rater1", type=Path, default=Path("evals/v3_abcd_200_rater1.json")
     )
     annotation_build.add_argument(
-        "--rater2", type=Path, default=Path("evals/formal_abcd_200_rater2.json")
+        "--rater2", type=Path, default=Path("evals/v3_abcd_200_rater2.json")
     )
     annotation_web = commands.add_parser("abcd-annotation-web")
     annotation_web.add_argument("--form", type=Path, required=True)
@@ -105,22 +101,22 @@ def _parser() -> argparse.ArgumentParser:
     annotation_web.add_argument("--port", type=int, default=8877)
     annotation_agreement = commands.add_parser("abcd-annotation-agreement")
     annotation_agreement.add_argument(
-        "--rater1", type=Path, default=Path("evals/formal_abcd_200_rater1.json")
+        "--rater1", type=Path, default=Path("evals/v3_abcd_200_rater1.json")
     )
     annotation_agreement.add_argument(
-        "--rater2", type=Path, default=Path("evals/formal_abcd_200_rater2.json")
+        "--rater2", type=Path, default=Path("evals/v3_abcd_200_rater2.json")
     )
     annotation_agreement.add_argument(
-        "--consensus", type=Path, default=Path("evals/formal_abcd_200_consensus.json")
+        "--consensus", type=Path, default=Path("evals/v3_abcd_200_consensus.json")
     )
     annotation_rescore = commands.add_parser("abcd-annotation-rescore")
     annotation_rescore.add_argument(
         "--raw",
         type=Path,
-        default=Path("evals/formal_abcd_200_gpt-5.6-luna_run1_raw.json.gz"),
+        default=Path("evals/v3_abcd_200_gpt-5.6-luna_run1_raw.json.gz"),
     )
     annotation_rescore.add_argument(
-        "--consensus", type=Path, default=Path("evals/formal_abcd_200_consensus.json")
+        "--consensus", type=Path, default=Path("evals/v3_abcd_200_consensus.json")
     )
     review_web = commands.add_parser("review-ab-web")
     review_web.add_argument("--form", type=Path, required=True)
@@ -128,24 +124,24 @@ def _parser() -> argparse.ArgumentParser:
     review_web.add_argument("--port", type=int, default=8887)
     annotation_translate = commands.add_parser("abcd-annotation-translate")
     annotation_translate.add_argument(
-        "--rater1", type=Path, default=Path("evals/formal_abcd_200_rater1.json")
+        "--rater1", type=Path, default=Path("evals/v3_abcd_200_rater1.json")
     )
     annotation_translate.add_argument(
-        "--rater2", type=Path, default=Path("evals/formal_abcd_200_rater2.json")
+        "--rater2", type=Path, default=Path("evals/v3_abcd_200_rater2.json")
     )
     annotation_translate.add_argument(
-        "--cache", type=Path, default=Path("evals/formal_abcd_200_translation_cache.json")
+        "--cache", type=Path, default=Path("evals/v3_abcd_200_translation_cache.json")
     )
     annotation_translate.add_argument("--workers", type=int, default=4)
     annotation_preannotate = commands.add_parser("abcd-preannotate")
     annotation_preannotate.add_argument(
-        "--source", type=Path, default=Path("evals/formal_abcd_200_rater1.json")
+        "--source", type=Path, default=Path("evals/v3_abcd_200_rater1.json")
     )
     annotation_preannotate.add_argument(
-        "--output", type=Path, default=Path("evals/formal_abcd_200_assistant_draft.json")
+        "--output", type=Path, default=Path("evals/v3_abcd_200_assistant_draft.json")
     )
     annotation_preannotate.add_argument(
-        "--cache", type=Path, default=Path("evals/formal_abcd_200_preannotation_cache.json")
+        "--cache", type=Path, default=Path("evals/v3_abcd_200_preannotation_cache.json")
     )
     annotation_preannotate.add_argument("--workers", type=int, default=4)
     return parser

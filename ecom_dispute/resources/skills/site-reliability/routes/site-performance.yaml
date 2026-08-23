@@ -1,0 +1,43 @@
+route_id: site-performance
+name: 站点性能故障
+report_type: site_performance
+match:
+  description: 页面缓慢、错误率、可用性和事故状态。
+  business_types:
+  - site_performance
+  positive_examples:
+  - 网站今天非常慢
+  negative_examples:
+  - 只有我的优惠券无效
+start_stage: ANALYZE
+core_tools: &id001
+- get_site_health
+lazy_tools: []
+required_evidence:
+- conversation
+- site_health
+optional_evidence: []
+allowed_decisions:
+- site_healthy
+- site_degraded
+- site_outage
+- manual_review
+decision_strategy: site_performance
+stages:
+  ANALYZE:
+    mode: agent
+    objective: 提取站点性能故障的用户主张、客服行为和关键边界
+    instruction_file: stages/analyze.md
+    default_next: VERIFY
+  VERIFY:
+    mode: deterministic
+    objective: 查询站点性能故障所需业务证据
+    tools: *id001
+    default_next: DECIDE
+  DECIDE:
+    mode: deterministic
+    objective: 依据证据和政策执行站点性能故障确定性策略
+    default_next: FUSE_AND_REVIEW
+  FUSE_AND_REVIEW:
+    mode: deterministic
+    objective: 合并证据冲突并创建必要的人工复检任务

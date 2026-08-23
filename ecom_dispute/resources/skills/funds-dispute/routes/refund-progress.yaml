@@ -1,0 +1,53 @@
+route_id: refund-progress
+name: 退款进度与到账
+report_type: refund_progress
+match:
+  description: 退款已经存在或应存在后的进度、完成和到账核验。
+  business_types:
+  - refund_progress
+  positive_examples:
+  - 退货已批准但退款还没发起
+  negative_examples:
+  - 我现在想申请退货
+start_stage: ANALYZE
+core_tools: &id001
+- get_order
+- get_payment_records
+- get_refund_records
+- get_after_sales_case
+- read_policy
+lazy_tools: []
+required_evidence:
+- conversation
+- order
+- payment
+- after_sales
+- policy
+optional_evidence: []
+allowed_decisions:
+- refund_not_initiated_overdue
+- refund_pending_within_sla
+- refund_processing_within_sla
+- refund_arrival_overdue
+- refund_completed
+- refund_record_conflict
+- manual_review
+decision_strategy: refund_progress
+stages:
+  ANALYZE:
+    mode: agent
+    objective: 提取退款进度与到账的用户主张、客服行为和关键边界
+    instruction_file: stages/analyze.md
+    default_next: VERIFY
+  VERIFY:
+    mode: deterministic
+    objective: 查询退款进度与到账所需业务证据
+    tools: *id001
+    default_next: DECIDE
+  DECIDE:
+    mode: deterministic
+    objective: 依据证据和政策执行退款进度与到账确定性策略
+    default_next: FUSE_AND_REVIEW
+  FUSE_AND_REVIEW:
+    mode: deterministic
+    objective: 合并证据冲突并创建必要的人工复检任务

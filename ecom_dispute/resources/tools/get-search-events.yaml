@@ -1,0 +1,18 @@
+tool_id: get_search_events
+name: 查询搜索请求、结果和索引诊断事件
+description: 查询搜索请求、结果和索引诊断事件。
+input_schema:
+  type: object
+  additionalProperties: false
+  properties: {}
+output_schema:
+  type: object
+  additionalProperties: true
+timeout_ms: 3000
+scope_bindings:
+  order_id:
+    source: case.order_id
+    mode: RUNTIME_INJECT
+executor: get_search_events
+result_adapter: get_search_events
+error_mapping: {}

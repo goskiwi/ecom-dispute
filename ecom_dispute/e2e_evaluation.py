@@ -12,7 +12,8 @@ from .agents import ConversationAgent, EvidenceGapAgent, ReviewAgent
 from .contracts import AgentResult
 from .harness import DiagnosticHarness
 from .llm import ResponsesClient
-from .repository import Repository, rebuild_database
+from .repository import Repository, initialize_database
+from .seed_v3 import seed_v3_policies
 
 
 class E2ECase(BaseModel):
@@ -38,6 +39,21 @@ class E2ECase(BaseModel):
     return_requests: list[dict[str, Any]]
     warehouse_pack_records: list[dict[str, Any]]
     claim_attachments: list[dict[str, Any]]
+    order_fee_records: list[dict[str, Any]]
+    charge_dispute_records: list[dict[str, Any]]
+    return_tracking_events: list[dict[str, Any]]
+    exchange_options: list[dict[str, Any]]
+    order_change_options: list[dict[str, Any]]
+    product_catalog_records: list[dict[str, Any]]
+    inventory_records: list[dict[str, Any]]
+    price_records: list[dict[str, Any]]
+    promotion_records: list[dict[str, Any]]
+    shipping_option_records: list[dict[str, Any]]
+    membership_records: list[dict[str, Any]]
+    checkout_events: list[dict[str, Any]]
+    cart_events: list[dict[str, Any]]
+    search_events: list[dict[str, Any]]
+    site_health_events: list[dict[str, Any]]
 
 
 class E2EInputSet(BaseModel):
@@ -58,7 +74,9 @@ class PrecomputedConversationAgent:
 
 
 def prepare_e2e_database(db_path: Path, input_path: Path) -> tuple[Repository, list[str]]:
-    repository = Repository(rebuild_database(db_path))
+    repository = Repository(initialize_database(db_path, seed=False))
+    with repository.connect() as connection:
+        seed_v3_policies(connection)
     dataset = E2EInputSet.model_validate_json(input_path.read_text(encoding="utf-8"))
     with repository.connect() as connection:
         for case in dataset.cases:
@@ -147,20 +165,153 @@ def prepare_e2e_database(db_path: Path, input_path: Path) -> tuple[Repository, l
 
 def _insert_extended_records(connection: Any, case: E2ECase) -> None:
     table_specs = {
-        "order_items": ("order_item_id", "sku_id", "product_name", "quantity", "unit_price", "category"),
-        "payment_gateway_events": ("gateway_event_id", "transaction_id", "event_type", "amount", "status", "occurred_at"),
+        "order_items": (
+            "order_item_id",
+            "sku_id",
+            "product_name",
+            "quantity",
+            "unit_price",
+            "category",
+        ),
+        "payment_gateway_events": (
+            "gateway_event_id",
+            "transaction_id",
+            "event_type",
+            "amount",
+            "status",
+            "occurred_at",
+        ),
         "delivery_proofs": ("proof_id", "recipient", "proof_type", "delivered_at", "detail"),
         "delivery_addresses": ("address_id", "city", "masked_address", "contact_suffix"),
-        "cancellation_requests": ("cancellation_id", "status", "requested_at", "accepted_at", "reason"),
-        "return_requests": ("return_request_id", "order_item_id", "status", "requested_at", "reason", "item_condition"),
-        "warehouse_pack_records": ("pack_record_id", "sku_id", "packed_quantity", "scanned_at", "station_id"),
-        "claim_attachments": ("attachment_id", "attachment_type", "uri", "size_bytes", "summary", "created_at"),
+        "cancellation_requests": (
+            "cancellation_id",
+            "status",
+            "requested_at",
+            "accepted_at",
+            "reason",
+        ),
+        "return_requests": (
+            "return_request_id",
+            "order_item_id",
+            "status",
+            "requested_at",
+            "reason",
+            "item_condition",
+        ),
+        "warehouse_pack_records": (
+            "pack_record_id",
+            "sku_id",
+            "packed_quantity",
+            "scanned_at",
+            "station_id",
+        ),
+        "claim_attachments": (
+            "attachment_id",
+            "attachment_type",
+            "uri",
+            "size_bytes",
+            "summary",
+            "created_at",
+        ),
+        "order_fee_records": (
+            "fee_id",
+            "status",
+            "fee_type",
+            "expected_amount",
+            "charged_amount",
+            "occurred_at",
+        ),
+        "charge_dispute_records": (
+            "charge_claim_id",
+            "status",
+            "payment_id",
+            "detail",
+            "occurred_at",
+        ),
+        "return_tracking_events": ("tracking_event_id", "status", "detail", "occurred_at"),
+        "exchange_options": (
+            "exchange_option_id",
+            "status",
+            "target_sku",
+            "price_difference",
+            "occurred_at",
+        ),
+        "order_change_options": (
+            "change_option_id",
+            "status",
+            "operation_type",
+            "detail",
+            "occurred_at",
+        ),
+        "product_catalog_records": (
+            "product_record_id",
+            "status",
+            "attributes_json",
+            "occurred_at",
+        ),
+        "inventory_records": (
+            "inventory_id",
+            "status",
+            "sku_id",
+            "available_quantity",
+            "restock_at",
+            "occurred_at",
+        ),
+        "price_records": (
+            "price_record_id",
+            "status",
+            "purchase_price",
+            "current_price",
+            "competitor_price",
+            "occurred_at",
+        ),
+        "promotion_records": (
+            "promotion_id",
+            "status",
+            "code",
+            "expires_at",
+            "detail",
+            "occurred_at",
+        ),
+        "shipping_option_records": (
+            "shipping_option_id",
+            "status",
+            "option_name",
+            "amount",
+            "estimated_days",
+            "region",
+            "occurred_at",
+        ),
+        "membership_records": (
+            "membership_id",
+            "status",
+            "level",
+            "credit_balance",
+            "benefits_json",
+            "occurred_at",
+        ),
+        "checkout_events": ("checkout_event_id", "status", "detail", "occurred_at"),
+        "cart_events": ("cart_event_id", "status", "detail", "occurred_at"),
+        "search_events": ("search_event_id", "status", "query_text", "detail", "occurred_at"),
+        "site_health_events": (
+            "health_event_id",
+            "status",
+            "error_rate",
+            "p95_ms",
+            "detail",
+            "occurred_at",
+        ),
     }
     for table, fields in table_specs.items():
         for item in getattr(case, table):
             columns = (fields[0], "order_id", *fields[1:], "version")
             placeholders = ", ".join("?" for _ in columns)
-            values = (item[fields[0]], case.order_id, *(item[field] for field in fields[1:]), item.get("version", 1))
+            values = (
+                item[fields[0]],
+                case.order_id,
+                *(item[field] for field in fields[1:]),
+                item.get("version", 1),
+            )
             connection.execute(
                 f"INSERT INTO {table} ({', '.join(columns)}) VALUES ({placeholders})",
                 values,
@@ -176,6 +327,7 @@ def evaluate_e2e(
 ) -> dict:
     repository, case_ids = prepare_e2e_database(db_path, input_path)
     oracle = json.loads(oracle_path.read_text(encoding="utf-8"))
+
     def run_case(case_id: str) -> dict:
         case = repository.case(case_id)
         expected = oracle[case_id]
@@ -219,9 +371,7 @@ def evaluate_e2e(
     }
 
 
-def _score_report(
-    report: object, expected: dict, *, include_agent_check: bool = False
-) -> dict:
+def _score_report(report: object, expected: dict, *, include_agent_check: bool = False) -> dict:
     evidence_kinds = {item.kind.value for item in report.evidence}
     called_tools = [
         tool

@@ -1,0 +1,30 @@
+skill_id: commerce-support
+name: 电商咨询
+entry: SKILL.md
+allowed_tools:
+- get_product_catalog
+- get_inventory
+- get_price_records
+- get_promotion_records
+- get_shipping_options
+- get_membership_records
+- get_order
+- read_policy
+routes:
+- route_id: product-information
+  file: routes/product-information.yaml
+- route_id: inventory-availability
+  file: routes/inventory-availability.yaml
+- route_id: price-adjustment
+  file: routes/price-adjustment.yaml
+- route_id: promotion-support
+  file: routes/promotion-support.yaml
+- route_id: shipping-options
+  file: routes/shipping-options.yaml
+- route_id: membership-support
+  file: routes/membership-support.yaml
+limits:
+  max_model_turns: 8
+  max_tool_calls: 12
+  max_loaded_lazy_tools: 3
+  max_total_recovery_actions: 4

@@ -1,0 +1,68 @@
+{
+  "source": "v3_e2e_26_pre_review_agent",
+  "rubric": {
+    "evidence_correctness": "1-5",
+    "conflict_coverage": "1-5",
+    "question_actionability": "1-5",
+    "irrelevant_content": "1-5 (5 means no irrelevant content)",
+    "overall_preference": "A | B | tie"
+  },
+  "items": [
+    {
+      "case_id": "v3-cart_issue",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3-checkout_issue",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3-delivered_not_received",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3-duplicate_charge",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3-item_condition_issue",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3-membership_support",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3-missing_item",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3-order_cancellation",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3-payment_captured_order_failed",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3-promotion_support",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3-received_item_mismatch",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3-search_issue",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3-site_performance",
+      "category": "compliance"
+    },
+    {
+      "case_id": "v3-unrecognized_charge",
+      "category": "compliance"
+    }
+  ]
+}

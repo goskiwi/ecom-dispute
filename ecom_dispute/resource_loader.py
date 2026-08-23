@@ -74,9 +74,7 @@ class RouteResource(ResourceModel):
             raise ValueError(f"start_stage does not exist: {self.start_stage}")
         for stage_id, stage in self.stages.items():
             if stage.default_next and stage.default_next not in self.stages:
-                raise ValueError(
-                    f"stage {stage_id} points to missing stage: {stage.default_next}"
-                )
+                raise ValueError(f"stage {stage_id} points to missing stage: {stage.default_next}")
         return self
 
     @property
@@ -210,8 +208,7 @@ class SkillLoader:
             and route.decision_strategy not in self.known_strategies
         ):
             raise ValueError(
-                f"route {route.route_id} references unknown strategy: "
-                f"{route.decision_strategy}"
+                f"route {route.route_id} references unknown strategy: {route.decision_strategy}"
             )
 
 
@@ -235,13 +232,9 @@ class ToolDefinitionLoader:
             definition = ToolResource.model_validate(_load_yaml(path))
             if definition.tool_id in tools:
                 raise ValueError(f"duplicate tool_id: {definition.tool_id}")
-            if (
-                self.known_executors is not None
-                and definition.executor not in self.known_executors
-            ):
+            if self.known_executors is not None and definition.executor not in self.known_executors:
                 raise ValueError(
-                    f"tool {definition.tool_id} references unknown executor: "
-                    f"{definition.executor}"
+                    f"tool {definition.tool_id} references unknown executor: {definition.executor}"
                 )
             if (
                 self.known_adapters is not None

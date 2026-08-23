@@ -1,0 +1,23 @@
+skill_id: fulfillment-service
+name: 履约服务
+entry: SKILL.md
+allowed_tools:
+- get_order
+- get_logistics_events
+- get_delivery_proof
+- get_delivery_address
+- get_cancellation_request
+- get_refund_records
+- read_policy
+routes:
+- route_id: fulfillment-progress
+  file: routes/fulfillment-progress.yaml
+- route_id: delivered-not-received
+  file: routes/delivered-not-received.yaml
+- route_id: order-cancellation
+  file: routes/order-cancellation.yaml
+limits:
+  max_model_turns: 8
+  max_tool_calls: 12
+  max_loaded_lazy_tools: 3
+  max_total_recovery_actions: 4

@@ -1,0 +1,16 @@
+skill_id: order-operations
+name: 订单操作
+entry: SKILL.md
+allowed_tools:
+- get_order
+- get_order_items
+- get_order_change_options
+- read_policy
+routes:
+- route_id: order-management
+  file: routes/order-management.yaml
+limits:
+  max_model_turns: 8
+  max_tool_calls: 12
+  max_loaded_lazy_tools: 3
+  max_total_recovery_actions: 4

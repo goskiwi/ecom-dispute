@@ -1,0 +1,49 @@
+route_id: order-management
+name: 订单信息与修改
+report_type: order_management
+match:
+  description: 核验或修改数量、地址、付款方式、配送等级/时间和订单商品。
+  business_types:
+  - order_management
+  positive_examples:
+  - 把配送时间改到晚上
+  negative_examples:
+  - 包裹为什么还没到
+start_stage: ANALYZE
+core_tools: &id001
+- get_order
+- get_order_items
+- get_order_change_options
+- read_policy
+lazy_tools: []
+required_evidence:
+- conversation
+- order
+- order_change_option
+- policy
+optional_evidence: []
+allowed_decisions:
+- order_change_allowed
+- order_change_blocked
+- order_change_completed
+- order_details_conflict
+- manual_review
+decision_strategy: order_management
+stages:
+  ANALYZE:
+    mode: agent
+    objective: 提取订单信息与修改的用户主张、客服行为和关键边界
+    instruction_file: stages/analyze.md
+    default_next: VERIFY
+  VERIFY:
+    mode: deterministic
+    objective: 查询订单信息与修改所需业务证据
+    tools: *id001
+    default_next: DECIDE
+  DECIDE:
+    mode: deterministic
+    objective: 依据证据和政策执行订单信息与修改确定性策略
+    default_next: FUSE_AND_REVIEW
+  FUSE_AND_REVIEW:
+    mode: deterministic
+    objective: 合并证据冲突并创建必要的人工复检任务

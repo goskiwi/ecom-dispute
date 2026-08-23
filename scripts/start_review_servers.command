@@ -11,21 +11,27 @@ cleanup() {
 trap cleanup EXIT INT TERM
 
 uv run python -m ecom_dispute abcd-annotation-web \
-  --form evals/formal_abcd_200_rater1.json \
+  --form evals/v3_abcd_200_rater1.json \
   --host 127.0.0.1 \
   --port 8877 &
 ABCD_PID=$!
 
-uv run python -m ecom_dispute review-ab-web \
-  --form evals/formal_review_40_rater1.json \
-  --host 127.0.0.1 \
-  --port 8887 &
-REVIEW_PID=$!
+if [[ -f evals/v3_review_blind_form.json ]]; then
+  uv run python -m ecom_dispute review-ab-web \
+    --form evals/v3_review_blind_form.json \
+    --host 127.0.0.1 \
+    --port 8887 &
+  REVIEW_PID=$!
+fi
 
 echo ""
 echo "EcomDispute review services are running."
 echo "ABCD annotation: http://127.0.0.1:8877/"
-echo "Review A/B:     http://127.0.0.1:8887/"
+if [[ -n "${REVIEW_PID:-}" ]]; then
+  echo "Review A/B:     http://127.0.0.1:8887/"
+else
+  echo "Review A/B:     not started (generate evals/v3_review_blind_form.json first)"
+fi
 echo "Keep this Terminal window open. Press Control-C to stop both services."
 echo ""
 

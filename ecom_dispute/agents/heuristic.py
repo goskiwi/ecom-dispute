@@ -49,9 +49,7 @@ class HeuristicConversationStub:
                         fact_type=fact_type,
                         polarity=polarity,
                         fact_mode=self.fact_mode(fact_type),
-                        time_relation=self.time_relation(
-                            text, speech_act, fact_type, polarity
-                        ),
+                        time_relation=self.time_relation(text, speech_act, fact_type, polarity),
                         quote=text,
                         message_index=index,
                         evidence_ids=[evidence.evidence_id],

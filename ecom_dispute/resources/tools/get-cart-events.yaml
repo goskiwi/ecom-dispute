@@ -1,0 +1,18 @@
+tool_id: get_cart_events
+name: 查询购物车变更和状态冲突事件
+description: 查询购物车变更和状态冲突事件。
+input_schema:
+  type: object
+  additionalProperties: false
+  properties: {}
+output_schema:
+  type: object
+  additionalProperties: true
+timeout_ms: 3000
+scope_bindings:
+  order_id:
+    source: case.order_id
+    mode: RUNTIME_INJECT
+executor: get_cart_events
+result_adapter: get_cart_events
+error_mapping: {}

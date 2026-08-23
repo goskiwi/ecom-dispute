@@ -1,11 +1,33 @@
 skill_id: item-after-sales
 name: 商品售后
 entry: SKILL.md
-allowed_tools: [get_order, get_order_items, get_return_request, get_warehouse_pack_record, get_claim_attachments, get_logistics_events, read_policy]
+allowed_tools:
+- get_order
+- get_order_items
+- get_return_request
+- get_return_tracking
+- get_exchange_options
+- get_inventory
+- get_warehouse_pack_record
+- get_claim_attachments
+- get_logistics_events
+- get_refund_records
+- read_policy
 routes:
-  - {route_id: return-eligibility, file: routes/return-eligibility.yaml}
-  - {route_id: wrong-item, file: routes/wrong-item.yaml}
-  - {route_id: missing-item, file: routes/missing-item.yaml}
-  - {route_id: damaged-item, file: routes/damaged-item.yaml}
-limits: {max_model_turns: 8, max_tool_calls: 10, max_loaded_lazy_tools: 3, max_total_recovery_actions: 4}
-
+- route_id: return-request
+  file: routes/return-request.yaml
+- route_id: return-progress
+  file: routes/return-progress.yaml
+- route_id: exchange-request
+  file: routes/exchange-request.yaml
+- route_id: received-item-mismatch
+  file: routes/received-item-mismatch.yaml
+- route_id: missing-item
+  file: routes/missing-item.yaml
+- route_id: item-condition-issue
+  file: routes/item-condition-issue.yaml
+limits:
+  max_model_turns: 8
+  max_tool_calls: 12
+  max_loaded_lazy_tools: 3
+  max_total_recovery_actions: 4

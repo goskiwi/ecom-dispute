@@ -1,0 +1,18 @@
+tool_id: get_promotion_records
+name: 查询优惠券、活动规则和使用状态
+description: 查询优惠券、活动规则和使用状态。
+input_schema:
+  type: object
+  additionalProperties: false
+  properties: {}
+output_schema:
+  type: object
+  additionalProperties: true
+timeout_ms: 3000
+scope_bindings:
+  order_id:
+    source: case.order_id
+    mode: RUNTIME_INJECT
+executor: get_promotion_records
+result_adapter: get_promotion_records
+error_mapping: {}

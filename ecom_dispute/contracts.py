@@ -20,8 +20,23 @@ class EvidenceKind(StrEnum):
     CANCELLATION_REQUEST = "cancellation_request"
     ORDER_ITEM = "order_item"
     RETURN_REQUEST = "return_request"
+    RETURN_TRACKING = "return_tracking"
+    EXCHANGE_REQUEST = "exchange_request"
     WAREHOUSE_PACK = "warehouse_pack"
     CLAIM_ATTACHMENT = "claim_attachment"
+    PRODUCT_CATALOG = "product_catalog"
+    INVENTORY = "inventory"
+    PRICE = "price"
+    PROMOTION = "promotion"
+    SHIPPING_OPTION = "shipping_option"
+    MEMBERSHIP = "membership"
+    ORDER_CHANGE_OPTION = "order_change_option"
+    ORDER_FEE = "order_fee"
+    CHARGE_CLAIM = "charge_claim"
+    CHECKOUT_EVENT = "checkout_event"
+    CART_EVENT = "cart_event"
+    SEARCH_EVENT = "search_event"
+    SITE_HEALTH = "site_health"
     POLICY = "policy"
     QUERY = "query"
 
@@ -48,6 +63,21 @@ class FactType(StrEnum):
     RETURN_REQUEST = "return_request"
     RETURN_ELIGIBILITY = "return_eligibility"
     ITEM_CONDITION = "item_condition"
+    ORDER_ATTRIBUTE = "order_attribute"
+    ORDER_CHANGE = "order_change"
+    FEE_CHARGE = "fee_charge"
+    RETURN_PROGRESS = "return_progress"
+    EXCHANGE_REQUEST = "exchange_request"
+    PRODUCT_ATTRIBUTE = "product_attribute"
+    INVENTORY_STATUS = "inventory_status"
+    PRICE_ADJUSTMENT = "price_adjustment"
+    PROMOTION_STATUS = "promotion_status"
+    SHIPPING_OPTION = "shipping_option"
+    MEMBERSHIP_STATUS = "membership_status"
+    CHECKOUT_STATUS = "checkout_status"
+    CART_STATUS = "cart_status"
+    SEARCH_STATUS = "search_status"
+    SITE_HEALTH = "site_health"
     STATUS = "status"
     OTHER = "other"
 
@@ -153,6 +183,13 @@ class CaseState(BaseModel):
     trace: list[dict[str, Any]] = Field(default_factory=list)
 
 
+class ActionPlan(BaseModel):
+    action_type: str
+    parameters: dict[str, Any]
+    requires_confirmation: bool = True
+    idempotency_key: str
+
+
 class DecisionReport(BaseModel):
     case_id: str
     dispute_type: str
@@ -166,6 +203,7 @@ class DecisionReport(BaseModel):
     conflicts: list[str]
     missing_evidence: list[str]
     recommended_action: str
+    action_plan: ActionPlan | None = None
     review_required: bool
     trace: list[dict[str, Any]]
 

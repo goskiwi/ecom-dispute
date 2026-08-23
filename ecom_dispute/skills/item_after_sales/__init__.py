@@ -1,14 +1,13 @@
 from .strategies import (
-    DamagedItemStrategy,
+    ItemConditionIssueStrategy,
     MissingItemStrategy,
-    ReturnEligibilityStrategy,
-    WrongItemStrategy,
+    ReceivedItemMismatchStrategy,
+    ReturnRequestStrategy,
 )
 
 __all__ = [
-    "DamagedItemStrategy",
+    "ItemConditionIssueStrategy",
     "MissingItemStrategy",
-    "ReturnEligibilityStrategy",
-    "WrongItemStrategy",
+    "ReceivedItemMismatchStrategy",
+    "ReturnRequestStrategy",
 ]
-

@@ -1,0 +1,50 @@
+route_id: order-cancellation
+name: 订单取消与关联退款
+report_type: order_cancellation
+match:
+  description: 取消申请、揽收先后关系、取消结果及关联退款。
+  business_types:
+  - order_cancellation
+  positive_examples:
+  - 取消申请后商家仍然发货
+  negative_examples:
+  - 只是修改配送时间
+start_stage: ANALYZE
+core_tools: &id001
+- get_order
+- get_logistics_events
+- get_cancellation_request
+- get_refund_records
+- read_policy
+lazy_tools: []
+required_evidence:
+- conversation
+- order
+- cancellation_request
+- policy
+optional_evidence: []
+allowed_decisions:
+- cancel_before_pickup_but_shipped
+- cancel_after_pickup
+- cancellation_refund_missing
+- cancellation_completed
+- manual_review
+decision_strategy: order_cancellation
+stages:
+  ANALYZE:
+    mode: agent
+    objective: 提取订单取消与关联退款的用户主张、客服行为和关键边界
+    instruction_file: stages/analyze.md
+    default_next: VERIFY
+  VERIFY:
+    mode: deterministic
+    objective: 查询订单取消与关联退款所需业务证据
+    tools: *id001
+    default_next: DECIDE
+  DECIDE:
+    mode: deterministic
+    objective: 依据证据和政策执行订单取消与关联退款确定性策略
+    default_next: FUSE_AND_REVIEW
+  FUSE_AND_REVIEW:
+    mode: deterministic
+    objective: 合并证据冲突并创建必要的人工复检任务

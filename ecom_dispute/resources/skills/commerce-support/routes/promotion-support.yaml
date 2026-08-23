@@ -1,0 +1,47 @@
+route_id: promotion-support
+name: 优惠促销支持
+report_type: promotion_support
+match:
+  description: 优惠券无效、过期、门槛、限制和补发资格。
+  business_types:
+  - promotion_support
+  positive_examples:
+  - 五天前的优惠码显示无效
+  negative_examples:
+  - 商品现在是什么价格
+start_stage: ANALYZE
+core_tools: &id001
+- get_promotion_records
+- get_membership_records
+- read_policy
+lazy_tools: []
+required_evidence:
+- conversation
+- promotion
+- policy
+optional_evidence: []
+allowed_decisions:
+- promotion_valid
+- promotion_expired
+- promotion_invalid
+- promotion_reissued
+- manual_review
+decision_strategy: promotion_support
+stages:
+  ANALYZE:
+    mode: agent
+    objective: 提取优惠促销支持的用户主张、客服行为和关键边界
+    instruction_file: stages/analyze.md
+    default_next: VERIFY
+  VERIFY:
+    mode: deterministic
+    objective: 查询优惠促销支持所需业务证据
+    tools: *id001
+    default_next: DECIDE
+  DECIDE:
+    mode: deterministic
+    objective: 依据证据和政策执行优惠促销支持确定性策略
+    default_next: FUSE_AND_REVIEW
+  FUSE_AND_REVIEW:
+    mode: deterministic
+    objective: 合并证据冲突并创建必要的人工复检任务

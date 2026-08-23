@@ -1,0 +1,42 @@
+route_id: business-statement-check
+name: 业务陈述核验
+report_type: business_statement_check
+match:
+  description: 核验客服业务陈述是否与系统事实一致。
+  business_types:
+  - business_statement_check
+  positive_examples:
+  - 客服说已退款但系统无记录
+  negative_examples:
+  - 用户自己询问退款状态
+start_stage: ANALYZE
+core_tools: &id001
+- read_policy
+lazy_tools: []
+required_evidence:
+- conversation
+- policy
+optional_evidence: []
+allowed_decisions:
+- business_statement_conflict
+- business_statement_verified
+- manual_review
+decision_strategy: business_statement_check
+stages:
+  ANALYZE:
+    mode: agent
+    objective: 提取业务陈述核验的用户主张、客服行为和关键边界
+    instruction_file: stages/analyze.md
+    default_next: VERIFY
+  VERIFY:
+    mode: deterministic
+    objective: 查询业务陈述核验所需业务证据
+    tools: *id001
+    default_next: DECIDE
+  DECIDE:
+    mode: deterministic
+    objective: 依据证据和政策执行业务陈述核验确定性策略
+    default_next: FUSE_AND_REVIEW
+  FUSE_AND_REVIEW:
+    mode: deterministic
+    objective: 合并证据冲突并创建必要的人工复检任务

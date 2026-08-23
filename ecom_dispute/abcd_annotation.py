@@ -8,18 +8,32 @@ from typing import Any
 from .datasets import load_abcd_subset
 
 ROUTE_GUIDE = {
-    "refund": "退款是否发起、处理中、完成或到账状态争议。",
-    "refund_amount": "应退金额、退款记录金额或实际入账金额不一致。",
+    "refund_progress": "已存在或应存在退款后的未发起、处理中、完成未到账和记录冲突。",
+    "refund_amount_mismatch": "应退金额与退款记录或实际到账金额不一致。",
     "duplicate_charge": "同一订单存在两笔或多笔扣款。",
-    "payment_order_failure": "资金已扣但订单创建失败、取消或未形成有效订单。",
-    "delivery": "已发货后的运输延迟、物流异常或承诺时效问题。",
-    "merchant_not_shipped": "商家超过发货时限且没有承运商揽收。",
+    "payment_captured_order_failed": "资金已扣但订单创建失败或未形成有效订单。",
+    "unrecognized_charge": "用户否认对应购买或授权的陌生扣款。",
+    "order_fee_dispute": "已收取运费、处理费或服务费与订单或政策不一致。",
+    "fulfillment_progress": "订单待发货、运输、延迟、丢失和正常送达进度。",
     "delivered_not_received": "系统显示签收/送达，但用户否认实际收到。",
-    "cancellation_in_transit": "取消申请与揽收、运输、退款时间存在争议。",
-    "return_eligibility": "用户是否满足退货期限、品类或商品状态条件。",
-    "wrong_item": "实收SKU、颜色、型号或商品身份与订单不一致。",
+    "order_cancellation": "订单取消申请、揽收先后、取消结果和关联退款。",
+    "return_request": "普通退货、买错、不合身、不喜欢及退货资格。",
+    "return_progress": "已提交退货后的标签、寄回、入库、验货和处理进度。",
+    "exchange_request": "换颜色、尺码或商品的换货申请。",
+    "received_item_mismatch": "原文明示下单与实收SKU、颜色、尺码或型号不一致。",
     "missing_item": "实际收到商品数量少于订单数量。",
-    "damaged_item": "用户已收到商品且商品本身破损。",
+    "item_condition_issue": "商品破损、污渍、瑕疵或质量缺陷。",
+    "order_management": "核验或修改订单数量、地址、付款方式、配送设置和商品。",
+    "product_information": "商品材质、尺码、防水、护理和目录属性。",
+    "inventory_availability": "缺货、补货时间、到货提醒和预订能力。",
+    "price_adjustment": "价保、竞品价格匹配和购买后降价。",
+    "promotion_support": "优惠券无效、过期、门槛、限制和补发资格。",
+    "shipping_options": "下单前配送方式、费用、国际配送和预计时效。",
+    "membership_support": "会员等级、权益、积分额度和服务状态。",
+    "checkout_issue": "未成功扣款前的银行卡拒绝、结账失败和订单无法创建。",
+    "cart_issue": "商品无法加入、移除或购物车状态异常。",
+    "search_issue": "搜索结果无关、缺失或索引异常。",
+    "site_performance": "页面缓慢、错误率、可用性和事故状态。",
     "other": "普通咨询、项目不支持或无法归入以上争议Route。",
 }
 
@@ -99,8 +113,8 @@ def agreement_and_consensus(
         "completed_pairs": len(completed_pairs),
         "exact_agreement": _mean(_labels(a) == _labels(b) for a, b in completed_pairs),
         "supported_agreement": _mean(a["supported"] == b["supported"] for a, b in completed_pairs),
-        "has_dispute_agreement": _mean(
-            a["has_dispute"] == b["has_dispute"] for a, b in completed_pairs
+        "has_business_exception_agreement": _mean(
+            a["has_business_exception"] == b["has_business_exception"] for a, b in completed_pairs
         ),
         "primary_route_agreement": _mean(
             a["primary_route"] == b["primary_route"] for a, b in completed_pairs
@@ -109,9 +123,9 @@ def agreement_and_consensus(
             [a["supported"] for a, _ in completed_pairs],
             [b["supported"] for _, b in completed_pairs],
         ),
-        "has_dispute_kappa": _cohen_kappa(
-            [a["has_dispute"] for a, _ in completed_pairs],
-            [b["has_dispute"] for _, b in completed_pairs],
+        "has_business_exception_kappa": _cohen_kappa(
+            [a["has_business_exception"] for a, _ in completed_pairs],
+            [b["has_business_exception"] for _, b in completed_pairs],
         ),
         "primary_route_kappa": _cohen_kappa(
             [a["primary_route"] for a, _ in completed_pairs],
@@ -127,11 +141,7 @@ def rescore_first_run(
 ) -> dict:
     with gzip.open(raw_result_path, "rt", encoding="utf-8") as stream:
         raw = json.load(stream)
-    observed = {
-        item["external_id"]: item
-        for item in raw["results"]
-        if "error" not in item
-    }
+    observed = {item["external_id"]: item for item in raw["results"] if "error" not in item}
     consensus = json.loads(consensus_path.read_text(encoding="utf-8"))
     scored = []
     for item in consensus["items"]:
@@ -162,7 +172,7 @@ def rescore_first_run(
 def _blank_annotation() -> dict[str, Any]:
     return {
         "supported": None,
-        "has_dispute": None,
+        "has_business_exception": None,
         "primary_route": None,
         "acceptable_routes": [],
         "evidence_turns": [],
@@ -175,7 +185,7 @@ def _blank_annotation() -> dict[str, Any]:
 def _annotation_complete(annotation: dict) -> bool:
     return (
         isinstance(annotation.get("supported"), bool)
-        and isinstance(annotation.get("has_dispute"), bool)
+        and isinstance(annotation.get("has_business_exception"), bool)
         and annotation.get("primary_route") in ROUTE_GUIDE
         and annotation.get("confidence") in {"low", "medium", "high"}
         and bool(annotation.get("reason"))
@@ -185,7 +195,7 @@ def _annotation_complete(annotation: dict) -> bool:
 def _labels(annotation: dict) -> tuple:
     return (
         annotation["supported"],
-        annotation["has_dispute"],
+        annotation["has_business_exception"],
         annotation["primary_route"],
         tuple(sorted(annotation["acceptable_routes"])),
     )
@@ -197,8 +207,7 @@ def _cohen_kappa(first: list, second: list) -> float | None:
     observed = _mean(a == b for a, b in zip(first, second, strict=True))
     labels = set(first) | set(second)
     expected = sum(
-        (first.count(label) / len(first)) * (second.count(label) / len(second))
-        for label in labels
+        (first.count(label) / len(first)) * (second.count(label) / len(second)) for label in labels
     )
     if expected == 1:
         return 1.0 if observed == 1 else None

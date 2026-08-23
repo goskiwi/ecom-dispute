@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import time
 from dataclasses import dataclass
-from typing import Any, Literal
+from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -18,17 +18,9 @@ from .tool_runtime import ToolRuntime, ToolSurfaceResolver
 class BaselineDecision(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    dispute_type: Literal["refund_dispute"]
-    responsible_party: Literal["platform", "payment_channel", "none", "undetermined"]
-    decision: Literal[
-        "refund_not_initiated_overdue",
-        "refund_pending_within_sla",
-        "refund_processing_within_sla",
-        "refund_arrival_overdue",
-        "refund_completed",
-        "refund_record_conflict",
-        "manual_review",
-    ]
+    dispute_type: str
+    responsible_party: str
+    decision: str
     evidence_ids: list[str] = Field(min_length=1)
     missing_evidence: list[str]
     recommended_action: str
@@ -59,19 +51,16 @@ class ToolCallingBaseline:
         self.registry = registry
         self.runtime = ToolRuntime(registry)
         self.max_rounds = max_rounds
-        self.skill = SkillRegistry(
-            default_strategies(), known_tools=registry.names
-        ).resolve("refund")
-        run_state = AgentRunState(case_id="baseline").activate(
-            self.skill.skill_id,
-            self.skill.route_id,
-            self.skill.route.start_stage,
-        )
-        run_state = run_state.move_to(HarnessStage.VERIFY)
-        self.surface = ToolSurfaceResolver(registry).resolve(self.skill, run_state)
+        self.skills = SkillRegistry(default_strategies(), known_tools=registry.names)
+        self.surface_resolver = ToolSurfaceResolver(registry)
 
     def diagnose(self, case: CaseInput) -> BaselineRun:
         prompt = self._prompt(case)
+        skill = self.skills.resolve(case.business_type)
+        run_state = AgentRunState(case_id=case.case_id).activate(
+            skill.skill_id, skill.route_id, skill.route.start_stage
+        )
+        surface = self.surface_resolver.resolve(skill, run_state.move_to(HarnessStage.VERIFY))
         history: list[dict[str, Any]] = [{"role": "user", "content": prompt}]
         trace: list[dict[str, Any]] = []
         returned_evidence: set[str] = set()
@@ -81,7 +70,7 @@ class ToolCallingBaseline:
             payload = {
                 "model": self.client.model,
                 "input": history,
-                "tools": self.surface.response_tools(),
+                "tools": surface.response_tools(),
                 "tool_choice": "required" if round_index == 1 else "auto",
                 "parallel_tool_calls": True,
                 "max_output_tokens": 1200,
@@ -125,7 +114,7 @@ class ToolCallingBaseline:
                 for call in function_calls:
                     name = str(call["name"])
                     arguments = json.loads(call.get("arguments") or "{}")
-                    result = self.runtime.execute(name, arguments, case, self.surface)
+                    result = self.runtime.execute(name, arguments, case, surface)
                     returned_evidence.update(item.evidence_id for item in result.evidence)
                     history.append(
                         {
@@ -165,9 +154,9 @@ class ToolCallingBaseline:
     @staticmethod
     def _prompt(case: CaseInput) -> str:
         return (
-            "你是电商退款争议裁决 Agent。必须通过工具核验订单、售后、退款、支付和事发时有效政策，"
+            "你是电商业务诊断 Agent。必须只使用当前Route开放的工具核验业务记录和适用政策，"
             "不得把用户或客服说法当作业务事实。最终结论只能引用工具真实返回的 evidence_id。"
-            "退款系统成功但没有匹配入账记录时，应标记事实冲突并转人工；证据不足时也应转人工。\n"
+            "不得发明工具未返回的事实或Evidence ID；证据不足或冲突时必须转人工。\n"
             f"case_id={case.case_id}\n"
             f"order_id={case.order_id}\n"
             f"region={case.region}\n"

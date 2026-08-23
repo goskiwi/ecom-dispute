@@ -66,5 +66,3 @@ class ContextProjector:
             tool_ids=tool_ids,
             repair_hint=run_state.recovery.transient_repair_hint,
         )
-
-

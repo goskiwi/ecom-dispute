@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+from dataclasses import replace
+
 from .case_state import evidence_ids_by_kind
 from .contracts import (
+    ActionPlan,
     CaseInput,
     CaseState,
     DecisionReport,
@@ -34,6 +37,8 @@ class EvidenceFusion:
         logistics = self._of_kind(state, EvidenceKind.LOGISTICS)
         self._fuse_conversation_facts(state, refunds, payments, logistics)
         outcome = skill.decide(case, state, tuple(state.missing_evidence))
+        if outcome.action_plan is None:
+            outcome = replace(outcome, action_plan=self._action_plan(case, outcome))
         state.findings.extend(outcome.findings)
         for conflict in outcome.conflicts:
             if conflict not in state.conflicts:
@@ -80,8 +85,36 @@ class EvidenceFusion:
             conflicts=state.conflicts,
             missing_evidence=state.missing_evidence,
             recommended_action=outcome.recommended_action,
+            action_plan=outcome.action_plan,
             review_required=outcome.review_required,
             trace=state.trace,
+        )
+
+    @staticmethod
+    def _action_plan(case: CaseInput, outcome: DecisionOutcome) -> ActionPlan | None:
+        action_types = {
+            "refund_not_initiated_overdue": "initiate_refund",
+            "unrecognized_charge_confirmed": "open_payment_dispute",
+            "order_fee_incorrect": "create_fee_adjustment",
+            "cancellation_refund_missing": "initiate_cancellation_refund",
+            "return_eligible": "create_return_request",
+            "exchange_available": "create_exchange_request",
+            "received_item_mismatch_confirmed": "create_replacement_order",
+            "missing_item_warehouse_shortage": "create_missing_item_reshipment",
+            "order_change_allowed": "submit_order_change",
+            "inventory_backorder_available": "create_backorder",
+            "price_adjustment_eligible": "create_price_adjustment",
+            "promotion_invalid": "request_promotion_reissue",
+            "membership_credit_missing": "request_membership_credit_repair",
+        }
+        action_type = action_types.get(outcome.decision)
+        if not action_type:
+            return None
+        return ActionPlan(
+            action_type=action_type,
+            parameters={"case_id": case.case_id, "order_id": case.order_id},
+            requires_confirmation=True,
+            idempotency_key=f"{case.case_id}:{outcome.decision}",
         )
 
     @staticmethod
@@ -154,8 +187,7 @@ class EvidenceFusion:
                     (
                         finding.fact_type == FactType.REFUND_INITIATION
                         and finding.polarity == Polarity.AFFIRMED
-                        and finding.time_relation
-                        in {TimeRelation.PRESENT, TimeRelation.PAST}
+                        and finding.time_relation in {TimeRelation.PRESENT, TimeRelation.PAST}
                     )
                     or (
                         finding.fact_type == FactType.REFUND_PROCESSING

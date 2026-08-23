@@ -2,20 +2,48 @@ route_id: refund-amount-mismatch
 name: 退款金额不符
 report_type: refund_amount_mismatch
 match:
-  description: 用户实际收到的退款金额与订单或退款记录不一致。
-  business_types: [refund_amount]
-  positive_examples: [少退了钱, 退款金额和订单金额不一致]
-  negative_examples: [退款还没发起]
+  description: 应退金额与退款记录或实际到账金额不一致。
+  business_types:
+  - refund_amount_mismatch
+  positive_examples:
+  - 应该退100元但只到账80元
+  negative_examples:
+  - 退款仍在正常处理中
 start_stage: ANALYZE
-core_tools: [get_order, get_payment_records, get_refund_records, read_policy]
-lazy_tools: [get_payment_gateway_events]
-required_evidence: [conversation, order, payment, refund, policy]
-optional_evidence: [payment_gateway]
-allowed_decisions: [refund_amount_correct, refund_amount_incorrect, refund_credit_amount_mismatch, manual_review]
+core_tools: &id001
+- get_order
+- get_payment_records
+- get_refund_records
+- read_policy
+lazy_tools: []
+required_evidence:
+- conversation
+- order
+- payment
+- refund
+- policy
+optional_evidence: []
+allowed_decisions:
+- refund_amount_correct
+- refund_amount_incorrect
+- refund_credit_amount_mismatch
+- manual_review
 decision_strategy: refund_amount_mismatch
 stages:
-  ANALYZE: {mode: agent, objective: 提取争议金额和到账陈述, instruction_file: stages/analyze.md, default_next: VERIFY}
-  VERIFY: {mode: deterministic, objective: 查询订单、支付、退款和政策, tools: [get_order, get_payment_records, get_refund_records, read_policy], default_next: DECIDE}
-  DECIDE: {mode: deterministic, objective: 核对订单、退款和入账金额, default_next: FUSE_AND_REVIEW}
-  FUSE_AND_REVIEW: {mode: deterministic, objective: 合并金额冲突并决定复检}
-
+  ANALYZE:
+    mode: agent
+    objective: 提取退款金额不符的用户主张、客服行为和关键边界
+    instruction_file: stages/analyze.md
+    default_next: VERIFY
+  VERIFY:
+    mode: deterministic
+    objective: 查询退款金额不符所需业务证据
+    tools: *id001
+    default_next: DECIDE
+  DECIDE:
+    mode: deterministic
+    objective: 依据证据和政策执行退款金额不符确定性策略
+    default_next: FUSE_AND_REVIEW
+  FUSE_AND_REVIEW:
+    mode: deterministic
+    objective: 合并证据冲突并创建必要的人工复检任务

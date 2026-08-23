@@ -13,23 +13,11 @@ from .tool_registry import ToolRegistry
 
 def evaluate(
     repository: Repository,
-    oracle_path: Path = ROOT / "evals" / "oracle.json",
+    oracle_path: Path = ROOT / "evals" / "v3_oracle.json",
     llm_client: ResponsesClient | None = None,
     case_ids: list[str] | None = None,
 ) -> dict:
     oracle = json.loads(oracle_path.read_text(encoding="utf-8"))
-    m6_oracle = oracle_path.with_name("oracle_m6.json")
-    if m6_oracle.is_file():
-        oracle.update(json.loads(m6_oracle.read_text(encoding="utf-8")))
-    m8_oracle = oracle_path.with_name("oracle_m8.json")
-    if m8_oracle.is_file():
-        oracle.update(json.loads(m8_oracle.read_text(encoding="utf-8")))
-    matrix_path = ROOT / "data" / "cases" / "m10_item_matrix.json"
-    if matrix_path.is_file():
-        for group in json.loads(matrix_path.read_text(encoding="utf-8")):
-            for offset in range(group["count"]):
-                variant = group["variants"][offset % len(group["variants"])]
-                oracle[f"m10_{group['business_type']}_{offset + 1:03d}"] = variant["expected"]
     harness = (
         DiagnosticHarness.live(repository, llm_client)
         if llm_client
@@ -75,19 +63,13 @@ def evaluate(
         "pass_rate": sum(item["passed"] for item in results) / len(results) if results else 0,
         "llm_calls": llm_calls,
         "input_tokens": sum(
-            usage.get("input_tokens", 0)
-            for item in results
-            for usage in item["agent_usage"]
+            usage.get("input_tokens", 0) for item in results for usage in item["agent_usage"]
         ),
         "output_tokens": sum(
-            usage.get("output_tokens", 0)
-            for item in results
-            for usage in item["agent_usage"]
+            usage.get("output_tokens", 0) for item in results for usage in item["agent_usage"]
         ),
         "latency_ms": sum(
-            usage.get("latency_ms", 0)
-            for item in results
-            for usage in item["agent_usage"]
+            usage.get("latency_ms", 0) for item in results for usage in item["agent_usage"]
         ),
         "results": results,
     }
@@ -96,7 +78,7 @@ def evaluate(
 def evaluate_baseline(
     repository: Repository,
     llm_client: ResponsesClient,
-    oracle_path: Path = ROOT / "evals" / "oracle.json",
+    oracle_path: Path = ROOT / "evals" / "v3_oracle.json",
     case_ids: list[str] | None = None,
 ) -> dict:
     oracle = json.loads(oracle_path.read_text(encoding="utf-8"))

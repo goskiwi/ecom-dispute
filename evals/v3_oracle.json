@@ -1,0 +1,158 @@
+{
+  "v3-cart_issue": {
+    "route_type": "cart_issue",
+    "decision": "cart_state_conflict",
+    "responsible_party": "platform",
+    "review_required": true
+  },
+  "v3-checkout_issue": {
+    "route_type": "checkout_issue",
+    "decision": "checkout_service_error",
+    "responsible_party": "platform",
+    "review_required": true
+  },
+  "v3-delivered_not_received": {
+    "route_type": "delivered_not_received",
+    "decision": "delivery_proof_missing",
+    "responsible_party": "logistics_provider",
+    "review_required": true
+  },
+  "v3-duplicate_charge": {
+    "route_type": "duplicate_charge",
+    "decision": "duplicate_charge_confirmed",
+    "responsible_party": "payment_channel",
+    "review_required": true
+  },
+  "v3-exchange_request": {
+    "route_type": "exchange_request",
+    "decision": "exchange_available",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "v3-fulfillment_progress": {
+    "route_type": "fulfillment_progress",
+    "decision": "fulfillment_delayed_merchant",
+    "responsible_party": "merchant",
+    "review_required": false
+  },
+  "v3-inventory_availability": {
+    "route_type": "inventory_availability",
+    "decision": "inventory_unavailable",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "v3-item_condition_issue": {
+    "route_type": "item_condition_issue",
+    "decision": "item_condition_evidence_collected",
+    "responsible_party": "undetermined",
+    "review_required": true
+  },
+  "v3-membership_support": {
+    "route_type": "membership_support",
+    "decision": "membership_credit_missing",
+    "responsible_party": "platform",
+    "review_required": true
+  },
+  "v3-missing_item": {
+    "route_type": "missing_item",
+    "decision": "missing_item_warehouse_shortage",
+    "responsible_party": "warehouse",
+    "review_required": true
+  },
+  "v3-order_cancellation": {
+    "route_type": "order_cancellation",
+    "decision": "cancel_before_pickup_but_shipped",
+    "responsible_party": "merchant",
+    "review_required": true
+  },
+  "v3-order_fee_dispute": {
+    "route_type": "order_fee_dispute",
+    "decision": "order_fee_incorrect",
+    "responsible_party": "platform",
+    "review_required": false
+  },
+  "v3-order_management": {
+    "route_type": "order_management",
+    "decision": "order_change_allowed",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "v3-payment_captured_order_failed": {
+    "route_type": "payment_captured_order_failed",
+    "decision": "captured_order_failed_unreversed",
+    "responsible_party": "platform",
+    "review_required": true
+  },
+  "v3-price_adjustment": {
+    "route_type": "price_adjustment",
+    "decision": "price_adjustment_eligible",
+    "responsible_party": "platform",
+    "review_required": false
+  },
+  "v3-product_information": {
+    "route_type": "product_information",
+    "decision": "product_information_found",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "v3-promotion_support": {
+    "route_type": "promotion_support",
+    "decision": "promotion_invalid",
+    "responsible_party": "platform",
+    "review_required": true
+  },
+  "v3-received_item_mismatch": {
+    "route_type": "received_item_mismatch",
+    "decision": "received_item_mismatch_confirmed",
+    "responsible_party": "warehouse",
+    "review_required": true
+  },
+  "v3-refund_amount_mismatch": {
+    "route_type": "refund_amount_mismatch",
+    "decision": "refund_amount_incorrect",
+    "responsible_party": "platform",
+    "review_required": false
+  },
+  "v3-refund_progress": {
+    "route_type": "refund_progress",
+    "decision": "refund_processing_within_sla",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "v3-return_progress": {
+    "route_type": "return_progress",
+    "decision": "return_in_transit",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "v3-return_request": {
+    "route_type": "return_request",
+    "decision": "return_eligible",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "v3-search_issue": {
+    "route_type": "search_issue",
+    "decision": "search_index_stale",
+    "responsible_party": "platform",
+    "review_required": true
+  },
+  "v3-shipping_options": {
+    "route_type": "shipping_options",
+    "decision": "shipping_option_available",
+    "responsible_party": "none",
+    "review_required": false
+  },
+  "v3-site_performance": {
+    "route_type": "site_performance",
+    "decision": "site_degraded",
+    "responsible_party": "platform",
+    "review_required": true
+  },
+  "v3-unrecognized_charge": {
+    "route_type": "unrecognized_charge",
+    "decision": "unrecognized_charge_confirmed",
+    "responsible_party": "payment_channel",
+    "review_required": true
+  }
+}

@@ -1,0 +1,53 @@
+route_id: item-condition-issue
+name: 商品状况问题
+report_type: item_condition_issue
+match:
+  description: 商品破损、污渍、瑕疵和质量缺陷。
+  business_types:
+  - item_condition_issue
+  positive_examples:
+  - 收到的衬衫有污渍
+  negative_examples:
+  - 实收商品颜色与订单不符
+start_stage: ANALYZE
+core_tools: &id001
+- get_order
+- get_order_items
+- get_warehouse_pack_record
+- get_claim_attachments
+- get_logistics_events
+- read_policy
+lazy_tools: []
+required_evidence:
+- conversation
+- order
+- order_item
+- policy
+optional_evidence:
+- warehouse_pack
+- claim_attachment
+- logistics
+allowed_decisions:
+- item_condition_evidence_collected
+- item_condition_attachment_missing
+- item_condition_evidence_insufficient
+- manual_review
+decision_strategy: item_condition_issue
+stages:
+  ANALYZE:
+    mode: agent
+    objective: 提取商品状况问题的用户主张、客服行为和关键边界
+    instruction_file: stages/analyze.md
+    default_next: VERIFY
+  VERIFY:
+    mode: deterministic
+    objective: 查询商品状况问题所需业务证据
+    tools: *id001
+    default_next: DECIDE
+  DECIDE:
+    mode: deterministic
+    objective: 依据证据和政策执行商品状况问题确定性策略
+    default_next: FUSE_AND_REVIEW
+  FUSE_AND_REVIEW:
+    mode: deterministic
+    objective: 合并证据冲突并创建必要的人工复检任务

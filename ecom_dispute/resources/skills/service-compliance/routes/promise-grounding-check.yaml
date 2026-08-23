@@ -1,0 +1,42 @@
+route_id: promise-grounding-check
+name: 承诺依据核验
+report_type: promise_grounding_check
+match:
+  description: 核验客服结果承诺是否有事实与政策依据。
+  business_types:
+  - promise_grounding_check
+  positive_examples:
+  - 证据不足却承诺一定退款
+  negative_examples:
+  - 只说明正在查询
+start_stage: ANALYZE
+core_tools: &id001
+- read_policy
+lazy_tools: []
+required_evidence:
+- conversation
+- policy
+optional_evidence: []
+allowed_decisions:
+- promise_unsupported
+- promise_grounded
+- manual_review
+decision_strategy: promise_grounding_check
+stages:
+  ANALYZE:
+    mode: agent
+    objective: 提取承诺依据核验的用户主张、客服行为和关键边界
+    instruction_file: stages/analyze.md
+    default_next: VERIFY
+  VERIFY:
+    mode: deterministic
+    objective: 查询承诺依据核验所需业务证据
+    tools: *id001
+    default_next: DECIDE
+  DECIDE:
+    mode: deterministic
+    objective: 依据证据和政策执行承诺依据核验确定性策略
+    default_next: FUSE_AND_REVIEW
+  FUSE_AND_REVIEW:
+    mode: deterministic
+    objective: 合并证据冲突并创建必要的人工复检任务

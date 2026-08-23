@@ -1,0 +1,22 @@
+skill_id: site-reliability
+name: 站点可靠性
+entry: SKILL.md
+allowed_tools:
+- get_checkout_events
+- get_cart_events
+- get_search_events
+- get_site_health
+routes:
+- route_id: checkout-issue
+  file: routes/checkout-issue.yaml
+- route_id: cart-issue
+  file: routes/cart-issue.yaml
+- route_id: search-issue
+  file: routes/search-issue.yaml
+- route_id: site-performance
+  file: routes/site-performance.yaml
+limits:
+  max_model_turns: 8
+  max_tool_calls: 12
+  max_loaded_lazy_tools: 3
+  max_total_recovery_actions: 4

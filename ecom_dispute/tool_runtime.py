@@ -102,7 +102,9 @@ class ToolSearchService:
                 f"{definition.tool_id} {definition.name} {definition.description}"
             )
             sequence = SequenceMatcher(None, normalized_query, document).ratio()
-            overlap = len(set(normalized_query) & set(document)) / max(len(set(normalized_query)), 1)
+            overlap = len(set(normalized_query) & set(document)) / max(
+                len(set(normalized_query)), 1
+            )
             score = min(1.0, sequence * 0.6 + overlap * 0.4)
             matches.append(
                 ToolSearchMatch(

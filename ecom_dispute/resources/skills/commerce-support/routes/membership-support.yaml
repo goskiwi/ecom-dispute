@@ -1,0 +1,44 @@
+route_id: membership-support
+name: 会员权益
+report_type: membership_support
+match:
+  description: 会员等级、权益、积分额度和服务状态。
+  business_types:
+  - membership_support
+  positive_examples:
+  - 我的会员额度少了40元
+  negative_examples:
+  - 忘记了账户密码
+start_stage: ANALYZE
+core_tools: &id001
+- get_membership_records
+- read_policy
+lazy_tools: []
+required_evidence:
+- conversation
+- membership
+optional_evidence: []
+allowed_decisions:
+- membership_active
+- membership_inactive
+- membership_credit_missing
+- manual_review
+decision_strategy: membership_support
+stages:
+  ANALYZE:
+    mode: agent
+    objective: 提取会员权益的用户主张、客服行为和关键边界
+    instruction_file: stages/analyze.md
+    default_next: VERIFY
+  VERIFY:
+    mode: deterministic
+    objective: 查询会员权益所需业务证据
+    tools: *id001
+    default_next: DECIDE
+  DECIDE:
+    mode: deterministic
+    objective: 依据证据和政策执行会员权益确定性策略
+    default_next: FUSE_AND_REVIEW
+  FUSE_AND_REVIEW:
+    mode: deterministic
+    objective: 合并证据冲突并创建必要的人工复检任务

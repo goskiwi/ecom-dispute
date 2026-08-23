@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Protocol
 
-from ..contracts import CaseInput, CaseState, EvidenceKind, Finding
+from ..contracts import ActionPlan, CaseInput, CaseState, EvidenceKind, Finding
 from ..resource_loader import LoadedSkillPack, RouteResource, SkillLoader
 
 
@@ -13,6 +13,7 @@ class DecisionOutcome:
     decision: str = "manual_review"
     recommended_action: str = "补充缺失证据后人工复检"
     review_required: bool = True
+    action_plan: ActionPlan | None = None
     findings: list[Finding] = field(default_factory=list)
     conflicts: list[str] = field(default_factory=list)
 

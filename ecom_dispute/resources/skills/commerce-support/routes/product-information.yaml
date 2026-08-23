@@ -1,0 +1,42 @@
+route_id: product-information
+name: 商品信息
+report_type: product_information
+match:
+  description: 商品材质、尺码、防水、护理和目录属性。
+  business_types:
+  - product_information
+  positive_examples:
+  - 这双靴子防水吗
+  negative_examples:
+  - 这件商品什么时候补货
+start_stage: ANALYZE
+core_tools: &id001
+- get_product_catalog
+lazy_tools: []
+required_evidence:
+- conversation
+- product_catalog
+optional_evidence: []
+allowed_decisions:
+- product_information_found
+- product_information_missing
+- manual_review
+decision_strategy: product_information
+stages:
+  ANALYZE:
+    mode: agent
+    objective: 提取商品信息的用户主张、客服行为和关键边界
+    instruction_file: stages/analyze.md
+    default_next: VERIFY
+  VERIFY:
+    mode: deterministic
+    objective: 查询商品信息所需业务证据
+    tools: *id001
+    default_next: DECIDE
+  DECIDE:
+    mode: deterministic
+    objective: 依据证据和政策执行商品信息确定性策略
+    default_next: FUSE_AND_REVIEW
+  FUSE_AND_REVIEW:
+    mode: deterministic
+    objective: 合并证据冲突并创建必要的人工复检任务

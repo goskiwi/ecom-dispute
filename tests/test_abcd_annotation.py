@@ -34,7 +34,7 @@ def test_blind_forms_hide_source_labels_and_predictions(tmp_path: Path) -> None:
                     {
                         "external_id": "abcd:1",
                         "subflow": "refund_status",
-                        "expected_route_type": "refund",
+                        "expected_action_present": True,
                     }
                 ]
             }
@@ -49,16 +49,16 @@ def test_blind_forms_hide_source_labels_and_predictions(tmp_path: Path) -> None:
 
     serialized = json.dumps(payload)
     assert "refund_status" not in serialized
-    assert "expected_route_type" not in serialized
+    assert "expected_action_present" not in serialized
     assert payload["items"][0]["annotation"]["primary_route"] is None
 
 
 def test_agreement_and_rescore_use_completed_consensus(tmp_path: Path) -> None:
     annotation = {
         "supported": True,
-        "has_dispute": True,
-        "primary_route": "refund",
-        "acceptable_routes": ["refund", "refund_amount"],
+        "has_business_exception": True,
+        "primary_route": "refund_progress",
+        "acceptable_routes": ["refund_progress", "refund_amount_mismatch"],
         "evidence_turns": [0],
         "reason": "refund status dispute",
         "confidence": "high",
@@ -81,7 +81,7 @@ def test_agreement_and_rescore_use_completed_consensus(tmp_path: Path) -> None:
                 "results": [
                     {
                         "external_id": "abcd:1",
-                        "observed_route_type": "refund_amount",
+                        "observed_route_type": "refund_amount_mismatch",
                     }
                 ]
             },

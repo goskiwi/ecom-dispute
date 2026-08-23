@@ -1,0 +1,18 @@
+tool_id: get_exchange_options
+name: 查询换货资格、目标SKU、库存和差价状态
+description: 查询换货资格、目标SKU、库存和差价状态。
+input_schema:
+  type: object
+  additionalProperties: false
+  properties: {}
+output_schema:
+  type: object
+  additionalProperties: true
+timeout_ms: 3000
+scope_bindings:
+  order_id:
+    source: case.order_id
+    mode: RUNTIME_INJECT
+executor: get_exchange_options
+result_adapter: get_exchange_options
+error_mapping: {}

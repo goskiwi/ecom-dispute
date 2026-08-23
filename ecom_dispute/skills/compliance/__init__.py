@@ -1,11 +1,11 @@
 from .strategies import (
-    FalseBusinessStatementStrategy,
-    MissingRequiredEscalationStrategy,
-    UnsupportedPromiseStrategy,
+    BusinessStatementCheckStrategy,
+    EscalationRequirementCheckStrategy,
+    PromiseGroundingCheckStrategy,
 )
 
 __all__ = [
-    "FalseBusinessStatementStrategy",
-    "MissingRequiredEscalationStrategy",
-    "UnsupportedPromiseStrategy",
+    "BusinessStatementCheckStrategy",
+    "EscalationRequirementCheckStrategy",
+    "PromiseGroundingCheckStrategy",
 ]

@@ -12,46 +12,6 @@ def _evidence(state: CaseState, kind: EvidenceKind) -> list:
 
 
 @dataclass(frozen=True)
-class MerchantNotShippedStrategy:
-    def decide(
-        self, case: CaseInput, state: CaseState, missing_evidence: tuple[str, ...]
-    ) -> DecisionOutcome:
-        if missing_evidence:
-            return DecisionOutcome()
-        orders = _evidence(state, EvidenceKind.ORDER)
-        logistics = _evidence(state, EvidenceKind.LOGISTICS)
-        policies = _evidence(state, EvidenceKind.POLICY)
-        if not orders or not policies:
-            return DecisionOutcome()
-        picked_up = any(
-            item.facts.get("event_type") in {"picked_up", "in_transit", "out_for_delivery"}
-            for item in logistics
-        )
-        if picked_up:
-            return DecisionOutcome(
-                responsible_party="none",
-                decision="shipment_already_picked_up",
-                recommended_action="转入物流运输阶段继续跟踪",
-                review_required=False,
-            )
-        created_at = datetime.fromisoformat(orders[0].facts["created_at"])
-        elapsed = (case.current_time - created_at).total_seconds() / 3600
-        if elapsed > policies[0].facts["rules"]["merchant_ship_hours"]:
-            return DecisionOutcome(
-                responsible_party="merchant",
-                decision="merchant_ship_overdue",
-                recommended_action="催促商家发货并按政策处理超时",
-                review_required=False,
-            )
-        return DecisionOutcome(
-            responsible_party="none",
-            decision="merchant_ship_within_sla",
-            recommended_action="订单仍在商家发货时限内",
-            review_required=False,
-        )
-
-
-@dataclass(frozen=True)
 class DeliveredNotReceivedStrategy:
     def decide(
         self, case: CaseInput, state: CaseState, missing_evidence: tuple[str, ...]
@@ -86,7 +46,7 @@ class DeliveredNotReceivedStrategy:
 
 
 @dataclass(frozen=True)
-class CancellationInTransitStrategy:
+class OrderCancellationStrategy:
     def decide(
         self, case: CaseInput, state: CaseState, missing_evidence: tuple[str, ...]
     ) -> DecisionOutcome:

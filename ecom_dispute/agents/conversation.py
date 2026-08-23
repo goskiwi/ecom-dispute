@@ -69,7 +69,14 @@ class ConversationAgent:
                 "request_attempts": result.request_attempts,
                 "model_repairs": model_repairs,
                 "route_type": result.semantics.route_type,
-                "has_dispute": result.semantics.has_dispute,
+                "has_business_exception": result.semantics.has_business_exception,
+                "return_reason": result.semantics.return_reason,
+                "order_operation": result.semantics.order_operation,
+                "item_mismatch_claim": (
+                    result.semantics.item_mismatch_claim.model_dump(mode="json")
+                    if result.semantics.item_mismatch_claim
+                    else None
+                ),
                 "business_facts": [
                     fact.model_dump(mode="json") for fact in result.semantics.business_facts
                 ],
@@ -87,6 +94,7 @@ class ConversationAgent:
         result: LLMResult,
     ) -> list[Finding]:
         findings = []
+        self._validate_item_mismatch_claim(case, result)
         for index, fact in enumerate(result.semantics.business_facts, start=1):
             self._validate_grounding(case, fact)
             findings.append(
@@ -124,20 +132,37 @@ class ConversationAgent:
             Finding(
                 finding_id="llm-route-type",
                 category="candidate_route_type",
-                claim=result.semantics.route_type,
+                claim=result.semantics.route_type.value,
                 evidence_ids=[evidence.evidence_id],
                 review_recommended=result.semantics.uncertainty is not None,
             )
         )
         findings.append(
             Finding(
-                finding_id="llm-has-dispute",
-                category="has_dispute",
-                claim=str(result.semantics.has_dispute).lower(),
+                finding_id="llm-has-business-exception",
+                category="has_business_exception",
+                claim=str(result.semantics.has_business_exception).lower(),
                 evidence_ids=[evidence.evidence_id],
             )
         )
         return findings
+
+    @staticmethod
+    def _validate_item_mismatch_claim(case: CaseInput, result: LLMResult) -> None:
+        claim = result.semantics.item_mismatch_claim
+        if claim is None:
+            return
+        if not claim.message_indices:
+            raise ValueError("item mismatch claim has no source messages")
+        source = []
+        for index in claim.message_indices:
+            if index >= len(case.conversation):
+                raise ValueError(f"item mismatch message_index out of range: {index}")
+            source.append(case.conversation[index]["text"].lower())
+        joined = " ".join(source)
+        for value in (claim.ordered_value, claim.received_value):
+            if value and value.lower() not in joined:
+                raise ValueError(f"item mismatch value is not grounded: {value}")
 
     @staticmethod
     def _validate_grounding(case: CaseInput, item: object) -> None:

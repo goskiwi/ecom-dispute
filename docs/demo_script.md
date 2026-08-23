@@ -1,4 +1,4 @@
-# EcomDispute v1.0 三分钟Demo
+# EcomDispute V3 三分钟Demo
 
 ## 启动
 
@@ -11,7 +11,7 @@ uv run python -m ecom_dispute web --agent-mode heuristic-test --port 8765
 
 ## Case 1：重复扣款
 
-案例：`m6_duplicate_001`
+案例：`v3-duplicate_charge`
 
 讲解重点：
 
@@ -23,7 +23,7 @@ uv run python -m ecom_dispute web --agent-mode heuristic-test --port 8765
 
 ## Case 2：签收未收到
 
-案例：`m6_not_received_001`
+案例：`v3-delivered_not_received`
 
 讲解重点：
 
@@ -32,16 +32,16 @@ uv run python -m ecom_dispute web --agent-mode heuristic-test --port 8765
 3. 主争议与客服合规分别执行，最后合并Finding。
 4. 证据不足或收货冲突进入ReviewTask。
 
-## Case 3：退款/支付冲突
+## Case 3：购物车状态故障
 
-案例：`refund_conflict_001`
+案例：`v3-cart_issue`
 
 讲解重点：
 
-1. 退款系统显示成功，但支付记录没有匹配credit。
-2. 确定性Strategy输出`refund_record_conflict`，不让LLM自由定责。
-3. live模式下ReviewAgent只引用已有Evidence生成复检材料。
-4. 展示错误恢复、Evidence ID和人工复检闭环。
+1. Conversation将“有库存但无法加购”与“明确缺货”区分开。
+2. VERIFY只开放购物车事件和站点健康工具。
+3. 确定性Strategy输出`cart_state_conflict`并创建ReviewTask。
+4. 展示站点故障Evidence、动态Tool Surface和人工复检闭环。
 
 ## 面试总结
 

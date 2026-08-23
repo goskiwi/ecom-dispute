@@ -9,60 +9,55 @@ from .contracts import SpeechAct
 from .datasets import load_abcd_subset
 from .llm import ResponsesClient
 
-SUPPORTED_SUBFLOWS = {
-    "refund_status": "refund",
-    "refund_update": "refund",
-    "refund_initiate": "refund",
-    "mistimed_billing_already_returned": "refund",
-    "return_size": "return_eligibility",
-    "return_color": "return_eligibility",
-    "status_delivery_time": "delivery",
-    "status_shipping_question": "delivery",
-}
 
-
-def build_abcd_manifest(dataset_path: Path, manifest_path: Path) -> dict:
+def build_abcd_manifest(dataset_path: Path, manifest_path: Path, case_count: int = 200) -> dict:
     records = load_abcd_subset(dataset_path, limit=100_000, subflows=None)
-    supported: dict[str, list] = defaultdict(list)
-    unsupported: dict[str, list] = defaultdict(list)
+    grouped: dict[str, list] = defaultdict(list)
     for record in records:
-        target = supported if record.subflow in SUPPORTED_SUBFLOWS else unsupported
-        target[record.subflow].append(record)
+        grouped[record.subflow].append(record)
+    for rows in grouped.values():
+        rows.sort(key=lambda item: item.external_id)
 
-    items = []
-    for subflow, route in SUPPORTED_SUBFLOWS.items():
-        chosen = supported[subflow][:20]
-        if len(chosen) < 20:
-            raise ValueError(f"ABCD subflow has fewer than 20 records: {subflow}")
-        items.extend(_manifest_item(record, route) for record in chosen)
-
-    unsupported_counts: Counter[str] = Counter()
-    for subflow in sorted(unsupported):
-        for record in unsupported[subflow]:
-            if unsupported_counts[subflow] >= 5:
-                break
-            items.append(_manifest_item(record, "other"))
-            unsupported_counts[subflow] += 1
-            if sum(unsupported_counts.values()) == 40:
-                break
-        if sum(unsupported_counts.values()) == 40:
+    selected = []
+    depth = 0
+    while len(selected) < case_count:
+        added = 0
+        for subflow in sorted(grouped):
+            if depth < len(grouped[subflow]):
+                selected.append(grouped[subflow][depth])
+                added += 1
+                if len(selected) == case_count:
+                    break
+        if not added:
             break
-    if sum(unsupported_counts.values()) != 40:
-        raise ValueError("could not select 40 unsupported ABCD records")
-    items.sort(key=lambda item: item["external_id"])
+        depth += 1
+    if len(selected) != case_count:
+        raise ValueError(f"ABCD dataset contains only {len(selected)} selectable records")
+
+    items = [
+        {
+            "external_id": record.external_id,
+            "split": record.split,
+            "subflow": record.subflow,
+            "expected_action_present": bool(record.expected_actions),
+        }
+        for record in sorted(selected, key=lambda item: item.external_id)
+    ]
     payload = {
         "source": "ABCD v1.1 official dataset",
-        "supported_count": 160,
-        "unsupported_count": 40,
+        "schema_version": 3,
+        "case_count": len(items),
+        "selection_method": "round_robin_across_all_subflows_no_route_oracle",
         "items": items,
     }
     manifest_path.parent.mkdir(parents=True, exist_ok=True)
-    manifest_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    manifest_path.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
     return {
         "case_count": len(items),
-        "supported": 160,
-        "unsupported": 40,
         "subflows": Counter(item["subflow"] for item in items),
+        "route_oracle": False,
     }
 
 
@@ -77,11 +72,7 @@ def evaluate_abcd(
     subflows = {item["subflow"] for item in manifest["items"]}
     records = {
         item.external_id: item
-        for item in load_abcd_subset(
-            dataset_path,
-            limit=100_000,
-            subflows=subflows,
-        )
+        for item in load_abcd_subset(dataset_path, limit=100_000, subflows=subflows)
         if item.external_id in wanted
     }
     if set(records) != set(wanted):
@@ -90,7 +81,7 @@ def evaluate_abcd(
 
     def run_one(external_id: str) -> dict:
         record = records[external_id]
-        expected = wanted[external_id]
+        manifest_item = wanted[external_id]
         try:
             result = client.extract_conversation(record.conversation)
         except (RuntimeError, ValueError) as exc:
@@ -103,10 +94,9 @@ def evaluate_abcd(
             "external_id": external_id,
             "split": record.split,
             "subflow": record.subflow,
-            "expected_route_type": expected["expected_route_type"],
-            "observed_route_type": result.semantics.route_type,
-            "route_correct": result.semantics.route_type == expected["expected_route_type"],
-            "expected_action_present": expected["expected_action_present"],
+            "observed_route_type": result.semantics.route_type.value,
+            "observed_has_business_exception": result.semantics.has_business_exception,
+            "expected_action_present": manifest_item["expected_action_present"],
             "observed_action_present": predicted_action,
             "input_tokens": result.input_tokens,
             "output_tokens": result.output_tokens,
@@ -120,48 +110,25 @@ def evaluate_abcd(
             results.append(future.result())
     results.sort(key=lambda item: item["external_id"])
     valid = [item for item in results if "error" not in item]
-    supported = [item for item in valid if item["expected_route_type"] != "other"]
-    rejected = [item for item in valid if item["expected_route_type"] == "other"]
-    action_tp = sum(
-        item["expected_action_present"] and item["observed_action_present"] for item in valid
+    action_matches = sum(
+        item["expected_action_present"] == item["observed_action_present"] for item in valid
     )
-    action_predicted = sum(item["observed_action_present"] for item in valid)
-    action_expected = sum(item["expected_action_present"] for item in valid)
     return {
-        "mode": "abcd_external_first_run",
+        "mode": "abcd_external_v3_unscored",
         "case_count": len(wanted),
         "evaluated": len(valid),
         "api_errors": len(results) - len(valid),
-        "route_accuracy": _mean(item["route_correct"] for item in valid),
-        "supported_route_accuracy": _mean(item["route_correct"] for item in supported),
-        "unsupported_rejection_accuracy": _mean(item["route_correct"] for item in rejected),
-        "action_presence_precision": action_tp / action_predicted if action_predicted else None,
-        "action_presence_recall": action_tp / action_expected if action_expected else None,
+        "route_accuracy": None,
+        "route_accuracy_status": "requires per-dialogue human consensus",
+        "route_distribution": Counter(item["observed_route_type"] for item in valid),
+        "business_exception_rate": (
+            sum(item["observed_has_business_exception"] for item in valid) / len(valid)
+            if valid
+            else None
+        ),
+        "action_presence_agreement": action_matches / len(valid) if valid else None,
         "input_tokens": sum(item["input_tokens"] for item in valid),
         "output_tokens": sum(item["output_tokens"] for item in valid),
         "latency_ms": sum(item["latency_ms"] for item in valid),
-        "per_subflow": {
-            subflow: {
-                "count": len(rows),
-                "route_accuracy": _mean(item["route_correct"] for item in rows),
-            }
-            for subflow in sorted({item["subflow"] for item in valid})
-            if (rows := [item for item in valid if item["subflow"] == subflow])
-        },
         "results": results,
     }
-
-
-def _manifest_item(record: object, route: str) -> dict:
-    return {
-        "external_id": record.external_id,
-        "split": record.split,
-        "subflow": record.subflow,
-        "expected_route_type": route,
-        "expected_action_present": bool(record.expected_actions),
-    }
-
-
-def _mean(values: object) -> float | None:
-    items = list(values)
-    return sum(items) / len(items) if items else None

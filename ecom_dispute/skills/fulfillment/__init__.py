@@ -1,13 +1,11 @@
 from .routes import (
-    CancellationInTransitStrategy,
     DeliveredNotReceivedStrategy,
-    MerchantNotShippedStrategy,
+    OrderCancellationStrategy,
 )
-from .strategies import DeliveryDelayStrategy
+from .strategies import FulfillmentProgressStrategy
 
 __all__ = [
-    "CancellationInTransitStrategy",
     "DeliveredNotReceivedStrategy",
-    "DeliveryDelayStrategy",
-    "MerchantNotShippedStrategy",
+    "FulfillmentProgressStrategy",
+    "OrderCancellationStrategy",
 ]

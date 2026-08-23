@@ -5,7 +5,7 @@ SCRIPT_DIR=${0:A:h}
 PROJECT_DIR=${SCRIPT_DIR:h}
 cd "$PROJECT_DIR"
 
-DRAFT=evals/formal_abcd_200_assistant_draft.json
+DRAFT=evals/v3_abcd_200_assistant_draft.json
 if [[ ! -f "$DRAFT" ]]; then
   echo "Missing $DRAFT. Run abcd-preannotate first."
   read -r "?Press Return to close."

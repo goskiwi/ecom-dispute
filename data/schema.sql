@@ -145,6 +145,160 @@ CREATE TABLE IF NOT EXISTS claim_attachments (
     version INTEGER NOT NULL DEFAULT 1
 );
 
+CREATE TABLE IF NOT EXISTS order_fee_records (
+    fee_id TEXT PRIMARY KEY,
+    order_id TEXT NOT NULL REFERENCES orders(order_id),
+    status TEXT NOT NULL,
+    fee_type TEXT NOT NULL,
+    expected_amount REAL NOT NULL,
+    charged_amount REAL NOT NULL,
+    occurred_at TEXT NOT NULL,
+    version INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS charge_dispute_records (
+    charge_claim_id TEXT PRIMARY KEY,
+    order_id TEXT NOT NULL REFERENCES orders(order_id),
+    status TEXT NOT NULL,
+    payment_id TEXT,
+    detail TEXT NOT NULL,
+    occurred_at TEXT NOT NULL,
+    version INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS return_tracking_events (
+    tracking_event_id TEXT PRIMARY KEY,
+    order_id TEXT NOT NULL REFERENCES orders(order_id),
+    status TEXT NOT NULL,
+    detail TEXT NOT NULL,
+    occurred_at TEXT NOT NULL,
+    version INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS exchange_options (
+    exchange_option_id TEXT PRIMARY KEY,
+    order_id TEXT NOT NULL REFERENCES orders(order_id),
+    status TEXT NOT NULL,
+    target_sku TEXT,
+    price_difference REAL NOT NULL DEFAULT 0,
+    occurred_at TEXT NOT NULL,
+    version INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS order_change_options (
+    change_option_id TEXT PRIMARY KEY,
+    order_id TEXT NOT NULL REFERENCES orders(order_id),
+    status TEXT NOT NULL,
+    operation_type TEXT NOT NULL,
+    detail TEXT NOT NULL,
+    occurred_at TEXT NOT NULL,
+    version INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS product_catalog_records (
+    product_record_id TEXT PRIMARY KEY,
+    order_id TEXT NOT NULL REFERENCES orders(order_id),
+    status TEXT NOT NULL,
+    attributes_json TEXT NOT NULL,
+    occurred_at TEXT NOT NULL,
+    version INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS inventory_records (
+    inventory_id TEXT PRIMARY KEY,
+    order_id TEXT NOT NULL REFERENCES orders(order_id),
+    status TEXT NOT NULL,
+    sku_id TEXT NOT NULL,
+    available_quantity INTEGER NOT NULL,
+    restock_at TEXT,
+    occurred_at TEXT NOT NULL,
+    version INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS price_records (
+    price_record_id TEXT PRIMARY KEY,
+    order_id TEXT NOT NULL REFERENCES orders(order_id),
+    status TEXT NOT NULL,
+    purchase_price REAL,
+    current_price REAL NOT NULL,
+    competitor_price REAL,
+    occurred_at TEXT NOT NULL,
+    version INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS promotion_records (
+    promotion_id TEXT PRIMARY KEY,
+    order_id TEXT NOT NULL REFERENCES orders(order_id),
+    status TEXT NOT NULL,
+    code TEXT NOT NULL,
+    expires_at TEXT,
+    detail TEXT NOT NULL,
+    occurred_at TEXT NOT NULL,
+    version INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS shipping_option_records (
+    shipping_option_id TEXT PRIMARY KEY,
+    order_id TEXT NOT NULL REFERENCES orders(order_id),
+    status TEXT NOT NULL,
+    option_name TEXT NOT NULL,
+    amount REAL NOT NULL,
+    estimated_days INTEGER NOT NULL,
+    region TEXT NOT NULL,
+    occurred_at TEXT NOT NULL,
+    version INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS membership_records (
+    membership_id TEXT PRIMARY KEY,
+    order_id TEXT NOT NULL REFERENCES orders(order_id),
+    status TEXT NOT NULL,
+    level TEXT NOT NULL,
+    credit_balance REAL NOT NULL,
+    benefits_json TEXT NOT NULL,
+    occurred_at TEXT NOT NULL,
+    version INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS checkout_events (
+    checkout_event_id TEXT PRIMARY KEY,
+    order_id TEXT NOT NULL REFERENCES orders(order_id),
+    status TEXT NOT NULL,
+    detail TEXT NOT NULL,
+    occurred_at TEXT NOT NULL,
+    version INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS cart_events (
+    cart_event_id TEXT PRIMARY KEY,
+    order_id TEXT NOT NULL REFERENCES orders(order_id),
+    status TEXT NOT NULL,
+    detail TEXT NOT NULL,
+    occurred_at TEXT NOT NULL,
+    version INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS search_events (
+    search_event_id TEXT PRIMARY KEY,
+    order_id TEXT NOT NULL REFERENCES orders(order_id),
+    status TEXT NOT NULL,
+    query_text TEXT NOT NULL,
+    detail TEXT NOT NULL,
+    occurred_at TEXT NOT NULL,
+    version INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS site_health_events (
+    health_event_id TEXT PRIMARY KEY,
+    order_id TEXT NOT NULL REFERENCES orders(order_id),
+    status TEXT NOT NULL,
+    error_rate REAL NOT NULL,
+    p95_ms INTEGER NOT NULL,
+    detail TEXT NOT NULL,
+    occurred_at TEXT NOT NULL,
+    version INTEGER NOT NULL DEFAULT 1
+);
+
 CREATE TABLE IF NOT EXISTS policies (
     policy_id TEXT NOT NULL,
     version INTEGER NOT NULL,

@@ -51,8 +51,7 @@ def _report_metrics(report: DecisionReport) -> dict:
     usages = [
         {"agent": event.get("agent"), **event.get("telemetry", {})}
         for event in report.trace
-        if event.get("agent") in {"evidence_gap", "review"}
-        and event.get("telemetry")
+        if event.get("agent") in {"evidence_gap", "review"} and event.get("telemetry")
     ]
     return {
         "decision": report.decision,

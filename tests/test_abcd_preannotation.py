@@ -10,9 +10,10 @@ class FakePreannotationClient:
     def create_response(self, payload: dict) -> dict:
         annotation = {
             "supported": True,
-            "has_dispute": True,
-            "primary_route": "refund",
+            "has_business_exception": True,
+            "primary_route": "refund_progress",
             "acceptable_routes": [],
+            "return_reason": None,
             "evidence_turns": [0],
             "reason": "用户明确表示退款尚未到账。",
             "confidence": "high",
@@ -38,7 +39,7 @@ def test_preannotation_creates_separate_unverified_draft(tmp_path: Path) -> None
         json.dumps(
             {
                 "rater_id": "rater1",
-                "route_guide": {"refund": "退款", "other": "其他"},
+                "route_guide": {"refund_progress": "退款", "other": "其他"},
                 "items": [
                     {
                         "external_id": "abcd:1",
@@ -63,14 +64,14 @@ def test_preannotation_creates_separate_unverified_draft(tmp_path: Path) -> None
     draft = json.loads(output.read_text(encoding="utf-8"))
     assert original["items"][0]["annotation"] == {"supported": None}
     assert draft["rater_id"] == "assistant_draft"
-    assert draft["items"][0]["annotation"]["primary_route"] == "refund"
+    assert draft["items"][0]["annotation"]["primary_route"] == "refund_progress"
     assert draft["items"][0]["annotation"]["human_verified"] is False
     assert draft["items"][0]["assistant_review"]["review_tier"] == "quick_audit"
     assert result["quick_audit"] == 1
 
 
 def test_audit_escalates_boundaries_without_changing_candidate() -> None:
-    candidate = {"primary_route": "delivery"}
+    candidate = {"primary_route": "fulfillment_progress"}
     conversation = [
         {
             "speaker": "user",
@@ -80,5 +81,5 @@ def test_audit_escalates_boundaries_without_changing_candidate() -> None:
 
     reasons = _conservative_audit_reasons(candidate, conversation)
 
-    assert reasons == ["同时出现系统送达与用户未收到，复核delivery边界"]
-    assert candidate == {"primary_route": "delivery"}
+    assert reasons == ["同时出现系统送达与用户未收到，复核delivered_not_received边界"]
+    assert candidate == {"primary_route": "fulfillment_progress"}

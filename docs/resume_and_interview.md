@@ -1,69 +1,60 @@
-# EcomDispute 简历与面试表达
+# EcomDispute V3 简历与面试表达
 
 ## 项目名
 
-**EcomDispute - 证据驱动的电商争议 Agent Harness**
+**EcomDispute - 证据驱动的电商服务与站点诊断 Agent Harness**
 
 ## 简历文案
 
-- 设计 `Skill Pack → Route → Stage` 分层Harness，以4个Skill、15个Route组织资金、履约、商品售后和客服合规场景；通过YAML声明工具面与证据要求，Python实现Strategy、Adapter、Reducer和Fusion，支持业务资源独立演进。
-- 实现Conversation、EvidenceGap、Review三个真实LLM Agent：核心证据由14个只读工具确定性收集，长尾Agent仅能访问当前Route的Lazy Tool，复检Agent严格校验Evidence ID；删除无收益的全量ToolQueryAgent路径。
-- 建设AgentRunState与证据化CaseState，工具结果经StateDelta和Reducer形成时间线、事实、冲突及证据缺口；实现Case Scope注入、Schema准入、模型瞬时重试和grounding单次修复，并记录完整Trace。
-- 建设152条确定性回归案例和ABCD外部对话适配器；真实`gpt-5.6-luna`冒烟验证Conversation+Gap及Conversation+Review链路，分别获得正确Route与业务结论，同时保留Token、延迟和失败分析。
+- 设计`Skill Pack → Route → Stage`分层Harness，以7个Skill、29个Route覆盖资金、履约、退换货、订单操作、商品/促销咨询、站点故障和客服合规；YAML声明动态工具面与证据合同，Python实现Strategy、Adapter、Reducer和Fusion。
+- 实现Conversation、EvidenceGap、Review三个真实LLM Agent及29个Case-scoped Tool；Conversation输出业务异常、退货原因和商品不符双侧原文证据，Route只开放当前Stage工具，长尾Agent不能越过Lazy Tool边界。
+- 建设31表可重建业务数据与26条Route最小E2E，确定性链路26/26；构建44条相邻Route边界集，真实`gpt-5.6-luna`首轮Route 44/44、业务异常43/44、退货原因3/3，保留31.5万输入Token和唯一失败分析。
+- 将订单修改、退换货、价保和促销修复输出为带确认要求和幂等键的ActionPlan；VERIFY阶段只读，跨系统写边界不由LLM直接执行。
 
 ## 一分钟介绍
 
-EcomDispute解决的是电商争议中“对话说法、系统事实和政策版本不一致”的问题。系统先由ConversationAgent提取具体Route、业务事实和客服行为，再按Route确定性查询核心业务证据；只有存在长尾证据空间时才调用EvidenceGapAgent。所有ToolResult经过Adapter和Reducer更新CaseState，最终由确定性Strategy完成金额、SLA和责任计算。主争议之外，系统还独立执行客服错误陈述、无依据承诺和缺少升级三类合规检查；冲突案件再由ReviewAgent生成引用真实Evidence的人工复检材料。
+EcomDispute处理“对话说法、系统事实、政策规则和站点事件不一致”的电商问题。ConversationAgent先识别具体Route并抽取有原文依据的事实；Harness按Skill/Route/Stage计算动态Tool Surface，核心工具确定性收集订单、支付、退款、物流、仓库、库存、促销和站点健康证据；Strategy再完成状态机、金额、SLA和责任判断。冲突案件进入ReviewAgent，三个合规Route独立检查客服陈述、承诺和升级，最终生成Evidence、Trace、ReviewTask和受控ActionPlan。
 
-## 最有价值的架构取舍
+## 可使用的V3指标
 
-旧版让LLM规划全部工具，但在19个有效案例中与固定执行器结果和工具数量完全相同，却额外增加约21万输入Token和429秒延迟。因此新版删除全量ToolQueryAgent，将模型规划收敛到Route范围内的Evidence Gap。这个决定来自真实消融，不是为了减少Agent数量。
-
-## 可以使用的指标
-
-- 4个Skill Pack、15个Route、14个只读业务Tool。
-- 152条确定性回归案例，152/152通过。
-- 63项自动化测试通过。
-- ABCD适配器实测选择50条官方test对话。
-- `m6_refund_amount_001`真实Agent链路：Conversation + EvidenceGap，10,145输入Token、379输出Token、26.9秒模型延迟，Route与结论正确。
-- `refund_conflict_001`真实Agent链路：Conversation + Review，10,289输入Token、810输出Token、56.8秒模型延迟，Route与结论正确。
-- 8条新Route holdout首轮路由8/8，但全项Exact Match 0/8；失败集中于旧FactType本体和InteractionAct标注边界，不能表述成业务准确率。
-- 破坏性扩展Fact ontology后，第二批8条新holdout的FactType-only P/R为90.9%/100%，用户InteractionAct P/R为88.9%/100%，客服为100%/100%；全项Exact 2/8，主要受TemporalStatus边界影响。
-- Temporal v5删除旧`temporal_status`并拆分event/state与past/present/future；16条新holdout首轮全项11/16，用户BusinessFact P/R为88.9%/94.1%，用户InteractionAct为100%/100%。
-- v1.0发布后新建12条全链路E2E盲测，12个主Route的Route、Decision、Party、Review、Evidence和Tool检查均通过；三Agent相对Core未提高准确率，额外增加约5.9万输入Token和159秒累计延迟。
-- 正式120条E2E由84个独立业务模板和36个表达变体组成，首轮Live/Core均为116/120，Evidence Grounded 100%；4个失败均来自Route重叠，Gap/Review未提高准确率且增加约53万输入Token。
-- ABCD外部200条首轮总Route Accuracy 71.9%、受支持Route 66.7%、unsupported拒识92.5%，不能表述为已实现稳定跨语言泛化。
-- ABCD粗映射存在流程标签与争议Route边界不一致；已建设隐藏subflow/模型预测的双人逐对话标注、Kappa和Consensus重评分工具，人工Consensus结果尚未完成。
+- 7个Skill Pack、29个Route、29个Tool、31张SQLite表。
+- 70项自动化测试通过。
+- 26条业务Route最小E2E，确定性Route/Decision/Evidence/Tool闭环26/26。
+- 44条真实LLM边界集：Route 44/44，`has_business_exception` 43/44，`return_reason` 3/3，API错误0，模型修复0。
+- 边界集累计Input/Output Token为314,780/8,050，模型累计延迟614,884ms。
+- V3 ABCD从完整96个subflow轮转抽样200条，不再使用subflow粗映射；人工Consensus未完成前不报告外部Route Accuracy。
 
 ## 不能使用的表述
 
-- 生产级电商裁决平台。
+- 生产级电商自动执行平台。
 - 线上业务准确率100%。
-- 真实企业订单或客服流量。
-- 152条真实LLM准确率。
-- 日均处理量、采纳率或人工提效比例。
-- 多地区、多语言已经完成。
-- ReviewAgent提升人工审核效率（40条A/B尚未完成人工评分）。
-- 所有14个工具都是远程微服务。
+- 26条或44条代表真实生产分布。
+- ABCD V3外部准确率已经得到。
+- ReviewAgent已经提高人工效率。
+- ActionPlan已经连接真实退款、扣款或订单修改接口。
 
 ## 常见追问
 
-### 为什么不是所有步骤都交给LLM？
+### 为什么Route从15个扩大到29个？
 
-金额、时间、政策版本和责任条件是确定性业务规则；交给LLM会降低可复现性。LLM只用于自然语言、证据缺口和复检材料这三类非结构化任务。
+不是按关键词拆分。每个Route必须对应不同证据、工具面或确定性策略。例如结账失败没有成功扣款时查结账事件；已扣款但无有效订单时查支付、订单和撤销记录；两者不能共用同一入口。完整边界见根目录V3本体文件。
 
-### 为什么需要Skill和Route？
+### 如何区分买家选错和商家错发？
 
-Skill是领域能力包，Route是具体业务场景。4个Skill拥有不同证据类型和责任体系，15个Route各自声明核心工具、Lazy Tool、证据要求和Strategy。新增Route不修改Harness主循环。
+买家选错、不合身或不喜欢进入`return_request`并填写`return_reason`。只有原文明示下单值与实收值不一致，才能进入`received_item_mismatch`；ordered/received值还要通过原文grounding校验。
 
-### 为什么使用YAML？
+### 为什么删除`merchant_not_shipped` Route？
 
-YAML只保存稳定声明并由Pydantic加载；真正业务判断仍在Python。这样Runtime不硬编码每个Route，同时避免在配置中发明复杂逻辑DSL。
+它与通用履约进度使用相同订单、物流和政策工具。V3由`fulfillment_progress`进入，确定性Strategy再根据是否揽收与SLA输出商家延迟或承运商延迟，避免入口重叠。
 
-### 152/152说明什么？
+### 为什么保留确定性Strategy？
 
-只说明构造数据、工具和确定性Strategy回归一致，不说明LLM或线上准确率。LLM能力必须使用独立盲测单独报告。
+金额、状态机、时间阈值、政策版本和责任条件需要可复现。LLM负责语言和开放性证据，不能自由计算或覆盖业务事实。
+
+### 44/44说明什么？
+
+只说明冻结本体下这44条预提交边界案例的Route全部命中。样本规模小且为人工最小对照，不能外推生产；唯一业务异常错误也被保留，没有继续针对本集调Prompt。
 
 ### 当前最大问题是什么？
 
-真实LLM串行成本和延迟较高，尤其复检链路约57秒；独立Route盲测仍未完成。这些是下一阶段评测和优化重点。
+每次Conversation调用注入完整Route与Fact合同，平均输入约7千Token；26条确定性E2E也只覆盖每Route一个主分支。下一步应扩展策略状态矩阵，并用全新评测集验证分层Skill Router能否降Token且不降准确率。

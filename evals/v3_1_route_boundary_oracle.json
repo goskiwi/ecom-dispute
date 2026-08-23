@@ -1,0 +1,181 @@
+{
+  "v3-boundary-clear-refund_progress": {
+    "route_type": "refund_progress",
+    "has_business_exception": false
+  },
+  "v3-boundary-clear-refund_amount_mismatch": {
+    "route_type": "refund_amount_mismatch",
+    "has_business_exception": true
+  },
+  "v3-boundary-clear-duplicate_charge": {
+    "route_type": "duplicate_charge",
+    "has_business_exception": true
+  },
+  "v3-boundary-clear-payment_captured_order_failed": {
+    "route_type": "payment_captured_order_failed",
+    "has_business_exception": true
+  },
+  "v3-boundary-clear-unrecognized_charge": {
+    "route_type": "unrecognized_charge",
+    "has_business_exception": true
+  },
+  "v3-boundary-clear-order_fee_dispute": {
+    "route_type": "order_fee_dispute",
+    "has_business_exception": true
+  },
+  "v3-boundary-clear-fulfillment_progress": {
+    "route_type": "fulfillment_progress",
+    "has_business_exception": true
+  },
+  "v3-boundary-clear-delivered_not_received": {
+    "route_type": "delivered_not_received",
+    "has_business_exception": true
+  },
+  "v3-boundary-clear-order_cancellation": {
+    "route_type": "order_cancellation",
+    "has_business_exception": true
+  },
+  "v3-boundary-clear-return_request": {
+    "route_type": "return_request",
+    "has_business_exception": false,
+    "return_reason": "fit_issue"
+  },
+  "v3-boundary-clear-return_progress": {
+    "route_type": "return_progress",
+    "has_business_exception": false
+  },
+  "v3-boundary-clear-exchange_request": {
+    "route_type": "exchange_request",
+    "has_business_exception": false
+  },
+  "v3-boundary-clear-received_item_mismatch": {
+    "route_type": "received_item_mismatch",
+    "has_business_exception": true
+  },
+  "v3-boundary-clear-missing_item": {
+    "route_type": "missing_item",
+    "has_business_exception": true
+  },
+  "v3-boundary-clear-item_condition_issue": {
+    "route_type": "item_condition_issue",
+    "has_business_exception": true
+  },
+  "v3-boundary-clear-order_management": {
+    "route_type": "order_management",
+    "has_business_exception": false
+  },
+  "v3-boundary-clear-product_information": {
+    "route_type": "product_information",
+    "has_business_exception": false
+  },
+  "v3-boundary-clear-inventory_availability": {
+    "route_type": "inventory_availability",
+    "has_business_exception": false
+  },
+  "v3-boundary-clear-price_adjustment": {
+    "route_type": "price_adjustment",
+    "has_business_exception": false
+  },
+  "v3-boundary-clear-promotion_support": {
+    "route_type": "promotion_support",
+    "has_business_exception": true
+  },
+  "v3-boundary-clear-shipping_options": {
+    "route_type": "shipping_options",
+    "has_business_exception": false
+  },
+  "v3-boundary-clear-membership_support": {
+    "route_type": "membership_support",
+    "has_business_exception": true
+  },
+  "v3-boundary-clear-checkout_issue": {
+    "route_type": "checkout_issue",
+    "has_business_exception": true
+  },
+  "v3-boundary-clear-cart_issue": {
+    "route_type": "cart_issue",
+    "has_business_exception": true
+  },
+  "v3-boundary-clear-search_issue": {
+    "route_type": "search_issue",
+    "has_business_exception": true
+  },
+  "v3-boundary-clear-site_performance": {
+    "route_type": "site_performance",
+    "has_business_exception": true
+  },
+  "v3-boundary-pair-buyer-color": {
+    "route_type": "return_request",
+    "has_business_exception": false,
+    "return_reason": "buyer_selected_wrong_variant"
+  },
+  "v3-boundary-pair-seller-color": {
+    "route_type": "received_item_mismatch",
+    "has_business_exception": true
+  },
+  "v3-boundary-pair-fit-size": {
+    "route_type": "return_request",
+    "has_business_exception": false,
+    "return_reason": "fit_issue"
+  },
+  "v3-boundary-pair-seller-size": {
+    "route_type": "received_item_mismatch",
+    "has_business_exception": true
+  },
+  "v3-boundary-pair-refund-after-return": {
+    "route_type": "refund_progress",
+    "has_business_exception": true
+  },
+  "v3-boundary-pair-return-warehouse": {
+    "route_type": "return_progress",
+    "has_business_exception": true
+  },
+  "v3-boundary-pair-inventory-cart": {
+    "route_type": "inventory_availability",
+    "has_business_exception": false
+  },
+  "v3-boundary-pair-cart-state": {
+    "route_type": "cart_issue",
+    "has_business_exception": true
+  },
+  "v3-boundary-pair-checkout-no-charge": {
+    "route_type": "checkout_issue",
+    "has_business_exception": true
+  },
+  "v3-boundary-pair-captured-no-order": {
+    "route_type": "payment_captured_order_failed",
+    "has_business_exception": true
+  },
+  "v3-boundary-pair-shipping-before-order": {
+    "route_type": "shipping_options",
+    "has_business_exception": false
+  },
+  "v3-boundary-pair-shipping-fee-charged": {
+    "route_type": "order_fee_dispute",
+    "has_business_exception": true
+  },
+  "v3-boundary-pair-not-arrived": {
+    "route_type": "fulfillment_progress",
+    "has_business_exception": true
+  },
+  "v3-boundary-pair-delivered-missing": {
+    "route_type": "delivered_not_received",
+    "has_business_exception": true
+  },
+  "v3-boundary-unsupported-password": {
+    "route_type": "other",
+    "has_business_exception": false
+  },
+  "v3-boundary-unsupported-two-factor": {
+    "route_type": "other",
+    "has_business_exception": false
+  },
+  "v3-boundary-unsupported-credit-extension": {
+    "route_type": "other",
+    "has_business_exception": false
+  },
+  "v3-boundary-unsupported-identity-name": {
+    "route_type": "other",
+    "has_business_exception": false
+  }
+}

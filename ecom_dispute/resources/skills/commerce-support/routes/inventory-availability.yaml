@@ -1,0 +1,43 @@
+route_id: inventory-availability
+name: 库存可用性
+report_type: inventory_availability
+match:
+  description: 缺货、补货时间、到货提醒和预订能力。
+  business_types:
+  - inventory_availability
+  positive_examples:
+  - 这条牛仔裤什么时候补货
+  negative_examples:
+  - 我想了解商品材质
+start_stage: ANALYZE
+core_tools: &id001
+- get_inventory
+lazy_tools: []
+required_evidence:
+- conversation
+- inventory
+optional_evidence: []
+allowed_decisions:
+- inventory_available
+- inventory_unavailable
+- inventory_backorder_available
+- manual_review
+decision_strategy: inventory_availability
+stages:
+  ANALYZE:
+    mode: agent
+    objective: 提取库存可用性的用户主张、客服行为和关键边界
+    instruction_file: stages/analyze.md
+    default_next: VERIFY
+  VERIFY:
+    mode: deterministic
+    objective: 查询库存可用性所需业务证据
+    tools: *id001
+    default_next: DECIDE
+  DECIDE:
+    mode: deterministic
+    objective: 依据证据和政策执行库存可用性确定性策略
+    default_next: FUSE_AND_REVIEW
+  FUSE_AND_REVIEW:
+    mode: deterministic
+    objective: 合并证据冲突并创建必要的人工复检任务

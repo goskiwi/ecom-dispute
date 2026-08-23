@@ -1,32 +1,32 @@
 # Review A/B人工评审说明
 
-评审文件：`evals/formal_review_40_blind_form.json`
+评审文件：`evals/v3_review_blind_form.json`
 
 两位评审的本地文件已经生成：
 
 ```text
-evals/formal_review_40_rater1.json
-evals/formal_review_40_rater2.json
+evals/v3_review_rater1.json
+evals/v3_review_rater2.json
 ```
 
 这两个文件和A/B key已加入`.gitignore`，评审完成前不要打开：
 
 ```text
-evals/formal_review_40_ab_key.json
+evals/v3_review_ab_key.json
 ```
 
 评审员1启动自动保存页面：
 
 ```bash
 uv run python -m ecom_dispute review-ab-web \
-  --form evals/formal_review_40_rater1.json --port 8887
+  --form evals/v3_review_rater1.json --port 8887
 ```
 
 评审员2使用第二份文件和不同端口：
 
 ```bash
 uv run python -m ecom_dispute review-ab-web \
-  --form evals/formal_review_40_rater2.json --port 8888
+  --form evals/v3_review_rater2.json --port 8888
 ```
 
 ## 每个选项评分

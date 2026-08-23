@@ -1,0 +1,50 @@
+route_id: received-item-mismatch
+name: 实收商品与订单不符
+report_type: received_item_mismatch
+match:
+  description: 必须明确比较下单与实收SKU、颜色、尺码、型号。
+  business_types:
+  - received_item_mismatch
+  positive_examples:
+  - 下单白色实际收到黑色
+  negative_examples:
+  - 颜色不喜欢但没有说商家错发
+start_stage: ANALYZE
+core_tools: &id001
+- get_order
+- get_order_items
+- get_warehouse_pack_record
+- get_claim_attachments
+- read_policy
+lazy_tools: []
+required_evidence:
+- conversation
+- order
+- order_item
+- warehouse_pack
+- policy
+optional_evidence:
+- claim_attachment
+allowed_decisions:
+- received_item_mismatch_confirmed
+- received_item_mismatch_unverified
+- manual_review
+decision_strategy: received_item_mismatch
+stages:
+  ANALYZE:
+    mode: agent
+    objective: 提取实收商品与订单不符的用户主张、客服行为和关键边界
+    instruction_file: stages/analyze.md
+    default_next: VERIFY
+  VERIFY:
+    mode: deterministic
+    objective: 查询实收商品与订单不符所需业务证据
+    tools: *id001
+    default_next: DECIDE
+  DECIDE:
+    mode: deterministic
+    objective: 依据证据和政策执行实收商品与订单不符确定性策略
+    default_next: FUSE_AND_REVIEW
+  FUSE_AND_REVIEW:
+    mode: deterministic
+    objective: 合并证据冲突并创建必要的人工复检任务

@@ -1,0 +1,1208 @@
+{
+  "source": "ABCD v1.1 official dataset",
+  "schema_version": 3,
+  "case_count": 200,
+  "selection_method": "round_robin_across_all_subflows_no_route_oracle",
+  "items": [
+    {
+      "external_id": "abcd:1000",
+      "split": "train",
+      "subflow": "status_credit_missing",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10000",
+      "split": "train",
+      "subflow": "cost",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10001",
+      "split": "train",
+      "subflow": "out_of_stock_general",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10002",
+      "split": "train",
+      "subflow": "pricing_4",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10003",
+      "split": "train",
+      "subflow": "manage_cancel",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10004",
+      "split": "train",
+      "subflow": "status_shipping_question",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10006",
+      "split": "train",
+      "subflow": "membership_3",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10007",
+      "split": "train",
+      "subflow": "search_results",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10008",
+      "split": "train",
+      "subflow": "out_of_stock_general",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10009",
+      "split": "train",
+      "subflow": "pricing_3",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10010",
+      "split": "dev",
+      "subflow": "status_service_removed",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10011",
+      "split": "train",
+      "subflow": "missing",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10012",
+      "split": "test",
+      "subflow": "refund_status",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10013",
+      "split": "train",
+      "subflow": "shopping_cart",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10014",
+      "split": "test",
+      "subflow": "membership_4",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10015",
+      "split": "train",
+      "subflow": "manage",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10016",
+      "split": "train",
+      "subflow": "mistimed_billing_never_bought",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10017",
+      "split": "train",
+      "subflow": "return_size",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10018",
+      "split": "train",
+      "subflow": "status_due_date",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10019",
+      "split": "train",
+      "subflow": "credit_card",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10020",
+      "split": "train",
+      "subflow": "recover_username",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10021",
+      "split": "train",
+      "subflow": "manage",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10022",
+      "split": "dev",
+      "subflow": "missing",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10023",
+      "split": "train",
+      "subflow": "out_of_stock_one_item",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10024",
+      "split": "dev",
+      "subflow": "slow_speed",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10025",
+      "split": "train",
+      "subflow": "mistimed_billing_already_returned",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10026",
+      "split": "train",
+      "subflow": "mistimed_billing_never_bought",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10027",
+      "split": "train",
+      "subflow": "pricing_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10028",
+      "split": "train",
+      "subflow": "jeans_other_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10029",
+      "split": "train",
+      "subflow": "return_stain",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10030",
+      "split": "train",
+      "subflow": "jacket_how_3",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10031",
+      "split": "dev",
+      "subflow": "status",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10033",
+      "split": "train",
+      "subflow": "refund_initiate",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10034",
+      "split": "dev",
+      "subflow": "status_delivery_time",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10035",
+      "split": "train",
+      "subflow": "return_size",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10036",
+      "split": "train",
+      "subflow": "bad_price_yesterday",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10037",
+      "split": "train",
+      "subflow": "manage_extension",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10038",
+      "split": "dev",
+      "subflow": "shirt_other_4",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10039",
+      "split": "train",
+      "subflow": "shopping_cart",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10041",
+      "split": "train",
+      "subflow": "status_shipping_question",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10042",
+      "split": "train",
+      "subflow": "membership_3",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10043",
+      "split": "train",
+      "subflow": "reset_2fa",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10044",
+      "split": "dev",
+      "subflow": "bad_price_competitor",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10045",
+      "split": "train",
+      "subflow": "manage_pay_bill",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10046",
+      "split": "train",
+      "subflow": "status",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10047",
+      "split": "train",
+      "subflow": "credit_card",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10048",
+      "split": "train",
+      "subflow": "cost",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10049",
+      "split": "train",
+      "subflow": "recover_password",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1005",
+      "split": "train",
+      "subflow": "membership_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10050",
+      "split": "train",
+      "subflow": "status_service_added",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10053",
+      "split": "train",
+      "subflow": "recover_password",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10054",
+      "split": "train",
+      "subflow": "membership_4",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10056",
+      "split": "dev",
+      "subflow": "membership_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10058",
+      "split": "train",
+      "subflow": "promo_code_out_of_date",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10059",
+      "split": "test",
+      "subflow": "manage_extension",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10060",
+      "split": "train",
+      "subflow": "status_service_removed",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10061",
+      "split": "test",
+      "subflow": "manage_upgrade",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10062",
+      "split": "train",
+      "subflow": "pricing_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10064",
+      "split": "train",
+      "subflow": "out_of_stock_one_item",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10065",
+      "split": "test",
+      "subflow": "recover_username",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10067",
+      "split": "train",
+      "subflow": "manage_dispute_bill",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10068",
+      "split": "train",
+      "subflow": "status_service_added",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10070",
+      "split": "train",
+      "subflow": "return_stain",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10071",
+      "split": "train",
+      "subflow": "bad_price_competitor",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10076",
+      "split": "train",
+      "subflow": "shirt_other_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10077",
+      "split": "dev",
+      "subflow": "return_color",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10079",
+      "split": "train",
+      "subflow": "reset_2fa",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10080",
+      "split": "train",
+      "subflow": "status_due_date",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10081",
+      "split": "dev",
+      "subflow": "mistimed_billing_already_returned",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10082",
+      "split": "test",
+      "subflow": "search_results",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10083",
+      "split": "test",
+      "subflow": "membership_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10085",
+      "split": "train",
+      "subflow": "promo_code_invalid",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10088",
+      "split": "train",
+      "subflow": "refund_status",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10092",
+      "split": "dev",
+      "subflow": "status_quantity",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10093",
+      "split": "train",
+      "subflow": "manage_create",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1010",
+      "split": "train",
+      "subflow": "status_due_amount",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10100",
+      "split": "train",
+      "subflow": "slow_speed",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10101",
+      "split": "train",
+      "subflow": "manage_cancel",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10103",
+      "split": "train",
+      "subflow": "manage_pay_bill",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10104",
+      "split": "train",
+      "subflow": "jacket_how_3",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10108",
+      "split": "test",
+      "subflow": "policy_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1011",
+      "split": "train",
+      "subflow": "pricing_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10110",
+      "split": "test",
+      "subflow": "shirt_how_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10111",
+      "split": "train",
+      "subflow": "status_quantity",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10115",
+      "split": "train",
+      "subflow": "manage_create",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10118",
+      "split": "train",
+      "subflow": "bad_price_yesterday",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10119",
+      "split": "train",
+      "subflow": "boots_other_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10122",
+      "split": "train",
+      "subflow": "timing_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10126",
+      "split": "train",
+      "subflow": "refund_initiate",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10129",
+      "split": "dev",
+      "subflow": "status_due_amount",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10132",
+      "split": "train",
+      "subflow": "boots_other_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10133",
+      "split": "train",
+      "subflow": "status_credit_missing",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10135",
+      "split": "train",
+      "subflow": "jeans_how_3",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10137",
+      "split": "train",
+      "subflow": "bad_price_yesterday",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10141",
+      "split": "test",
+      "subflow": "jeans_how_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10145",
+      "split": "test",
+      "subflow": "shirt_other_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10146",
+      "split": "train",
+      "subflow": "timing_3",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10148",
+      "split": "train",
+      "subflow": "refund_update",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10149",
+      "split": "train",
+      "subflow": "status_payment_method",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10152",
+      "split": "train",
+      "subflow": "refund_update",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10155",
+      "split": "train",
+      "subflow": "bad_price_competitor",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10159",
+      "split": "train",
+      "subflow": "status_payment_method",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10161",
+      "split": "train",
+      "subflow": "boots_how_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10172",
+      "split": "train",
+      "subflow": "timing_3",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10176",
+      "split": "train",
+      "subflow": "return_color",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10181",
+      "split": "train",
+      "subflow": "jeans_how_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10185",
+      "split": "train",
+      "subflow": "policy_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10186",
+      "split": "test",
+      "subflow": "jeans_other_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10187",
+      "split": "train",
+      "subflow": "jacket_how_4",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10190",
+      "split": "train",
+      "subflow": "manage_upgrade",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10191",
+      "split": "dev",
+      "subflow": "policy_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1020",
+      "split": "test",
+      "subflow": "status_questions",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10204",
+      "split": "train",
+      "subflow": "shirt_how_3",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10205",
+      "split": "train",
+      "subflow": "pricing_3",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10209",
+      "split": "train",
+      "subflow": "policy_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10217",
+      "split": "train",
+      "subflow": "manage_dispute_bill",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10231",
+      "split": "train",
+      "subflow": "jeans_other_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10241",
+      "split": "train",
+      "subflow": "policy_3",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10242",
+      "split": "train",
+      "subflow": "pricing_4",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10244",
+      "split": "train",
+      "subflow": "shirt_other_3",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10249",
+      "split": "train",
+      "subflow": "status_delivery_time",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10250",
+      "split": "train",
+      "subflow": "jeans_how_3",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10252",
+      "split": "train",
+      "subflow": "shirt_other_4",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10253",
+      "split": "train",
+      "subflow": "boots_other_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10255",
+      "split": "train",
+      "subflow": "boots_other_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10257",
+      "split": "train",
+      "subflow": "boots_how_4",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10260",
+      "split": "train",
+      "subflow": "status_mystery_fee",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10261",
+      "split": "train",
+      "subflow": "jeans_other_4",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10268",
+      "split": "dev",
+      "subflow": "promo_code_out_of_date",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10276",
+      "split": "train",
+      "subflow": "shirt_how_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10277",
+      "split": "train",
+      "subflow": "policy_4",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10284",
+      "split": "train",
+      "subflow": "timing_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10299",
+      "split": "train",
+      "subflow": "boots_other_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10302",
+      "split": "train",
+      "subflow": "promo_code_invalid",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10310",
+      "split": "train",
+      "subflow": "jacket_other_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10324",
+      "split": "train",
+      "subflow": "timing_4",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10329",
+      "split": "test",
+      "subflow": "membership_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10333",
+      "split": "train",
+      "subflow": "shirt_other_3",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10334",
+      "split": "train",
+      "subflow": "jacket_how_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10340",
+      "split": "train",
+      "subflow": "boots_other_3",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10346",
+      "split": "train",
+      "subflow": "jeans_other_3",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10351",
+      "split": "train",
+      "subflow": "jeans_other_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10359",
+      "split": "train",
+      "subflow": "boots_other_4",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10360",
+      "split": "train",
+      "subflow": "manage_downgrade",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10363",
+      "split": "train",
+      "subflow": "jacket_how_4",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10373",
+      "split": "train",
+      "subflow": "timing_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10387",
+      "split": "train",
+      "subflow": "policy_3",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10391",
+      "split": "test",
+      "subflow": "status_mystery_fee",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10393",
+      "split": "train",
+      "subflow": "boots_other_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1040",
+      "split": "train",
+      "subflow": "manage_change_address",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10403",
+      "split": "dev",
+      "subflow": "boots_how_3",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10425",
+      "split": "train",
+      "subflow": "shirt_other_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10443",
+      "split": "train",
+      "subflow": "boots_how_4",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1045",
+      "split": "test",
+      "subflow": "manage_payment_method",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10452",
+      "split": "train",
+      "subflow": "jacket_other_4",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10453",
+      "split": "train",
+      "subflow": "timing_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10466",
+      "split": "train",
+      "subflow": "manage_downgrade",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10483",
+      "split": "train",
+      "subflow": "jacket_other_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10495",
+      "split": "train",
+      "subflow": "jacket_other_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10499",
+      "split": "train",
+      "subflow": "timing_4",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10532",
+      "split": "dev",
+      "subflow": "shirt_how_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10546",
+      "split": "dev",
+      "subflow": "boots_other_3",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10568",
+      "split": "dev",
+      "subflow": "jeans_other_3",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:10587",
+      "split": "train",
+      "subflow": "jeans_other_4",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1068",
+      "split": "train",
+      "subflow": "manage_payment_method",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1076",
+      "split": "dev",
+      "subflow": "shirt_how_4",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:108",
+      "split": "train",
+      "subflow": "jacket_how_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1085",
+      "split": "train",
+      "subflow": "policy_4",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1088",
+      "split": "train",
+      "subflow": "manage_change_phone",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:109",
+      "split": "train",
+      "subflow": "pricing_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1093",
+      "split": "train",
+      "subflow": "shirt_other_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1096",
+      "split": "train",
+      "subflow": "manage_change_name",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1106",
+      "split": "dev",
+      "subflow": "manage_change_name",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:111",
+      "split": "train",
+      "subflow": "manage_change_phone",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1133",
+      "split": "train",
+      "subflow": "jeans_how_4",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1150",
+      "split": "dev",
+      "subflow": "shirt_how_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:116",
+      "split": "train",
+      "subflow": "status_questions",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1180",
+      "split": "train",
+      "subflow": "boots_how_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1185",
+      "split": "train",
+      "subflow": "jacket_other_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1212",
+      "split": "train",
+      "subflow": "boots_how_3",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1224",
+      "split": "train",
+      "subflow": "boots_how_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1240",
+      "split": "train",
+      "subflow": "jacket_other_3",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1281",
+      "split": "train",
+      "subflow": "boots_how_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1289",
+      "split": "train",
+      "subflow": "manage_change_address",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1335",
+      "split": "train",
+      "subflow": "jacket_how_2",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1342",
+      "split": "train",
+      "subflow": "jeans_how_4",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1364",
+      "split": "train",
+      "subflow": "jacket_how_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1438",
+      "split": "train",
+      "subflow": "jacket_other_4",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1447",
+      "split": "test",
+      "subflow": "boots_how_3",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1479",
+      "split": "train",
+      "subflow": "jeans_how_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1557",
+      "split": "train",
+      "subflow": "boots_other_4",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1560",
+      "split": "test",
+      "subflow": "jeans_how_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1561",
+      "split": "train",
+      "subflow": "boots_how_4",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1599",
+      "split": "train",
+      "subflow": "jacket_other_3",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1605",
+      "split": "dev",
+      "subflow": "shirt_how_4",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:1617",
+      "split": "train",
+      "subflow": "boots_how_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:168",
+      "split": "train",
+      "subflow": "boots_how_1",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:207",
+      "split": "train",
+      "subflow": "status_delivery_date",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:2314",
+      "split": "train",
+      "subflow": "shirt_how_3",
+      "expected_action_present": true
+    },
+    {
+      "external_id": "abcd:274",
+      "split": "train",
+      "subflow": "status_delivery_date",
+      "expected_action_present": true
+    }
+  ]
+}

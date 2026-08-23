@@ -1,0 +1,53 @@
+route_id: return-progress
+name: 退货处理与入库进度
+report_type: return_progress
+match:
+  description: 已提交退货后的标签、寄回、仓库入库、验货和闭环状态。
+  business_types:
+  - return_progress
+  positive_examples:
+  - 退货寄出一周仓库还没收到
+  negative_examples:
+  - 这个商品还能退吗
+start_stage: ANALYZE
+core_tools: &id001
+- get_order
+- get_return_request
+- get_return_tracking
+- get_refund_records
+- read_policy
+lazy_tools: []
+required_evidence:
+- conversation
+- return_request
+- return_tracking
+optional_evidence:
+- refund
+- policy
+allowed_decisions:
+- return_requested
+- return_label_created
+- return_in_transit
+- return_received
+- return_inspected
+- return_closed
+- manual_review
+decision_strategy: return_progress
+stages:
+  ANALYZE:
+    mode: agent
+    objective: 提取退货处理与入库进度的用户主张、客服行为和关键边界
+    instruction_file: stages/analyze.md
+    default_next: VERIFY
+  VERIFY:
+    mode: deterministic
+    objective: 查询退货处理与入库进度所需业务证据
+    tools: *id001
+    default_next: DECIDE
+  DECIDE:
+    mode: deterministic
+    objective: 依据证据和政策执行退货处理与入库进度确定性策略
+    default_next: FUSE_AND_REVIEW
+  FUSE_AND_REVIEW:
+    mode: deterministic
+    objective: 合并证据冲突并创建必要的人工复检任务

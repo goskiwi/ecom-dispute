@@ -8,7 +8,7 @@ from ..base import DecisionOutcome
 
 
 @dataclass(frozen=True)
-class DeliveryDelayStrategy:
+class FulfillmentProgressStrategy:
     def decide(
         self, case: CaseInput, state: CaseState, missing_evidence: tuple[str, ...]
     ) -> DecisionOutcome:
@@ -44,7 +44,7 @@ class DeliveryDelayStrategy:
                 review_recommended=True,
             )
             return DecisionOutcome(
-                decision="delivery_event_conflict",
+                decision="fulfillment_event_conflict",
                 recommended_action="核验订单状态与物流轨迹后人工复检",
                 findings=[finding],
                 conflicts=[conflict],
@@ -55,27 +55,27 @@ class DeliveryDelayStrategy:
             if elapsed_hours > rules["delivery_grace_hours"]:
                 return DecisionOutcome(
                     responsible_party="logistics_provider",
-                    decision="delivery_completed_late",
+                    decision="fulfillment_completed_late",
                     recommended_action="记录物流超时并按政策处理补偿",
                     review_required=False,
                 )
             return DecisionOutcome(
                 responsible_party="none",
-                decision="delivery_completed_on_time",
+                decision="fulfillment_completed_on_time",
                 recommended_action="向用户提供送达时间和物流凭证",
                 review_required=False,
             )
         if exceptions and any(item.facts.get("detail") == "weather" for item in exceptions):
             return DecisionOutcome(
                 responsible_party="none",
-                decision="delivery_delay_force_majeure",
+                decision="fulfillment_force_majeure",
                 recommended_action="同步不可抗力原因和新的预计送达时间",
                 review_required=False,
             )
         if exceptions:
             return DecisionOutcome(
                 responsible_party="logistics_provider",
-                decision="delivery_delay_logistics",
+                decision="fulfillment_delayed_carrier",
                 recommended_action="联系物流方处理异常并向用户同步进度",
                 review_required=False,
             )
@@ -84,13 +84,13 @@ class DeliveryDelayStrategy:
             if elapsed_hours > rules["merchant_ship_hours"]:
                 return DecisionOutcome(
                     responsible_party="merchant",
-                    decision="delivery_delay_merchant",
+                    decision="fulfillment_delayed_merchant",
                     recommended_action="催促商家发货并按政策处理超时",
                     review_required=False,
                 )
             return DecisionOutcome(
                 responsible_party="none",
-                decision="delivery_in_transit_within_sla",
+                decision="fulfillment_within_sla",
                 recommended_action="订单仍在商家发货时限内",
                 review_required=False,
             )
@@ -98,14 +98,13 @@ class DeliveryDelayStrategy:
         if elapsed_hours > rules["delivery_grace_hours"]:
             return DecisionOutcome(
                 responsible_party="logistics_provider",
-                decision="delivery_delay_logistics",
+                decision="fulfillment_delayed_carrier",
                 recommended_action="联系物流方处理超时并向用户同步进度",
                 review_required=False,
             )
         return DecisionOutcome(
             responsible_party="none",
-            decision="delivery_in_transit_within_sla",
+            decision="fulfillment_within_sla",
             recommended_action="物流仍在政策宽限时限内，继续跟踪",
             review_required=False,
         )
-

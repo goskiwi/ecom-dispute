@@ -1,0 +1,18 @@
+tool_id: get_site_health
+name: 查询站点错误率、延迟和事故状态
+description: 查询站点错误率、延迟和事故状态。
+input_schema:
+  type: object
+  additionalProperties: false
+  properties: {}
+output_schema:
+  type: object
+  additionalProperties: true
+timeout_ms: 3000
+scope_bindings:
+  order_id:
+    source: case.order_id
+    mode: RUNTIME_INJECT
+executor: get_site_health
+result_adapter: get_site_health
+error_mapping: {}

@@ -62,12 +62,8 @@ class AgentRunState(BaseModel):
         }
         expected = transitions.get(self.current_stage)
         if expected != stage:
-            raise ValueError(
-                f"invalid harness stage transition: {self.current_stage} -> {stage}"
-            )
-        return self.model_copy(
-            update={"current_stage": stage, "turn_count": self.turn_count + 1}
-        )
+            raise ValueError(f"invalid harness stage transition: {self.current_stage} -> {stage}")
+        return self.model_copy(update={"current_stage": stage, "turn_count": self.turn_count + 1})
 
     def add_tool_calls(self, count: int) -> AgentRunState:
         if count < 0:
@@ -78,5 +74,3 @@ class AgentRunState(BaseModel):
         if self.current_stage != HarnessStage.FUSE_AND_REVIEW:
             raise ValueError("run state can only complete after FUSE_AND_REVIEW")
         return self.model_copy(update={"status": RunStatus.COMPLETED})
-
-

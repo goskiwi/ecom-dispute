@@ -1,17 +1,49 @@
 route_id: missing-item
-name: 少件争议
+name: 少件
 report_type: missing_item
-match: {description: 用户收到的商品数量少于订单数量。, business_types: [missing_item], positive_examples: [订单两件只收到一件], negative_examples: [收到的商品型号不对]}
+match:
+  description: 实际收到数量少于订单数量。
+  business_types:
+  - missing_item
+  positive_examples:
+  - 订单两件只收到一件
+  negative_examples:
+  - 整单尚未送达
 start_stage: ANALYZE
-core_tools: [get_order, get_order_items, get_warehouse_pack_record, get_claim_attachments, read_policy]
+core_tools: &id001
+- get_order
+- get_order_items
+- get_warehouse_pack_record
+- get_claim_attachments
+- read_policy
 lazy_tools: []
-required_evidence: [conversation, order, order_item, warehouse_pack, policy]
-optional_evidence: [claim_attachment]
-allowed_decisions: [missing_item_warehouse_shortage, missing_item_not_verified, manual_review]
+required_evidence:
+- conversation
+- order
+- order_item
+- warehouse_pack
+- policy
+optional_evidence: []
+allowed_decisions:
+- missing_item_warehouse_shortage
+- missing_item_not_verified
+- manual_review
 decision_strategy: missing_item
 stages:
-  ANALYZE: {mode: agent, objective: 提取用户声称缺少的数量和商品, instruction_file: stages/analyze.md, default_next: VERIFY}
-  VERIFY: {mode: deterministic, objective: 查询订单数量、仓库扫描、附件和政策, tools: [get_order, get_order_items, get_warehouse_pack_record, get_claim_attachments, read_policy], default_next: DECIDE}
-  DECIDE: {mode: deterministic, objective: 比较下单数量和打包数量, default_next: FUSE_AND_REVIEW}
-  FUSE_AND_REVIEW: {mode: deterministic, objective: 合并数量与附件证据}
-
+  ANALYZE:
+    mode: agent
+    objective: 提取少件的用户主张、客服行为和关键边界
+    instruction_file: stages/analyze.md
+    default_next: VERIFY
+  VERIFY:
+    mode: deterministic
+    objective: 查询少件所需业务证据
+    tools: *id001
+    default_next: DECIDE
+  DECIDE:
+    mode: deterministic
+    objective: 依据证据和政策执行少件确定性策略
+    default_next: FUSE_AND_REVIEW
+  FUSE_AND_REVIEW:
+    mode: deterministic
+    objective: 合并证据冲突并创建必要的人工复检任务

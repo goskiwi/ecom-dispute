@@ -1,0 +1,53 @@
+route_id: exchange-request
+name: 换货申请
+report_type: exchange_request
+match:
+  description: 换颜色、尺码或商品，需要库存、差价和资格证据。
+  business_types:
+  - exchange_request
+  positive_examples:
+  - 想把9码换成10码
+  negative_examples:
+  - 只想退款不换货
+start_stage: ANALYZE
+core_tools: &id001
+- get_order
+- get_order_items
+- get_return_request
+- get_exchange_options
+- get_inventory
+- read_policy
+lazy_tools: []
+required_evidence:
+- conversation
+- order
+- order_item
+- exchange_request
+- inventory
+- policy
+optional_evidence: []
+allowed_decisions:
+- exchange_available
+- exchange_inventory_unavailable
+- exchange_price_difference
+- exchange_created
+- manual_review
+decision_strategy: exchange_request
+stages:
+  ANALYZE:
+    mode: agent
+    objective: 提取换货申请的用户主张、客服行为和关键边界
+    instruction_file: stages/analyze.md
+    default_next: VERIFY
+  VERIFY:
+    mode: deterministic
+    objective: 查询换货申请所需业务证据
+    tools: *id001
+    default_next: DECIDE
+  DECIDE:
+    mode: deterministic
+    objective: 依据证据和政策执行换货申请确定性策略
+    default_next: FUSE_AND_REVIEW
+  FUSE_AND_REVIEW:
+    mode: deterministic
+    objective: 合并证据冲突并创建必要的人工复检任务

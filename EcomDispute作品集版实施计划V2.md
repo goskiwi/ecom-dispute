@@ -1,5 +1,7 @@
 # EcomDispute 作品集版实施计划 V2
 
+> **Legacy Ontology V2**：本文件保留为演进记录，不再是当前实现依据。V3唯一合同见根目录`EcomDispute-Route本体与能力边界V3.md`。
+
 ## 0. 文档目的
 
 本文档用于指导 EcomDispute 从当前退款/物流争议原型，升级为可用于校招、实习面试和 GitHub 作品集展示的电商争议 Agent 系统。

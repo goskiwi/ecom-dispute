@@ -33,14 +33,10 @@ def build_review_manifest(
         for item in candidates:
             if item["category"] == category and item not in selected:
                 selected.append(item)
-                if len(selected) == 40:
+                if len(selected) == len(candidates):
                     break
-        if len(selected) == 40:
-            break
-    if len(selected) != 40:
-        raise ValueError(f"review manifest requires 40 cases, found {len(selected)}")
     payload = {
-        "source": "formal_e2e_120_pre_review_agent",
+        "source": "v3_e2e_26_pre_review_agent",
         "rubric": {
             "evidence_correctness": "1-5",
             "conflict_coverage": "1-5",
@@ -55,7 +51,7 @@ def build_review_manifest(
     counts = {}
     for item in selected:
         counts[item["category"]] = counts.get(item["category"], 0) + 1
-    return {"case_count": 40, "categories": counts}
+    return {"case_count": len(selected), "categories": counts}
 
 
 def generate_review_ab(
@@ -206,9 +202,7 @@ def _review_category(report: object) -> str:
 
 
 def _fixed_review(report: object) -> dict:
-    reasons = list(report.conflicts) or [
-        f"缺失证据：{item}" for item in report.missing_evidence
-    ]
+    reasons = list(report.conflicts) or [f"缺失证据：{item}" for item in report.missing_evidence]
     if not reasons:
         reasons = [
             finding.claim

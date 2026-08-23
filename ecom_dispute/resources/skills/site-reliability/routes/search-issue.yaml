@@ -1,0 +1,45 @@
+route_id: search-issue
+name: 搜索故障
+report_type: search_issue
+match:
+  description: 搜索结果无关、缺失或索引异常。
+  business_types:
+  - search_issue
+  positive_examples:
+  - 搜索鞋子却出现不相关商品
+  negative_examples:
+  - 商品明确缺货
+start_stage: ANALYZE
+core_tools: &id001
+- get_search_events
+- get_site_health
+lazy_tools: []
+required_evidence:
+- conversation
+- search_event
+optional_evidence:
+- site_health
+allowed_decisions:
+- search_healthy
+- search_index_stale
+- search_no_results
+- manual_review
+decision_strategy: search_issue
+stages:
+  ANALYZE:
+    mode: agent
+    objective: 提取搜索故障的用户主张、客服行为和关键边界
+    instruction_file: stages/analyze.md
+    default_next: VERIFY
+  VERIFY:
+    mode: deterministic
+    objective: 查询搜索故障所需业务证据
+    tools: *id001
+    default_next: DECIDE
+  DECIDE:
+    mode: deterministic
+    objective: 依据证据和政策执行搜索故障确定性策略
+    default_next: FUSE_AND_REVIEW
+  FUSE_AND_REVIEW:
+    mode: deterministic
+    objective: 合并证据冲突并创建必要的人工复检任务

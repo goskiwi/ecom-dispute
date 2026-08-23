@@ -1,0 +1,43 @@
+route_id: shipping-options
+name: 配送方案咨询
+report_type: shipping_options
+match:
+  description: 下单前配送方式、报价、国际配送和预计时效。
+  business_types:
+  - shipping_options
+  positive_examples:
+  - 会员是否包含国际配送
+  negative_examples:
+  - 已经支付的运费被多收
+start_stage: ANALYZE
+core_tools: &id001
+- get_shipping_options
+- get_membership_records
+lazy_tools: []
+required_evidence:
+- conversation
+- shipping_option
+optional_evidence: []
+allowed_decisions:
+- shipping_option_available
+- shipping_option_unavailable
+- manual_review
+decision_strategy: shipping_options
+stages:
+  ANALYZE:
+    mode: agent
+    objective: 提取配送方案咨询的用户主张、客服行为和关键边界
+    instruction_file: stages/analyze.md
+    default_next: VERIFY
+  VERIFY:
+    mode: deterministic
+    objective: 查询配送方案咨询所需业务证据
+    tools: *id001
+    default_next: DECIDE
+  DECIDE:
+    mode: deterministic
+    objective: 依据证据和政策执行配送方案咨询确定性策略
+    default_next: FUSE_AND_REVIEW
+  FUSE_AND_REVIEW:
+    mode: deterministic
+    objective: 合并证据冲突并创建必要的人工复检任务

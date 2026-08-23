@@ -1,0 +1,45 @@
+route_id: checkout-issue
+name: 结账故障
+report_type: checkout_issue
+match:
+  description: 未成功扣款前的银行卡拒绝、结账失败和订单无法创建。
+  business_types:
+  - checkout_issue
+  positive_examples:
+  - 信用卡在结账时一直被拒绝
+  negative_examples:
+  - 已经扣款但订单失败
+start_stage: ANALYZE
+core_tools: &id001
+- get_checkout_events
+- get_site_health
+lazy_tools: []
+required_evidence:
+- conversation
+- checkout_event
+optional_evidence:
+- site_health
+allowed_decisions:
+- checkout_recovered
+- checkout_payment_declined
+- checkout_service_error
+- manual_review
+decision_strategy: checkout_issue
+stages:
+  ANALYZE:
+    mode: agent
+    objective: 提取结账故障的用户主张、客服行为和关键边界
+    instruction_file: stages/analyze.md
+    default_next: VERIFY
+  VERIFY:
+    mode: deterministic
+    objective: 查询结账故障所需业务证据
+    tools: *id001
+    default_next: DECIDE
+  DECIDE:
+    mode: deterministic
+    objective: 依据证据和政策执行结账故障确定性策略
+    default_next: FUSE_AND_REVIEW
+  FUSE_AND_REVIEW:
+    mode: deterministic
+    objective: 合并证据冲突并创建必要的人工复检任务

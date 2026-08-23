@@ -9,7 +9,7 @@ from ..base import DecisionOutcome
 
 
 @dataclass(frozen=True)
-class RefundStatusStrategy:
+class RefundProgressStrategy:
     def decide(
         self, case: CaseInput, state: CaseState, missing_evidence: tuple[str, ...]
     ) -> DecisionOutcome:
@@ -95,4 +95,3 @@ class RefundStatusStrategy:
                 conflicts=[conflict],
             )
         return DecisionOutcome()
-

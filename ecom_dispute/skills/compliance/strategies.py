@@ -41,22 +41,27 @@ def _outcome(decision: str, claim: str, state: CaseState, violation: bool) -> De
 
 
 @dataclass(frozen=True)
-class FalseBusinessStatementStrategy:
-    def decide(self, case: CaseInput, state: CaseState, missing_evidence: tuple[str, ...]) -> DecisionOutcome:
+class BusinessStatementCheckStrategy:
+    def decide(
+        self, case: CaseInput, state: CaseState, missing_evidence: tuple[str, ...]
+    ) -> DecisionOutcome:
         conflict = any(
             finding.category == "conversation_fact_conflict" for finding in state.findings
         )
         if conflict:
-            return _outcome("false_statement_found", "客服业务陈述与系统事实冲突", state, True)
-        return _outcome("false_statement_not_found", "未发现客服业务陈述冲突", state, False)
+            return _outcome(
+                "business_statement_conflict", "客服业务陈述与系统事实冲突", state, True
+            )
+        return _outcome("business_statement_verified", "未发现客服业务陈述冲突", state, False)
 
 
 @dataclass(frozen=True)
-class UnsupportedPromiseStrategy:
-    def decide(self, case: CaseInput, state: CaseState, missing_evidence: tuple[str, ...]) -> DecisionOutcome:
+class PromiseGroundingCheckStrategy:
+    def decide(
+        self, case: CaseInput, state: CaseState, missing_evidence: tuple[str, ...]
+    ) -> DecisionOutcome:
         promise = any(
-            finding.category == "agent_interaction_act"
-            and finding.speech_act == SpeechAct.PROMISE
+            finding.category == "agent_interaction_act" and finding.speech_act == SpeechAct.PROMISE
             for finding in state.findings
         )
         primary_requires_review = any(
@@ -66,13 +71,15 @@ class UnsupportedPromiseStrategy:
             finding.category == "conversation_fact_conflict" for finding in state.findings
         )
         if promise and primary_requires_review:
-            return _outcome("unsupported_promise_found", "证据未闭环时客服做出结果承诺", state, True)
-        return _outcome("unsupported_promise_not_found", "未发现无依据结果承诺", state, False)
+            return _outcome("promise_unsupported", "证据未闭环时客服做出结果承诺", state, True)
+        return _outcome("promise_grounded", "未发现无依据结果承诺", state, False)
 
 
 @dataclass(frozen=True)
-class MissingRequiredEscalationStrategy:
-    def decide(self, case: CaseInput, state: CaseState, missing_evidence: tuple[str, ...]) -> DecisionOutcome:
+class EscalationRequirementCheckStrategy:
+    def decide(
+        self, case: CaseInput, state: CaseState, missing_evidence: tuple[str, ...]
+    ) -> DecisionOutcome:
         primary_requires_review = any(
             item.get("review_required") for item in state.candidate_decisions
         )

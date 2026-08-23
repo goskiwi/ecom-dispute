@@ -7,9 +7,16 @@ import urllib.request
 from dataclasses import dataclass
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from .contracts import FactMode, FactType, Polarity, SpeechAct, TimeRelation
+from .ontology import (
+    ROUTE_DESCRIPTIONS,
+    BusinessRoute,
+    ItemAttribute,
+    OrderOperationType,
+    ReturnReason,
+)
 
 
 class BusinessFact(BaseModel):
@@ -33,28 +40,41 @@ class InteractionAct(BaseModel):
     speech_act: SpeechAct
 
 
+class ItemMismatchClaim(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    attribute: ItemAttribute
+    ordered_value: str | None
+    received_value: str | None
+    explicit_order_received_mismatch: bool
+    message_indices: list[int]
+
+
 class ConversationSemantics(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    route_type: Literal[
-        "refund",
-        "refund_amount",
-        "duplicate_charge",
-        "payment_order_failure",
-        "delivery",
-        "merchant_not_shipped",
-        "delivered_not_received",
-        "cancellation_in_transit",
-        "return_eligibility",
-        "wrong_item",
-        "missing_item",
-        "damaged_item",
-        "other",
-    ]
-    has_dispute: bool
+    route_type: BusinessRoute
+    has_business_exception: bool
+    return_reason: ReturnReason | None
+    order_operation: OrderOperationType | None
+    item_mismatch_claim: ItemMismatchClaim | None
     business_facts: list[BusinessFact]
     interaction_acts: list[InteractionAct]
     uncertainty: str | None
+
+    @model_validator(mode="after")
+    def validate_route_evidence(self) -> ConversationSemantics:
+        if self.route_type == BusinessRoute.RECEIVED_ITEM_MISMATCH:
+            claim = self.item_mismatch_claim
+            if claim is None or not claim.explicit_order_received_mismatch:
+                raise ValueError(
+                    "received_item_mismatch requires an explicit order/received mismatch"
+                )
+        if self.route_type != BusinessRoute.ORDER_MANAGEMENT and self.order_operation:
+            raise ValueError("order_operation is only valid for order_management")
+        if self.route_type != BusinessRoute.RETURN_REQUEST and self.return_reason:
+            raise ValueError("return_reason is only valid for return_request")
+        return self
 
 
 @dataclass(frozen=True)
@@ -100,10 +120,24 @@ class ResponsesClient:
     ) -> LLMResult:
         prompt = (
             "你是电商售后争议的对话分析 Agent。仅依据下列对话提取信息，不推测订单、"
-            "支付、退款、物流或政策事实。route_type 必须从Schema列出的具体Route中选择；"
-            "has_dispute 表示用户是否表达业务异常或对处理结果不满，正常查询或问题已解决为 false。"
-            "只要用户明确陈述晚到、未收到、未发起、未到账或金额不符等异常，has_dispute 必须为 true，"
-            "即使用户同时在询问政策；只有没有异常的状态查询或已正常解决才为 false。"
+            "支付、退款、物流或政策事实。route_type 必须从Schema列出的具体Route中选择。"
+            f"Route定义：{json.dumps({key.value: value for key, value in ROUTE_DESCRIPTIONS.items()}, ensure_ascii=False)}。"
+            "has_business_exception表示对话中是否曾发生业务异常或处理结果争议；后续被客服解决不能抹掉"
+            "已经发生的异常。正常咨询、普通修改或主动退换货且没有异常时为false。"
+            "买家自己选错规格、穿着不合身、不喜欢或改变主意本身不是业务异常；"
+            "只有商家错发、系统失败或用户明确争议处理结果时才为true。"
+            "route_type按用户的主要业务诉求和需要执行的证据工作流选择，不按客服最终采取的补发、退款、"
+            "改期等动作选择。"
+            "退货申请使用return_request，已提交退货后的标签、寄回、入库或验货进度使用return_progress；"
+            "退款已经存在或应存在后的进度与到账使用refund_progress。"
+            "received_item_mismatch必须有明确的下单值与实收值比较，或用户明确声称商家错发；"
+            "只说wrong color/size、不合身或不喜欢时不得推断商家错发，应使用return_request并填写return_reason。"
+            "return_reason只描述return_request的普通退货原因，其他Route必须为null。"
+            "item_mismatch_claim只有存在商品不符主张时填写；同一句或多句明确给出下单值与实收值时，"
+            "explicit_order_received_mismatch必须为true，不要求提前证明最终责任；"
+            "ordered_value或received_value原文没有就必须为null，禁止补写。"
+            "账户密码/2FA、身份资料修改和信贷延期明确选择other。order_operation只在order_management时填写。"
+            "商品明确缺货或库存为零时选择inventory_availability；只有库存可用或未知但购物车状态异常时才选择cart_issue。"
             "输出 business_facts 与 interaction_acts 两个完全独立的数组。business_facts 只包含可被订单、退款、"
             "支付或物流系统核验的业务命题，每个事实包含fact_type、polarity、fact_mode和time_relation。"
             "interaction_acts 只描述说话行为：promise、action、advice、query、explanation、"
@@ -121,6 +155,12 @@ class ResponsesClient:
             "item_identity=实收商品身份/SKU是否与订单一致；item_quantity=实收商品数量；"
             "item_damage=商品是否破损；return_request=是否提交退货申请；"
             "return_eligibility=是否满足退货资格；item_condition=未拆封、可二次销售等商品状态；"
+            "order_attribute=订单数量、地址、付款方式或配送设置；order_change=订单修改；"
+            "fee_charge=运费或处理费；return_progress=退货寄回、入库或验货状态；"
+            "exchange_request=换货申请；product_attribute=商品目录属性；inventory_status=库存状态；"
+            "price_adjustment=价保或价格匹配；promotion_status=优惠券状态；shipping_option=配送方案；"
+            "membership_status=会员状态或权益；checkout_status/cart_status/search_status/site_health分别表示"
+            "结账、购物车、搜索和站点健康事实；"
             "status=查询或处理状态；other=确实无法归入上述任何类型的业务事实。"
             "不得因为旧退款/物流类型无法表达就使用other。fact_type不编码否定或言语行为。"
             "fact_mode定义：event=扣款、创建、发起、签收等离散事件；state=金额差异、商品身份、"
@@ -204,9 +244,7 @@ class ResponsesClient:
                 retryable=exc.code in {429, 502, 503, 504},
             ) from exc
         except urllib.error.URLError as exc:
-            raise LLMRequestError(
-                f"LLM request failed: {exc.reason}", retryable=True
-            ) from exc
+            raise LLMRequestError(f"LLM request failed: {exc.reason}", retryable=True) from exc
         except TimeoutError as exc:
             raise LLMRequestError(
                 f"LLM request timed out after {self.timeout_seconds} seconds",

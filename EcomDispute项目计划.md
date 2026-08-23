@@ -1,5 +1,7 @@
 # EcomDispute 项目计划
 
+> 本文件是早期总体计划。当前Route、Skill、工具和评测边界以`EcomDispute-Route本体与能力边界V3.md`及README为准。
+
 > 本文档为早期计划，当前实施以根目录 `EcomDispute作品集版实施计划V2.md` 为准。
 
 ## 1. 项目定位
